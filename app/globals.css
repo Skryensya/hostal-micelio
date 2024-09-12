@@ -2,16 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* HOSTAL COLORS HEX  
+  #009F98 
+  #E1197C 
+  #561944 
+  #F3D39E 
+  #EE7934 
+*/
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* HOSTAL COLORS HSL 
+  hsl(177, 100%, 31%)
+  hsl(330, 80%, 49%)
+  hsl(318, 55%, 22%)
+	hsl(37, 78%, 79%)
+  hsl(22, 85%, 57%)
+*/
+
+:root {
+  /* ligth mode */
+  --background: hsl(37, 78%, 89%);
+  --foreground: hsl(318, 55%, 17%);
+  --border: hsl(22, 85%, 57%);
+
+  /* dark mode */
+  --background-2: hsl(318, 55%, 17%);
+  --foreground-2: hsl(37, 78%, 89%);
+  --border-2: hsl(22, 85%, 67%);
 }
 
 body {
@@ -24,4 +40,50 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}
+
+.embla {
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center; /* Center the slides vertically if necessary */
+}
+
+.embla__container {
+  display: flex;
+  will-change: transform;
+}
+
+.embla__slide {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  width: auto;
+}
+
+.no-select {
+  user-select: none; /* Standard syntax */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.hero-bg {
+  --pattern-bg-color: hsl(37, 78%, 89%);
+  --pattern-fg-color: hsl(330, 80%, 49%);
+  background-color: #f3d39e;
+  opacity: 0.6;
+  background-image: repeating-radial-gradient(
+      circle at 0 0,
+      transparent 0,
+      #f3d39e 20px
+    ),
+    repeating-linear-gradient(#e1197c95, #e1197c);
 }
