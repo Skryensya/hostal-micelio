@@ -19,21 +19,88 @@
 */
 
 :root {
-  /* ligth mode */
-  --background: hsl(37, 78%, 89%);
-  --foreground: hsl(318, 55%, 17%);
-  --border: hsl(22, 85%, 57%);
+  --font-poppins: "Poppins", sans-serif;
+  --font-baloo-bhaijaan-2: "Baloo Bhaijaan 2", cursive;
 
-  /* dark mode */
-  --background-2: hsl(318, 55%, 17%);
-  --foreground-2: hsl(37, 78%, 89%);
-  --border-2: hsl(22, 85%, 67%);
+  .font-poppins,
+  .font-heading {
+    font-family: var(--font-poppins);
+  }
+  .font-baloo-bhaijaan-2,
+  .font-body {
+    font-family: var(--font-baloo-bhaijaan-2);
+  }
+
+  --text-light: hsl(319, 57%, 10%);
+  --text-dark: hsl(319, 57%, 90%);
+
+  --surface-light: hsl(27, 87%, 94%);
+  --surface-dark: hsl(27, 87%, 6%);
+
+  --primary-light: hsl(318, 61%, 71%);
+  --primary-dark: hsl(318, 61%, 29%);
+
+  --secondary-light: hsl(15, 64%, 28%);
+  --secondary-dark: hsl(15, 64%, 72%);
+
+  --accent-light: hsl(177, 99%, 64%);
+  --accent-dark: hsl(177, 99%, 36%);
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+html {
+  scroll-behavior: smooth;
+  font-size: 100%;
+  font-family: var(--font-baloo-bhaijaan-2);
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: var(--font-poppins);
+  font-weight: 200;
+}
+
+html {
+  font-size: 100%;
+} /* 16px */
+
+h1,
+.h1 {
+  font-size: 1.99rem; /* 31.84px */
+}
+
+h2,
+.h2 {
+  font-size: 1.658rem; /* 26.56px */
+}
+
+h3,
+.h3 {
+  font-size: 1.382rem; /* 22.08px */
+}
+
+h4,
+.h4 {
+  font-size: 1.152rem; /* 18.4px */
+}
+
+h5,
+.h5 {
+  font-size: 0.96rem; /* 15.36px */
+}
+
+small,
+.small {
+  font-size: 0.667rem; /* 10.72px */
 }
 
 @layer utilities {

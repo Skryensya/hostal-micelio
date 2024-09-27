@@ -4,7 +4,7 @@ import React from "react";
 export function Events() {
   // this should be a showcase of the previous events and an invitation to the next ones
   return (
-    <div className="h-96 bg-background">
+    <div className="h-96">
       <div className="container mx-auto ">
         <div className="py-20">Events section</div>
       </div>

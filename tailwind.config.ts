@@ -9,11 +9,55 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      container: {
+        center: true, // Centers the container (Bootstrap's containers are centered)
+        padding: "1rem", // Add padding (similar to Bootstrap's container padding)
+        screens: {
+          sm: "576px", // Matches Bootstrap's sm container width
+          md: "720px", // Matches Bootstrap's md container width
+          lg: "960px", // Matches Bootstrap's lg container width
+          xl: "1140px", // Matches Bootstrap's xl container width
+          "2xl": "1320px", // Matches Bootstrap's xxl container width
+        },
+      },
+      fontSize: {
+        sm: "0.750rem",
+        base: "1rem",
+        xl: "1.333rem",
+        "2xl": "1.777rem",
+        "3xl": "2.369rem",
+        "4xl": "3.158rem",
+        "5xl": "4.210rem",
+      },
+      fontFamily: {
+        heading: "Poppins",
+        body: "Baloo Bhaijaan 2",
+      },
+      fontWeight: {
+        normal: "400",
+        bold: "700",
+      },
       colors: {
-        background: "var(--background-light)",
-        foreground: "var(--foreground-light)",
-        "background-2": "var(--background-2)",
-        "foreground-2": "var(--foreground-2)",
+        text: {
+          light: "var(--text-light)",
+          dark: "var(--text-dark)",
+        },
+        surface: {
+          light: "var(--surface-light)",
+          dark: "var(--surface-dark)",
+        },
+        primary: {
+          light: "var(--primary-light)",
+          dark: "var(--primary-dark)",
+        },
+        secondary: {
+          light: "var(--secondary-light)",
+          dark: "var(--secondary-dark)",
+        },
+        accent: {
+          light: "var(--accent-light)",
+          dark: "var(--accent-dark)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -4,7 +4,7 @@ import React from "react";
 export function Villarrica() {
   // showcase tours and things to do in Villarrica, partners and stuff
   return (
-    <div className="h-96  bg-background">
+    <div className="h-96 ">
       <div className="container mx-auto  py-20">
         <div className="flex flex-col justify-center items-center">
           <p className="pb-4 text-2xl">

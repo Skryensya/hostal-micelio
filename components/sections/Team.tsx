@@ -4,7 +4,7 @@ import React from "react";
 export function Team() {
   // this should be a way to showcase the diffetent people collaborating in the project
   return (
-    <div className="h-96 bg-background">
+    <div className="h-96 ">
       <div className="container mx-auto ">
         <div className="py-20">Team</div>
       </div>

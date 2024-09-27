@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Parque Nacional Rapa Nui",
+    "slug": "parque-nacional-rapa-nui",
+    "description": "Habitación con cama matrimonial y baño privado, con vista al lago Villarrica.",
+    "floor": 1,
+    "beds": ["B01"],
+    "capacity": 2
+  },
+  {
+    "name": "Parque Nacional Conguillío",
+    "slug": "parque-nacional-conguillio",
+    "description": "Habitación con 3 camas individuales de 1,5 plazas, agradable luz natural y calefacción en el interior.",
+    "floor": 1,
+    "beds": ["B02", "B02", "B02"],
+    "capacity": 3
+  },
+  {
+    "name": "Parque Nacional Villarrica",
+    "slug": "parque-nacional-villarrica",
+    "description": "Habitación con una cama matrimonial y vista al volcán Villarrica, con luz del amanecer y atardeceres coloridos.",
+    "floor": 1,
+    "beds": ["B01"],
+    "capacity": 2
+  },
+  {
+    "name": "Laguna San Rafael",
+    "slug": "laguna-san-rafael",
+    "description": "Dormitorio compartido con 6 camas individuales, 2 de ellas literas, y luz natural.",
+    "floor": 0,
+    "beds": ["B02", "B02", "B03", "B03"],
+    "capacity": 6
+  },
+  {
+    "name": "Torres del Paine",
+    "slug": "torres-del-paine",
+    "description": "Habitación con 2 camas individuales de 1,5 plazas, vista al volcán Villarrica y luz natural.",
+    "floor": 1,
+    "beds": ["B02", "B02"],
+    "capacity": 2
+  },
+  {
+    "name": "Parque Nacional Huerquehue",
+    "slug": "parque-nacional-huerquehue",
+    "description": "Habitación individual con una cama de 1,5 plazas y vista al volcán.",
+    "floor": 2,
+    "beds": ["B02"],
+    "capacity": 1
+  },
+  {
+    "name": "Parque Nacional Pumalin",
+    "slug": "parque-nacional-pumalin",
+    "description": "Habitación con 2 camas de 1,5 plazas, luz natural y vista al volcán Villarrica.",
+    "floor": 2,
+    "beds": ["B02", "B02"],
+    "capacity": 2
+  },
+  {
+    "name": "Parque Nacional Nahuelbuta",
+    "slug": "parque-nacional-nahuelbuta",
+    "description": "Habitación con una cama de 1,5 plazas.",
+    "floor": 2,
+    "beds": ["B02"],
+    "capacity": 1
+  },
+  {
+    "name": "Parque Nacional Queulat",
+    "slug": "parque-nacional-queulat",
+    "description": "Habitación con una cama matrimonial y una cama de 1,5 plazas, vista a la ciudad, al lago y al volcán Llaima.",
+    "floor": 2,
+    "beds": ["B01", "B02"],
+    "capacity": 3
+  }
+]

@@ -1,21 +1,10 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 import { Header } from "@/components/sections/Header";
 import { Footer } from "@/components/sections/Footer";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import { poppins, balooBhaijaan2 } from "./fonts";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -30,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} tapiz-bg min-h-screen light:bg-background light:text-foreground dark:bg-background-2 dark:text-foreground-2 font-sans antialiased`}
+        className={`${poppins.variable} ${balooBhaijaan2.variable} font-sans antialiased min-h-screen bg-surface-light text-text-light dark:bg-surface-dark  dark:text-text-dark  `}
       >
         <ThemeProvider attribute="class" defaultTheme="system">
           <Header />

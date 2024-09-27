@@ -43,7 +43,7 @@ export function Amenities() {
   );
 
   return (
-    <div className="relative w-full overflow-hidden bg-background">
+    <div className="relative w-full overflow-hidden">
       <div className="embla " ref={emblaRef}>
         <div className="embla__container mx-auto  flex">
           {AMENITIES.map((amenity, index) => (

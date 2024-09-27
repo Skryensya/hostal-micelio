@@ -1,0 +1,171 @@
+{
+  "about": {
+    "mision": "En Hostal Micelio nuestra misión es ofrecer a nuestros huéspedes una estadía cómoda y enriquecedora en un ambiente acogedor y amigable. Queremos que cada visitante se sienta como en casa, creando recuerdos memorables en un entorno seguro y hospitalario.",
+    "vision": "Aspiramos a ser el destino preferido en Villarrica y expandirnos a nuevas ubicaciones en los próximos cinco años consolidando nuestro compromiso con un servicio de excelencia, ofreciendo soluciones completas a las necesidades de nuestros pasajeros."
+  },
+  "habitaciones": [
+    {
+      "nombre": "Parque Nacional Rapa Nui",
+      "descripcion": "Habitación con cama matrimonial y baño privado, con vista al lago Villarrica.",
+      "piso": 1,
+      "camas": [
+        {
+          "size": "matrimonial"
+        }
+      ],
+      "precio": 35000
+    },
+    {
+      "nombre": "Parque Nacional Conguillío",
+      "descripcion": "Habitación con 3 camas individuales de 1,5 plazas, agradable luz natural y calefacción en el interior.",
+      "piso": 1,
+      "camas": [
+        {
+          "size": "1,5"
+        },
+        {
+          "size": "1,5"
+        },
+        {
+          "size": "1,5"
+        }
+      ],
+      "precio": 35000
+    },
+    {
+      "nombre": "Parque Nacional Villarrica",
+      "descripcion": "Habitación con una cama matrimonial y vista al volcán Villarrica, con luz del amanecer y atardeceres coloridos.",
+      "piso": 1,
+      "camas": [
+        {
+          "size": "matrimonial"
+        }
+      ],
+      "precio": 35000
+    },
+    {
+      "nombre": "Laguna San Rafael",
+      "descripcion": "Dormitorio compartido con 6 camas individuales, 2 de ellas literas, y luz natural.",
+      "piso": 0,
+      "camas": [
+        {
+          "size": "1,5"
+        },
+        {
+          "size": "1,5"
+        },
+        {
+          "size": "literas"
+        }
+      ],
+      "precio": 35000
+    },
+    {
+      "nombre": "Torres del Paine",
+      "descripcion": "Habitación con 2 camas individuales de 1,5 plazas, vista al volcán Villarrica y luz natural.",
+      "piso": 1,
+      "camas": [
+        {
+          "size": "1,5"
+        },
+        {
+          "size": "1,5"
+        }
+      ],
+      "precio": 35000
+    },
+    {
+      "nombre": "Parque Nacional Huerquehue",
+      "descripcion": "Habitación individual con una cama de 1,5 plazas y vista al volcán.",
+      "piso": 2,
+      "camas": [
+        {
+          "size": "1,5"
+        }
+      ],
+      "precio": 35000
+    },
+    {
+      "nombre": "Parque Nacional Pumalin",
+      "descripcion": "Habitación con 2 camas de 1,5 plazas, luz natural y vista al volcán Villarrica.",
+      "piso": 2,
+      "camas": [
+        {
+          "size": "1,5"
+        }
+      ],
+      "precio": 35000
+    },
+    {
+      "nombre": "Parque Nacional Nahuelbuta",
+      "descripcion": "Habitación con una cama de 1,5 plazas.",
+      "piso": 2,
+      "camas": [
+        {
+          "size": "1,5"
+        }
+      ],
+      "precio": 35000
+    },
+    {
+      "nombre": "Parque Nacional Queulat",
+      "descripcion": "Habitación con una cama matrimonial y una cama de 1,5 plazas, vista a la ciudad, al lago y al volcán Llaima.",
+      "piso": 2,
+      "camas": [
+        {
+          "size": "matrimonial"
+        },
+        {
+          "size": "1,5"
+        }
+      ],
+      "precio": 35000
+    }
+  ],
+  "servicios": {
+    "incluidos": [
+      "Wifi 5g",
+      "Estacionamiento previa coordinación",
+      "Cocina full equipada",
+      "Comedores",
+      "6 baños compartidos con secador de pelo",
+      "Agua caliente",
+      "5 ambientes en exterior, 1 en patio techado",
+      "Zona de fumadores",
+      "Parrilla previa coordinación",
+      "Guarda equipaje",
+      "Huerto orgánico para uso de los pasajeros",
+      "Vista al volcán y al lago desde los espacios comunes",
+      "Asesoría turística para tu viaje"
+    ],
+    "extra": {
+      "lavanderia": "$5.000",
+      "arriendo_bicicletas": "$5.000",
+      "pension_completa": "$10.000",
+      "desayuno": "$3.000",
+      "almuerzo": "$3.500",
+      "cena": "$3.500",
+      "operador_turistico": true,
+      "venta_bebidas_alcoholicas": true,
+      "terapias_complementarias": true,
+      "eventos_tematicos": true
+    }
+  },
+  "equipo": [
+    {
+      "nombre": "Marcela",
+      "rol": "Mucama",
+      "descripcion": "Encargada de mantener todo impecable en Hostal Micelio, asegurándose de que cada habitación y espacio común esté en perfectas condiciones."
+    },
+    {
+      "nombre": "Jaime",
+      "rol": "Administrativo y creativo",
+      "descripcion": "Apoya en el área administrativa y creativa, aportando soluciones eficientes y frescas para el buen funcionamiento del hostal."
+    },
+    {
+      "nombre": "Nataly",
+      "rol": "Dueña",
+      "descripcion": "Dueña carismática que conecta con los huéspedes, ofreciendo asesoría sobre actividades locales y promoviendo una comunidad unida."
+    }
+  ]
+}

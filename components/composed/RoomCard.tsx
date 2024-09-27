@@ -1,19 +1,36 @@
+"use client";
 import React from "react";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { Card } from "../../../OLD-hostal-micelio-pages/src/components/ui/card";
+import { Card } from "../ui/card";
+import { ImageCarousel } from "@/components/ImageCarousel";
+// import { cn } from "@/lib/utils";
+import ROOM_IMAGES from "@/db/ROOM_IMAGES.json";
 
-export default function RoomCard() {
+export default function RoomCard({
+  slug,
+  name,
+  description,
+  floor,
+}: {
+  slug: string;
+  name: string;
+  description: string;
+  floor: number;
+}) {
   return (
-    <Card>
-      <div className="object-cover w-4/12">
-        <Image
-          src="https://dummyimage.com/250/eaeaea/000000"
-          height={400}
-          width={400}
-          alt="Room"
-          className="w-full height-full"
-        ></Image>
+    <Card className="flex flex-col h-full ">
+      <div className="w-full">
+        <ImageCarousel
+          disabledZoom={true}
+          imgs={ROOM_IMAGES[slug].map((img) => ({
+            src: img.src,
+            alt: img.alt,
+          }))}
+        />
+      </div>
+      <div className="py-4 px-2">
+        <h2 className="font-bold">{name}</h2>
+        <small> Piso #{floor} </small>
+        <p>{description}</p>
       </div>
     </Card>
   );

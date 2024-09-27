@@ -1,0 +1,129 @@
+{
+    "parque-nacional-rapa-nui": [
+      {
+        "src": "https://dummyimage.com/600x400/aeaeae/000000.png&text=Parque+Nacional+Rapa+Nui+1",
+        "alt": "View of Parque Nacional Rapa Nui Room"
+      },
+      {
+        "src": "https://dummyimage.com/400x300/aeaeae/000000.png&text=Parque+Nacional+Rapa+Nui+2",
+        "alt": "Second angle of Parque Nacional Rapa Nui Room"
+      },
+      {
+        "src": "https://dummyimage.com/500x500/aeaeae/000000.png&text=Parque+Nacional+Rapa+Nui+3",
+        "alt": "Different view of Parque Nacional Rapa Nui Room"
+      }
+    ],
+    "parque-nacional-conguillio": [
+      {
+        "src": "https://dummyimage.com/600x400/aeaeae/000000.png&text=Parque+Nacional+Conguillio+1",
+        "alt": "View of Parque Nacional Conguillio Room"
+      },
+      {
+        "src": "https://dummyimage.com/400x300/aeaeae/000000.png&text=Parque+Nacional+Conguillio+2",
+        "alt": "Second angle of Parque Nacional Conguillio Room"
+      },
+      {
+        "src": "https://dummyimage.com/500x500/aeaeae/000000.png&text=Parque+Nacional+Conguillio+3",
+        "alt": "Different view of Parque Nacional Conguillio Room"
+      }
+    ],
+    "parque-nacional-villarrica": [
+      {
+        "src": "https://dummyimage.com/600x400/aeaeae/000000.png&text=Parque+Nacional+Villarrica+1",
+        "alt": "View of Parque Nacional Villarrica Room"
+      },
+      {
+        "src": "https://dummyimage.com/400x300/aeaeae/000000.png&text=Parque+Nacional+Villarrica+2",
+        "alt": "Second angle of Parque Nacional Villarrica Room"
+      },
+      {
+        "src": "https://dummyimage.com/500x500/aeaeae/000000.png&text=Parque+Nacional+Villarrica+3",
+        "alt": "Different view of Parque Nacional Villarrica Room"
+      }
+    ],
+    "laguna-san-rafael": [
+      {
+        "src": "https://dummyimage.com/600x400/aeaeae/000000.png&text=Laguna+San+Rafael+1",
+        "alt": "View of Laguna San Rafael Room"
+      },
+      {
+        "src": "https://dummyimage.com/400x300/aeaeae/000000.png&text=Laguna+San+Rafael+2",
+        "alt": "Second angle of Laguna San Rafael Room"
+      },
+      {
+        "src": "https://dummyimage.com/500x500/aeaeae/000000.png&text=Laguna+San+Rafael+3",
+        "alt": "Different view of Laguna San Rafael Room"
+      }
+    ],
+    "torres-del-paine": [
+      {
+        "src": "https://dummyimage.com/600x400/aeaeae/000000.png&text=Torres+del+Paine+1",
+        "alt": "View of Torres del Paine Room"
+      },
+      {
+        "src": "https://dummyimage.com/400x300/aeaeae/000000.png&text=Torres+del+Paine+2",
+        "alt": "Second angle of Torres del Paine Room"
+      },
+      {
+        "src": "https://dummyimage.com/500x500/aeaeae/000000.png&text=Torres+del+Paine+3",
+        "alt": "Different view of Torres del Paine Room"
+      }
+    ],
+    "parque-nacional-huerquehue": [
+      {
+        "src": "https://dummyimage.com/600x400/aeaeae/000000.png&text=Parque+Nacional+Huerquehue+1",
+        "alt": "View of Parque Nacional Huerquehue Room"
+      },
+      {
+        "src": "https://dummyimage.com/400x300/aeaeae/000000.png&text=Parque+Nacional+Huerquehue+2",
+        "alt": "Second angle of Parque Nacional Huerquehue Room"
+      },
+      {
+        "src": "https://dummyimage.com/500x500/aeaeae/000000.png&text=Parque+Nacional+Huerquehue+3",
+        "alt": "Different view of Parque Nacional Huerquehue Room"
+      }
+    ],
+    "parque-nacional-pumalin": [
+      {
+        "src": "https://dummyimage.com/600x400/aeaeae/000000.png&text=Parque+Nacional+Pumalin+1",
+        "alt": "View of Parque Nacional Pumalin Room"
+      },
+      {
+        "src": "https://dummyimage.com/400x300/aeaeae/000000.png&text=Parque+Nacional+Pumalin+2",
+        "alt": "Second angle of Parque Nacional Pumalin Room"
+      },
+      {
+        "src": "https://dummyimage.com/500x500/aeaeae/000000.png&text=Parque+Nacional+Pumalin+3",
+        "alt": "Different view of Parque Nacional Pumalin Room"
+      }
+    ],
+    "parque-nacional-nahuelbuta": [
+      {
+        "src": "https://dummyimage.com/600x400/aeaeae/000000.png&text=Parque+Nacional+Nahuelbuta+1",
+        "alt": "View of Parque Nacional Nahuelbuta Room"
+      },
+      {
+        "src": "https://dummyimage.com/400x300/aeaeae/000000.png&text=Parque+Nacional+Nahuelbuta+2",
+        "alt": "Second angle of Parque Nacional Nahuelbuta Room"
+      },
+      {
+        "src": "https://dummyimage.com/500x500/aeaeae/000000.png&text=Parque+Nacional+Nahuelbuta+3",
+        "alt": "Different view of Parque Nacional Nahuelbuta Room"
+      }
+    ],
+    "parque-nacional-queulat": [
+      {
+        "src": "https://dummyimage.com/600x400/aeaeae/000000.png&text=Parque+Nacional+Queulat+1",
+        "alt": "View of Parque Nacional Queulat Room"
+      },
+      {
+        "src": "https://dummyimage.com/400x300/aeaeae/000000.png&text=Parque+Nacional+Queulat+2",
+        "alt": "Second angle of Parque Nacional Queulat Room"
+      },
+      {
+        "src": "https://dummyimage.com/500x500/aeaeae/000000.png&text=Parque+Nacional+Queulat+3",
+        "alt": "Different view of Parque Nacional Queulat Room"
+      }
+    ]
+  }
+  

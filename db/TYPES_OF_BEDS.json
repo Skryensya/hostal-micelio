@@ -1,0 +1,17 @@
+{
+  "B01": {
+    "name": "Cama Matrimonial",
+    "size": "matrimonial",
+    "capacity": 2
+  },
+  "B02": {
+    "name": "Cama Individual",
+    "size": "1,5",
+    "capacity": 1
+  },
+  "B03": {
+    "name": "Cama Litera",
+    "size": "literas",
+    "capacity": 1
+  }
+}

@@ -3,7 +3,7 @@ import React from "react";
 
 export function GettingHere() {
   return (
-    <div className="h-96  bg-background">
+    <div className="h-96">
       <div className="container mx-auto ">
         <div className="py-20">Getting Here section</div>
       </div>
