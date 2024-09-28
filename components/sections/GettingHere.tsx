@@ -2,7 +2,7 @@ import React from "react";
 import { MapPinHouse } from "lucide-react";
 import { Button } from "../ui/button";
 // import { cn } from "@/lib/utils";
-import { getDirectionsTemplate } from "@/lib/whatsapp_templates/Directions";
+import { getDirectionsTemplate } from "@/lib/whatsapp_templates/directions";
 import Link from "next/link";
 
 const GOOGLE_MAPS_LINK = "https://maps.app.goo.gl/XpovqzcoqBebn7839";
