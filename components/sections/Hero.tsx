@@ -16,9 +16,9 @@ const slides: SlideType[] = [
     focusPoint: "center bottom", // Focus on the center of the image
     content: (
       <>
-        <h2 className="text-4xl font-bold pb-6">Adventure Awaits</h2>
+        <h2 className="text-4xl font-bold pb-6">¡La aventura en espera!</h2>
         <p className="text-xl">
-          Embark on thrilling journeys and create lasting memories.
+          Experimenta emocionantes aventuras y crea memorias únicas.
         </p>
       </>
     ),
@@ -28,9 +28,11 @@ const slides: SlideType[] = [
     focusPoint: "center bottom", // Example of focusing on the bottom center of the image
     content: (
       <>
-        <h2 className="text-4xl font-bold mb-6">Discover Amazing Places</h2>
+        <h2 className="text-4xl font-bold mb-6">
+          Descubre lugares maravillosos
+        </h2>
         <p className="text-xl">
-          Explore breathtaking destinations around the world.
+          Conoce todo lo que Villarrica tiene para ofrecer.
         </p>
       </>
     ),
@@ -40,9 +42,9 @@ const slides: SlideType[] = [
     focusPoint: "75% 75%", // Focus on the top right of the image
     content: (
       <>
-        <h2 className="text-4xl font-bold mb-6">Relax in Paradise</h2>
+        <h2 className="text-4xl font-bold mb-6">Relajate en el paraíso</h2>
         <p className="text-xl">
-          Unwind in luxurious resorts and serene landscapes.
+          Despierte en lujosos hoteles y paisajes serenos.
         </p>
       </>
     ),

@@ -15,11 +15,11 @@ const TeamMember = ({ person }) => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <Avatar className="w-full h-full transition-opacity duration-300">
+        <Avatar className="w-full h-full transition-opacity duration-300 ">
           <AvatarImage
             src={isHovered ? person.picture2 : person.picture1}
             alt={person.name}
-            className="object-cover group-hover:opacity-90 group-focus:opacity-90 group-active:opacity-90 transition-opacity duration-300" // Apply hover, focus, active states
+            className="object-cover group-hover:opacity-90 group-focus:opacity-90 group-active:opacity-90 transition-opacity duration-300 border border-border-light rounded-full" // Apply hover, focus, active states
           />
           <AvatarFallback>{person.name.charAt(0)}</AvatarFallback>
         </Avatar>

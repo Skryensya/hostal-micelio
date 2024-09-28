@@ -4,12 +4,13 @@ import React from "react";
 import { Hero } from "@/components/sections/Hero";
 import { Villarrica } from "@/components/sections/Villarrica";
 import { Amenities } from "@/components/sections/Amenities";
-import { Events } from "@/components/sections/Events";
-// import { Rooms } from "@/components/sections/Rooms";
+// import { Events } from "@/components/sections/Events";
+import { Rooms } from "@/components/sections/Rooms";
 import { Team } from "@/components/sections/Team";
-import { Menu } from "@/components/sections/Menu";
+// import { Menu } from "@/components/sections/Menu";
 import { GettingHere } from "@/components/sections/GettingHere";
 import { CheckAvailability } from "@/components/sections/CheckAvailability";
+import { Test } from "@/components/sections/Test";
 // import { Test } from "@/components/sections/Test";
 
 export default function Home() {
@@ -17,13 +18,14 @@ export default function Home() {
     <main className="">
       <Hero />
       <CheckAvailability></CheckAvailability>
+      {/* <Rooms /> */}
       <Villarrica />
       <Amenities />
-      {/* <Rooms /> */}
-      <Events />
+      {/* <Events /> */}
       <Team />
-      <Menu />
+      {/* <Menu /> */}
       <GettingHere />
+      <Test />
     </main>
   );
 }

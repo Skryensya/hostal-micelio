@@ -32,14 +32,17 @@ export function DateRangePicker({
     return date ? format(date, "dd/MM/yyyy", { locale: es }) : "__________";
   };
 
-  const handleSelect = (range: DateRange | undefined) => {
-    setDate(range);
-    setDateRange(range); // Call the passed setState function
-  };
+  const handleSelect = React.useCallback(
+    (range: DateRange | undefined) => {
+      setDate(range);
+      setDateRange(range); // Call the passed setState function
+    },
+    [setDateRange]
+  );
 
   React.useEffect(() => {
     handleSelect(date);
-  }, [date]);
+  }, [date, handleSelect]);
 
   return (
     <div className={cn("flex items-center gap-2", className)}>

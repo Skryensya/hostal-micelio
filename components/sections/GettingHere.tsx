@@ -1,6 +1,13 @@
 import React from "react";
 import { MapPinHouse } from "lucide-react";
+import { Button } from "../ui/button";
 // import { cn } from "@/lib/utils";
+import { getDirectionsTemplate } from "@/lib/whatsapp_templates/Directions";
+import Link from "next/link";
+
+const GOOGLE_MAPS_LINK = "https://maps.app.goo.gl/XpovqzcoqBebn7839";
+const GOOGLE_MAPS_EMBED_LINK =
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7279.0746688457175!2d-72.23123636024849!3d-39.28514831555788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x96146225645498eb%3A0x4f5d838949e2c739!2sHostal%20Torre%20Suiza!5e0!3m2!1sen!2scl!4v1727501711581!5m2!1sen!2sc";
 
 export function GettingHere() {
   return (
@@ -20,12 +27,11 @@ export function GettingHere() {
               >
                 Francisco Bilbao 969
               </a>
-              , en el corazón de Villarrica. Su ubicación
-              central es uno de sus principales atractivos, ya que está a pocos
-              pasos de los terminales de transporte y del centro de la ciudad.
-              Esto permite a nuestros huéspedes acceder fácilmente a las
-              diversas atracciones y servicios que Villarrica tiene para
-              ofrecer.
+              , en el corazón de Villarrica. Su ubicación central es uno de sus
+              principales atractivos, ya que está a pocos pasos de los
+              terminales de transporte y del centro de la ciudad. Esto permite a
+              nuestros huéspedes acceder fácilmente a las diversas atracciones y
+              servicios que Villarrica tiene para ofrecer.
             </p>
             <p>
               Estar en el centro de la ciudad significa que estás cerca de
@@ -33,13 +39,25 @@ export function GettingHere() {
               nuestro hostal en el punto de partida ideal para explorar todo lo
               que esta hermosa localidad tiene para ofrecer.
             </p>
+            <div className="flex gap-4 mt-4">
+              <Link href={GOOGLE_MAPS_LINK} target="_blank">
+                <Button> Ver en Google maps </Button>
+              </Link>
+
+              <Link
+                href={getDirectionsTemplate()}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Button variant="outline">Preguntanos</Button>
+              </Link>
+            </div>
           </div>
           <div className="h-[500px] col-span-7 overflow-hidden rounded-lg border border-border-light">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7279.0746688457175!2d-72.23123636024849!3d-39.28514831555788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x96146225645498eb%3A0x4f5d838949e2c739!2sHostal%20Torre%20Suiza!5e0!3m2!1sen!2scl!4v1727501711581!5m2!1sen!2sc"
+              src={GOOGLE_MAPS_EMBED_LINK}
               className="w-full h-96"
               style={{ border: 0, width: "100%", height: "100%" }}
-              // allowfullscreen
               loading="lazy"
             ></iframe>
           </div>

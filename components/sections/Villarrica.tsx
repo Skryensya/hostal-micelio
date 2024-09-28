@@ -1,6 +1,6 @@
 import React from "react";
 import { MapPin } from "lucide-react";
-import { AttractionCard } from "@/components/composed/Attraction";
+import { HoverCard } from "@/components/composed/HoverCard";
 import ATTRACTIONS from "@/db/ATTRACTIONS.json";
 // import { cn } from "@/lib/utils";
 
@@ -24,7 +24,7 @@ export function Villarrica() {
         </div>
         <div className="h-full w-full my-10 grid grid-cols-1 md:grid-cols-5 gap-4">
           {ATTRACTIONS.map((attraction) => (
-            <AttractionCard key={attraction.title} attraction={attraction} />
+            <HoverCard key={attraction.title} {...attraction} />
           ))}
         </div>
       </div>
