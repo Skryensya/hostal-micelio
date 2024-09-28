@@ -9,13 +9,14 @@ import { Events } from "@/components/sections/Events";
 import { Team } from "@/components/sections/Team";
 import { Menu } from "@/components/sections/Menu";
 import { GettingHere } from "@/components/sections/GettingHere";
-import { Test } from "@/components/sections/Test";
+import { CheckAvailability } from "@/components/sections/CheckAvailability";
+// import { Test } from "@/components/sections/Test";
 
 export default function Home() {
   return (
     <main className="">
       <Hero />
-      <Test />
+      <CheckAvailability></CheckAvailability>
       <Villarrica />
       <Amenities />
       {/* <Rooms /> */}

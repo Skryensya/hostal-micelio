@@ -20,15 +20,17 @@
 
 :root {
   --font-poppins: "Poppins", sans-serif;
-  --font-baloo-bhaijaan-2: "Baloo Bhaijaan 2", cursive;
+  --font-baloo-bhaijaan-2: "Baloo Bhaijaan 2";
+  --font-nunito-sans: "Nunito Sans", sans-serif;
 
   .font-poppins,
   .font-heading {
     font-family: var(--font-poppins);
   }
   .font-baloo-bhaijaan-2,
-  .font-body {
-    font-family: var(--font-baloo-bhaijaan-2);
+  .font-body,
+  body {
+    font-family: var(--font-nunito-sans);
   }
 
   --text-light: hsl(319, 57%, 10%);
@@ -45,6 +47,9 @@
 
   --accent-light: hsl(177, 99%, 64%);
   --accent-dark: hsl(177, 99%, 36%);
+
+  --border-light: hsl(22, 59%, 23%);
+  --border-dark: hsl(22, 85%, 67%);
 }
 
 html {
@@ -66,7 +71,7 @@ h5,
 .h5,
 .h6 {
   font-family: var(--font-poppins);
-  font-weight: 200;
+  font-weight: 600;
 }
 
 html {
@@ -115,6 +120,17 @@ small,
   }
 }
 
+.hero_embla {
+  overflow: hidden;
+}
+.hero_embla__container {
+  display: flex;
+}
+.hero_embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
 .embla {
   overflow: hidden;
   width: 100%;
@@ -153,4 +169,12 @@ small,
       #f3d39e 20px
     ),
     repeating-linear-gradient(#e1197c95, #e1197c);
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  line-clamp: 3;
+  overflow: hidden;
 }

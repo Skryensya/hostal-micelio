@@ -1,8 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true, 
+  reactStrictMode: true,
   images: {
-    domains: ["dummyimage.com"],
+    domains: [
+      "dummyimage.com",
+ 
+    ],
   },
 };
 

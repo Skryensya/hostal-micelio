@@ -1,22 +1,31 @@
 import React from "react";
+import { MapPin } from "lucide-react";
+import { AttractionCard } from "@/components/composed/Attraction";
+import ATTRACTIONS from "@/db/ATTRACTIONS.json";
 // import { cn } from "@/lib/utils";
 
 export function Villarrica() {
   // showcase tours and things to do in Villarrica, partners and stuff
   return (
-    <div className="h-96 ">
-      <div className="container mx-auto  py-20">
-        <div className="flex flex-col justify-center items-center">
-          <p className="pb-4 text-2xl">
-            <strong>Conoce Villarrica</strong>
-          </p>
-
+    <div className="">
+      <div className="container mx-auto  py-10">
+        <div className="">
+          <h2 className="mb-6 text-2xl flex items-center gap-2">
+            <MapPin />
+            Conoce Villarrica y Pucón
+          </h2>
           <p className="w-[80ch]">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo
-            enim unde sapiente, repellendus, voluptate earum praesentium
-            officiis adipisci sed voluptatem inventore, modi cupiditate
-            repudiandae nemo laudantium voluptas quas. Id, ab!
+            Explora las diversas actividades que Villarrica tiene para ofrecer,
+            sumergiéndote en una experiencia única en el centro de la ciudad.
+            Disfruta de eventos vibrantes y aprovecha la cercanía a la hermosa
+            playa de Pucón, un destino perfecto para disfrutar de tu estancia en
+            el sur.
           </p>
+        </div>
+        <div className="h-full w-full my-10 grid grid-cols-1 md:grid-cols-5 gap-4">
+          {ATTRACTIONS.map((attraction) => (
+            <AttractionCard key={attraction.title} attraction={attraction} />
+          ))}
         </div>
       </div>
     </div>

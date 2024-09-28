@@ -1,0 +1,31 @@
+[
+  {
+    "name": "Nataly",
+    "subtitle": "Dueña de Hostal Micelio",
+    "description": "Nataly, cercana y carismática, busca nuevas formas de sorprender a sus huéspedes, creando una comunidad que crece de forma orgánica.",
+    "picture1": "/assets/team/allison/PHOTO_00.jpeg",
+    "picture2": "/assets/team/allison/PHOTO_01.jpeg"
+  },
+  {
+    "name": "Marcela",
+    "subtitle": "Encargada de limpieza",
+    "description": "Marcela cuida cada detalle en Hostal Micelio, manteniendo cada habitación y espacio común impecables para el confort de los huéspedes.",
+    "picture1": "/assets/team/allison/PHOTO_00.jpeg",
+    "picture2": "/assets/team/allison/PHOTO_01.jpeg"
+  },
+  {
+    "name": "Jaime",
+    "subtitle": "Apoyo administrativo y creativo",
+    "description": "Jaime resuelve con eficiencia los desafíos administrativos y aporta ideas frescas que enriquecen el ambiente del hostal.",
+    "picture1": "/assets/team/allison/PHOTO_00.jpeg",
+    "picture2": "/assets/team/allison/PHOTO_01.jpeg"
+  },
+
+  {
+    "name": "Allison",
+    "subtitle": "Desarrollador del sitio",
+    "description": "Allison, encargado del desarrollo del sitio web, ha creado una plataforma intuitiva que mejora la experiencia de los huéspedes en línea.",
+    "picture1": "/assets/team/allison/PHOTO_00.jpeg",
+    "picture2": "/assets/team/allison/PHOTO_01.jpeg"
+  }
+]

@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 
 import { Header } from "@/components/sections/Header";
 import { Footer } from "@/components/sections/Footer";
-import { poppins, balooBhaijaan2 } from "./fonts";
+import { poppins, balooBhaijaan2, nunitoSans } from "./fonts";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.variable} ${balooBhaijaan2.variable} font-sans antialiased min-h-screen bg-surface-light text-text-light dark:bg-surface-dark  dark:text-text-dark  `}
+        className={`${poppins.variable} ${balooBhaijaan2.variable} ${nunitoSans.variable} font-sans antialiased min-h-screen bg-surface-light text-text-light dark:bg-surface-dark  dark:text-text-dark  `}
       >
         <ThemeProvider attribute="class" defaultTheme="system">
           <Header />

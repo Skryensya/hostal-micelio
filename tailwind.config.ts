@@ -58,6 +58,10 @@ const config: Config = {
           light: "var(--accent-light)",
           dark: "var(--accent-dark)",
         },
+        border: {
+          light: "var(--border-light)",
+          dark: "var(--border-dark)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
