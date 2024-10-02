@@ -98,7 +98,7 @@ export function Hero() {
 
       {/* Navigation Controls */}
       <button
-        className={`absolute left-4 top-1/2 transform -translate-y-1/2 p-2 bg-black/50 rounded-full`}
+        className={`absolute left-4 top-1/2 transform -translate-y-1/2 p-2 bg-black/50 rounded-standar`}
         onClick={scrollPrev}
         disabled={!canScrollPrev}
       >
@@ -106,7 +106,7 @@ export function Hero() {
       </button>
 
       <button
-        className={`absolute right-4 top-1/2 transform -translate-y-1/2 p-2 bg-black/50 rounded-full`}
+        className={`absolute right-4 top-1/2 transform -translate-y-1/2 p-2 bg-black/50 rounded-standar`}
         onClick={scrollNext}
         disabled={!canScrollNext}
       >
@@ -118,7 +118,7 @@ export function Hero() {
         {slides.map((_, index) => (
           <button
             key={index}
-            className={`w-3 h-3 rounded-full ${
+            className={`w-3 h-3 rounded-standar ${
               index === selectedIndex ? "bg-white" : "bg-gray-400"
             }`}
             onClick={() => emblaApi?.scrollTo(index)}

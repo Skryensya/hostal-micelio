@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --font-poppins: "Poppins", sans-serif;
+  --font-baloo-bhaijaan-2: "Baloo Bhaijaan 2";
+  --font-nunito-sans: "Nunito Sans", sans-serif;
+
+  .rounded-standar {
+    border-radius: 1.125rem;
+  }
+
+  .font-poppins,
+  .font-heading {
+    font-family: var(--font-poppins);
+  }
+  .font-baloo-bhaijaan-2,
+  .font-body,
+  body {
+    font-family: var(--font-nunito-sans);
+    text-underline-offset: 2px;
+  }
+}
+
 /* HOSTAL COLORS HEX  
   #009F98 
   #E1197C 
@@ -19,21 +40,6 @@
 */
 
 :root {
-  --font-poppins: "Poppins", sans-serif;
-  --font-baloo-bhaijaan-2: "Baloo Bhaijaan 2";
-  --font-nunito-sans: "Nunito Sans", sans-serif;
-
-  .font-poppins,
-  .font-heading {
-    font-family: var(--font-poppins);
-  }
-  .font-baloo-bhaijaan-2,
-  .font-body,
-  body {
-    font-family: var(--font-nunito-sans);
-    text-underline-offset: 2px;
-  }
-
   --text-light: hsl(319, 57%, 10%);
   --text-dark: hsl(319, 57%, 90%);
 
@@ -51,6 +57,36 @@
 
   --border-light: hsl(22, 59%, 23%);
   --border-dark: hsl(22, 85%, 67%);
+}
+
+$colors: "primary", "secondary", "surface", "accent";
+$themes: "light", "dark";
+$steps: (
+  "10": 0.1,
+  "20": 0.2,
+  "30": 0.3,
+  "40": 0.4,
+  "50": 0.5,
+  "60": 0.6,
+  "70": 0.7,
+  "80": 0.8,
+  "90": 0.9,
+  "100": 1,
+  "default": 1,
+);
+
+@each $color in $colors {
+  @each $theme in $themes {
+    @each $step-name, $opacity in $steps {
+      :root {
+        --#{$color}-#{$theme}-#{$step-name}: color-mix(
+          in srgb,
+          var(--#{$color}-#{$theme}) calc(#{$opacity} * 100%),
+          transparent
+        );
+      }
+    }
+  }
 }
 
 html {

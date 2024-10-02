@@ -43,24 +43,116 @@ const config: Config = {
           dark: "var(--text-dark)",
         },
         surface: {
-          light: "var(--surface-light)",
-          dark: "var(--surface-dark)",
+          light: {
+            DEFAULT: "var(--surface-light)",
+            10: "var(--surface-light-10)",
+            20: "var(--surface-light-20)",
+            30: "var(--surface-light-30)",
+            40: "var(--surface-light-40)",
+            50: "var(--surface-light-50)",
+            60: "var(--surface-light-60)",
+            70: "var(--surface-light-70)",
+            80: "var(--surface-light-80)",
+            90: "var(--surface-light-90)",
+          },
+          dark: {
+            DEFAULT: "var(--surface-dark)", // 100% opacity
+            10: "var(--surface-dark-10)",
+            20: "var(--surface-dark-20)",
+            30: "var(--surface-dark-30)",
+            40: "var(--surface-dark-40)",
+            50: "var(--surface-dark-50)",
+            60: "var(--surface-dark-60)",
+            70: "var(--surface-dark-70)",
+            80: "var(--surface-dark-80)",
+            90: "var(--surface-dark-90)",
+          },
         },
         primary: {
-          light: "var(--primary-light)",
-          dark: "var(--primary-dark)",
+          light: {
+            DEFAULT: "var(--primary-light)", // 100% opacity
+            10: "var(--primary-light-10)",
+            20: "var(--primary-light-20)",
+            30: "var(--primary-light-30)",
+            40: "var(--primary-light-40)",
+            50: "var(--primary-light-50)",
+            60: "var(--primary-light-60)",
+            70: "var(--primary-light-70)",
+            80: "var(--primary-light-80)",
+            90: "var(--primary-light-90)",
+          },
+          dark: {
+            DEFAULT: "var(--primary-dark)", // 100% opacity
+            10: "var(--primary-dark-10)",
+            20: "var(--primary-dark-20)",
+            30: "var(--primary-dark-30)",
+            40: "var(--primary-dark-40)",
+            50: "var(--primary-dark-50)",
+            60: "var(--primary-dark-60)",
+            70: "var(--primary-dark-70)",
+            80: "var(--primary-dark-80)",
+            90: "var(--primary-dark-90)",
+          },
         },
         secondary: {
-          light: "var(--secondary-light)",
-          dark: "var(--secondary-dark)",
+          light: {
+            DEFAULT: "var(--secondary-light)", // 100% opacity
+            10: "var(--secondary-light-10)",
+            20: "var(--secondary-light-20)",
+            30: "var(--secondary-light-30)",
+            40: "var(--secondary-light-40)",
+            50: "var(--secondary-light-50)",
+            60: "var(--secondary-light-60)",
+            70: "var(--secondary-light-70)",
+            80: "var(--secondary-light-80)",
+            90: "var(--secondary-light-90)",
+          },
+          dark: {
+            DEFAULT: "var(--secondary-dark)", // 100% opacity
+            10: "var(--secondary-dark-10)",
+            20: "var(--secondary-dark-20)",
+            30: "var(--secondary-dark-30)",
+            40: "var(--secondary-dark-40)",
+            50: "var(--secondary-dark-50)",
+            60: "var(--secondary-dark-60)",
+            70: "var(--secondary-dark-70)",
+            80: "var(--secondary-dark-80)",
+            90: "var(--secondary-dark-90)",
+          },
         },
         accent: {
-          light: "var(--accent-light)",
-          dark: "var(--accent-dark)",
+          light: {
+            DEFAULT: "var(--accent-light)", // 100% opacity
+            10: "var(--accent-light-10)",
+            20: "var(--accent-light-20)",
+            30: "var(--accent-light-30)",
+            40: "var(--accent-light-40)",
+            50: "var(--accent-light-50)",
+            60: "var(--accent-light-60)",
+            70: "var(--accent-light-70)",
+            80: "var(--accent-light-80)",
+            90: "var(--accent-light-90)",
+          },
+          dark: {
+            DEFAULT: "var(--accent-dark)", // 100% opacity
+            10: "var(--accent-dark-10)",
+            20: "var(--accent-dark-20)",
+            30: "var(--accent-dark-30)",
+            40: "var(--accent-dark-40)",
+            50: "var(--accent-dark-50)",
+            60: "var(--accent-dark-60)",
+            70: "var(--accent-dark-70)",
+            80: "var(--accent-dark-80)",
+            90: "var(--accent-dark-90)",
+          },
         },
         border: {
-          light: "var(--border-light)",
-          dark: "var(--border-dark)",
+          light: {
+            DEFAULT: "var(--border-light)", // 100% opacity
+          },
+          dark: {
+            DEFAULT: "var(--border-dark)", // 100% opacity
+          },
         },
       },
       borderRadius: {

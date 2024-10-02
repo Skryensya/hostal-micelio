@@ -43,7 +43,6 @@ export function GettingHere() {
               <Link href={GOOGLE_MAPS_LINK} target="_blank">
                 <Button> Ver en Google maps </Button>
               </Link>
-
               <Link
                 href={getDirectionsTemplate()}
                 target="_blank"
@@ -53,7 +52,7 @@ export function GettingHere() {
               </Link>
             </div>
           </div>
-          <div className="h-[500px] col-span-7 overflow-hidden rounded-lg border border-border-light">
+          <div className="h-[500px] col-span-7 overflow-hidden rounded-standar border border-border-light">
             <iframe
               src={GOOGLE_MAPS_EMBED_LINK}
               className="w-full h-96"

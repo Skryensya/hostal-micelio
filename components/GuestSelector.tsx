@@ -40,10 +40,6 @@ export function GuestSelector({ setSelectionFunction }: GuestSelectorProps) {
     setSelectionFunction({ adults, children, pets });
   }, [adults, children, pets, setSelectionFunction]);
 
-  const handleApply = () => {
-    setOpen(false);
-  };
-
   const adultsLabel = adults === 1 ? "adulto" : "adultos";
   const childrenLabel = children === 1 ? "niño" : "niños";
   const petsLabel = pets === 1 ? "mascota" : "mascotas";
@@ -139,9 +135,6 @@ export function GuestSelector({ setSelectionFunction }: GuestSelectorProps) {
               </div>
             </div>
           </div>
-          <Button className="w-full" onClick={handleApply}>
-            Aplicar
-          </Button>
         </div>
       </PopoverContent>
     </Popover>

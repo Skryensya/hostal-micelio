@@ -19,16 +19,16 @@ const TeamMember = ({ person }) => {
           <AvatarImage
             src={isHovered ? person.picture2 : person.picture1}
             alt={person.name}
-            className="object-cover group-hover:opacity-90 group-focus:opacity-90 group-active:opacity-90 transition-opacity duration-300 border border-border-light rounded-full" // Apply hover, focus, active states
+            className="object-cover duration-300 border border-border-light rounded-full" // Apply hover, focus, active states
           />
           <AvatarFallback>{person.name.charAt(0)}</AvatarFallback>
         </Avatar>
       </div>
       <h3 className="text-xl font-semibold mb-1 text-center">{person.name}</h3>
-      <p className="text-sm text-gray-600 mb-2 text-center">
+      <p className="text-base text-gray-600 mb-2 text-center">
         {person.subtitle}
       </p>
-      <div className="max-w-[40ch] text-center text-sm">
+      <div className="max-w-[40ch] text-center text-base">
         {person.description}
       </div>
     </div>

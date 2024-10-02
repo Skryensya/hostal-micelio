@@ -109,7 +109,7 @@ export function ImageCarousel({
           {imgs.map((_, index) => (
             <button
               key={index}
-              className={`w-2 h-2 rounded-full transition-colors duration-200 ${
+              className={`w-2 h-2 rounded-standar transition-colors duration-200 ${
                 index === current ? "bg-gray-600" : "bg-gray-400"
               }`}
               onClick={() => api?.scrollTo(index)}

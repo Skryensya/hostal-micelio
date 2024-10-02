@@ -10,7 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-neutral-900 text-neutral-50 shadow hover:bg-neutral-900/90 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-50/90",
+          "bg-secondary-light text-neutral-50 shadow hover:bg-secondary-light-90 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-50/90",
         destructive:
           "bg-red-500 text-neutral-50 shadow-sm hover:bg-red-500/90 dark:bg-red-900 dark:text-neutral-50 dark:hover:bg-red-900/90",
         outline:
@@ -22,9 +22,9 @@ const buttonVariants = cva(
         link: "text-neutral-900 underline-offset-4 hover:underline dark:text-neutral-50",
       },
       size: {
-        default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-8",
+        default: "h-10 rounded-standar px-6 py-4",
+        sm: "h-8 rounded-standar px-3 text-xs",
+        lg: "h-12 rounded-standar px-8",
         icon: "h-9 w-9",
       },
     },

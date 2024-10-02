@@ -18,7 +18,7 @@ export default function Home() {
     <main className="">
       <Hero />
       <CheckAvailability></CheckAvailability>
-      {/* <Rooms /> */}
+      <Rooms />
       <Villarrica />
       <Amenities />
       {/* <Events /> */}

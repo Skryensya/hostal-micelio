@@ -24,7 +24,7 @@ export function CheckAvailability() {
 
   return (
     <div className="container mx-auto py-2">
-      <div className=" flex justify-between border border-border-light rounded-lg p-4 bg-surface-light dark:bg-surface-dark bg-white ">
+      <div className=" flex justify-between border border-border-light rounded-standar p-4 bg-surface-light dark:bg-surface-dark bg-white ">
         <div className="flex items-center justify-center gap-4 ">
           <span className="font-bold">Fecha:</span>
           <DateRangePicker setDateRange={setDateRange} />
