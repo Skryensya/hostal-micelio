@@ -114,7 +114,7 @@ export function Hero() {
       </button>
 
       {/* Dots Navigation */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2">
         {slides.map((_, index) => (
           <button
             key={index}
@@ -138,7 +138,7 @@ type SlideProps = {
 const Slide = ({ children, backgroundImage, focusPoint }: SlideProps) => {
   return (
     <div
-      className="relative h-[500px] overflow-hidden"
+      className="relative h-[700px] max-h-[80dvh] min-h-[500px] overflow-hidden"
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",

@@ -10,13 +10,14 @@ import { Team } from "@/components/sections/Team";
 // import { Menu } from "@/components/sections/Menu";
 import { GettingHere } from "@/components/sections/GettingHere";
 import { CheckAvailability } from "@/components/sections/CheckAvailability";
-import { Test } from "@/components/sections/Test";
 // import { Test } from "@/components/sections/Test";
+import { SectionDividerWavy } from "@/components/composed/SectionDividerWavy";
 
 export default function Home() {
   return (
     <main className="">
       <Hero />
+      <SectionDividerWavy></SectionDividerWavy>
       <CheckAvailability></CheckAvailability>
       <Rooms />
       <Villarrica />
@@ -25,7 +26,6 @@ export default function Home() {
       <Team />
       {/* <Menu /> */}
       <GettingHere />
-      <Test />
     </main>
   );
 }

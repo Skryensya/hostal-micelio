@@ -29,7 +29,7 @@ export default function RoomCard({
       </div>
       <div className="py-4 px-2">
         <h2 className="font-bold">{name}</h2>
-        <small> Piso #{floor} </small>
+
         <p>{description}</p>
       </div>
     </Card>
