@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ModeToggle } from "@/components/ModeToggle";
 import { Flower } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { WavyDivider } from "../composed/WavyDivider";
+// import { WavyDivider } from "../composed/WavyDivider";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react"; // Icon for burger menu
 
