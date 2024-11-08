@@ -27,6 +27,7 @@
     "embla-carousel-auto-scroll": "^8.2.1",
     "embla-carousel-react": "^8.3.0",
     "embla-carousel-wheel-gestures": "^8.0.1",
+    "framer-motion": "^11.11.11",
     "lucide-react": "^0.438.0",
     "next": "14.2.8",
     "next-themes": "^0.3.0",

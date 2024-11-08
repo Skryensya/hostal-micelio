@@ -11,7 +11,6 @@ export function CheckAvailability() {
   const [selectionFunction, setSelectionFunction] = useState({
     adults: 1,
     children: 0,
-    pets: 0,
   });
 
   const handleWhatsAppClick = () => {
@@ -23,16 +22,26 @@ export function CheckAvailability() {
   };
 
   return (
-    <div className="container mx-auto py-2">
-      <div className=" flex justify-between border border-border-light rounded-standar p-4 bg-surface-light dark:bg-surface-dark bg-white ">
-        <div className="flex items-center justify-center gap-4 ">
-          <span className="font-bold">Fecha:</span>
-          <DateRangePicker setDateRange={setDateRange} />
-          <span className="font-bold">Huéspedes:</span>
-          <GuestSelector setSelectionFunction={setSelectionFunction} />
+    <div className="container mx-auto py-8">
+      <div className=" flex flex-col gap-4 md:flex-row justify-between rounded-[40px] md:rounded-full py-6 px-6 md:px-12 shadow-xl shadow-primary-light-10 bg-primary-light-30">
+        <div className="flex flex-col md:flex-row items-start md:items-center md:justify-center gap-4 ">
+          <div className="w-full flex flex-col md:flex-row   items-start md:items-center md:justify-center gap-1 md:gap-4">
+            <div className="font-bold flex">
+              Fecha
+              <div className="block md:hidden pl-[0.3rem]"> de estadía</div>
+            </div>
+            <DateRangePicker setDateRange={setDateRange} />
+          </div>
+          <div className="w-full flex flex-col md:flex-row  items-start md:items-center md:justify-center  gap-1 md:gap-4">
+            <span className="font-bold">Huéspedes</span>
+            <GuestSelector setSelectionFunction={setSelectionFunction} />
+          </div>
         </div>
         <div>
-          <Button onClick={handleWhatsAppClick}>
+          <Button
+            onClick={handleWhatsAppClick}
+            className="bg-primary-light w-full md:w-fit"
+          >
             Consultar disponibilidad
           </Button>
         </div>

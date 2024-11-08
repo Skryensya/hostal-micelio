@@ -1,7 +1,6 @@
 import React from "react";
 import { MapPinHouse } from "lucide-react";
 import { Button } from "../ui/button";
-// import { cn } from "@/lib/utils";
 import { getDirectionsTemplate } from "@/lib/whatsapp_templates/directions";
 import Link from "next/link";
 
@@ -11,10 +10,10 @@ const GOOGLE_MAPS_EMBED_LINK =
 
 export function GettingHere() {
   return (
-    <div className="min-h-96">
-      <div className="container mx-auto ">
-        <div className="grid grid-cols-12 gap-12">
-          <div className="col-span-5">
+    <div className="min-h-96 px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto">
+        <div className="grid grid-cols-12 gap-4 md:gap-12">
+          <div className="col-span-12 md:col-span-5">
             <h2 className="flex items-center gap-2 pb-6">
               <MapPinHouse /> Como llegar
             </h2>
@@ -39,9 +38,9 @@ export function GettingHere() {
               nuestro hostal en el punto de partida ideal para explorar todo lo
               que esta hermosa localidad tiene para ofrecer.
             </p>
-            <div className="flex gap-4 mt-4">
+            <div className="flex flex-col md:flex-row items-center gap-4 mt-4">
               <Link href={GOOGLE_MAPS_LINK} target="_blank">
-                <Button> Ver en Google maps </Button>
+                <Button>Ver en Google maps</Button>
               </Link>
               <Link
                 href={getDirectionsTemplate()}
@@ -52,11 +51,11 @@ export function GettingHere() {
               </Link>
             </div>
           </div>
-          <div className="h-[500px] col-span-7 overflow-hidden rounded-standar border border-border-light">
+          <div className="col-span-12 md:col-span-7 overflow-hidden rounded-standar border border-border-light">
             <iframe
               src={GOOGLE_MAPS_EMBED_LINK}
-              className="w-full h-96"
-              style={{ border: 0, width: "100%", height: "100%" }}
+              className="w-full h-[300px] md:h-[500px]"
+              style={{ border: 0 }}
               loading="lazy"
             ></iframe>
           </div>

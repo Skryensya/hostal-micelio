@@ -11,13 +11,19 @@ import { Team } from "@/components/sections/Team";
 import { GettingHere } from "@/components/sections/GettingHere";
 import { CheckAvailability } from "@/components/sections/CheckAvailability";
 // import { Test } from "@/components/sections/Test";
-import { SectionDividerWavy } from "@/components/composed/SectionDividerWavy";
+import { WavyDivider } from "@/components/composed/WavyDivider";
 
 export default function Home() {
   return (
     <main className="">
       <Hero />
-      <SectionDividerWavy></SectionDividerWavy>
+      <WavyDivider
+        backgroundClassNames={[
+          "bg-white/50",
+          "bg-surface-light",
+          "bg-surface-light",
+        ]}
+      />
       <CheckAvailability></CheckAvailability>
       <Rooms />
       <Villarrica />

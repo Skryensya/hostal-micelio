@@ -46,6 +46,9 @@
   --surface-light: hsl(27, 87%, 94%);
   --surface-dark: hsl(27, 87%, 6%);
 
+  --surface-2-light: hsl(27, 56%, 45%);
+  --surface-2-dark: hsl(27, 87%, 6%);
+
   --primary-light: hsl(318, 61%, 71%);
   --primary-dark: hsl(318, 61%, 29%);
 
@@ -59,7 +62,7 @@
   --border-dark: hsl(22, 85%, 67%);
 }
 
-$colors: "primary", "secondary", "surface", "accent";
+$colors: "primary", "secondary", "surface", "surface-2", "accent";
 $themes: "light", "dark";
 $steps: (
   "10": 0.1,
@@ -217,10 +220,17 @@ small,
 }
 
 .section-wave {
-  --mask: radial-gradient(13.79px at 50% 19.5px, #000 99%, #0000 101%)
-      calc(50% - 20px) 0/40px 100%,
-    radial-gradient(13.79px at 50% -9.5px, #0000 99%, #000 101%) 50% 10px/40px
-      100% repeat-x;
-  -webkit-mask: var(--mask);
-  mask: var(--mask);
+  --mask:
+  radial-gradient(13.45px at 50% 19px,#000 99%,#0000 101%) calc(50% - 20px) 0/40px 100%,
+  radial-gradient(13.45px at 50% -9px,#0000 99%,#000 101%) 50% 10px/40px 100% repeat-x;
+-webkit-mask: var(--mask);
+        mask: var(--mask);
 }
+.section-wave--bottom {
+  --mask:
+  radial-gradient(13.45px at 50% calc(100% - 19px),#000 99%,#0000 101%) calc(50% - 20px) 0/40px 100%,
+  radial-gradient(13.45px at 50% calc(100% + 9px),#0000 99%,#000 101%) 50% calc(100% - 10px)/40px 100% repeat-x;
+-webkit-mask: var(--mask);
+        mask: var(--mask);
+}
+

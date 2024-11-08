@@ -1,27 +1,26 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { MinusIcon, PlusIcon, UserRound, Baby, Dog } from "lucide-react"; // Import icons
+import { MinusIcon, PlusIcon, UserRound, Baby } from "lucide-react"; // Import icons
 
 interface GuestSelectorProps {
   setSelectionFunction: (selection: {
     adults: number;
     children: number;
-    pets: number;
   }) => void;
 }
 
 export function GuestSelector({ setSelectionFunction }: GuestSelectorProps) {
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
-  const [pets, setPets] = useState(0); // Change pets to a number
   const [open, setOpen] = useState(false);
+  const childrenRef = useRef<HTMLInputElement>(null);
 
   const incrementCount = (
     setter: React.Dispatch<React.SetStateAction<number>>
@@ -35,19 +34,42 @@ export function GuestSelector({ setSelectionFunction }: GuestSelectorProps) {
     setter((prev) => Math.max(0, prev - 1));
   };
 
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    setter: React.Dispatch<React.SetStateAction<number>>
+  ) => {
+    const value = event.target.value;
+    if (/^\d*$/.test(value)) {
+      setter(parseInt(value === "" ? "0" : value, 10));
+    }
+  };
+
+  const handleKeyPress = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+    nextInput?: React.RefObject<HTMLInputElement>
+  ) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      if (nextInput?.current) {
+        nextInput.current.focus();
+      } else {
+        setOpen(false); // Close the popover on the last input
+      }
+    }
+  };
+
   // Update selection function whenever any state changes
   useEffect(() => {
-    setSelectionFunction({ adults, children, pets });
-  }, [adults, children, pets, setSelectionFunction]);
+    setSelectionFunction({ adults, children });
+  }, [adults, children, setSelectionFunction]);
 
   const adultsLabel = adults === 1 ? "adulto" : "adultos";
   const childrenLabel = children === 1 ? "niño" : "niños";
-  const petsLabel = pets === 1 ? "mascota" : "mascotas";
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="min-w-[280px]">
+        <Button variant="outline" className="min-w-[200px] w-full md:w-fit">
           <span>
             {adults} {adultsLabel}
           </span>
@@ -55,15 +77,11 @@ export function GuestSelector({ setSelectionFunction }: GuestSelectorProps) {
           <span>
             {children} {childrenLabel}
           </span>
-          <span className="px-2">|</span>
-          <span>
-            {pets} {petsLabel}
-          </span>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80">
+      <PopoverContent className="min-w-[200px] rounded-2xl">
         <div className="space-y-4">
-          <div className="font-semibold text-lg h3">Huéspedes</div>
+ 
           <div className="space-y-2">
             <div className="flex justify-between items-center">
               <span className="flex items-center">
@@ -78,7 +96,13 @@ export function GuestSelector({ setSelectionFunction }: GuestSelectorProps) {
                 >
                   <MinusIcon className="h-4 w-4" />
                 </Button>
-                <span className="w-8 text-center">{adults}</span>
+                <input
+                  type="text"
+                  value={adults}
+                  onChange={(e) => handleInputChange(e, setAdults)}
+                  onKeyDown={(e) => handleKeyPress(e, childrenRef)}
+                  style={{ border: "none", textAlign: "center", width: "40px" }}
+                />
                 <Button
                   variant="outline"
                   size="icon"
@@ -101,34 +125,18 @@ export function GuestSelector({ setSelectionFunction }: GuestSelectorProps) {
                 >
                   <MinusIcon className="h-4 w-4" />
                 </Button>
-                <span className="w-8 text-center">{children}</span>
+                <input
+                  ref={childrenRef}
+                  type="text"
+                  value={children}
+                  onChange={(e) => handleInputChange(e, setChildren)}
+                  onKeyDown={(e) => handleKeyPress(e)}
+                  style={{ border: "none", textAlign: "center", width: "40px" }}
+                />
                 <Button
                   variant="outline"
                   size="icon"
                   onClick={() => incrementCount(setChildren)}
-                >
-                  <PlusIcon className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="flex items-center">
-                <Dog className="mr-2 h-4 w-4" /> Mascotas
-              </span>
-              <div className="flex items-center space-x-2">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => decrementCount(setPets)}
-                  disabled={pets === 0}
-                >
-                  <MinusIcon className="h-4 w-4" />
-                </Button>
-                <span className="w-8 text-center">{pets}</span>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => incrementCount(setPets)}
                 >
                   <PlusIcon className="h-4 w-4" />
                 </Button>

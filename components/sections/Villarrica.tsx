@@ -14,7 +14,7 @@ export function Villarrica() {
             <MapPin />
             Conoce Villarrica y Pucón
           </h2>
-          <p className="w-[80ch]">
+          <p className="w-max-[80ch]">
             Explora las diversas actividades que Villarrica tiene para ofrecer,
             sumergiéndote en una experiencia única en el centro de la ciudad.
             Disfruta de eventos vibrantes y aprovecha la cercanía a la hermosa

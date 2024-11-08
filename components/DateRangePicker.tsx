@@ -52,8 +52,8 @@ export function DateRangePicker({
             id="date-from"
             variant={"outline"}
             className={cn(
-              "w-fit justify-start text-left font-normal",
-              !date?.from && "text-neutral-500 dark:text-neutral-400"
+              "w-full md:w-fit justify-start text-left font-normal",
+              !date?.from && "text-neutral-500 dark:text-neutral-400 "
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />

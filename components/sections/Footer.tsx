@@ -2,12 +2,12 @@ import React from "react";
 import Image from "next/image";
 import { Facebook, Instagram, Phone, Mail, MapPin } from "lucide-react"; // Import Lucide icons
 import CONTACT_INFO from "@/db/CONTACT_INFO.json";
-import { SectionDividerWavy } from "../composed/SectionDividerWavy";
+import { WavyDivider } from "../composed/WavyDivider";
 
 const Footer = () => {
   return (
     <div className="mt-20">
-      <SectionDividerWavy
+      <WavyDivider
         backgroundClassNames={[
           "bg-surface-light",
           "bg-border-light",
@@ -17,16 +17,23 @@ const Footer = () => {
       <footer className="bg-surface-dark  text-white py-8">
         <div className="container mx-auto px-4">
           {/* Level 1: Logo and Links */}
-          <div className="flex justify-between items-center mb-6">
-            <div className="flex items-center">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+            <div className="flex flex-col md:flex-row items-center space-y-4">
               <Image
                 src="/assets/LOGO_COLOR.png"
                 alt="Hostal Micelio Logo"
-                className="h-[100px] mr-4"
+                className="h-[100px] md:mr-4 hidden md:block"
                 width={100} // Add width for the Image component
                 height={100} // Add height for the Image component
               />
-              <nav className="flex space-x-6">
+              <Image
+                src="/assets/LOGO_COLOR.png"
+                alt="Hostal Micelio Logo"
+                className="h-[150px]  md:mr-4 block md:hidden"
+                width={150} // Add width for the Image component
+                height={150} // Add height for the Image component
+              />
+              <nav className="flex  flex-row flex-wrap  items-center text-balance gap-4 ">
                 <a href="#about" className="hover:text-gray-400">
                   Acerca de
                 </a>
@@ -41,7 +48,7 @@ const Footer = () => {
                 </a>
               </nav>
             </div>
-            <div className="text-right  flex flex-col items-end space-y-2">
+            <div className="text-right  flex flex-col items-end space-y-2 mt-8 md:mt-0">
               {/* CONTACT_INFO */}
               <a
                 href={`tel:${CONTACT_INFO.phone}`}
@@ -72,12 +79,12 @@ const Footer = () => {
           </div>
 
           {/* Level 2: Socials and Copyright */}
-          <div className="flex justify-between items-center border-t border-gray-700 pt-4">
-            <p className="text-sm">
+          <div className="flex flex-col md:flex-row justify-between items-center border-t border-gray-700 pt-4  gap-4 md:pt-4">
+            <p className="text-sm order-1">
               &copy; 2024 Hostal Micelio. Todos los derechos reservados.
             </p>
-            <div className="flex space-x-4">
-              <span>Siguenos en</span>
+            <div className="flex gap-4 md:order-2">
+              <span>Siguenos</span>
               <a
                 href="https://facebook.com"
                 className="hover:text-gray-400"
