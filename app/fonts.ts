@@ -19,4 +19,5 @@ export const nunitoSans = Nunito_Sans({
   display: "swap",
   variable: "--font-nunito-sans",
   weight: ["400", "500", "600", "700", "800"],
+  adjustFontFallback: false, // Disable automatic fallback adjustment
 });

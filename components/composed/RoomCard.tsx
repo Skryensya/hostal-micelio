@@ -9,12 +9,12 @@ export default function RoomCard({
   slug,
   name,
   description,
-  floor,
+  // floor,
 }: {
   slug: string;
   name: string;
   description: string;
-  floor: number;
+  // floor: number;
 }) {
   return (
     <Card className="flex flex-col h-full ">
