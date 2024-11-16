@@ -4,9 +4,17 @@ import Link from "next/link";
 import { ModeToggle } from "@/components/ModeToggle";
 import { Flower } from "lucide-react";
 import { cn } from "@/lib/utils";
-// import { WavyDivider } from "../composed/WavyDivider";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react"; // Icon for burger menu
+
+// Centralized configuration for all links
+const NAV_LINKS = [
+  { href: "/", label: "Inicio" },
+  { href: "/hospedaje", label: "Hospedaje" },
+  { href: "/eventos", label: "Eventos" },
+  { href: "/larga-estadia", label: "Larga estadía" },
+  { href: "/about", label: "Sobre nosotros" },
+];
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -59,52 +67,35 @@ export function Header() {
               </button>
             </div>
 
-            {/* Regular menu for desktop */}
+            {/* Menu visible in desktop */}
             <nav className="hidden lg:flex items-center gap-4">
-              <Link href={"/habitaciones"}>Habitaciones</Link>
-              <Link href={"#about"}>Nosotros</Link>
-              <Link href={"#contact"}>Contactanos</Link>
-              <Link href={"#"}>Consulta Precios</Link>
+              {NAV_LINKS.map((link) => (
+                <Link key={link.href} href={link.href}>
+                  {link.label}
+                </Link>
+              ))}
             </nav>
 
             <ModeToggle />
           </div>
         </div>
 
+        {/* Mobile menu with Framer Motion */}
         <motion.nav
           initial="closed"
           animate={isMenuOpen ? "open" : "closed"}
           variants={menuVariants}
-          className={
-            "lg:hidden  bg-surface-light overflow-hidden top-full z-40"
-          }
+          className={"lg:hidden bg-surface-light overflow-hidden top-full z-40"}
         >
           <div className="p-4 w-full flex flex-col items-end gap-4">
-            <motion.div variants={linkVariants}>
-              <Link href={"/habitaciones"}>Habitaciones</Link>
-            </motion.div>
-            <motion.div variants={linkVariants}>
-              <Link href={"#about"}>Nosotros</Link>
-            </motion.div>
-            <motion.div variants={linkVariants}>
-              <Link href={"#contact"}>Contactanos</Link>
-            </motion.div>
-            <motion.div variants={linkVariants}>
-              <Link href={"#"}>Consulta Precios</Link>
-            </motion.div>
+            {NAV_LINKS.map((link) => (
+              <motion.div key={link.href} variants={linkVariants}>
+                <Link href={link.href}>{link.label}</Link>
+              </motion.div>
+            ))}
           </div>
         </motion.nav>
       </div>
-
-      {/* Mobile menu with animation */}
-      {/* <WavyDivider
-        direction="bottom"
-        backgroundClassNames={[
-          "bg-surface-light",
-          "bg-white/50",
-          "bg-transparent",
-        ]}
-      /> */}
     </header>
   );
 }

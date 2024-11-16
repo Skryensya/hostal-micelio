@@ -5,7 +5,7 @@ import { InnerHero } from "@/components/sections/InnerHero";
 export default function RoomsPage() {
   return (
     <div>
-      <InnerHero title="Encuentra tu habitación ideal"></InnerHero>
+      <InnerHero title="¡Conoce nuestros eventos!"></InnerHero>
       <div className="container text-2xl text-rose-400 font-bold italic">
         [AUN EN DESARROLLO]
       </div>

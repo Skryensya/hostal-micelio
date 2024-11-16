@@ -9,6 +9,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        // "room-gradient": "linear-gradient(19deg, var(--primary-light) 0%, var( --text-dark) 100%)",
+        "room-gradient": "linear-gradient(160deg, var(--primary-light-60) 0%, var(--text-dark) 100%)",
+      },
       container: {
         center: true, // Centers the container (Bootstrap's containers are centered)
         padding: "1rem", // Add padding (similar to Bootstrap's container padding)
