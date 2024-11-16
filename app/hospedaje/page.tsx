@@ -1,4 +1,5 @@
-import { Test } from "@/components/sections/Test";
+import { Rooms } from "@/components/sections/Rooms";
+import { Amenities } from "@/components/sections/Amenities";
 export default function RoomsPage() {
   return (
     <div>
@@ -14,7 +15,8 @@ export default function RoomsPage() {
           <li>Compartidas</li>
         </ul>
       </section>
-      <Test />
+      <Amenities />
+      <Rooms />
     </div>
   );
 }

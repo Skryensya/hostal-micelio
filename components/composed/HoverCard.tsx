@@ -21,7 +21,7 @@ export const HoverCard: React.FC<HoverCardProps> = ({
   return (
     <Link
       href={link}
-      className="md:aspect-square aspect-[2/1.2] w-full relative overflow-hidden group cursor-pointer shadow-sm rounded-lg"
+      className="md:aspect-[2/1.6] aspect-[2/1.2] w-full relative overflow-hidden group cursor-pointer shadow-sm rounded-xl"
     >
       <div className="relative h-full">
         <Image

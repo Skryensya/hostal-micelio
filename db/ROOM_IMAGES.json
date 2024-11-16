@@ -1,62 +1,188 @@
 {
-"laguna-san-rafael": [
-{"src": "/assets/rooms/laguna-san-rafael/PHOTO_00.jpg", "alt": "View of laguna san rafael Room"}
-],
-"parque-nacional-conguillio": [
-{"src": "/assets/rooms/parque-nacional-conguillio/PHOTO_00.jpg", "alt": "View of parque nacional conguillio Room"}
-],
-"parque-nacional-huerquehue": [
-{"src": "/assets/rooms/parque-nacional-huerquehue/PHOTO_00.jpg", "alt": "View of parque nacional huerquehue Room"},
-{"src": "/assets/rooms/parque-nacional-huerquehue/PHOTO_01.jpg", "alt": "View of parque nacional huerquehue Room"},
-{"src": "/assets/rooms/parque-nacional-huerquehue/PHOTO_02.jpg", "alt": "View of parque nacional huerquehue Room"},
-{"src": "/assets/rooms/parque-nacional-huerquehue/PHOTO_03.jpg", "alt": "View of parque nacional huerquehue Room"},
-{"src": "/assets/rooms/parque-nacional-huerquehue/PHOTO_04.jpg", "alt": "View of parque nacional huerquehue Room"},
-{"src": "/assets/rooms/parque-nacional-huerquehue/PHOTO_05.jpg", "alt": "View of parque nacional huerquehue Room"}
-],
-"parque-nacional-nahuelbuta": [
-{"src": "/assets/rooms/parque-nacional-nahuelbuta/PHOTO_00.jpg", "alt": "View of parque nacional nahuelbuta Room"}
-],
-"parque-nacional-pumalin": [
-{"src": "/assets/rooms/parque-nacional-pumalin/PHOTO_00.jpg", "alt": "View of parque nacional pumalin Room"},
-{"src": "/assets/rooms/parque-nacional-pumalin/PHOTO_01.jpg", "alt": "View of parque nacional pumalin Room"}
-],
-"parque-nacional-queulat": [
-{"src": "/assets/rooms/parque-nacional-queulat/PHOTO_00.jpg", "alt": "View of parque nacional queulat Room"},
-{"src": "/assets/rooms/parque-nacional-queulat/PHOTO_01.jpg", "alt": "View of parque nacional queulat Room"},
-{"src": "/assets/rooms/parque-nacional-queulat/PHOTO_02.jpg", "alt": "View of parque nacional queulat Room"},
-{"src": "/assets/rooms/parque-nacional-queulat/PHOTO_03.jpg", "alt": "View of parque nacional queulat Room"},
-{"src": "/assets/rooms/parque-nacional-queulat/PHOTO_04.jpg", "alt": "View of parque nacional queulat Room"}
-],
-"parque-nacional-rapa-nui": [
-{"src": "/assets/rooms/parque-nacional-rapa-nui/PHOTO_00.jpg", "alt": "View of parque nacional rapa nui Room"},
-{"src": "/assets/rooms/parque-nacional-rapa-nui/PHOTO_01.jpg", "alt": "View of parque nacional rapa nui Room"},
-{"src": "/assets/rooms/parque-nacional-rapa-nui/PHOTO_02.jpg", "alt": "View of parque nacional rapa nui Room"},
-{"src": "/assets/rooms/parque-nacional-rapa-nui/PHOTO_03.jpg", "alt": "View of parque nacional rapa nui Room"},
-{"src": "/assets/rooms/parque-nacional-rapa-nui/PHOTO_04.jpg", "alt": "View of parque nacional rapa nui Room"},
-{"src": "/assets/rooms/parque-nacional-rapa-nui/PHOTO_05.jpg", "alt": "View of parque nacional rapa nui Room"},
-{"src": "/assets/rooms/parque-nacional-rapa-nui/PHOTO_06.jpg", "alt": "View of parque nacional rapa nui Room"}
-],
-"parque-nacional-villarrica": [
-{"src": "/assets/rooms/parque-nacional-villarrica/PHOTO_00.jpg", "alt": "View of parque nacional villarrica Room"},
-{"src": "/assets/rooms/parque-nacional-villarrica/PHOTO_01.jpg", "alt": "View of parque nacional villarrica Room"},
-{"src": "/assets/rooms/parque-nacional-villarrica/PHOTO_02.jpg", "alt": "View of parque nacional villarrica Room"},
-{"src": "/assets/rooms/parque-nacional-villarrica/PHOTO_03.jpg", "alt": "View of parque nacional villarrica Room"},
-{"src": "/assets/rooms/parque-nacional-villarrica/PHOTO_04.jpg", "alt": "View of parque nacional villarrica Room"},
-{"src": "/assets/rooms/parque-nacional-villarrica/PHOTO_05.jpg", "alt": "View of parque nacional villarrica Room"},
-{"src": "/assets/rooms/parque-nacional-villarrica/PHOTO_06.jpg", "alt": "View of parque nacional villarrica Room"}
-],
-"torres-del-paine": [
-{"src": "/assets/rooms/torres-del-paine/PHOTO_00.jpg", "alt": "View of torres del paine Room"},
-{"src": "/assets/rooms/torres-del-paine/PHOTO_01.jpg", "alt": "View of torres del paine Room"},
-{"src": "/assets/rooms/torres-del-paine/PHOTO_02.jpg", "alt": "View of torres del paine Room"},
-{"src": "/assets/rooms/torres-del-paine/PHOTO_03.jpg", "alt": "View of torres del paine Room"},
-{"src": "/assets/rooms/torres-del-paine/PHOTO_04.jpg", "alt": "View of torres del paine Room"},
-{"src": "/assets/rooms/torres-del-paine/PHOTO_05.jpg", "alt": "View of torres del paine Room"},
-{"src": "/assets/rooms/torres-del-paine/PHOTO_06.jpg", "alt": "View of torres del paine Room"},
-{"src": "/assets/rooms/torres-del-paine/PHOTO_07.jpg", "alt": "View of torres del paine Room"},
-{"src": "/assets/rooms/torres-del-paine/PHOTO_08.jpg", "alt": "View of torres del paine Room"},
-{"src": "/assets/rooms/torres-del-paine/PHOTO_09.jpg", "alt": "View of torres del paine Room"},
-{"src": "/assets/rooms/torres-del-paine/PHOTO_10.jpg", "alt": "View of torres del paine Room"},
-{"src": "/assets/rooms/torres-del-paine/PHOTO_11.jpg", "alt": "View of torres del paine Room"}
-]
+  "laguna-san-rafael": [
+    {
+      "src": "/assets/rooms/laguna-san-rafael/PHOTO_00.jpg",
+      "alt": "View of laguna san rafael Room"
+    }
+  ],
+  "parque-nacional-conguillio": [
+    {
+      "src": "/assets/rooms/parque-nacional-conguillio/PHOTO_00.jpg",
+      "alt": "View of parque nacional conguillio Room"
+    }
+  ],
+  "parque-nacional-huerquehue": [
+    {
+      "src": "/assets/rooms/parque-nacional-huerquehue/PHOTO_00.jpg",
+      "alt": "View of parque nacional huerquehue Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-huerquehue/PHOTO_01.jpg",
+      "alt": "View of parque nacional huerquehue Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-huerquehue/PHOTO_02.jpg",
+      "alt": "View of parque nacional huerquehue Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-huerquehue/PHOTO_03.jpg",
+      "alt": "View of parque nacional huerquehue Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-huerquehue/PHOTO_04.jpg",
+      "alt": "View of parque nacional huerquehue Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-huerquehue/PHOTO_05.jpg",
+      "alt": "View of parque nacional huerquehue Room"
+    }
+  ],
+  "parque-nacional-nahuelbuta": [
+    {
+      "src": "/assets/rooms/parque-nacional-nahuelbuta/PHOTO_00.jpg",
+      "alt": "View of parque nacional nahuelbuta Room"
+    }
+  ],
+  "parque-nacional-pumalin": [
+    {
+      "src": "/assets/rooms/parque-nacional-pumalin/PHOTO_00.jpg",
+      "alt": "View of parque nacional pumalin Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-pumalin/PHOTO_01.jpg",
+      "alt": "View of parque nacional pumalin Room"
+    }
+  ],
+  "parque-nacional-queulat": [
+    {
+      "src": "/assets/rooms/parque-nacional-queulat/PHOTO_00.jpg",
+      "alt": "View of parque nacional queulat Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-queulat/PHOTO_01.jpg",
+      "alt": "View of parque nacional queulat Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-queulat/PHOTO_02.jpg",
+      "alt": "View of parque nacional queulat Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-queulat/PHOTO_03.jpg",
+      "alt": "View of parque nacional queulat Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-queulat/PHOTO_04.jpg",
+      "alt": "View of parque nacional queulat Room"
+    }
+  ],
+  "parque-nacional-rapa-nui": [
+    {
+      "src": "/assets/rooms/parque-nacional-rapa-nui/PHOTO_00.jpg",
+      "alt": "View of parque nacional rapa nui Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-rapa-nui/PHOTO_01.jpg",
+      "alt": "View of parque nacional rapa nui Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-rapa-nui/PHOTO_02.jpg",
+      "alt": "View of parque nacional rapa nui Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-rapa-nui/PHOTO_03.jpg",
+      "alt": "View of parque nacional rapa nui Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-rapa-nui/PHOTO_04.jpg",
+      "alt": "View of parque nacional rapa nui Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-rapa-nui/PHOTO_05.jpg",
+      "alt": "View of parque nacional rapa nui Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-rapa-nui/PHOTO_06.jpg",
+      "alt": "View of parque nacional rapa nui Room"
+    }
+  ],
+  "parque-nacional-villarrica": [
+    {
+      "src": "/assets/rooms/parque-nacional-villarrica/PHOTO_00.jpg",
+      "alt": "View of parque nacional villarrica Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-villarrica/PHOTO_01.jpg",
+      "alt": "View of parque nacional villarrica Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-villarrica/PHOTO_02.jpg",
+      "alt": "View of parque nacional villarrica Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-villarrica/PHOTO_03.jpg",
+      "alt": "View of parque nacional villarrica Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-villarrica/PHOTO_04.jpg",
+      "alt": "View of parque nacional villarrica Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-villarrica/PHOTO_05.jpg",
+      "alt": "View of parque nacional villarrica Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-villarrica/PHOTO_06.jpg",
+      "alt": "View of parque nacional villarrica Room"
+    }
+  ],
+  "torres-del-paine": [
+    {
+      "src": "/assets/rooms/torres-del-paine/PHOTO_00.jpg",
+      "alt": "View of torres del paine Room"
+    },
+    {
+      "src": "/assets/rooms/torres-del-paine/PHOTO_01.jpg",
+      "alt": "View of torres del paine Room"
+    },
+    {
+      "src": "/assets/rooms/torres-del-paine/PHOTO_02.jpg",
+      "alt": "View of torres del paine Room"
+    },
+    {
+      "src": "/assets/rooms/torres-del-paine/PHOTO_03.jpg",
+      "alt": "View of torres del paine Room"
+    },
+    {
+      "src": "/assets/rooms/torres-del-paine/PHOTO_04.jpg",
+      "alt": "View of torres del paine Room"
+    },
+    {
+      "src": "/assets/rooms/torres-del-paine/PHOTO_05.jpg",
+      "alt": "View of torres del paine Room"
+    },
+    {
+      "src": "/assets/rooms/torres-del-paine/PHOTO_06.jpg",
+      "alt": "View of torres del paine Room"
+    },
+    {
+      "src": "/assets/rooms/torres-del-paine/PHOTO_07.jpg",
+      "alt": "View of torres del paine Room"
+    },
+    {
+      "src": "/assets/rooms/torres-del-paine/PHOTO_08.jpg",
+      "alt": "View of torres del paine Room"
+    },
+    {
+      "src": "/assets/rooms/torres-del-paine/PHOTO_09.jpg",
+      "alt": "View of torres del paine Room"
+    },
+    {
+      "src": "/assets/rooms/torres-del-paine/PHOTO_10.jpg",
+      "alt": "View of torres del paine Room"
+    },
+    {
+      "src": "/assets/rooms/torres-del-paine/PHOTO_11.jpg",
+      "alt": "View of torres del paine Room"
+    }
+  ]
 }
