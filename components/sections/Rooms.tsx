@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ROOMS from "@/db/ROOMS.json";
 import RoomCard from "../composed/RoomCard";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function Rooms() {
   const [filterByToilet, setFilterByToilet] = useState(false);
@@ -25,12 +26,20 @@ export function Rooms() {
           <span>Only rooms with private toilet</span>
         </label>
       </div>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {filteredRooms.map((room) => (
-          <div key={room.slug} className="">
-            <RoomCard {...room} />
-          </div>
-        ))}
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <AnimatePresence>
+          {filteredRooms.map((room) => (
+            <motion.div
+              key={room.slug}
+              layout
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <RoomCard {...room} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
     </div>
   );

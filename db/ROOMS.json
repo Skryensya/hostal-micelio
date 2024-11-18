@@ -51,7 +51,7 @@
     "floor": 2,
     "beds": ["B02"],
     "capacity": 1,
-    "hasPrivateToilet": false
+    "hasPrivateToilet": true
   },
   {
     "name": "Parque Nacional Pumalin",
@@ -77,6 +77,6 @@
     "floor": 2,
     "beds": ["B01", "B02"],
     "capacity": 3,
-    "hasPrivateToilet": false
+    "hasPrivateToilet": true
   }
 ]

@@ -10,7 +10,7 @@ export default function RoomsPage() {
         [AUN EN DESARROLLO]
       </div>
       <div className="mt-10">
-        <Amenities />
+        {/* <Amenities /> */}
       </div>
       <Rooms />
     </div>
