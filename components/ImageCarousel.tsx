@@ -13,7 +13,6 @@ import { motion } from "framer-motion";
 
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 type ImageType = {
   src: string;
@@ -25,9 +24,6 @@ export function ImageCarousel({ imgs }: { imgs: ImageType[] }) {
   const [current, setCurrent] = useState<number>(0);
   const [canScrollNext, setCanScrollNext] = useState<boolean>(false);
   const [canScrollPrev, setCanScrollPrev] = useState<boolean>(false);
-
-  // Detect if the screen is mobile or desktop
-  const isMobile = useMediaQuery("(max-width: 768px)");
 
   useEffect(() => {
     if (!api) {
