@@ -19,7 +19,13 @@ type ImageType = {
   alt: string;
 };
 
-export function ImageCarousel({ imgs }: { imgs: ImageType[] }) {
+export function ImageCarousel({ 
+  imgs, 
+  aspectRatio = "square" 
+}: { 
+  imgs: ImageType[];
+  aspectRatio?: "square" | "video";
+}) {
   const [api, setApi] = useState<EmblaCarouselType | null>(null);
   const [current, setCurrent] = useState<number>(0);
   const [canScrollNext, setCanScrollNext] = useState<boolean>(false);
@@ -57,7 +63,7 @@ export function ImageCarousel({ imgs }: { imgs: ImageType[] }) {
 
   if (imgs.length === 1) {
     return (
-      <div className="relative w-full h-full aspect-square">
+      <div className="relative w-full h-full">
         <Image
           src={imgs[0].src}
           alt={imgs[0].alt}
@@ -81,7 +87,9 @@ export function ImageCarousel({ imgs }: { imgs: ImageType[] }) {
         <CarouselContent className="-ml-0">
           {imgs.map((image, index) => (
             <CarouselItem key={index} className="w-full h-full pl-0">
-              <div className="relative w-full h-full aspect-square">
+              <div className={`relative w-full h-full ${
+                aspectRatio === "video" ? "aspect-[4/3]" : "lg:aspect-square aspect-[4/3]"
+              }`}>
                 <Image
                   src={image.src}
                   alt={image.alt}

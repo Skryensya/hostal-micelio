@@ -59,7 +59,8 @@
     "description": "Habitación con 2 camas de 1,5 plazas, luz natural y vista al volcán Villarrica.",
     "floor": 2,
     "beds": ["B02", "B02"],
-    "capacity": 2
+    "capacity": 2,
+    "hasPrivateToilet": true
   },
   {
     "name": "Parque Nacional Nahuelbuta",

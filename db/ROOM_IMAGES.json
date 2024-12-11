@@ -3,11 +3,27 @@
     {
       "src": "/assets/rooms/laguna-san-rafael/PHOTO_00.jpg",
       "alt": "View of laguna san rafael Room"
+    },
+    {
+      "src": "/assets/rooms/laguna-san-rafael/PHOTO_01.jpg",
+      "alt": "View of laguna san rafael Room"
+    },
+    {
+      "src": "/assets/rooms/laguna-san-rafael/PHOTO_02.jpg",
+      "alt": "View of laguna san rafael Room"
     }
   ],
   "parque-nacional-conguillio": [
     {
       "src": "/assets/rooms/parque-nacional-conguillio/PHOTO_00.jpg",
+      "alt": "View of parque nacional conguillio Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-conguillio/PHOTO_01.jpg",
+      "alt": "View of parque nacional conguillio Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-conguillio/PHOTO_02.jpg",
       "alt": "View of parque nacional conguillio Room"
     }
   ],
@@ -40,6 +56,14 @@
   "parque-nacional-nahuelbuta": [
     {
       "src": "/assets/rooms/parque-nacional-nahuelbuta/PHOTO_00.jpg",
+      "alt": "View of parque nacional nahuelbuta Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-nahuelbuta/PHOTO_01.jpg",
+      "alt": "View of parque nacional nahuelbuta Room"
+    },
+    {
+      "src": "/assets/rooms/parque-nacional-nahuelbuta/PHOTO_02.jpg",
       "alt": "View of parque nacional nahuelbuta Room"
     }
   ],
