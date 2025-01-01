@@ -10,10 +10,11 @@ import { Menu, X } from "lucide-react"; // Icon for burger menu
 // Centralized configuration for all links
 const NAV_LINKS = [
   { href: "/", label: "Inicio" },
-  { href: "/hospedaje", label: "Hospedaje" },
+  { href: "/habitaciones", label: "Habitaciones" },
   { href: "/eventos", label: "Eventos" },
   { href: "/larga-estadia", label: "Larga estadía" },
-  { href: "/about", label: "Sobre nosotros" },
+  { href: "/sobre-nosotros", label: "Sobre nosotros" },
+  { href: "/reviews", label: "Reseñas" },
 ];
 
 export function Header() {

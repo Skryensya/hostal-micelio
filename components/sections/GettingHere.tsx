@@ -10,14 +10,14 @@ const GOOGLE_MAPS_EMBED_LINK =
 
 export function GettingHere() {
   return (
-    <div className="min-h-96 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-96 px-4 py-10 sm:px-6 lg:px-8">
       <div className="container mx-auto">
+        <h2 className="flex text-2xl items-center gap-2 pb-6">
+          <MapPinHouse /> Como llegar
+        </h2>
         <div className="grid grid-cols-12 gap-4 md:gap-12">
-          <div className="col-span-12 md:col-span-5">
-            <h2 className="flex items-center gap-2 pb-6">
-              <MapPinHouse /> Como llegar
-            </h2>
-            <p className="mb-4">
+          <div className="col-span-12 md:col-span-5 text-lg">
+            <p className="mb-4 ">
               El <strong>Hostal Micelio</strong> se encuentra en{" "}
               <a
                 href="https://maps.app.goo.gl/5v4wGHi4YDYywrHw9"
@@ -38,7 +38,7 @@ export function GettingHere() {
               nuestro hostal en el punto de partida ideal para explorar todo lo
               que esta hermosa localidad tiene para ofrecer.
             </p>
-            <div className="flex flex-col md:flex-row items-center gap-4 mt-4">
+            <div className="flex flex-col md:flex-row items-center justify-start gap-4 mt-8">
               <Link href={GOOGLE_MAPS_LINK} target="_blank">
                 <Button>Ver en Google maps</Button>
               </Link>

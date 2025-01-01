@@ -14,7 +14,7 @@ export function Rooms() {
     : ROOMS;
 
   return (
-    <div className="container mx-auto py-20">
+    <div className="container mx-auto py-10">
       <div className="flex justify-end mb-4">
         <label className="flex items-center space-x-2">
           <input

@@ -1,11 +1,19 @@
 import { Rooms } from "@/components/sections/Rooms";
-// import { Amenities } from "@/components/sections/Amenities";
+import { Breadcrumb } from "@/components/composed/Breadcrumb";
 
 import { InnerHero } from "@/components/sections/InnerHero";
 export default function RoomsPage() {
   return (
     <div>
       <InnerHero title="Encuentra tu habitación ideal"></InnerHero>
+
+      <Breadcrumb
+        levels={[
+          { label: "Inicio", href: "/" },
+          { label: "Habitaciones", href: "/habitaciones" },
+        ]}
+      />
+
       <div className="mt-10">{/* <Amenities /> */}</div>
       <Rooms />
     </div>

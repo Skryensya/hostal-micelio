@@ -20,7 +20,6 @@ export function RoomImageShowcase({ slug }) {
             <Image
               src={images[selectedImage]?.src}
               alt={images[selectedImage]?.alt || name}
-           
               objectFit="contain"
               className="bg-white/50 rounded-xl"
             />
@@ -44,7 +43,7 @@ export function RoomImageShowcase({ slug }) {
                   <Image
                     src={image.src}
                     alt={image.alt || name}
-                    layout="fill"
+                    fill
                     objectFit="cover"
                   />
                 </div>

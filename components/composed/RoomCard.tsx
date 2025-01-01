@@ -16,7 +16,7 @@ export default function RoomCard({
 
   return (
     <a
-      href={`/hospedaje/${slug}`}
+      href={`/habitaciones/${slug}`}
       className="flex flex-col h-full w-full group  "
     >
       <div

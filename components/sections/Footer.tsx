@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { Facebook, Instagram, Phone, Mail, MapPin } from "lucide-react"; // Import Lucide icons
 import CONTACT_INFO from "@/db/CONTACT_INFO.json";
 import { WavyDivider } from "../composed/WavyDivider";
@@ -18,21 +18,25 @@ const Footer = () => {
         <div className="container mx-auto px-4">
           {/* Level 1: Logo and Links */}
           <div className="flex flex-col md:flex-row justify-between items-center mb-6">
-            <div className="flex flex-col md:flex-row items-center space-y-4">
-              <Image
-                src="/assets/logos/LOGO_COLOR.png"
-                alt="Hostal Micelio Logo"
-                className="h-[100px] md:mr-4 hidden md:block"
-                width={100} // Add width for the Image component
-                height={100} // Add height for the Image component
-              />
-              <Image
-                src="/assets/logos/LOGO_COLOR.png"
-                alt="Hostal Micelio Logo"
-                className="h-[150px]  md:mr-4 block md:hidden"
-                width={150} // Add width for the Image component
-                height={150} // Add height for the Image component
-              />
+            <div className="flex flex-col md:flex-row  gap-x-4 items-center space-y-4">
+              <div className="hidden md:block">
+                <Image
+                  src="/assets/logos/LOGO_COLOR.png"
+                  alt="Hostal Micelio Logo"
+                  className="h-[100px] md:mr-4"
+                  width={100}
+                  height={100}
+                />
+              </div>
+              <div className="block md:hidden">
+                <Image
+                  src="/assets/logos/LOGO_COLOR.png"
+                  alt="Hostal Micelio Logo"
+                  className="h-[150px] md:mr-4"
+                  width={150}
+                  height={150}
+                />
+              </div>
               <nav className="flex  flex-row flex-wrap  items-center text-balance gap-4 ">
                 <a href="#about" className="hover:text-gray-400">
                   Acerca de

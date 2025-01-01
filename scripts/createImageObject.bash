@@ -14,7 +14,7 @@ for dir in ./public/assets/images/_webp/rooms/*/; do \
       fi; \
       echo "    {" >> ./db/ROOM_IMAGES.json; \
       echo "      \"src\": \"/assets/images/_webp/rooms/$slug/$filename\"," >> ./db/ROOM_IMAGES.json; \
-      echo "      \"thumbnail\": \"/assets/images/_optimized/rooms/$slug/$filename\"," >> ./db/ROOM_IMAGES.json; \
+      echo "      \"thumbnail\": \"/assets/images/_thumbnails/rooms/$slug/$filename\"," >> ./db/ROOM_IMAGES.json; \
       echo "      \"alt\": \"View of ${slug//-/ } Room\"" >> ./db/ROOM_IMAGES.json; \
       echo -n "    }" >> ./db/ROOM_IMAGES.json; \
     done; \

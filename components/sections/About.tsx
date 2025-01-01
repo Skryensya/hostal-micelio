@@ -6,7 +6,7 @@ export function About() {
   return (
     <div className="h-96">
       <div className="container mx-auto ">
-        <div className="py-20">About</div>
+        <div className="py-10">About</div>
       </div>
     </div>
   );

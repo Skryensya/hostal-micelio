@@ -17,11 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es" suppressHydrationWarning>
       <body
-        className={`${poppins.variable} ${balooBhaijaan2.variable} ${nunitoSans.variable} font-sans antialiased min-h-screen bg-surface-light text-text-light dark:bg-surface-dark  dark:text-text-dark  `}
+        className={`${poppins.variable} ${balooBhaijaan2.variable} ${nunitoSans.variable} font-sans antialiased min-h-screen bg-surface-light text-text-light dark:bg-surface-dark dark:text-text-dark`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
           {children}
           <Footer />

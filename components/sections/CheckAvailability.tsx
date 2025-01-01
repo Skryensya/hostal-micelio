@@ -22,7 +22,7 @@ export function CheckAvailability() {
   };
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-10">
       <div className=" flex flex-col gap-4 md:flex-row justify-between rounded-[40px] md:rounded-full py-6 px-6 md:px-12 shadow-xl shadow-primary-light-10 bg-primary-light-30">
         <div className="flex flex-col md:flex-row items-start md:items-center md:justify-center gap-4 ">
           <div className="w-full flex flex-col md:flex-row   items-start md:items-center md:justify-center gap-1 md:gap-4">

@@ -294,7 +294,7 @@ const Slide = ({
       }}
     >
       <div
-        className="relative h-[700px] max-h-[80dvh] min-h-[500px] overflow-hidden"
+        className="relative h-[650px] min-h-[500px] overflow-hidden"
         style={{
           backgroundImage: `url(${image})`,
           backgroundSize: "cover",
@@ -307,7 +307,7 @@ const Slide = ({
           src={thumbnail}
           alt=""
           className="absolute inset-0 w-full h-full object-cover object-bottom blur "
-          layout="fill"
+          fill
           priority
         />
         {/* Main Image */}
@@ -315,7 +315,7 @@ const Slide = ({
           src={image}
           alt=""
           className="absolute inset-0 w-full h-full object-cover object-bottom"
-          layout="fill"
+          fill
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-transparent" />

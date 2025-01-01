@@ -25,13 +25,14 @@ export default function Home() {
       />
       <CheckAvailability></CheckAvailability>
       <Offers />
-      <Reviews />
+
       {/* <Villarrica /> */}
       {/* <Amenities /> */}
       {/* <Events /> */}
       {/* <Team /> */}
       {/* <Menu /> */}
       <GettingHere />
+      <Reviews />
     </main>
   );
 }

@@ -6,7 +6,7 @@ export function Events() {
   return (
     <div className="h-96">
       <div className="container mx-auto ">
-        <div className="py-20">Events section</div>
+        <div className="py-10">Events section</div>
       </div>
     </div>
   );

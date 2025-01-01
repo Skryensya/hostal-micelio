@@ -23,9 +23,9 @@ export function InnerHero({ title }) {
       </button>
 
       <div className="bg-room-gradient">
-        <div className="h-60 max-h-[40dvh] container flex items-center">
-          <div>
-            <h1 className="text-4xl">{title}</h1>
+        <div className="h-[200px] container flex items-center">
+          <div className="flex flex-col justify-end h-full">
+            <h1 className="text-4xl pb-6">{title}</h1>
           </div>
         </div>
       </div>
