@@ -8,9 +8,9 @@ import { Card, CardContent } from "@/components/ui/card";
 // import { DateRangePicker } from "@/components/DateRangePicker";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -19,7 +19,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function RoomPage({ params }: PageProps) {
+export default async function RoomPage(props: PageProps) {
+  const params = await props.params;
   const room = ROOMS.find((room) => room.slug === params.slug);
   const images = ROOM_IMAGES[params.slug] || [];
 

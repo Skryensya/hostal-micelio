@@ -9,29 +9,22 @@ import React, {
 } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronRight, ChevronLeft, Play, Pause } from "lucide-react";
+import Image from "next/image";
 
 type SlideType = {
   img: string;
+  thumbnail: string;
   content: ReactNode;
   focusPoint: string;
+  color: string;
 };
 
 const slides: SlideType[] = [
   {
-    img: "/assets/shared-spaces/puerta-principal/PHOTO_03.jpg",
+    img: "/assets/images/_webp/hero/PHOTO_00.webp",
+    thumbnail: "/assets/images/_thumbnails/hero/PHOTO_00.webp",
     focusPoint: "center bottom",
-    content: (
-      <>
-        <h2 className="text-4xl font-bold pb-6">¡La aventura en espera!</h2>
-        <p className="text-xl">
-          Experimenta emocionantes aventuras y crea memorias únicas.
-        </p>
-      </>
-    ),
-  },
-  {
-    img: "/assets/villarrica/PHOTO_00.jpg",
-    focusPoint: "center bottom",
+    color: "#799bb9",
     content: (
       <>
         <h2 className="text-4xl font-bold mb-6">
@@ -44,13 +37,29 @@ const slides: SlideType[] = [
     ),
   },
   {
-    img: "/assets/shared-spaces/living/PHOTO_01.jpg",
+    img: "/assets/images/_webp/hero/PHOTO_01.webp",
+    thumbnail: "/assets/images/_thumbnails/hero/PHOTO_01.webp",
     focusPoint: "75% 75%",
+    color: "#6c513e",
     content: (
       <>
         <h2 className="text-4xl font-bold mb-6">Relájate en el paraíso</h2>
         <p className="text-xl">
           Despierta en lujosos hoteles y paisajes serenos.
+        </p>
+      </>
+    ),
+  },
+  {
+    img: "/assets/images/_webp/hero/PHOTO_02.webp",
+    thumbnail: "/assets/images/_thumbnails/hero/PHOTO_02.webp",
+    focusPoint: "center bottom",
+    color: "#47504a",
+    content: (
+      <>
+        <h2 className="text-4xl font-bold pb-6">¡La aventura en espera!</h2>
+        <p className="text-xl">
+          Experimenta emocionantes aventuras y crea memorias únicas.
         </p>
       </>
     ),
@@ -156,7 +165,12 @@ export function Hero() {
         <div className="hero_embla__container">
           {slides.map((slide, index) => (
             <div key={index} className="hero_embla__slide">
-              <Slide backgroundImage={slide.img} focusPoint={slide.focusPoint}>
+              <Slide
+                image={slide.img}
+                focusPoint={slide.focusPoint}
+                thumbnail={slide.thumbnail}
+                color={slide.color}
+              >
                 {slide.content}
               </Slide>
             </div>
@@ -260,24 +274,54 @@ export function Hero() {
 
 type SlideProps = {
   children: ReactNode;
-  backgroundImage: string;
+  image: string;
   focusPoint: string;
+  thumbnail: string;
+  color: string;
 };
 
-const Slide = ({ children, backgroundImage, focusPoint }: SlideProps) => {
+const Slide = ({
+  children,
+  image,
+  thumbnail,
+  color,
+  focusPoint,
+}: SlideProps) => {
   return (
     <div
-      className="relative h-[700px] max-h-[80dvh] min-h-[500px] overflow-hidden"
       style={{
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: focusPoint,
-        backgroundRepeat: "no-repeat",
+        backgroundColor: color,
       }}
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-transparent" />
-      <div className="absolute top-0 left-0 right-0 p-8 text-white container">
-        {children}
+      <div
+        className="relative h-[700px] max-h-[80dvh] min-h-[500px] overflow-hidden"
+        style={{
+          backgroundImage: `url(${image})`,
+          backgroundSize: "cover",
+          backgroundPosition: focusPoint,
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        {/* Thumbnail Image */}
+        <Image
+          src={thumbnail}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover object-bottom blur "
+          layout="fill"
+          priority
+        />
+        {/* Main Image */}
+        <Image
+          src={image}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover object-bottom"
+          layout="fill"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 p-8 text-white container">
+          {children}
+        </div>
       </div>
     </div>
   );

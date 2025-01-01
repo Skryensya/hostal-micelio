@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "update-room-imgs": "echo '{' > ./db/ROOM_IMAGES.json && for dir in ./public/assets/rooms/*/; do slug=$(basename \"$dir\"); files=(\"$dir\"*.jpg); if [ ${#files[@]} -gt 0 ]; then echo '\"'$slug'\": ['; i=0; for file in \"${files[@]}\"; do filename=$(printf 'PHOTO_%02d.jpg' \"$i\"); echo '{\"src\": \"/assets/rooms/'\"$slug\"'/'\"$filename\"'\", \"alt\": \"View of '${slug//-/ }' Room\"},'; i=$((i+1)); done | sed '$ s/,$//'; echo '],'; fi; done | sed '$ s/,$//' >> ./db/ROOM_IMAGES.json && echo '}' >> ./db/ROOM_IMAGES.json"
+    "process-images": "node scripts/optimize.js && node scripts/resizeblur.js",
+    "generate-room-images-object": "bash scripts/createImageObject.bash"
   },
   "dependencies": {
     "@fontsource/baloo-bhaijaan-2": "^5.1.0",
@@ -31,11 +32,11 @@
     "embla-carousel-wheel-gestures": "^8.0.1",
     "framer-motion": "^11.11.11",
     "lucide-react": "^0.438.0",
-    "next": "14.2.8",
+    "next": "15.1.3",
     "next-themes": "^0.3.0",
-    "react": "^18",
+    "react": "19.0.0",
     "react-day-picker": "^8.10.1",
-    "react-dom": "^18",
+    "react-dom": "19.0.0",
     "react-router-dom": "^7.1.1",
     "sass": "^1.79.4",
     "tailwind-merge": "^2.5.2",
@@ -45,12 +46,16 @@
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "19.0.2",
+    "@types/react-dom": "19.0.2",
     "eslint": "^8",
-    "eslint-config-next": "14.2.8",
+    "eslint-config-next": "15.1.3",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@types/react": "19.0.2",
+    "@types/react-dom": "19.0.2"
   }
 }

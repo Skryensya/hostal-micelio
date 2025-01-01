@@ -20,14 +20,14 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center mb-6">
             <div className="flex flex-col md:flex-row items-center space-y-4">
               <Image
-                src="/assets/LOGO_COLOR.png"
+                src="/assets/logos/LOGO_COLOR.png"
                 alt="Hostal Micelio Logo"
                 className="h-[100px] md:mr-4 hidden md:block"
                 width={100} // Add width for the Image component
                 height={100} // Add height for the Image component
               />
               <Image
-                src="/assets/LOGO_COLOR.png"
+                src="/assets/logos/LOGO_COLOR.png"
                 alt="Hostal Micelio Logo"
                 className="h-[150px]  md:mr-4 block md:hidden"
                 width={150} // Add width for the Image component

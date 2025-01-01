@@ -19,10 +19,10 @@ type ImageType = {
   alt: string;
 };
 
-export function ImageCarousel({ 
-  imgs, 
-  aspectRatio = "square" 
-}: { 
+export function ImageCarousel({
+  imgs,
+  aspectRatio = "square",
+}: {
   imgs: ImageType[];
   aspectRatio?: "square" | "video";
 }) {
@@ -87,9 +87,13 @@ export function ImageCarousel({
         <CarouselContent className="-ml-0">
           {imgs.map((image, index) => (
             <CarouselItem key={index} className="w-full h-full pl-0">
-              <div className={`relative w-full h-full ${
-                aspectRatio === "video" ? "aspect-[4/3]" : "lg:aspect-square aspect-[4/3]"
-              }`}>
+              <div
+                className={`relative w-full h-full ${
+                  aspectRatio === "video"
+                    ? "aspect-[4/3]"
+                    : "lg:aspect-square aspect-[4/3]"
+                }`}
+              >
                 <Image
                   src={image.src}
                   alt={image.alt}
@@ -107,19 +111,22 @@ export function ImageCarousel({
             visibleDots(index) ? (
               <motion.div
                 key={index}
-                className={`rounded-full transition-colors duration-200 ${
-                  index === current
-                    ? "bg-white w-2.5 h-2.5"
-                    : index === current - 1 || index === current + 1
-                    ? "bg-white/80 w-2 h-2"
-                    : "bg-white/70 w-1.5 h-1.5"
-                }
-                ${index === 0 ? " h-2.5 w-2.5 " : ""}
-                `}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-              />
+              >
+                <div
+                  className={`rounded-full transition-colors duration-200 ${
+                    index === current
+                      ? "bg-white w-2.5 h-2.5"
+                      : index === current - 1 || index === current + 1
+                      ? "bg-white/80 w-2 h-2"
+                      : "bg-white/70 w-1.5 h-1.5"
+                  }
+                ${index === 0 ? " h-2.5 w-2.5 " : ""}
+                `}
+                />
+              </motion.div>
             ) : null
           )}
         </div>

@@ -46,7 +46,7 @@ export function GuestSelector({ setSelectionFunction }: GuestSelectorProps) {
 
   const handleKeyPress = (
     event: React.KeyboardEvent<HTMLInputElement>,
-    nextInput?: React.RefObject<HTMLInputElement>
+    nextInput?: React.RefObject<HTMLInputElement | null>
   ) => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();

@@ -85,14 +85,19 @@ export function Header() {
           initial="closed"
           animate={isMenuOpen ? "open" : "closed"}
           variants={menuVariants}
-          className={"lg:hidden bg-surface-light overflow-hidden top-full z-40"}
         >
-          <div className="p-4 w-full flex flex-col items-end gap-4">
-            {NAV_LINKS.map((link) => (
-              <motion.div key={link.href} variants={linkVariants}>
-                <Link href={link.href}>{link.label}</Link>
-              </motion.div>
-            ))}
+          <div
+            className={
+              "lg:hidden bg-surface-light overflow-hidden top-full z-40"
+            }
+          >
+            <div className="p-4 w-full flex flex-col items-end gap-4">
+              {NAV_LINKS.map((link) => (
+                <motion.div key={link.href} variants={linkVariants}>
+                  <Link href={link.href}>{link.label}</Link>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </motion.nav>
       </div>
