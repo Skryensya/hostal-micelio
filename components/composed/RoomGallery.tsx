@@ -20,7 +20,7 @@ export function RoomImageShowcase({ slug }) {
             <Image
               src={images[selectedImage]?.src}
               alt={images[selectedImage]?.alt || name}
-              layout="fill"
+           
               objectFit="contain"
               className="bg-white/50 rounded-xl"
             />

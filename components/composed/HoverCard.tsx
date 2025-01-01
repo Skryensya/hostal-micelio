@@ -28,7 +28,7 @@ export const HoverCard: React.FC<HoverCardProps> = ({
           src={imgUrl}
           alt={alt || title} // Use alt if provided, otherwise use title
           layout="fill"
-          className="transition-transform duration-500 delay-100 ease-out group-hover:scale-110 md:group-hover:scale-110 object-cover"
+          className="transition-transform duration-500 delay-100 ease-out group-hover:scale-105 object-cover"
         />
         <div className="px-6 md:px-8 absolute inset-0 z-10 pb-8 text-white flex flex-col justify-end bg-gradient-to-t from-black/60 to-transparent md:group-hover:from-10% md:group-hover:to-50% md:group-hover:from-black/50">
           <h3 className="text-2xl font-bold">{title}</h3>

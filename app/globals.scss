@@ -239,3 +239,13 @@ small,
   -webkit-mask: var(--mask);
   mask: var(--mask);
 }
+
+.masonry-container {
+  column-count: 4; /* Number of columns */
+  column-gap: 16px; /* Space between columns */
+}
+
+.masonry-container > * {
+  break-inside: avoid; /* Prevents items from breaking inside columns */
+  margin-bottom: 16px; /* Space between items */
+}

@@ -25,3 +25,10 @@ export type Bed = {
   size: string; // Tamaño de la cama (ej. "matrimonial", "1,5", "literas")
   capacity: number; // Capacidad máxima de personas
 };
+
+export type Review = {
+  name: string; // Nombre del huesped
+  comment: string; // Comentario del huesped
+  url: string; // URL de la imagen del huesped
+  hue: number; // Color de fondo del avatar
+};

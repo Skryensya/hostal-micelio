@@ -6,7 +6,6 @@ export default function RoomsPage() {
   return (
     <div>
       <InnerHero title="Encuentra tu habitación ideal"></InnerHero>
-
       <div className="mt-10">{/* <Amenities /> */}</div>
       <Rooms />
     </div>

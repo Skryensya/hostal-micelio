@@ -9,9 +9,9 @@ import { Offers } from "@/components/sections/Offers";
 // import { Team } from "@/components/sections/Team";
 // import { Menu } from "@/components/sections/Menu";
 import { GettingHere } from "@/components/sections/GettingHere";
-import { CheckAvailability } from "@/components/sections/CheckAvailability"; 
+import { CheckAvailability } from "@/components/sections/CheckAvailability";
 import { WavyDivider } from "@/components/composed/WavyDivider";
-
+import { Reviews } from "@/components/sections/Reviews";
 export default function Home() {
   return (
     <main className="">
@@ -25,6 +25,7 @@ export default function Home() {
       />
       <CheckAvailability></CheckAvailability>
       <Offers />
+      <Reviews />
       {/* <Villarrica /> */}
       {/* <Amenities /> */}
       {/* <Events /> */}
