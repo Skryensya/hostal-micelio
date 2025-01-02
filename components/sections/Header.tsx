@@ -11,8 +11,8 @@ import { Menu, X } from "lucide-react"; // Icon for burger menu
 const NAV_LINKS = [
   { href: "/", label: "Inicio" },
   { href: "/habitaciones", label: "Habitaciones" },
-  { href: "/eventos", label: "Eventos" },
-  { href: "/larga-estadia", label: "Larga estadía" },
+  // { href: "/eventos", label: "Eventos" },
+  // { href: "/larga-estadia", label: "Larga estadía" },
   { href: "/sobre-nosotros", label: "Sobre nosotros" },
   { href: "/reviews", label: "Reseñas" },
 ];
@@ -69,7 +69,7 @@ export function Header() {
             </div>
 
             {/* Menu visible in desktop */}
-            <nav className="hidden lg:flex items-center gap-4">
+            <nav className="hidden lg:flex items-center gap-4 text-lg">
               {NAV_LINKS.map((link) => (
                 <Link key={link.href} href={link.href}>
                   {link.label}

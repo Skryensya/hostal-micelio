@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -8,17 +8,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { MinusIcon, PlusIcon, UserRound, Baby } from "lucide-react"; // Import icons
+import { useSelectionStore } from "@/store/useSelectionStore"; // Import the Zustand store
 
-interface GuestSelectorProps {
-  setSelectionFunction: (selection: {
-    adults: number;
-    children: number;
-  }) => void;
-}
-
-export function GuestSelector({ setSelectionFunction }: GuestSelectorProps) {
-  const [adults, setAdults] = useState(1);
-  const [children, setChildren] = useState(0);
+export function GuestSelector() {
+  // Replace local state with Zustand store
+  const { adults, children, setAdults, setChildren } = useSelectionStore();
   const [open, setOpen] = useState(false);
   const childrenRef = useRef<HTMLInputElement>(null);
 
@@ -58,11 +52,6 @@ export function GuestSelector({ setSelectionFunction }: GuestSelectorProps) {
     }
   };
 
-  // Update selection function whenever any state changes
-  useEffect(() => {
-    setSelectionFunction({ adults, children });
-  }, [adults, children, setSelectionFunction]);
-
   const adultsLabel = adults === 1 ? "adulto" : "adultos";
   const childrenLabel = children === 1 ? "niño" : "niños";
 
@@ -81,7 +70,6 @@ export function GuestSelector({ setSelectionFunction }: GuestSelectorProps) {
       </PopoverTrigger>
       <PopoverContent className="min-w-[200px] rounded-2xl">
         <div className="space-y-4">
- 
           <div className="space-y-2">
             <div className="flex justify-between items-center">
               <span className="flex items-center">

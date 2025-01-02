@@ -1,4 +1,4 @@
-import { House } from "lucide-react";
+import { Binoculars } from "lucide-react";
 import { HoverCard } from "../composed/HoverCard";
 
 export function Offers() {
@@ -7,7 +7,7 @@ export function Offers() {
   return (
     <div className="container mx-auto py-10 min-h-96">
       <h2 className="mb-6 text-2xl flex items-center gap-2 z-90">
-        <House />
+        <Binoculars className="h-8 w-8" />
         Podrás encontrar
       </h2>
       <div className="relative isolate overflow-hidden rounded-[30px]">
