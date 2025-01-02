@@ -11,26 +11,23 @@ import { MinusIcon, PlusIcon, UserRound, Baby } from "lucide-react"; // Import i
 import { useSelectionStore } from "@/store/useSelectionStore"; // Import the Zustand store
 
 export function GuestSelector() {
-  // Replace local state with Zustand store
-  const { adults, children, setAdults, setChildren } = useSelectionStore();
+  // Use Zustand store for state management
+  const {
+    adults,
+    children,
+    setAdults,
+    setChildren,
+    incrementChildren,
+    decrementChildren,
+    incrementAdults,
+    decrementAdults,
+  } = useSelectionStore();
   const [open, setOpen] = useState(false);
   const childrenRef = useRef<HTMLInputElement>(null);
 
-  const incrementCount = (
-    setter: React.Dispatch<React.SetStateAction<number>>
-  ) => {
-    setter((prev) => prev + 1);
-  };
-
-  const decrementCount = (
-    setter: React.Dispatch<React.SetStateAction<number>>
-  ) => {
-    setter((prev) => Math.max(0, prev - 1));
-  };
-
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    setter: React.Dispatch<React.SetStateAction<number>>
+    setter: (value: number) => void
   ) => {
     const value = event.target.value;
     if (/^\d*$/.test(value)) {
@@ -79,7 +76,7 @@ export function GuestSelector() {
                 <Button
                   variant="outline"
                   size="icon"
-                  onClick={() => decrementCount(setAdults)}
+                  onClick={decrementAdults}
                   disabled={adults <= 1}
                 >
                   <MinusIcon className="h-4 w-4" />
@@ -91,11 +88,7 @@ export function GuestSelector() {
                   onKeyDown={(e) => handleKeyPress(e, childrenRef)}
                   style={{ border: "none", textAlign: "center", width: "40px" }}
                 />
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => incrementCount(setAdults)}
-                >
+                <Button variant="outline" size="icon" onClick={incrementAdults}>
                   <PlusIcon className="h-4 w-4" />
                 </Button>
               </div>
@@ -108,7 +101,7 @@ export function GuestSelector() {
                 <Button
                   variant="outline"
                   size="icon"
-                  onClick={() => decrementCount(setChildren)}
+                  onClick={decrementChildren}
                   disabled={children === 0}
                 >
                   <MinusIcon className="h-4 w-4" />
@@ -124,7 +117,7 @@ export function GuestSelector() {
                 <Button
                   variant="outline"
                   size="icon"
-                  onClick={() => incrementCount(setChildren)}
+                  onClick={incrementChildren}
                 >
                   <PlusIcon className="h-4 w-4" />
                 </Button>

@@ -1,18 +1,19 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { DateRangePicker } from "@/components/DateRangePicker";
-import { DateRange } from "react-day-picker";
 import { GuestSelector } from "@/components/GuestSelector";
 import { Button } from "../ui/button";
 import { checkAvailabilityTemplate } from "@/lib/whatsapp_templates/availability";
 import { useSelectionStore } from "@/store/useSelectionStore";
 
 export function CheckAvailability() {
-  const [dateRange, setDateRange] = useState<DateRange | undefined>();
-  const { adults, children } = useSelectionStore();
+  const { adults, children, dateRange } = useSelectionStore();
 
   const handleWhatsAppClick = () => {
-    const whatsappLink = checkAvailabilityTemplate(dateRange, { adults, children });
+    const whatsappLink = checkAvailabilityTemplate(dateRange, {
+      adults,
+      children,
+    });
     window.open(whatsappLink, "_blank");
   };
 
@@ -25,7 +26,7 @@ export function CheckAvailability() {
               Fecha
               <div className="block md:hidden pl-[0.3rem]"> de estadía</div>
             </div>
-            <DateRangePicker setDateRange={setDateRange} />
+            <DateRangePicker />
           </div>
           <div className="w-full flex flex-col md:flex-row items-start md:items-center md:justify-center gap-1 md:gap-4">
             <span className="font-bold">Huéspedes</span>
