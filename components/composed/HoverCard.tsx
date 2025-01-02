@@ -6,7 +6,7 @@ interface HoverCardProps {
   title: string;
   description: string;
   imgUrl: string;
-  blurUrl: string;
+  blurUrl?: string;
   link: string;
   alt?: string; // Optional alt property
   color?: string;

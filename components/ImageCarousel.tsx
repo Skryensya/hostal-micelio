@@ -8,7 +8,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { EmblaCarouselType } from "embla-carousel";
 import { motion } from "framer-motion";
 
 import Image from "next/image";
@@ -26,7 +25,7 @@ export function ImageCarousel({
   imgs: ImageType[];
   aspectRatio?: "square" | "video";
 }) {
-  const [api, setApi] = useState<EmblaCarouselType | null>(null);
+  const [api, setApi] = useState(null);
   const [current, setCurrent] = useState<number>(0);
   const [canScrollNext, setCanScrollNext] = useState<boolean>(false);
   const [canScrollPrev, setCanScrollPrev] = useState<boolean>(false);
@@ -81,7 +80,7 @@ export function ImageCarousel({
         opts={{
           align: "center",
         }}
-        setApi={(api) => setApi(api as EmblaCarouselType)}
+        setApi={(api) => setApi(api)}
         className="w-full h-full"
       >
         <CarouselContent className="-ml-0">
