@@ -18,9 +18,9 @@ export default function Home() {
       <Hero />
       <WavyDivider
         backgroundClassNames={[
-          "bg-white/50",
-          "bg-surface-light",
-          "bg-surface-light",
+          "bg-white/50 dark:bg-white/20",
+          "bg-surface-light dark:bg-surface-dark",
+          "bg-surface-light dark:bg-surface-dark",
         ]}
       />
       <CheckAvailability></CheckAvailability>

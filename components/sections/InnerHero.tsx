@@ -25,15 +25,17 @@ export function InnerHero({ title }) {
       <div className="bg-room-gradient">
         <div className="h-[200px] container flex items-center">
           <div className="flex flex-col justify-end h-full">
-            <h1 className="text-4xl pb-6">{title}</h1>
+            <h1 className="text-3xl md:text-4xl pb-6 text-text-light ">
+              {title}
+            </h1>
           </div>
         </div>
       </div>
       <WavyDivider
         backgroundClassNames={[
-          "bg-white/50",
-          "bg-surface-light",
-          "bg-surface-light",
+          "bg-white/50 dark:bg-white/20",
+          "bg-surface-light dark:bg-surface-dark",
+          "bg-surface-light dark:bg-surface-dark",
         ]}
       />
       <div

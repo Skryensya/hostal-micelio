@@ -9,9 +9,9 @@ const Footer = () => {
     <div className="mt-20">
       <WavyDivider
         backgroundClassNames={[
-          "bg-surface-light",
-          "bg-border-light",
-          "bg-surface-dark",
+          "bg-surface-light dark:bg-surface-dark",
+          "bg-border-light dark:bg-border-dark",
+          "bg-surface-dark dark:bg-surface-dark",
         ]}
       />
       <footer className="bg-surface-dark  text-white py-8">

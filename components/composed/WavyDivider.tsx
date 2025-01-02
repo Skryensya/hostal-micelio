@@ -1,5 +1,9 @@
 export function WavyDivider({
-  backgroundClassNames = ["bg-transparent", "bg-white", "bg-surface-light"],
+  backgroundClassNames = [
+    "bg-transparent",
+    "bg-white",
+    "bg-surface-light dark:bg-surface-dark",
+  ],
   direction = "top",
 }: {
   backgroundClassNames?: string[];
@@ -7,22 +11,22 @@ export function WavyDivider({
 }) {
   if (direction === "top") {
     return (
-      <div className={"relative h-2   "}>
+      <div className={"relative h-2"}>
         <div
           className={
-            "section-wave absolute  h-5 inset-0 -translate-y-5 " +
+            "section-wave absolute  h-5 inset-0 translate-y-[-20.5px] " +
             backgroundClassNames[0]
           }
         ></div>
         <div
           className={
-            "section-wave absolute z-10 h-5 inset-0 -translate-y-4 " +
+            "section-wave absolute z-10 h-5 inset-0 translate-y-[-15.5px] " +
             backgroundClassNames[1]
           }
         ></div>
         <div
           className={
-            "section-wave absolute  z-20 h-5 inset-0 -translate-y-3 " +
+            "section-wave absolute  z-20 h-5 inset-0  translate-y-[-11.5px] " +
             backgroundClassNames[2]
           }
         ></div>
