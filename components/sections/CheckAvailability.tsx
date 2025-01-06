@@ -1,39 +1,54 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { DateRangePicker } from "@/components/DateRangePicker";
 import { GuestSelector } from "@/components/GuestSelector";
 import { Button } from "../ui/button";
-import { checkAvailabilityTemplate } from "@/lib/whatsapp_templates/availability";
 import { useSelectionStore } from "@/store/useSelectionStore";
+import { cn } from "@/lib/utils";
 
 export function CheckAvailability() {
-  const { adults, children, dateRange } = useSelectionStore();
+  const [selectedTab, setSelectedTab] = useState("hospedaje");
+
+  const handleTabChange = (tab: string) => {
+    setSelectedTab(tab);
+  };
+
+  const getWhatsAppLink = useSelectionStore((state) => state.getWhatsAppLink);
 
   const handleWhatsAppClick = () => {
-    const whatsappLink = checkAvailabilityTemplate(dateRange, {
-      adults,
-      children,
-    });
-    window.open(whatsappLink, "_blank");
+    window.open(getWhatsAppLink(), "_blank");
   };
+
+  // const isLargaEstadia = selectedTab === "largaEstadia";
+  // const isHospedaje = selectedTab === "hospedaje";
 
   return (
     <div className="container mx-auto py-10">
-      <div className="flex flex-col gap-4 md:flex-row justify-between rounded-[40px] md:rounded-full py-6 px-6 md:px-12 shadow-xl shadow-primary-light-10 bg-primary-light-30">
-        <div className="flex flex-col md:flex-row items-start md:items-center md:justify-center gap-4">
-          <div className="w-full flex flex-col md:flex-row items-start md:items-center md:justify-center gap-1 md:gap-4">
-            <div className="font-bold flex">
-              Fecha
-              <div className="block md:hidden pl-[0.3rem]"> de estadía</div>
-            </div>
-            <DateRangePicker />
-          </div>
-          <div className="w-full flex flex-col md:flex-row items-start md:items-center md:justify-center gap-1 md:gap-4">
-            <span className="font-bold">Huéspedes</span>
-            <GuestSelector />
-          </div>
-        </div>
-        <div>
+      <div className="mx-auto flex justify-center w-4/12">
+        <button
+          className={cn(
+            ` w-fit cursor-pointer px-2 py-2 text-lg`,
+            selectedTab === "hospedaje" ? "font-bold" : ""
+          )}
+          onClick={() => handleTabChange("hospedaje")}
+        >
+          Hospedaje
+        </button>
+        <button
+          className={cn(
+            `w-fit cursor-pointer px-2 py-2 text-lg`,
+            selectedTab === "largaEstadia" ? "font-bold" : ""
+          )}
+          onClick={() => handleTabChange("largaEstadia")}
+        >
+          Larga estadía
+        </button>
+      </div>
+
+      <div className=" ">
+        <div className="flex flex-col gap-4 md:flex-row justify-between rounded-[40px] md:rounded-full shadow-xl shadow-primary-light-10 p-2 bg-primary-light-30">
+          <DateRangePicker />
+          <GuestSelector />
           <Button
             onClick={handleWhatsAppClick}
             className="bg-primary-light w-full md:w-fit"

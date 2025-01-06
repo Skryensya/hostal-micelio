@@ -1,5 +1,5 @@
 import React from "react";
-import { MapPinHouse } from "lucide-react";
+import { Milestone } from "lucide-react";
 import { Button } from "../ui/button";
 import { getDirectionsTemplate } from "@/lib/whatsapp_templates/directions";
 import Link from "next/link";
@@ -13,10 +13,10 @@ export function GettingHere() {
     <div className="min-h-96 px-4 py-10 sm:px-6 lg:px-8">
       <div className="container mx-auto">
         <h2 className="flex text-2xl items-center gap-2 pb-6">
-          <MapPinHouse /> Como llegar
+          <Milestone /> Como llegar
         </h2>
         <div className="grid grid-cols-12 gap-4 md:gap-12">
-          <div className="col-span-12 md:col-span-5 text-lg">
+          <div className="col-span-12 lg:col-span-5 text-lg">
             <p className="mb-4 ">
               El <strong>Hostal Micelio</strong> se encuentra en{" "}
               <a
@@ -51,10 +51,10 @@ export function GettingHere() {
               </Link>
             </div>
           </div>
-          <div className="col-span-12 md:col-span-7 overflow-hidden rounded-standar border border-border-light">
+          <div className="col-span-12 lg:col-span-7 overflow-hidden rounded-standar border border-border-light">
             <iframe
               src={GOOGLE_MAPS_EMBED_LINK}
-              className="w-full h-[300px] md:h-[500px]"
+              className="w-full h-[300px] lg:h-[500px]"
               style={{ border: 0 }}
               loading="lazy"
             ></iframe>

@@ -1,160 +1,132 @@
 "use client";
 
-import React, {
-  ReactNode,
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-} from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronRight, ChevronLeft, Play, Pause } from "lucide-react";
 import Image from "next/image";
 
+// Types
 type SlideType = {
   img: string;
   thumbnail: string;
-  content: ReactNode;
+  title: string;
+  description: string;
   focusPoint: string;
   color: string;
 };
 
+// Constants
+const SLIDE_DURATION = 7000; // 7 seconds
 const slides: SlideType[] = [
   {
     img: "/assets/images/_webp/hero/PHOTO_00.webp",
     thumbnail: "/assets/images/_thumbnails/hero/PHOTO_00.webp",
     focusPoint: "center bottom",
     color: "#799bb9",
-    content: (
-      <>
-        <h2 className="text-4xl font-bold mb-6">
-          Descubre lugares maravillosos
-        </h2>
-        <p className="text-xl">
-          Conoce todo lo que Villarrica tiene para ofrecer.
-        </p>
-      </>
-    ),
+    title: "Descubre lugares maravillosos",
+    description:
+      "Conoce todo lo que Villarrica tiene para ofrecer. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. lorem ipsos ",
   },
   {
     img: "/assets/images/_webp/hero/PHOTO_01.webp",
     thumbnail: "/assets/images/_thumbnails/hero/PHOTO_01.webp",
     focusPoint: "75% 75%",
     color: "#6c513e",
-    content: (
-      <>
-        <h2 className="text-4xl font-bold mb-6">Relájate en el paraíso</h2>
-        <p className="text-xl">
-          Despierta en lujosos hoteles y paisajes serenos.
-        </p>
-      </>
-    ),
+    title: "Relájate en el paraíso",
+    description:
+      "Despierta en lujosos hoteles y paisajes serenos. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. lorem ipsos ",
   },
   {
     img: "/assets/images/_webp/hero/PHOTO_02.webp",
     thumbnail: "/assets/images/_thumbnails/hero/PHOTO_02.webp",
     focusPoint: "center bottom",
     color: "#47504a",
-    content: (
-      <>
-        <h2 className="text-4xl font-bold pb-6">¡La aventura en espera!</h2>
-        <p className="text-xl">
-          Experimenta emocionantes aventuras y crea memorias únicas.
-        </p>
-      </>
-    ),
+    title: "¡La aventura en espera!",
+    description:
+      "Experimenta emocionantes aventuras y crea memorias únicas. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. lorem ipsos ",
   },
 ];
 
 export function Hero() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-  const [isPlaying, setIsPlaying] = useState(true);
+  // Carousel state
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30 });
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState<SlideType | null>(null);
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(false);
+
+  // Animation state
+  const [isPlaying, setIsPlaying] = useState(true);
   const [progress, setProgress] = useState(0);
 
+  // Refs
   const endOfHeroRef = useRef<HTMLDivElement>(null);
 
+  // Carousel controls
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
   const togglePlay = () => setIsPlaying(!isPlaying);
 
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
-
+  // Update state on slide change
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
-    setSelectedIndex(emblaApi.selectedScrollSnap());
+    const index = emblaApi.selectedScrollSnap();
+    setSelectedIndex(index);
+    setCurrentSlide(slides[index]);
     setCanScrollPrev(emblaApi.canScrollPrev());
     setCanScrollNext(emblaApi.canScrollNext());
   }, [emblaApi]);
 
-  const handleSkipToContent = () => {
-    endOfHeroRef.current?.focus();
-  };
-
+  // Keyboard navigation for dots
   const handleDotKeydown = (event: React.KeyboardEvent) => {
     const dotsCount = slides.length;
     if (event.key === "ArrowRight" || event.key === "ArrowDown") {
       event.preventDefault();
-      const nextIndex = (selectedIndex + 1) % dotsCount;
-      emblaApi?.scrollTo(nextIndex);
+      emblaApi?.scrollTo((selectedIndex + 1) % dotsCount);
     } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
       event.preventDefault();
-      const prevIndex = (selectedIndex - 1 + dotsCount) % dotsCount;
-      emblaApi?.scrollTo(prevIndex);
-    } else if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      emblaApi?.scrollTo(selectedIndex);
+      emblaApi?.scrollTo((selectedIndex - 1 + dotsCount) % dotsCount);
     }
   };
 
+  // Initialize carousel
   useEffect(() => {
     if (!emblaApi) return;
     emblaApi.on("select", onSelect);
     onSelect();
   }, [emblaApi, onSelect]);
 
+  // Handle autoplay animation
   useEffect(() => {
-    if (isPlaying && emblaApi) {
-      let animationFrame: number;
-      let startTime: number | null = null;
+    if (!isPlaying || !emblaApi) return;
 
-      const animate = (timestamp: number) => {
-        if (startTime === null) startTime = timestamp;
-        const elapsed = timestamp - startTime;
-        const duration = 7 * 1000;
-        const newProgress = Math.min(elapsed / duration, 1);
-        setProgress(newProgress);
+    let animationFrame: number;
+    let startTime: number | null = null;
 
-        if (elapsed < duration) {
-          animationFrame = requestAnimationFrame(animate);
-        } else {
-          emblaApi.scrollNext();
-          startTime = timestamp;
-          animationFrame = requestAnimationFrame(animate);
-        }
-      };
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const newProgress = Math.min(elapsed / SLIDE_DURATION, 1);
+      setProgress(newProgress);
 
-      animationFrame = requestAnimationFrame(animate);
+      if (elapsed < SLIDE_DURATION) {
+        animationFrame = requestAnimationFrame(animate);
+      } else {
+        emblaApi.scrollNext();
+        startTime = timestamp;
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
 
-      return () => {
-        cancelAnimationFrame(animationFrame);
-      };
-    } else {
-      setProgress(0); // Reset progress when paused
-    }
+    animationFrame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrame);
   }, [isPlaying, emblaApi, selectedIndex]);
 
   return (
     <div className="relative">
       {/* Hidden Skip Hero Button */}
       <button
-        onClick={handleSkipToContent}
+        onClick={() => endOfHeroRef.current?.focus()}
         className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-md z-10"
         tabIndex={0}
       >
@@ -171,96 +143,123 @@ export function Hero() {
                 thumbnail={slide.thumbnail}
                 color={slide.color}
               >
-                {slide.content}
+                <SlideContent
+                  title={slide.title}
+                  description={slide.description}
+                />
               </Slide>
             </div>
           ))}
         </div>
       </div>
-
-      {/* Dots Navigation */}
-      <div
-        role="group"
-        aria-label="Navegación de diapositivas"
-        className="absolute bottom-12 md:left-1/2 right-16 md:right-auto transform -translate-x-1/2 flex space-x-2 outline-offset-8 rounded-lg"
-        tabIndex={0} // Make the container focusable
-        onKeyDown={handleDotKeydown} // Handle keyboard events here
-      >
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            className={`w-3 h-3 rounded-full border border-white/30 ${
-              index === selectedIndex ? "bg-primary-light" : "bg-white/50"
-            }`}
-            onClick={() => emblaApi?.scrollTo(index)}
-            aria-label={`Ir a la diapositiva ${index + 1}`}
-            aria-selected={index === selectedIndex}
-            tabIndex={-1}
+      {/* Content */}
+      <div className="absolute inset-0 bg-gradient-to-t from-surface-dark-70 to-transparent" />
+      <div className="absolute bottom-16 left-0 right-0  text-text-dark container">
+        {currentSlide && (
+          <SlideContent
+            title={currentSlide.title}
+            description={currentSlide.description}
           />
-        ))}
+        )}
       </div>
 
-      {/* Navigation Controls */}
-      <button
-        className="absolute left-4 md:top-1/2 md:transform md:-translate-y-1/2 bottom-10 md:bottom-4 md:p-4 group outline-none"
-        onClick={scrollPrev}
-        aria-label="Diapositiva anterior"
-        disabled={!canScrollPrev}
-        tabIndex={0}
-      >
-        <div className="rounded-full p-1 group-focus:outline outline-[#458bfb] outline-offset-0  group-focus:ring group-focus: ring-white ring-offset-[1px]">
-          <div className="p-2 md:p-3 rounded-full bg-white/70 flex items-center justify-center ">
-            <ChevronLeft className="text-text-light" />
+      <div className="container relative">
+        {/* Navigation Controls */}
+        <button
+          className="group absolute left-2 bottom-8 outline-none"
+          onClick={scrollPrev}
+          aria-label="Diapositiva anterior"
+          disabled={!canScrollPrev}
+          tabIndex={0}
+        >
+          <div className="rounded-full p-1 group-focus-visible:outline outline-[#458bfb] outline-offset-0 group-focus-visible:ring group-focus-visible:ring-white ring-offset-[1px]">
+            <div className="p-2 rounded-full bg-white/30 group-hover:bg-primary-light-60 flex items-center justify-center transition-all duration-300">
+              <ChevronLeft className=" text-white  transition-all duration-300" />
+            </div>
           </div>
-        </div>
-      </button>
+        </button>
 
-      <button
-        className="absolute left-16 md:left-auto md:top-1/2 md:transform md:-translate-y-1/2 bottom-10 md:bottom-4 md:right-4 group md:p-4 outline-none"
-        onClick={scrollNext}
-        aria-label="Siguiente diapositiva"
-        disabled={!canScrollNext}
-        tabIndex={0}
-      >
-        <div className="rounded-full p-1 group-focus:outline outline-[#458bfb] outline-offset-0  group-focus:ring group-focus: ring-white ring-offset-[1px]">
-          <div className="p-2 md:p-3 rounded-full bg-white/70 flex items-center justify-center">
-            <ChevronRight className="text-text-light" />
+        <button
+          className=" absolute left-14 bottom-8 group outline-none"
+          onClick={scrollNext}
+          aria-label="Siguiente diapositiva"
+          disabled={!canScrollNext}
+          tabIndex={0}
+        >
+          <div className="rounded-full p-1 group-focus-visible:outline outline-[#458bfb] outline-offset-0 group-focus-visible:ring group-focus-visible:ring-white ring-offset-[1px]">
+            <div className="p-2 rounded-full  bg-white/30 group-hover:bg-primary-light-60 flex items-center justify-center transition-all duration-300">
+              <ChevronRight className="  translate-x-0.5 text-white  transition-all duration-300" />
+            </div>
           </div>
-        </div>
-      </button>
+        </button>
 
-      {/* Play/Pause Button with Circular Progress */}
-      <button
-        className="absolute bottom-10 right-10 w-8 h-8 rounded-full bg-white/70 shadow-md flex items-center justify-center"
-        onClick={togglePlay}
-        aria-label={isPlaying ? "Pausar carrusel" : "Reproducir carrusel"}
-        tabIndex={0}
-      >
-        <svg width="37" height="37" viewBox="0 0 40 40" className="absolute">
-          <circle
-            cx="20"
-            cy="20"
-            r="18"
-            fill="none"
-            className="stroke-surface-light-10"
-            strokeWidth="3"
-          />
-          <circle
-            cx="20"
-            cy="20"
-            r="18"
-            fill="none"
-            className="stroke-primary-light"
-            strokeWidth="3"
-            strokeDasharray={`${progress * 113.1} 113.1`}
-            strokeLinecap="round"
-            transform="rotate(-90 20 20)"
-          />
-        </svg>
-        <div className="z-10">
-          {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+        {/* Dots Navigation */}
+        <div
+          role="group"
+          aria-label="Navegación de diapositivas"
+          className="absolute bottom-12 md:left-1/2 right-16 md:right-auto transform -translate-x-1/2 flex space-x-2 outline-offset-8 rounded-lg"
+          tabIndex={0} // Make the container focusable
+          onKeyDown={handleDotKeydown} // Handle keyboard events here
+        >
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              className={`w-3 h-3 rounded-full   ${
+                index === selectedIndex ? "bg-primary-light" : "bg-white/50"
+              }`}
+              onClick={() => emblaApi?.scrollTo(index)}
+              aria-label={`Ir a la diapositiva ${index + 1}`}
+              aria-pressed={index === selectedIndex}
+              tabIndex={-1}
+            />
+          ))}
         </div>
-      </button>
+
+        {/* Play/Pause Button with Circular Progress */}
+        <button
+          className="group absolute bottom-10 right-10 w-8 h-8 rounded-full bg-white/30 shadow-md flex items-center justify-center"
+          onClick={togglePlay}
+          aria-label={isPlaying ? "Pausar carrusel" : "Reproducir carrusel"}
+          tabIndex={0}
+        >
+          <svg width="37" height="37" viewBox="0 0 40 40" className="absolute">
+            <circle
+              cx="20"
+              cy="20"
+              r="18"
+              fill="none"
+              className="stroke-surface-light-10"
+              strokeWidth="3"
+            />
+            <circle
+              cx="20"
+              cy="20"
+              r="18"
+              fill="none"
+              className="stroke-primary-light"
+              strokeWidth="3"
+              strokeDasharray={`${progress * 113.1} 113.1`}
+              strokeLinecap="round"
+              transform="rotate(-90 20 20)"
+            />
+          </svg>
+          <div className="z-10">
+            {isPlaying ? (
+              <Pause
+                size={16}
+                fill="white"
+                className="text-white/80 transition-all duration-300"
+              />
+            ) : (
+              <Play
+                size={16}
+                fill="white"
+                className="text-white/80 transition-all duration-300"
+              />
+            )}
+          </div>
+        </button>
+      </div>
 
       <div
         ref={endOfHeroRef}
@@ -273,7 +272,7 @@ export function Hero() {
 }
 
 type SlideProps = {
-  children: ReactNode;
+  children: React.ReactNode;
   image: string;
   focusPoint: string;
   thumbnail: string;
@@ -281,7 +280,7 @@ type SlideProps = {
 };
 
 const Slide = ({
-  children,
+  // children,
   image,
   thumbnail,
   color,
@@ -294,7 +293,7 @@ const Slide = ({
       }}
     >
       <div
-        className="relative h-[650px] min-h-[500px] overflow-hidden"
+        className="relative h-[550px] md:h-[550px] lg:h-[650px]  overflow-hidden"
         style={{
           backgroundImage: `url(${image})`,
           backgroundSize: "cover",
@@ -318,11 +317,24 @@ const Slide = ({
           fill
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-transparent" />
-        <div className="absolute top-0 left-0 right-0 p-8 text-white container">
-          {children}
-        </div>
       </div>
+    </div>
+  );
+};
+
+const SlideContent = ({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) => {
+  return (
+    <div className=" md:w-8/12 lg:w-6/12   my-12 rounded-lg">
+      <h2 className="text-2xl md:text-3xl   font-bold mb-4">{title}</h2>
+      <p className="text-base md:text-lg lg:text-xl  text-pretty font-medium">
+        {description}
+      </p>
     </div>
   );
 };
