@@ -15,9 +15,12 @@ function Calendar({
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
+  const today = new Date();
+
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
+      disabled={{ before: today }}
       className={cn(
         "p-5 bg-primary-light-10 rounded-[40px] border border-primary-light-30",
         className
@@ -34,7 +37,7 @@ function Calendar({
         nav_button_previous: "absolute left-0",
         nav_button_next: "absolute right-0",
         table: "  ",
-        head_row: "flex  border-b-2 border-primary-light-30 ",
+        head_row: "flex  rounded-full bg-primary-light-20 ",
         head_cell: "rounded-full w-10 text-[0.8rem] text-black font-medium",
         row: "flex w-full mt-2",
         cell: cn(
@@ -51,7 +54,7 @@ function Calendar({
         day_range_end: "day-range-end",
         day_selected:
           "bg-primary-light text-white hover:bg-primary-light hover:text-white focus:bg-primary-light focus:text-white !rounded-none",
-        day_today: "border border-primary-light-30 text-black",
+        day_today: " border-b-4 border-b-primary-light-30 !rounded-none text-black",
         day_outside:
           "day-outside text-gray-900 opacity-50 aria-selected:bg-neutral-100/50 aria-selected:text-gray-900 aria-selected:opacity-30",
         day_disabled: "text-gray-900 opacity-50",

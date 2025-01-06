@@ -9,9 +9,8 @@ import {
 } from "@/components/ui/popover";
 import { MinusIcon, PlusIcon, UserRound, Baby } from "lucide-react"; // Import icons
 import { useSelectionStore } from "@/store/useSelectionStore"; // Import the Zustand store
-
+import { cn } from "@/lib/utils";
 export function GuestSelector() {
-  // Use Zustand store for state management
   const {
     adults,
     children,
@@ -52,79 +51,101 @@ export function GuestSelector() {
   const adultsLabel = adults === 1 ? "adulto" : "adultos";
   const childrenLabel = children === 1 ? "niño" : "niños";
 
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button variant="outline" className="min-w-[200px] w-full md:w-fit">
-          <span>
-            {adults} {adultsLabel}
-          </span>
-          <span className="px-2">|</span>
-          <span>
-            {children} {childrenLabel}
-          </span>
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="min-w-[200px] rounded-2xl">
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <span className="flex items-center">
-                <UserRound className="mr-2 h-4 w-4" /> Adultos
-              </span>
-              <div className="flex items-center space-x-2">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={decrementAdults}
-                  disabled={adults <= 1}
-                >
-                  <MinusIcon className="h-4 w-4" />
-                </Button>
-                <input
-                  type="text"
-                  value={adults}
-                  onChange={(e) => handleInputChange(e, setAdults)}
-                  onKeyDown={(e) => handleKeyPress(e, childrenRef)}
-                  style={{ border: "none", textAlign: "center", width: "40px" }}
-                />
-                <Button variant="outline" size="icon" onClick={incrementAdults}>
-                  <PlusIcon className="h-4 w-4" />
-                </Button>
-              </div>
+  const PeopleButton = () => {
+    return (
+      <div
+        className={cn(
+          "transition-all duration-300 flex rounded-[40px] hover:bg-primary-light-20"
+        )}
+      >
+        <div
+          className={cn(
+            "flex flex-col items-start rounded-[40px] px-6 py-3  min-w-[200px]"
+          )}
+          onClick={() => {}}
+        >
+          <div className="flex items-center font-bold text-sm">Quién</div>
+          <div>
+            <span>
+              {adults} {adultsLabel}
+            </span>
+            <span className="px-2">|</span>
+            <span>
+              {children} {childrenLabel}
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const GuestSelectorContent = () => {
+    return (
+      <div className="space-y-4 p-5 p-5 bg-primary-light-10 rounded-[40px] border border-primary-light-30">
+        <div className="space-y-2">
+          <div className="flex justify-between items-center">
+            <span className="flex items-center">
+              <UserRound className="mr-2 h-4 w-4" /> Adultos
+            </span>
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={decrementAdults}
+                disabled={adults <= 1}
+              >
+                <MinusIcon className="h-4 w-4" />
+              </Button>
+              <input
+                type="text"
+                value={adults}
+                onChange={(e) => handleInputChange(e, setAdults)}
+                onKeyDown={(e) => handleKeyPress(e, childrenRef)}
+                style={{ border: "none", textAlign: "center", width: "40px" }}
+              />
+              <Button variant="outline" size="icon" onClick={incrementAdults}>
+                <PlusIcon className="h-4 w-4" />
+              </Button>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="flex items-center">
-                <Baby className="mr-2 h-4 w-4" /> Niños
-              </span>
-              <div className="flex items-center space-x-2">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={decrementChildren}
-                  disabled={children === 0}
-                >
-                  <MinusIcon className="h-4 w-4" />
-                </Button>
-                <input
-                  ref={childrenRef}
-                  type="text"
-                  value={children}
-                  onChange={(e) => handleInputChange(e, setChildren)}
-                  onKeyDown={(e) => handleKeyPress(e)}
-                  style={{ border: "none", textAlign: "center", width: "40px" }}
-                />
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={incrementChildren}
-                >
-                  <PlusIcon className="h-4 w-4" />
-                </Button>
-              </div>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="flex items-center">
+              <Baby className="mr-2 h-4 w-4" /> Niños
+            </span>
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={decrementChildren}
+                disabled={children === 0}
+              >
+                <MinusIcon className="h-4 w-4" />
+              </Button>
+              <input
+                ref={childrenRef}
+                type="text"
+                value={children}
+                onChange={(e) => handleInputChange(e, setChildren)}
+                onKeyDown={(e) => handleKeyPress(e)}
+                style={{ border: "none", textAlign: "center", width: "40px" }}
+              />
+              <Button variant="outline" size="icon" onClick={incrementChildren}>
+                <PlusIcon className="h-4 w-4" />
+              </Button>
             </div>
           </div>
         </div>
+      </div>
+    );
+  };
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger>
+        <PeopleButton />
+      </PopoverTrigger>
+      <PopoverContent className="p-0 rounded-[40px] border-none  bg-surface-light w-[300px]">
+        <GuestSelectorContent />
       </PopoverContent>
     </Popover>
   );
