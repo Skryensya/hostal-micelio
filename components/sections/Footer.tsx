@@ -10,11 +10,11 @@ const Footer = () => {
       <WavyDivider
         backgroundClassNames={[
           "bg-surface-light dark:bg-surface-dark",
-          "bg-border-light dark:bg-border-dark",
-          "bg-surface-dark dark:bg-surface-dark",
+          "bg-primary-light  ",
+          "bg-surface-2-dark",
         ]}
       />
-      <footer className="bg-surface-dark  text-white py-8">
+      <footer className="bg-surface-2-dark text-text-dark py-8">
         <div className="container mx-auto px-4">
           {/* Level 1: Logo and Links */}
           <div className="flex flex-col md:flex-row justify-between items-center mb-6">
@@ -83,7 +83,7 @@ const Footer = () => {
           </div>
 
           {/* Level 2: Socials and Copyright */}
-          <div className="flex flex-col md:flex-row justify-between items-center border-t border-gray-700 pt-4  gap-4 md:pt-4">
+          <div className="flex flex-col md:flex-row justify-between items-center border-t border-border-dark pt-4  gap-4 md:pt-4">
             <p className="text-sm order-1">
               &copy; 2024 Hostal Micelio. Todos los derechos reservados.
             </p>

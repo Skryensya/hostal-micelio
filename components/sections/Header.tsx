@@ -49,7 +49,7 @@ export function Header() {
     <header
       id="header"
       className={cn(
-        "py-2 sticky bg-surface-light dark:bg-surface-dark top-0 border-b border-border-light dark:border-border-dark z-50 transition-all"
+        "py-2 sticky bg-surface-light-80 dark:bg-surface-dark-80 top-0 z-50 transition-all border-b-2 border-border-light dark:border-border-dark backdrop-blur-xl"
       )}
     >
       <div className="flex flex-col">
@@ -89,7 +89,7 @@ export function Header() {
         >
           <div
             className={
-              "lg:hidden bg-surface-light dark:bg-surface-dark overflow-hidden top-full z-40"
+              "lg:hidden bg-surface-2-light dark:bg-surface-2-dark overflow-hidden top-full z-40"
             }
           >
             <div className="p-4 w-full flex flex-col items-end gap-4">

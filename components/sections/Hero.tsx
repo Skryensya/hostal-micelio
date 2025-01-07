@@ -127,7 +127,7 @@ export function Hero() {
       {/* Hidden Skip Hero Button */}
       <button
         onClick={() => endOfHeroRef.current?.focus()}
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-md z-10"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-text-dark px-4 py-2 rounded-md z-10"
         tabIndex={0}
       >
         Saltar Hero
@@ -153,7 +153,8 @@ export function Hero() {
         </div>
       </div>
       {/* Content */}
-      <div className="absolute inset-0 bg-gradient-to-t from-surface-dark-70 to-transparent" />
+
+      <div className="absolute inset-0 bottom-gradient" />
       <div className="absolute bottom-16 left-0 right-0  text-text-dark container">
         {currentSlide && (
           <SlideContent
@@ -174,7 +175,7 @@ export function Hero() {
         >
           <div className="rounded-full p-1 group-focus-visible:outline outline-[#458bfb] outline-offset-0 group-focus-visible:ring group-focus-visible:ring-white ring-offset-[1px]">
             <div className="p-2 rounded-full bg-white/30 group-hover:bg-primary-light-60 flex items-center justify-center transition-all duration-300">
-              <ChevronLeft className=" text-white  transition-all duration-300" />
+              <ChevronLeft className=" text-text-dark transition-all duration-300" />
             </div>
           </div>
         </button>
@@ -188,7 +189,7 @@ export function Hero() {
         >
           <div className="rounded-full p-1 group-focus-visible:outline outline-[#458bfb] outline-offset-0 group-focus-visible:ring group-focus-visible:ring-white ring-offset-[1px]">
             <div className="p-2 rounded-full  bg-white/30 group-hover:bg-primary-light-60 flex items-center justify-center transition-all duration-300">
-              <ChevronRight className="  translate-x-0.5 text-white  transition-all duration-300" />
+              <ChevronRight className="  translate-x-0.5 text-text-dark  transition-all duration-300" />
             </div>
           </div>
         </button>
@@ -247,14 +248,16 @@ export function Hero() {
             {isPlaying ? (
               <Pause
                 size={16}
-                fill="white"
-                className="text-white/80 transition-all duration-300"
+                fill="#f4d7eb"
+                stroke="#f4d7eb"
+                className="text-text-dark-80 transition-all duration-300"
               />
             ) : (
               <Play
                 size={16}
-                fill="white"
-                className="text-white/80 transition-all duration-300"
+                fill="#f4d7eb"
+                stroke="#f4d7eb"
+                className="text-text-dark-80 transition-all duration-300"
               />
             )}
           </div>

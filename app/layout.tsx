@@ -16,8 +16,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isGrayscale = false;
+
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html
+      lang="es"
+      suppressHydrationWarning
+      style={{ filter: isGrayscale ? "grayscale(100%)" : "none" }}
+    >
       <body
         className={`${poppins.variable} ${balooBhaijaan2.variable} ${nunitoSans.variable} font-sans antialiased min-h-screen bg-surface-light text-text-light dark:bg-surface-dark dark:text-text-dark`}
       >

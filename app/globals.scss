@@ -40,14 +40,14 @@
 */
 
 :root {
-  --text-light: hsl(319, 57%, 10%);
+  --text-light: hsl(242, 24%, 30%);
   --text-dark: hsl(319, 57%, 90%);
 
   --surface-light: hsl(27, 87%, 94%);
-  --surface-dark: hsl(27, 87%, 6%);
+  --surface-dark: hsl(242, 24%, 45%);
 
-  --surface-2-light: hsl(27, 56%, 45%);
-  --surface-2-dark: hsl(27, 87%, 6%);
+  --surface-2-light: hsl(27, 87%, 88%);
+  --surface-2-dark: hsl(277, 28%, 37%);
 
   --primary-light: hsl(318, 61%, 71%);
   --primary-dark: hsl(318, 61%, 29%);
@@ -58,12 +58,12 @@
   --accent-light: hsl(177, 99%, 64%);
   --accent-dark: hsl(177, 99%, 36%);
 
-  --border-light: hsl(22, 59%, 23%);
-  --border-dark: hsl(22, 85%, 67%);
+  --border-light: hsl(242, 24%, 30%);
+  --border-dark: hsl(319, 57%, 90%);
 }
 
 // create a gradient from bottom to top that uses surface light and in the top is transparent
-.gradient-surface-light {
+.gradient-surface {
   position: relative;
   &::after {
     content: "";
@@ -89,6 +89,41 @@
     height: 100%;
     background: transparent;
     z-index: 1;
+  }
+}
+
+// dark mode
+.dark {
+  .gradient-surface {
+    &::after {
+      background: linear-gradient(
+        to top,
+        var(--surface-dark),
+        var(--surface-dark-50) 20%,
+        transparent
+      );
+    }
+  }
+}
+
+.bottom-gradient {
+  background: linear-gradient(
+    to top,
+    var(--surface-dark-90),
+    var(--surface-dark-80) 5%,
+    var(--surface-dark-70) 10%,
+    var(--surface-dark-60) 15%,
+    var(--surface-dark-50) 20%,
+    transparent 65%
+  );
+  &--soft {
+    background: linear-gradient(
+      to top,
+      var(--surface-dark-70),
+      var(--surface-dark-60) 5%,
+      var(--surface-dark-50) 15%,
+      transparent 45%
+    );
   }
 }
 

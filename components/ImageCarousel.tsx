@@ -131,14 +131,14 @@ export function ImageCarousel({
         </div>
         {canScrollPrev && (
           <div className="absolute left-4 top-1/2 -translate-y-1/2 translate-x-12 opacity-0 group-hover:opacity-80 transition-opacity duration-300">
-            <CarouselPrevious className="bg-gray-400/50 hover:bg-gray-400/75 text-white">
+            <CarouselPrevious className="bg-gray-400/50 hover:bg-gray-400/75 text-text-dark">
               <ChevronLeft className="h-6 w-6" />
             </CarouselPrevious>
           </div>
         )}
         {canScrollNext && (
           <div className="absolute right-4 top-1/2 -translate-y-1/2 -translate-x-12 opacity-0 group-hover:opacity-80 transition-opacity duration-300">
-            <CarouselNext className="bg-gray-400/50 hover:bg-gray-400/75 text-white">
+            <CarouselNext className="bg-gray-400/50 hover:bg-gray-400/75 text-text-dark">
               <ChevronRight className="h-6 w-6" />
             </CarouselNext>
           </div>

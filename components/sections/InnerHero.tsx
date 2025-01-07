@@ -16,7 +16,7 @@ export function InnerHero({ title }) {
       {/* Hidden Skip Hero Button */}
       <button
         onClick={handleSkipToContent}
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-md z-10"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-text-dark px-4 py-2 rounded-md z-10"
         tabIndex={0}
       >
         Saltar Hero

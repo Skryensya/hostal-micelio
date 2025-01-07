@@ -13,7 +13,7 @@ const Reviews = () => {
         <MessageCircle className="w-8 h-8" />
         Lo que dicen nuestros Huespedes
       </h2>
-      <div className=" h-fit max-h-[600px] overflow-hidden gradient-surface-light mb-6 ">
+      <div className=" h-fit max-h-[600px] overflow-hidden gradient-surface mb-6 ">
         <div className="masonry-container">
           {REVIEWS.sort((a, b) => a.comment.length - b.comment.length).map(
             (review, index) => (
