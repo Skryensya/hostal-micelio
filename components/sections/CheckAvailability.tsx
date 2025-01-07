@@ -45,8 +45,8 @@ export function CheckAvailability() {
         </button>
       </div>
 
-      <div className=" ">
-        <div className="flex flex-col gap-4 md:flex-row justify-between rounded-[40px] md:rounded-full shadow-xl shadow-primary-light-10 p-2 bg-primary-light-30">
+      <div className="">
+        <div className="flex flex-col items-center gap-y-4 md:flex-row flex-shrink rounded-[40px] md:rounded-full shadow-xl shadow-primary-light-10 p-1 bg-primary-light-30">
           <DateRangePicker />
           <GuestSelector />
           <Button
