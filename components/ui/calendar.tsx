@@ -47,7 +47,7 @@ function Calendar({
             : "[&:has([aria-selected])]:rounded-full "
         ),
         day: cn(
-          buttonVariants({ variant: "ghost" }),
+          buttonVariants({ variant: "link" }),
           "h-10 w-10 p-0 font-normal aria-selected:opacity-100 hover:bg-primary-light-30  "
         ),
         day_range_start: "day-range-start",
