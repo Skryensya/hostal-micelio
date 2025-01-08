@@ -1,0 +1,10 @@
+.hero_embla {
+    overflow: hidden;
+  }
+  .hero_embla__container {
+    display: flex;
+  }
+  .hero_embla__slide {
+    flex: 0 0 100%;
+    min-width: 0;
+  }

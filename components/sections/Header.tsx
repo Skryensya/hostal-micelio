@@ -49,7 +49,7 @@ export function Header() {
     <header
       id="header"
       className={cn(
-        "py-2 sticky bg-surface-light-80 dark:bg-surface-dark-80 top-0 z-50 transition-all border-b-2 border-border-light dark:border-border-dark backdrop-blur-xl"
+        "py-2 sticky bg-surface-light-80 dark:bg-surface-dark-80 top-0 z-50 transition-all border-b border-border-light dark:border-border-dark backdrop-blur"
       )}
     >
       <div className="flex flex-col">

@@ -1,0 +1,89 @@
+:root {
+  --font-poppins: "Poppins", sans-serif;
+  --font-baloo-bhaijaan-2: "Baloo Bhaijaan 2";
+  --font-nunito-sans: "Nunito Sans", sans-serif;
+
+  .font-poppins,
+  .font-heading {
+    font-family: var(--font-poppins);
+  }
+  .font-baloo-bhaijaan-2,
+  .font-body,
+  body {
+    font-family: var(--font-nunito-sans);
+    text-underline-offset: 2px;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: var(--font-poppins);
+  font-weight: 600;
+}
+p > a {
+  color: var(--accent-light);
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  }
+}
+.dark p > a {
+  color: var(--accent-dark);
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+h1,
+.h1 {
+  font-size: 1.99rem; /* 31.84px */
+}
+
+h2,
+.h2 {
+  font-size: 1.658rem; /* 26.56px */
+}
+
+h3,
+.h3 {
+  font-size: 1.382rem; /* 22.08px */
+}
+
+h4,
+.h4 {
+  font-size: 1.152rem; /* 18.4px */
+}
+
+h5,
+.h5 {
+  font-size: 0.96rem; /* 15.36px */
+}
+
+small,
+.small {
+  font-size: 0.667rem; /* 10.72px */
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  line-clamp: 3;
+  overflow: hidden;
+}

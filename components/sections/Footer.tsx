@@ -8,8 +8,7 @@ const Footer = () => {
   return (
     <div className="mt-20">
       <WavyDivider
-        backgroundClassNames={[
-          "bg-surface-light dark:bg-surface-dark",
+        backgroundClassNames={[ 
           "bg-primary-light  ",
           "bg-surface-2-dark",
         ]}

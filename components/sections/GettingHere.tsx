@@ -21,8 +21,7 @@ export function GettingHere() {
               El <strong>Hostal Micelio</strong> se encuentra en{" "}
               <a
                 href="https://maps.app.goo.gl/5v4wGHi4YDYywrHw9"
-                className="text-primary-light underline hover:text-primary-dark"
-                target="_blank"
+                 target="_blank"
               >
                 Francisco Bilbao 969
               </a>
@@ -51,7 +50,8 @@ export function GettingHere() {
               </Link>
             </div>
           </div>
-          <div className="col-span-12 lg:col-span-7 overflow-hidden rounded-standar border border-border-light">
+          <div className="col-span-12 lg:col-span-7 overflow-hidden rounded-xl border border-border-light relative">
+            <span className="absolute inset-0  dark:bg-surface-dark  pointer-events-none opacity-[35%]"></span>
             <iframe
               src={GOOGLE_MAPS_EMBED_LINK}
               className="w-full h-[300px] lg:h-[500px]"

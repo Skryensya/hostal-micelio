@@ -1,0 +1,26 @@
+.masonry-container {
+    --columns: 4;
+    --gap: 16px;
+    column-count: var(--columns); /* Number of columns */
+    column-gap: var(--gap); /* Space between columns */
+  }
+  
+  .masonry-container > * {
+    break-inside: avoid; /* Prevents items from breaking inside columns */
+    margin-bottom: var(--gap); /* Space between items */
+  }
+  
+  @media (max-width: 1024px) {
+    .masonry-container {
+      --columns: 3;
+      --gap: 12px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .masonry-container {
+      --columns: 2;
+      --gap: 8px;
+    }
+  }
+  

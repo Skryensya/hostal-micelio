@@ -5,6 +5,7 @@ import { GuestSelector } from "@/components/GuestSelector";
 import { Button } from "../ui/button";
 import { useSelectionStore } from "@/store/useSelectionStore";
 import { cn } from "@/lib/utils";
+import { LightEffect } from "@/components/ui/LightEffect";
 
 export function CheckAvailability() {
   const [selectedTab, setSelectedTab] = useState("hospedaje");
@@ -27,7 +28,7 @@ export function CheckAvailability() {
       <div className="mx-auto flex justify-center w-4/12">
         <button
           className={cn(
-            ` w-fit cursor-pointer px-2 py-2 text-lg`,
+            `w-fit cursor-pointer px-2 py-2 text-lg`,
             selectedTab === "hospedaje" ? "font-bold" : ""
           )}
           onClick={() => handleTabChange("hospedaje")}
@@ -44,15 +45,12 @@ export function CheckAvailability() {
           Larga estadía
         </button>
       </div>
-
-      <div className="">
-        <div className="flex flex-col items-center gap-y-4 md:flex-row flex-shrink rounded-[40px] md:rounded-full shadow-xl shadow-primary-light-10 p-1 bg-primary-light-30">
+      <div className="flex justify-center items-center">
+        <div className="relative flex flex-col items-center gap-y-4 md:flex-row flex-shrink rounded-standar md:rounded-full p-1 bg-primary-light-30 dark:bg-primary-dark-30 w-fit">
+          <LightEffect />
           <DateRangePicker />
           <GuestSelector />
-          <Button
-            onClick={handleWhatsAppClick}
-            className="bg-primary-light w-full md:w-fit"
-          >
+          <Button onClick={handleWhatsAppClick} variant="outline">
             Consultar disponibilidad
           </Button>
         </div>

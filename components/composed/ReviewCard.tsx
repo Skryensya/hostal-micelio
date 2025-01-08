@@ -3,6 +3,7 @@ import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Review } from "@/lib/types";
 import { StarIcon, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { LightEffect } from "@/components/ui/LightEffect";
 
 const ReviewCard = ({
   review,
@@ -14,10 +15,11 @@ const ReviewCard = ({
   return (
     <Card
       style={{
-        backgroundColor: `hsl(${review.hue} 70% 90% / 0.5)`,
-      }}
-      className={`shadow shadow-[hsl(${review.hue} 70% 98%)] text-text-light`}
+        "--hue": review.hue,
+      } as React.CSSProperties}
+      className={`review-card-bg relative shadow shadow-[hsl(${review.hue} 70% 98%)] text-text-light`}
     >
+      <LightEffect />
       <CardHeader className="flex flex-row items-center md:gap-4 p-4 md:p-6 md:pb-0 space-y-0 justify-between">
         <div className="flex flex-row items-center gap-2">
           <Avatar className="h-6 w-6 md:h-10 md:w-10 aspect-square bg-gray-200">

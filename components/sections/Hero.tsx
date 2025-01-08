@@ -4,7 +4,9 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronRight, ChevronLeft, Play, Pause } from "lucide-react";
 import Image from "next/image";
-
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import { LightEffect } from "@/components/ui/LightEffect";
 // Types
 type SlideType = {
   img: string;
@@ -123,7 +125,7 @@ export function Hero() {
   }, [isPlaying, emblaApi, selectedIndex]);
 
   return (
-    <div className="relative">
+    <div className="relative dark">
       {/* Hidden Skip Hero Button */}
       <button
         onClick={() => endOfHeroRef.current?.focus()}
@@ -174,7 +176,16 @@ export function Hero() {
           tabIndex={0}
         >
           <div className="rounded-full p-1 group-focus-visible:outline outline-[#458bfb] outline-offset-0 group-focus-visible:ring group-focus-visible:ring-white ring-offset-[1px]">
-            <div className="p-2 rounded-full bg-white/30 group-hover:bg-primary-light-60 flex items-center justify-center transition-all duration-300">
+            {/* "p-2 rounded-full bg-white/30 group-hover:bg-primary-light-60 flex items-center justify-center transition-all duration-300" */}
+            <div
+              className={cn(
+                buttonVariants({
+                  variant: "outline",
+                  size: "icon",
+                })
+              )}
+            >
+              <LightEffect />
               <ChevronLeft className=" text-text-dark transition-all duration-300" />
             </div>
           </div>
@@ -188,8 +199,14 @@ export function Hero() {
           tabIndex={0}
         >
           <div className="rounded-full p-1 group-focus-visible:outline outline-[#458bfb] outline-offset-0 group-focus-visible:ring group-focus-visible:ring-white ring-offset-[1px]">
-            <div className="p-2 rounded-full  bg-white/30 group-hover:bg-primary-light-60 flex items-center justify-center transition-all duration-300">
-              <ChevronRight className="  translate-x-0.5 text-text-dark  transition-all duration-300" />
+            {/* "p-2 rounded-full  bg-white/30 group-hover:bg-primary-light-60 flex items-center justify-center transition-all duration-300" */}
+            <div
+              className={cn(
+                buttonVariants({ variant: "outline", size: "icon" })
+              )}
+            >
+              <LightEffect />
+              <ChevronRight className="translate-x-0.5 text-text-dark  transition-all duration-300" />
             </div>
           </div>
         </button>
@@ -205,31 +222,38 @@ export function Hero() {
           {slides.map((_, index) => (
             <button
               key={index}
-              className={`w-3 h-3 rounded-full   ${
-                index === selectedIndex ? "bg-primary-light" : "bg-white/50"
-              }`}
+              className={cn(
+                buttonVariants({
+                  variant: "outline",
+                  size: "icon",
+                }),
+                { "bg-primary-light": index === selectedIndex },
+                "w-3 h-3 rounded-full"
+              )}
               onClick={() => emblaApi?.scrollTo(index)}
               aria-label={`Ir a la diapositiva ${index + 1}`}
               aria-pressed={index === selectedIndex}
               tabIndex={-1}
-            />
+            >
+              <LightEffect />
+            </button>
           ))}
         </div>
 
         {/* Play/Pause Button with Circular Progress */}
         <button
-          className="group absolute bottom-10 right-10 w-8 h-8 rounded-full bg-white/30 shadow-md flex items-center justify-center"
+          className="group absolute bottom-10 right-10 w-10 h-10 rounded-full  flex items-center justify-center"
           onClick={togglePlay}
           aria-label={isPlaying ? "Pausar carrusel" : "Reproducir carrusel"}
           tabIndex={0}
         >
-          <svg width="37" height="37" viewBox="0 0 40 40" className="absolute">
+          <svg width="40" height="40" viewBox="0 0 40 40" className="absolute">
             <circle
               cx="20"
               cy="20"
               r="18"
               fill="none"
-              className="stroke-surface-light-10"
+              className="stroke-translate"
               strokeWidth="3"
             />
             <circle
@@ -244,7 +268,16 @@ export function Hero() {
               transform="rotate(-90 20 20)"
             />
           </svg>
-          <div className="z-10">
+          <div
+            className={cn(
+              buttonVariants({
+                variant: "link",
+                size: "icon",
+              }),
+              "z-10 rounded-full h-10 "
+            )}
+          >
+            <LightEffect />
             {isPlaying ? (
               <Pause
                 size={16}

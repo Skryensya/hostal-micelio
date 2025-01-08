@@ -1,0 +1,19 @@
+.embla {
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center; /* Center the slides vertically if necessary */
+}
+
+.embla__container {
+  display: flex;
+  will-change: transform;
+}
+
+.embla__slide {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  width: auto;
+}

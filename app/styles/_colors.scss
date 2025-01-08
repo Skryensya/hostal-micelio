@@ -1,0 +1,68 @@
+/* HOSTAL COLORS HEX  
+  #009F98 
+  #E1197C 
+  #561944 
+  #F3D39E 
+  #EE7934 
+*/
+
+/* HOSTAL COLORS HSL 
+  hsl(177, 100%, 31%)
+  hsl(330, 80%, 49%)
+  hsl(318, 55%, 22%)
+	hsl(37, 78%, 79%)
+  hsl(22, 85%, 57%)
+*/
+
+:root {
+  --text-light: hsl(242, 24%, 15%);
+  --text-dark: hsl(319, 100%, 95%);
+
+  --surface-light: hsl(27, 87%, 90%);
+  --surface-dark: hsl(242, 24%, 45%);
+
+  --surface-2-light: hsl(27, 87%, 88%);
+  --surface-2-dark: hsl(277, 28%, 37%);
+
+  --primary-light: hsl(318, 61%, 71%);
+  --primary-dark: hsl(310, 40%, 29%);
+
+  --secondary-light: hsl(22, 85%, 65%);
+  --secondary-dark: hsl(15, 64%, 72%);
+
+  --accent-light: hsl(170, 55%, 25%);
+  --accent-dark: hsl(170, 80%, 70%);
+
+  --border-light: hsl(242, 24%, 20%);
+  --border-dark: hsl(319, 57%, 90%);
+}
+
+$colors: "primary", "secondary", "surface", "surface-2", "accent";
+$themes: "light", "dark";
+$steps: (
+  "10": 0.1,
+  "20": 0.2,
+  "30": 0.3,
+  "40": 0.4,
+  "50": 0.5,
+  "60": 0.6,
+  "70": 0.7,
+  "80": 0.8,
+  "90": 0.9,
+  "100": 1,
+  "default": 1,
+);
+
+@each $color in $colors {
+  @each $theme in $themes {
+    @each $step-name, $opacity in $steps {
+      :root {
+        --#{$color}-#{$theme}-#{$step-name}: color-mix(
+          in srgb,
+          var(--#{$color}-#{$theme}) calc(#{$opacity} * 100%),
+          transparent
+        );
+      }
+    }
+  }
+}

@@ -55,13 +55,13 @@ export function DateRangePicker({
       <div
         ref={dateButtonRef}
         className={cn(
-          "transition-all duration-300 flex rounded-[40px]",
+          "transition-all duration-300 flex rounded-standar",
           activeButton ? "hover:bg-primary-light-20" : ""
         )}
       >
         <div
           className={cn(
-            "flex flex-col items-start rounded-[40px] px-6 py-3  min-w-[170px]",
+            "flex flex-col items-start rounded-standar px-6 py-3  min-w-[170px]",
             activeButton === "from" ? "bg-white" : "",
             activeButton ? "" : "hover:bg-primary-light-20"
           )}
@@ -74,7 +74,7 @@ export function DateRangePicker({
         </div>
         <div
           className={cn(
-            " relative flex flex-col items-start rounded-[40px] px-6  py-3  min-w-[200px] ",
+            "flex flex-col items-start rounded-standar px-6  py-3  min-w-[200px] ",
             activeButton === "to" ? "bg-white pr-8" : "",
             activeButton ? "" : "hover:bg-primary-light-20"
           )}
@@ -123,7 +123,7 @@ export function DateRangePicker({
           <DateButton />
         </PopoverTrigger>
         <PopoverContent
-          className="w-auto p-0 rounded-[40px] border-none  bg-surface-light "
+          className="w-auto p-0 rounded-standar border-none  bg-surface-light "
           align="start"
         >
           <Calendar

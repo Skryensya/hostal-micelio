@@ -12,6 +12,7 @@ import { GettingHere } from "@/components/sections/GettingHere";
 import { CheckAvailability } from "@/components/sections/CheckAvailability";
 import { WavyDivider } from "@/components/composed/WavyDivider";
 import { Reviews } from "@/components/sections/Reviews";
+import { ButtonShowcase } from "@/components/sections/ButtonShowcase";
 export default function Home() {
   return (
     <main className="">
@@ -24,6 +25,7 @@ export default function Home() {
         ]}
       />
       <CheckAvailability></CheckAvailability>
+      <ButtonShowcase />
       <Offers />
 
       {/* <Villarrica /> */}

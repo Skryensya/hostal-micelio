@@ -22,7 +22,7 @@ function Calendar({
       showOutsideDays={showOutsideDays}
       disabled={{ before: today }}
       className={cn(
-        "p-5 bg-primary-light-10 rounded-[40px] border border-primary-light-30",
+        "p-5 bg-primary-light-10 rounded-standar border border-primary-light-30",
         className
       )}
       classNames={{

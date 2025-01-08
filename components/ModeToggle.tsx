@@ -5,7 +5,7 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 
-export function ModeToggle() { 
+export function ModeToggle() {
   const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
@@ -13,10 +13,17 @@ export function ModeToggle() {
   };
 
   return (
-    <Button onClick={toggleTheme} variant="icon" size="icon">
-      <Moon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:rotate-90 dark:scale-0" />
-      <Sun className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-      <span className="sr-only">Toggle theme</span>
+    <Button
+      onClick={toggleTheme}
+      variant="link"
+      size="icon"
+      title={
+        theme === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"
+      }
+    >
+      <Moon className=" dark:hidden text-text-light" />
+      <Sun className="dark:block hidden text-text-dark" />
+      <span className="sr-only h-0 w-0">Toggle theme</span>
     </Button>
   );
 }

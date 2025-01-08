@@ -55,12 +55,12 @@ export function GuestSelector() {
     return (
       <div
         className={cn(
-          "transition-all duration-300 flex rounded-[40px] hover:bg-primary-light-20"
+          "transition-all duration-300 flex rounded-standar hover:bg-primary-light-20"
         )}
       >
         <div
           className={cn(
-            "flex flex-col items-start rounded-[40px] px-6 py-3  min-w-[200px]"
+            "flex flex-col items-start rounded-standar px-6 py-3  min-w-[200px]"
           )}
           onClick={() => {}}
         >
@@ -81,7 +81,7 @@ export function GuestSelector() {
 
   const GuestSelectorContent = () => {
     return (
-      <div className="space-y-4 p-5 p-5 bg-primary-light-10 rounded-[40px] border border-primary-light-30">
+      <div className="space-y-4 p-5 p-5 bg-primary-light-10 rounded-standar border border-primary-light-30">
         <div className="space-y-2">
           <div className="flex justify-between items-center">
             <span className="flex items-center">
@@ -144,7 +144,7 @@ export function GuestSelector() {
       <PopoverTrigger>
         <PeopleButton />
       </PopoverTrigger>
-      <PopoverContent className="p-0 rounded-[40px] border-none  bg-surface-light w-[300px]">
+      <PopoverContent className="p-0 rounded-standar border-none  bg-surface-light w-[300px]">
         <GuestSelectorContent />
       </PopoverContent>
     </Popover>

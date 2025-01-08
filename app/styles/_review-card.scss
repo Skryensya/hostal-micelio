@@ -1,0 +1,9 @@
+.review-card-bg {
+    --hue: 318;
+    background-color: hsl(var(--hue) 50% 70% / 0.7);
+  }
+  .dark {
+    .review-card-bg {
+      background-color: hsl(var(--hue) 30% 60% / 1);
+    }
+  }
