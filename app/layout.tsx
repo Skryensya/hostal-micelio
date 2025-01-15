@@ -16,7 +16,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const isGrayscale = false;
+  const isGrayscale = true;
 
   return (
     <html

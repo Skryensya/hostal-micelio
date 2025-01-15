@@ -8,7 +8,7 @@ export const StayingTypeSelector: React.FC = () => {
   const { selectedTab, setSelectedTab } = useSelectionStore(); // Use the store
 
   return (
-    <div className="mx-auto flex justify-center w-4/12">
+    <div className="mx-auto flex items-center justify-center lg:w-4/12 !mt-0 bg-surface-light dark:bg-surface-dark  rounded-standar lg:rounded-none px-2  ">
       <button
         className={cn(
           `w-fit cursor-pointer px-2 py-2 text-lg`,

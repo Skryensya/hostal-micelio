@@ -221,7 +221,7 @@ const DotsNavigation = ({
       role="group"
       aria-label="Navegación de diapositivas"
       className={cn(
-        "absolute bottom-12 md:left-1/2 right-16 md:right-auto transform -translate-x-1/2 flex space-x-2 outline-offset-8 rounded-lg",
+        "absolute bottom-12 -translate-y-1/2 md:translate-y-0 md:left-1/2 right-20 md:right-auto transform -translate-x-1/2 flex space-x-2 outline-offset-8 rounded-lg",
         !isLoaded && "opacity-50 cursor-not-allowed"
       )}
       tabIndex={isLoaded ? 0 : -1}

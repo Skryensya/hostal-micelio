@@ -46,29 +46,8 @@ function Calendar({
     setNumberOfMonths((prev) => prev + 1);
   };
 
-  const weekdays = [
-    "lunes",
-    "martes",
-    "miércoles",
-    "jueves",
-    "viernes",
-    "sábado",
-    "domingo",
-  ];
-
   return (
-    <div className="flex flex-col lg:flex-row items-center w-full rounded-standar border border-primary-light-30 overflow-hidden lg:rounded-none lg:border-none relative">
-      <div className="rounded-full bg-surface-2-light dark:bg-surface-2-dark absolute inset-4 bottom-auto lg:hidden flex justify-center items-center px-1 z-30">
-        {weekdays.map((day, index) => (
-          <div
-            key={index}
-            className="rounded-full w-full text-[0.8rem] text-text-light dark:text-text-dark font-medium text-center"
-            aria-label={day}
-          >
-            {day.slice(0, 2)}
-          </div>
-        ))}
-      </div>
+    <div className="flex flex-col lg:flex-row items-center w-full overflow-hidden relative">
       <div
         className={cn(
           "w-full overflow-y-auto flex flex-col lg:flex-row lg:overflow-y-hidden",
@@ -80,22 +59,22 @@ function Calendar({
           showOutsideDays={showOutsideDays}
           disabled={{ before: today }}
           className={cn(
-            "p-5 bg-transparent rounded-standar lg:border lg:border-primary-light-30",
+            "p-0 md:p-5 bg-transparent rounded-standar lg:border lg:border-primary-light-30",
             className
           )}
           classNames={{
             months: cn(
-              "flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-4",
+              "flex flex-col lg:flex-row   lg:space-y-0 lg:space-x-4",
               isMobile ? "overflow-visible" : ""
             ),
             month: cn(
-              "space-y-4 flex flex-col justify-center items-center",
+              "lg:space-y-4 flex flex-col justify-center items-center",
               isMobile ? "block" : ""
             ),
             caption:
               "flex justify-start lg:justify-center pt-1 relative items-center",
             caption_label:
-              " font-bold text-text-light dark:text-text-dark border-b border-border-light dark:border-border-dark w-full mx-3 lg:border-none",
+              "font-bold text-text-light dark:text-text-dark border-b border-border-light dark:border-border-dark w-full mx-3 lg:border-none",
             nav: "space-x-1 flex items-center",
             nav_button: cn(
               "h-10 w-10 flex items-center justify-center bg-transparent p-2 hover:opacity-100"
@@ -120,9 +99,9 @@ function Calendar({
             day_range_start: "day-range-start",
             day_range_end: "day-range-end",
             day_selected:
-              "bg-primary-light text-text-dark hover:bg-primary-light focus:bg-primary-light   !rounded-none",
+              "bg-primary-light text-text-dark hover:bg-primary-light focus:bg-primary-light !rounded-none",
             day_today:
-              " border-b-4 border-b-primary-light-30 !rounded-none text-text-light",
+              "border-b-4 border-b-primary-light-30 !rounded-none text-text-light",
             day_outside:
               "day-outside text-gray-900 opacity-50 aria-selected:bg-neutral-100/50 aria-selected:text-gray-900 aria-selected:opacity-30",
             day_disabled: "text-gray-900 opacity-50 cursor-not-allowed",
@@ -134,19 +113,36 @@ function Calendar({
           components={{
             IconLeft: () => <PreviousButton />,
             IconRight: () => <NextButton />,
+            Footer: ({ displayMonth }) => {
+              const lastMonthDate = new Date(
+                today.getFullYear(),
+                today.getMonth() + numberOfMonths - 1,
+                1
+              );
+              const lastMonthKey = `${lastMonthDate.getMonth()}-${lastMonthDate.getFullYear()}`;
+              const displayMonthKey = `${displayMonth.getMonth()}-${displayMonth.getFullYear()}`;
+              const sameMonth = displayMonthKey === lastMonthKey;
+              return (
+                <div className="flex justify-center items-center mt-4 mb-1">
+                  {isMobile && sameMonth && numberOfMonths < 16 && (
+                    <button
+                      onClick={loadMoreMonths}
+                      className={cn(
+                        buttonVariants({ variant: "outline" }),
+                        "w-full"
+                      )}
+                    >
+                      Cargar más meses
+                    </button>
+                  )}
+                </div>
+              );
+            },
           }}
           numberOfMonths={numberOfMonths}
           {...props}
         />
       </div>
-      {isMobile && numberOfMonths < 12 && (
-        <button
-          onClick={loadMoreMonths}
-          className="mt-4 p-2 text-sm bg-primary-light rounded-full"
-        >
-          Load More Months
-        </button>
-      )}
     </div>
   );
 }

@@ -28,7 +28,7 @@ const CalendarContent = ({
   handleSelect: (range: DateRange | undefined) => void;
 }) => {
   return (
-    <div className="w-full h-full flex justify-center items-center rounded-standar">
+    <div className="w-full h-full flex justify-center items-center lg:rounded-standar">
       <LightEffect />
       <Calendar
         initialFocus
@@ -73,6 +73,16 @@ export function DateRangePicker({
     },
     [setDateRange]
   );
+
+  const weekdays = [
+    "lunes",
+    "martes",
+    "miércoles",
+    "jueves",
+    "viernes",
+    "sábado",
+    "domingo",
+  ];
 
   const DateButton = () => {
     return (
@@ -165,7 +175,22 @@ export function DateRangePicker({
         </Popover>
       </div>
       <div className="block lg:hidden">
-        <CalendarContent dateRange={dateRange} handleSelect={handleSelect} />
+        <div className="p-5 border border-primary-light-30 bg-surface-light dark:bg-surface-dark rounded-standar lg:border-none lg:rounded-none">
+          <div className="rounded-full bg-surface-2-light dark:bg-surface-2-dark lg:hidden flex justify-center items-center px-1 z-30 mb-2">
+            {weekdays.map((day, index) => (
+              <div
+                key={index}
+                className="rounded-full w-full text-[0.8rem] text-text-light dark:text-text-dark font-medium text-center"
+                aria-label={day}
+              >
+                {day.slice(0, 3).charAt(0).toUpperCase() +
+                  day.slice(0, 3).slice(1) +
+                  "."}
+              </div>
+            ))}
+          </div>
+          <CalendarContent dateRange={dateRange} handleSelect={handleSelect} />
+        </div>
       </div>
     </div>
   );
