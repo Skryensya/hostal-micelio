@@ -43,9 +43,15 @@ const CalendarContent = ({
   );
 };
 
-export function DateRangePicker({
+interface DateRangePickerProps {
+  onSelect?: (from: Date, to: Date) => void;
+  className?: string;
+}
+
+export const DateRangePicker: React.FC<DateRangePickerProps> = ({
+  onSelect,
   className,
-}: React.HTMLAttributes<HTMLDivElement>) {
+}) => {
   const { dateRange, setDateRange } = useSelectionStore();
   const [activeButton, setActiveButton] = useState<"from" | "to" | null>(null);
   const dateButtonRef = useRef<HTMLDivElement>(null);
@@ -70,8 +76,11 @@ export function DateRangePicker({
     (range: DateRange | undefined) => {
       setDateRange(range);
       if (range?.from) setActiveButton("to");
+      if (onSelect) {
+        onSelect(range?.from, range?.to);
+      }
     },
-    [setDateRange]
+    [setDateRange, onSelect]
   );
 
   const weekdays = [
@@ -194,4 +203,4 @@ export function DateRangePicker({
       </div>
     </div>
   );
-}
+};
