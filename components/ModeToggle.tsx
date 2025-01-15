@@ -4,26 +4,34 @@ import * as React from "react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
 
 export function ModeToggle() {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <Button variant="link" size="icon" className="opacity-0">
+        <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100" />
+      </Button>
+    );
+  }
 
   return (
     <Button
-      onClick={toggleTheme}
       variant="link"
       size="icon"
-      title={
-        theme === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"
-      }
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      title={theme === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
     >
-      <Moon className=" dark:hidden text-text-light" />
-      <Sun className="dark:block hidden text-text-dark" />
-      <span className="sr-only h-0 w-0">Toggle theme</span>
+      <Sun className="h-[1.2rem] w-[1.2rem] dark:block hidden !text-text-dark" />
+      <Moon className="h-[1.2rem] w-[1.2rem] dark:hidden !text-text-light" />
+      <span className="sr-only">Toggle theme</span>
     </Button>
   );
 }

@@ -7,7 +7,7 @@ import { ImageCarousel } from "@/components/ImageCarousel";
 import { Card, CardContent } from "@/components/ui/card";
 // import { DateRangePicker } from "@/components/DateRangePicker";
 import { Breadcrumb } from "@/components/composed/Breadcrumb";
-import { InnerHero } from "@/components/sections/InnerHero";
+import { InnerHero } from "@/components/sections/InnerHero"; 
 
 interface PageProps {
   params: Promise<{
@@ -33,6 +33,7 @@ export default async function RoomPage(props: PageProps) {
   return (
     <>
       <InnerHero title={room.name} />
+
       <main className="container mx-auto px-4 py-8">
         <Breadcrumb
           levels={[
@@ -49,7 +50,7 @@ export default async function RoomPage(props: PageProps) {
               href: `/habitaciones/${room.slug}`,
             },
           ]}
-        />
+        /> 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Left Column - Images */}
           <div className="space-y-4">

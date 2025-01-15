@@ -18,6 +18,8 @@ interface SelectionState {
   decrementAdults: () => void;
   incrementAdults: () => void;
   getWhatsAppLink: () => string;
+  selectedTab: "hospedaje" | "larga-estadia";
+  setSelectedTab: (tab: "hospedaje" | "larga-estadia") => void;
 }
 
 const customStorage = {
@@ -56,6 +58,8 @@ export const useSelectionStore = create<SelectionState>()(
       adults: 1,
       children: 0,
       dateRange: undefined,
+      selectedTab: "hospedaje",
+      setSelectedTab: (tab: "hospedaje" | "larga-estadia") => set({ selectedTab: tab }),
       setAdults: (value) => {
         const newValue =
           typeof value === "string" ? parseInt(value || "1", 10) : value;

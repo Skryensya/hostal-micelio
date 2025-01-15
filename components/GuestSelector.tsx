@@ -55,12 +55,12 @@ export function GuestSelector() {
     return (
       <div
         className={cn(
-          "transition-all duration-300 flex rounded-standar hover:bg-primary-light-20"
+          "transition-all duration-300 flex rounded-standar hover:bg-primary-light-20 w-full"
         )}
       >
         <div
           className={cn(
-            "flex flex-col items-start rounded-standar px-6 py-3  min-w-[200px]"
+            "flex flex-col items-start rounded-standar px-6 py-3  min-w-[200px] w-full"
           )}
           onClick={() => {}}
         >
@@ -81,8 +81,8 @@ export function GuestSelector() {
 
   const GuestSelectorContent = () => {
     return (
-      <div className="space-y-4 p-5 p-5 bg-primary-light-10 rounded-standar border border-primary-light-30">
-        <div className="space-y-2">
+      <div className="p-6 bg-primary-light-10 rounded-standar border border-primary-light-30 ">
+        <div className="space-y-6">
           <div className="flex justify-between items-center">
             <span className="flex items-center">
               <UserRound className="mr-2 h-4 w-4" /> Adultos
@@ -102,6 +102,7 @@ export function GuestSelector() {
                 onChange={(e) => handleInputChange(e, setAdults)}
                 onKeyDown={(e) => handleKeyPress(e, childrenRef)}
                 style={{ border: "none", textAlign: "center", width: "40px" }}
+                className="bg-transparent"
               />
               <Button variant="outline" size="icon" onClick={incrementAdults}>
                 <PlusIcon className="h-4 w-4" />
@@ -128,6 +129,7 @@ export function GuestSelector() {
                 onChange={(e) => handleInputChange(e, setChildren)}
                 onKeyDown={(e) => handleKeyPress(e)}
                 style={{ border: "none", textAlign: "center", width: "40px" }}
+                className="bg-transparent"
               />
               <Button variant="outline" size="icon" onClick={incrementChildren}>
                 <PlusIcon className="h-4 w-4" />
@@ -141,10 +143,10 @@ export function GuestSelector() {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger>
+      <PopoverTrigger className="w-full">
         <PeopleButton />
       </PopoverTrigger>
-      <PopoverContent className="p-0 rounded-standar border-none  bg-surface-light w-[300px]">
+      <PopoverContent className="p-0 rounded-standar border-none bg-surface-2-light dark:bg-surface-2-dark w-[300px]">
         <GuestSelectorContent />
       </PopoverContent>
     </Popover>

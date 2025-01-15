@@ -8,11 +8,12 @@ import {
 } from "@/components/ui/breadcrumb";
 import React from "react";
 
-export function Breadcrumb({
-  levels,
-}: {
-  levels: { label: string; href: string }[];
-}) {
+export type BreadcrumbLevel = {
+  label: string;
+  href: string;
+};
+
+export function Breadcrumb({ levels }: { levels: BreadcrumbLevel[] }) {
   return (
     <div className="container mx-auto py-4">
       <BreadcrumbUI>

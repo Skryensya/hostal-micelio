@@ -13,10 +13,34 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { LightEffect } from "@/components/ui/LightEffect";
 import { useSelectionStore } from "@/store/useSelectionStore";
 
 const formatDateInSpanish = (date: Date | undefined) => {
   return date ? format(date, "d 'de' MMMM", { locale: es }) : "Agregar fecha";
+};
+
+const CalendarContent = ({
+  dateRange,
+  handleSelect,
+}: {
+  dateRange: DateRange | undefined;
+  handleSelect: (range: DateRange | undefined) => void;
+}) => {
+  return (
+    <div className="w-full h-full flex justify-center items-center rounded-standar">
+      <LightEffect />
+      <Calendar
+        initialFocus
+        mode="range"
+        defaultMonth={dateRange?.from}
+        selected={dateRange}
+        onSelect={handleSelect}
+        className="flex flex-col lg:flex-row"
+        locale={es}
+      />
+    </div>
+  );
 };
 
 export function DateRangePicker({
@@ -55,14 +79,16 @@ export function DateRangePicker({
       <div
         ref={dateButtonRef}
         className={cn(
-          "transition-all duration-300 flex rounded-standar",
+          "transition-all duration-300 flex flex-col lg:flex-row rounded-standar w-full",
           activeButton ? "hover:bg-primary-light-20" : ""
         )}
       >
         <div
           className={cn(
             "flex flex-col items-start rounded-standar px-6 py-3  min-w-[170px]",
-            activeButton === "from" ? "bg-white" : "",
+            activeButton === "from"
+              ? "bg-primary-light-50 dark:bg-primary-dark-50"
+              : "",
             activeButton ? "" : "hover:bg-primary-light-20"
           )}
           onClick={() => {
@@ -75,7 +101,9 @@ export function DateRangePicker({
         <div
           className={cn(
             "flex flex-col items-start rounded-standar px-6  py-3  min-w-[200px] ",
-            activeButton === "to" ? "bg-white pr-8" : "",
+            activeButton === "to"
+              ? "bg-primary-light-50 dark:bg-primary-dark-50 pr-8"
+              : "",
             activeButton ? "" : "hover:bg-primary-light-20"
           )}
           onClick={() => {
@@ -117,27 +145,28 @@ export function DateRangePicker({
   };
 
   return (
-    <div className={cn("flex items-center gap-2", className)}>
-      <Popover>
-        <PopoverTrigger>
-          <DateButton />
-        </PopoverTrigger>
-        <PopoverContent
-          className="w-auto p-0 rounded-standar border-none  bg-surface-light "
-          align="start"
-        >
-          <Calendar
-            initialFocus
-            mode="range"
-            defaultMonth={dateRange?.from}
-            selected={dateRange}
-            onSelect={handleSelect}
-            numberOfMonths={2}
-            className="flex flex-col sm:flex-row"
-            locale={es}
-          />
-        </PopoverContent>
-      </Popover>
+    <div>
+      <div
+        className={cn("  items-center w-full gap-2 hidden lg:flex", className)}
+      >
+        <Popover>
+          <PopoverTrigger>
+            <DateButton />
+          </PopoverTrigger>
+          <PopoverContent
+            className="w-auto p-0 rounded-standar border-none  bg-surface-2-light dark:bg-surface-2-dark"
+            align="start"
+          >
+            <CalendarContent
+              dateRange={dateRange}
+              handleSelect={handleSelect}
+            />
+          </PopoverContent>
+        </Popover>
+      </div>
+      <div className="block lg:hidden">
+        <CalendarContent dateRange={dateRange} handleSelect={handleSelect} />
+      </div>
     </div>
   );
 }

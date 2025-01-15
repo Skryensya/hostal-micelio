@@ -3,7 +3,7 @@ import { ArrowRightIcon } from "lucide-react";
 
 export function ButtonShowcase() {
   return (
-    <div className="flex justify-center items-center gap-1">
+    <div className="flex flex-wrap justify-center items-center gap-1">
       <Button variant="primary">Button Primary</Button>
       <Button variant="secondary">Button Secondary</Button>
       <Button variant="outline">Button Outline</Button>

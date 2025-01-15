@@ -14,9 +14,11 @@ const ReviewCard = ({
 }) => {
   return (
     <Card
-      style={{
-        "--hue": review.hue,
-      } as React.CSSProperties}
+      style={
+        {
+          "--hue": review.hue,
+        } as React.CSSProperties
+      }
       className={`review-card-bg relative shadow shadow-[hsl(${review.hue} 70% 98%)] text-text-light`}
     >
       <LightEffect />
@@ -37,11 +39,8 @@ const ReviewCard = ({
           className="flex flex-row items-center gap-1 pb-1"
           title="5 estrellas"
         >
-          <span className="text-xs pt-0.5">5</span>
-          <StarIcon
-            className="w-5 h-5   text-yellow-300/70"
-            fill="rgb(253 224 71 / 0.7)"
-          />
+          <span className="text-sm font-bold pt-0.5">5</span>
+          <StarIcon className="w-5 h-5 " fill="rgb(253 224 71)" />
         </div>
       </CardHeader>
       <CardContent className="p-4 md:px-6 nd:pt-4">

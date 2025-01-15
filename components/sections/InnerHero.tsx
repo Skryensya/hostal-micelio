@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 
 import { WavyDivider } from "@/components/composed/WavyDivider";
 
-export function InnerHero({ title }) {
+export function InnerHero({ title }: { title?: string }) {
   const endOfHeroRef = useRef<HTMLDivElement>(null);
 
   const handleSkipToContent = () => {
@@ -24,11 +24,13 @@ export function InnerHero({ title }) {
 
       <div className="bg-room-gradient">
         <div className="h-[200px] container flex items-center">
-          <div className="flex flex-col justify-end h-full">
-            <h1 className="text-3xl md:text-4xl pb-6 text-text-light ">
-              {title}
-            </h1>
-          </div>
+          {title && (
+            <div className="flex flex-col justify-end h-full">
+              <h1 className="text-3xl md:text-4xl pb-6 text-text-light ">
+                {title}
+              </h1>
+            </div>
+          )}
         </div>
       </div>
       <WavyDivider
