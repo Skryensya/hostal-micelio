@@ -81,60 +81,58 @@ export function GuestSelector() {
 
   const GuestSelectorContent = () => {
     return (
-      <div className="p-6 bg-primary-light-10 rounded-standar border border-primary-light-30 ">
-        <div className="space-y-6">
-          <div className="flex justify-between items-center">
-            <span className="flex items-center">
-              <UserRound className="mr-2 h-4 w-4" /> Adultos
-            </span>
-            <div className="flex items-center space-x-2">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={decrementAdults}
-                disabled={adults <= 1}
-              >
-                <MinusIcon className="h-4 w-4" />
-              </Button>
-              <input
-                type="text"
-                value={adults}
-                onChange={(e) => handleInputChange(e, setAdults)}
-                onKeyDown={(e) => handleKeyPress(e, childrenRef)}
-                style={{ border: "none", textAlign: "center", width: "40px" }}
-                className="bg-transparent"
-              />
-              <Button variant="outline" size="icon" onClick={incrementAdults}>
-                <PlusIcon className="h-4 w-4" />
-              </Button>
-            </div>
+      <div className="space-y-6">
+        <div className="flex justify-between items-center">
+          <span className="flex items-center">
+            <UserRound className="mr-2 h-4 w-4" /> Adultos
+          </span>
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={decrementAdults}
+              disabled={adults <= 1}
+            >
+              <MinusIcon className="h-4 w-4" />
+            </Button>
+            <input
+              type="text"
+              value={adults}
+              onChange={(e) => handleInputChange(e, setAdults)}
+              onKeyDown={(e) => handleKeyPress(e, childrenRef)}
+              style={{ border: "none", textAlign: "center", width: "40px" }}
+              className="bg-transparent"
+            />
+            <Button variant="outline" size="icon" onClick={incrementAdults}>
+              <PlusIcon className="h-4 w-4" />
+            </Button>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="flex items-center">
-              <Baby className="mr-2 h-4 w-4" /> Niños
-            </span>
-            <div className="flex items-center space-x-2">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={decrementChildren}
-                disabled={children === 0}
-              >
-                <MinusIcon className="h-4 w-4" />
-              </Button>
-              <input
-                ref={childrenRef}
-                type="text"
-                value={children}
-                onChange={(e) => handleInputChange(e, setChildren)}
-                onKeyDown={(e) => handleKeyPress(e)}
-                style={{ border: "none", textAlign: "center", width: "40px" }}
-                className="bg-transparent"
-              />
-              <Button variant="outline" size="icon" onClick={incrementChildren}>
-                <PlusIcon className="h-4 w-4" />
-              </Button>
-            </div>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="flex items-center">
+            <Baby className="mr-2 h-4 w-4" /> Niños
+          </span>
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={decrementChildren}
+              disabled={children === 0}
+            >
+              <MinusIcon className="h-4 w-4" />
+            </Button>
+            <input
+              ref={childrenRef}
+              type="text"
+              value={children}
+              onChange={(e) => handleInputChange(e, setChildren)}
+              onKeyDown={(e) => handleKeyPress(e)}
+              style={{ border: "none", textAlign: "center", width: "40px" }}
+              className="bg-transparent"
+            />
+            <Button variant="outline" size="icon" onClick={incrementChildren}>
+              <PlusIcon className="h-4 w-4" />
+            </Button>
           </div>
         </div>
       </div>
@@ -142,13 +140,24 @@ export function GuestSelector() {
   };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger className="w-full">
-        <PeopleButton />
-      </PopoverTrigger>
-      <PopoverContent className="p-0 rounded-standar border-none bg-surface-2-light dark:bg-surface-2-dark w-[300px]">
-        <GuestSelectorContent />
-      </PopoverContent>
-    </Popover>
+    <>
+      <div className="hidden md:block">
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger className="w-full">
+            <PeopleButton />
+          </PopoverTrigger>
+          <PopoverContent className="p-0 rounded-standar border-none bg-surface-2-light dark:bg-surface-2-dark w-[300px]">
+            <div className="p-6 bg-primary-light-10 rounded-standar border border-primary-light-30 ">
+              <GuestSelectorContent />
+            </div>
+          </PopoverContent>
+        </Popover>
+      </div>
+      <div className="block md:hidden">
+        <div className="p-4">
+          <GuestSelectorContent />
+        </div>
+      </div>
+    </>
   );
 }

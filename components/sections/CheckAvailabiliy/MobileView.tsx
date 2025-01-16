@@ -32,7 +32,7 @@ const formatDateInSpanish = (from: Date | undefined, to: Date | undefined) => {
 };
 
 export const MobileView: React.FC = () => {
-  const [openSection, setOpenSection] = useState<OpenSection>("dates");
+  const [openSection, setOpenSection] = useState<OpenSection>("guests");
   const [selectedDateLabel, setSelectedDateLabel] = useState<string | null>(
     "Agregar fechas"
   );
@@ -55,37 +55,44 @@ export const MobileView: React.FC = () => {
             <StayingTypeSelector />
           </DialogHeader>
           <div className="flex flex-col gap-4 pt-2 px-4 h-full">
-            {openSection === "dates" ? (
-              <DateRangePicker
-                onSelect={(from, to) => {
-                  handleSelectDate(from, to);
-                }}
-              />
-            ) : (
-              <SectionButton
-                title="Cuando"
-                description={selectedDateLabel}
-                onClick={() => setOpenSection("dates")}
-              />
-            )}
-            {openSection === "guests" ? (
-              <GuestSelector />
-            ) : (
-              <SectionButton
-                title="Quiénes"
-                description=""
-                onClick={() => setOpenSection("guests")}
-              />
-            )}
-            {openSection === "rooms" ? (
-              <RoomSelector />
-            ) : (
-              <SectionButton
-                title="Habitaciones"
-                description=""
-                onClick={() => setOpenSection("rooms")}
-              />
-            )}
+            <ButtonWrapper>
+              {openSection === "guests" ? (
+                <GuestSelector />
+              ) : (
+                <SectionButton
+                  title="Quiénes"
+                  description=""
+                  onClick={() => setOpenSection("guests")}
+                />
+              )}
+            </ButtonWrapper>
+            <ButtonWrapper>
+              {openSection === "dates" ? (
+                <DateRangePicker
+                  onSelect={(from, to) => {
+                    handleSelectDate(from, to);
+                  }}
+                />
+              ) : (
+                <SectionButton
+                  title="Cuando"
+                  description={selectedDateLabel}
+                  onClick={() => setOpenSection("dates")}
+                />
+              )}
+            </ButtonWrapper>
+
+            <ButtonWrapper>
+              {openSection === "rooms" ? (
+                <RoomSelector />
+              ) : (
+                <SectionButton
+                  title="Habitaciones"
+                  description=""
+                  onClick={() => setOpenSection("rooms")}
+                />
+              )}
+            </ButtonWrapper>
           </div>
           <DialogFooter>
             <DialogClose asChild>
@@ -107,13 +114,24 @@ const SectionButton: React.FC<{
 }> = ({ title, description, onClick }) => {
   return (
     <div
-      className={cn(buttonVariants({ variant: "outline" }))}
+      className={cn(
+        buttonVariants({ variant: "outline" }),
+        "flex justify-between border-none"
+      )}
       onClick={onClick}
     >
-      {title}
-      <p className="text-sm text-primary-light-30 dark:text-primary-dark-30">
-        {description}
-      </p>
+      <span className="font-bold">{title}</span>
+      <span className="font-thin text-sm">{description}</span>
+    </div>
+  );
+};
+
+const ButtonWrapper: React.FC<{
+  children: React.ReactNode;
+}> = ({ children }) => {
+  return (
+    <div className="rounded-standar border border-border-light dark:border-border-dark transition-all duration-300">
+      {children}
     </div>
   );
 };

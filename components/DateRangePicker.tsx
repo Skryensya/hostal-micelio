@@ -23,9 +23,11 @@ const formatDateInSpanish = (date: Date | undefined) => {
 const CalendarContent = ({
   dateRange,
   handleSelect,
+  showOutsideDays = true,
 }: {
   dateRange: DateRange | undefined;
   handleSelect: (range: DateRange | undefined) => void;
+  showOutsideDays?: boolean;
 }) => {
   return (
     <div className="w-full h-full flex justify-center items-center lg:rounded-standar">
@@ -38,6 +40,7 @@ const CalendarContent = ({
         onSelect={handleSelect}
         className="flex flex-col lg:flex-row"
         locale={es}
+        showOutsideDays={showOutsideDays}
       />
     </div>
   );
@@ -179,6 +182,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
             <CalendarContent
               dateRange={dateRange}
               handleSelect={handleSelect}
+              showOutsideDays={true}
             />
           </PopoverContent>
         </Popover>
@@ -198,7 +202,11 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
               </div>
             ))}
           </div>
-          <CalendarContent dateRange={dateRange} handleSelect={handleSelect} />
+          <CalendarContent
+            dateRange={dateRange}
+            handleSelect={handleSelect}
+            showOutsideDays={false}
+          />
         </div>
       </div>
     </div>

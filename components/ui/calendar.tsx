@@ -50,8 +50,8 @@ function Calendar({
     <div className="flex flex-col lg:flex-row items-center w-full overflow-hidden relative">
       <div
         className={cn(
-          "w-full overflow-y-auto flex flex-col lg:flex-row lg:overflow-y-hidden",
-          isMobile ? "max-h-[55vh]" : ""
+          "w-full overflow-y-auto flex flex-col lg:flex-row lg:overflow-y-hidden max-h-[55vh] lg:max-h-none",
+          // isMobile ? "max-h-[55vh]" : ""
         )}
         style={{ maxHeight: "55vh" }}
       >
@@ -64,15 +64,14 @@ function Calendar({
           )}
           classNames={{
             months: cn(
-              "flex flex-col lg:flex-row   lg:space-y-0 lg:space-x-4",
-              isMobile ? "overflow-visible" : ""
+              "flex flex-col lg:flex-row   lg:space-y-0 lg:space-x-4 overflow-visible lg:overflow-hidden",
+              // isMobile ? "" : ""
             ),
             month: cn(
-              "lg:space-y-4 flex flex-col justify-center items-center",
-              isMobile ? "block" : ""
+              "lg:space-y-4 flex flex-col justify-center items-center "
             ),
             caption:
-              "flex justify-start lg:justify-center pt-1 relative items-center",
+              "flex justify-start lg:justify-center pt-1 relative items-center w-full text-start lg:text-center lg:w-fit",
             caption_label:
               "font-bold text-text-light dark:text-text-dark border-b border-border-light dark:border-border-dark w-full mx-3 lg:border-none",
             nav: "space-x-1 flex items-center",
@@ -122,20 +121,34 @@ function Calendar({
               const lastMonthKey = `${lastMonthDate.getMonth()}-${lastMonthDate.getFullYear()}`;
               const displayMonthKey = `${displayMonth.getMonth()}-${displayMonth.getFullYear()}`;
               const sameMonth = displayMonthKey === lastMonthKey;
+
+              // Ensure consistent rendering between server and client
+              const [isClient, setIsClient] = React.useState(false);
+              React.useEffect(() => {
+                setIsClient(true);
+              }, []);
+
               return (
-                <div className="flex justify-center items-center mt-4 mb-1">
-                  {isMobile && sameMonth && numberOfMonths < 16 && (
-                    <button
-                      onClick={loadMoreMonths}
-                      className={cn(
-                        buttonVariants({ variant: "outline" }),
-                        "w-full"
-                      )}
+                <tfoot className="">
+                  <tr>
+                    <td
+                      colSpan={7}
+                      className="flex justify-center items-center mt-4 mb-1"
                     >
-                      Cargar más meses
-                    </button>
-                  )}
-                </div>
+                      {isClient && sameMonth && numberOfMonths < 16 && (
+                        <button
+                          onClick={loadMoreMonths}
+                          className={cn(
+                            buttonVariants({ variant: "outline" }),
+                            "w-full"
+                          )}
+                        >
+                          Cargar más meses
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                </tfoot>
               );
             },
           }}
