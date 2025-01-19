@@ -24,7 +24,7 @@ const ReviewCard = ({
       <LightEffect />
       <CardHeader className="flex flex-row items-center md:gap-4 p-4 md:p-6 md:pb-0 space-y-0 justify-between">
         <div className="flex flex-row items-center gap-2">
-          <Avatar className="h-6 w-6 md:h-10 md:w-10 aspect-square bg-gray-200">
+          <Avatar className="  h-10  w-10 aspect-square bg-gray-200">
             <AvatarImage src={review.url} alt={review.name} />
             <AvatarFallback hue={review.hue}>
               {review.name.charAt(0)}

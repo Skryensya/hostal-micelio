@@ -7,9 +7,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { MinusIcon, PlusIcon, UserRound, Baby } from "lucide-react"; // Import icons
+import { MinusIcon, PlusIcon } from "lucide-react"; // Import icons
 import { useSelectionStore } from "@/store/useSelectionStore"; // Import the Zustand store
 import { cn } from "@/lib/utils";
+
 export function GuestSelector() {
   const {
     adults,
@@ -23,6 +24,7 @@ export function GuestSelector() {
   } = useSelectionStore();
   const [open, setOpen] = useState(false);
   const childrenRef = useRef<HTMLInputElement>(null);
+  const adultsRef = useRef<HTMLInputElement>(null); // Unique ref for adults input
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -79,61 +81,90 @@ export function GuestSelector() {
     );
   };
 
-  const GuestSelectorContent = () => {
+  const CounterInput = ({
+    label,
+    value,
+    onChange,
+    onIncrement,
+    onDecrement,
+    disabledDecrement,
+    ref,
+  }: {
+    label: string;
+    value: number;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onIncrement: () => void;
+    onDecrement: () => void;
+    disabledDecrement: boolean;
+    ref?: React.RefObject<HTMLInputElement | null>;
+  }) => {
+    const inputId = `${label}-input`; // Unique ID for the input
     return (
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <span className="flex items-center">
-            <UserRound className="mr-2 h-4 w-4" /> Adultos
-          </span>
-          <div className="flex items-center space-x-2">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={decrementAdults}
-              disabled={adults <= 1}
+      <div className="flex items-center space-x-2  w-11/12 mx-auto">
+        <div>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={onDecrement}
+            disabled={disabledDecrement}
+          >
+            <MinusIcon className="h-4 w-4" />
+          </Button>
+        </div>
+        <div className="flex items-center justify-center w-full">
+          <div className="flex items-center gap-1 justify-start w-[120px] border-b border-text-light-20 dark:border-text-dark-20 ">
+            <label
+              htmlFor={inputId}
+              className="cursor-pointer order-2"
+              onClick={() => ref?.current?.focus()}
             >
-              <MinusIcon className="h-4 w-4" />
-            </Button>
+              {label}
+            </label>
             <input
-              type="text"
-              value={adults}
-              onChange={(e) => handleInputChange(e, setAdults)}
-              onKeyDown={(e) => handleKeyPress(e, childrenRef)}
+              id={inputId}
+              ref={ref}
+              type="number"
+              value={value}
+              onChange={onChange}
+              onKeyDown={(e) => handleKeyPress(e, ref)}
               style={{ border: "none", textAlign: "center", width: "40px" }}
               className="bg-transparent"
             />
-            <Button variant="outline" size="icon" onClick={incrementAdults}>
-              <PlusIcon className="h-4 w-4" />
-            </Button>
           </div>
         </div>
+        <div>
+          <Button variant="outline" size="icon" onClick={onIncrement}>
+            <PlusIcon className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+    );
+  };
+
+  const GuestSelectorContent = () => {
+    return (
+      <div className="space-y-8 my-4">
+        <div className="flex justify-between items-center w-full">
+          <CounterInput
+            label="Adultos"
+            value={adults}
+            onChange={(e) => handleInputChange(e, setAdults)}
+            onIncrement={incrementAdults}
+            onDecrement={decrementAdults}
+            disabledDecrement={adults <= 1}
+            ref={adultsRef}
+          />
+        </div>
         <div className="flex justify-between items-center">
-          <span className="flex items-center">
-            <Baby className="mr-2 h-4 w-4" /> Niños
-          </span>
-          <div className="flex items-center space-x-2">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={decrementChildren}
-              disabled={children === 0}
-            >
-              <MinusIcon className="h-4 w-4" />
-            </Button>
-            <input
-              ref={childrenRef}
-              type="text"
-              value={children}
-              onChange={(e) => handleInputChange(e, setChildren)}
-              onKeyDown={(e) => handleKeyPress(e)}
-              style={{ border: "none", textAlign: "center", width: "40px" }}
-              className="bg-transparent"
-            />
-            <Button variant="outline" size="icon" onClick={incrementChildren}>
-              <PlusIcon className="h-4 w-4" />
-            </Button>
-          </div>
+          <CounterInput
+            label="Niños"
+            value={children}
+            onChange={(e) => handleInputChange(e, setChildren)}
+            onIncrement={incrementChildren}
+            onDecrement={decrementChildren}
+            disabledDecrement={children === 0}
+            ref={childrenRef}
+          />
         </div>
       </div>
     );
@@ -143,7 +174,7 @@ export function GuestSelector() {
     <>
       <div className="hidden md:block">
         <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger className="w-full">
+          <PopoverTrigger className="w-full" onClick={() => setOpen(!open)}>
             <PeopleButton />
           </PopoverTrigger>
           <PopoverContent className="p-0 rounded-standar border-none bg-surface-2-light dark:bg-surface-2-dark w-[300px]">

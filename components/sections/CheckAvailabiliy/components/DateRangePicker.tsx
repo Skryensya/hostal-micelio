@@ -7,7 +7,7 @@ import { DateRange } from "react-day-picker";
 import React, { useState, useRef } from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Calendar } from "@/components/ui/calendar";
+import { Calendar } from "@/components/sections/CheckAvailabiliy/components/Calendar";
 import {
   Popover,
   PopoverContent,
@@ -30,7 +30,7 @@ const CalendarContent = ({
   showOutsideDays?: boolean;
 }) => {
   return (
-    <div className="w-full h-full flex justify-center items-center lg:rounded-standar">
+    <div className="w-full h-full flex justify-center items-center lg:rounded-standar lg:p-0  lg:rounded-[40px] overflow-hidden">
       <LightEffect />
       <Calendar
         initialFocus
@@ -166,10 +166,16 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
     );
   };
 
+  const getDayName = (day: string) => {
+    return (
+      day.slice(0, 3).charAt(0).toUpperCase() + day.slice(0, 3).slice(1) + "."
+    );
+  };
+
   return (
     <div>
       <div
-        className={cn("  items-center w-full gap-2 hidden lg:flex", className)}
+        className={cn("items-center w-full gap-2 hidden lg:flex", className)}
       >
         <Popover>
           <PopoverTrigger>
@@ -188,17 +194,15 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
         </Popover>
       </div>
       <div className="block lg:hidden">
-        <div className="p-5 border border-primary-light-30 bg-surface-light dark:bg-surface-dark rounded-standar lg:border-none lg:rounded-none">
-          <div className="rounded-full bg-surface-2-light dark:bg-surface-2-dark lg:hidden flex justify-center items-center px-1 z-30 mb-2">
+        <div className="bg-transparent rounded-standar lg:border-none lg:rounded-none">
+          <div className="rounded-full bg-surface-2-light dark:bg-surface-2-dark lg:hidden flex justify-center items-center px-1 z-30  m-4">
             {weekdays.map((day, index) => (
               <div
                 key={index}
                 className="rounded-full w-full text-[0.8rem] text-text-light dark:text-text-dark font-medium text-center"
                 aria-label={day}
               >
-                {day.slice(0, 3).charAt(0).toUpperCase() +
-                  day.slice(0, 3).slice(1) +
-                  "."}
+                {getDayName(day)}
               </div>
             ))}
           </div>

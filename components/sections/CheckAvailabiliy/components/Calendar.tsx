@@ -19,13 +19,13 @@ function Calendar({
   const [numberOfMonths, setNumberOfMonths] = React.useState(3); // Default to 3 months for mobile
 
   // Memoized variable to check if it's mobile
-  const isMobile = React.useMemo(() => {
-    // Check if window is defined
-    if (typeof window !== "undefined") {
-      return window.innerWidth < 768;
-    }
-    return false; // Default to false if window is not available
-  }, []);
+  // const isMobile = React.useMemo(() => {
+  //   // Check if window is defined
+  //   if (typeof window !== "undefined") {
+  //     return window.innerWidth < 768;
+  //   }
+  //   return false; // Default to false if window is not available
+  // }, []);
 
   // Adjust number of months dynamically based on screen size
   React.useEffect(() => {
@@ -50,21 +50,20 @@ function Calendar({
     <div className="flex flex-col lg:flex-row items-center w-full overflow-hidden relative">
       <div
         className={cn(
-          "w-full overflow-y-auto flex flex-col lg:flex-row lg:overflow-y-hidden max-h-[55vh] lg:max-h-none",
+          "w-full  overflow-y-auto flex flex-col lg:flex-row lg:overflow-y-hidden h-[calc(100vh-350px)] lg:h-fit lg:max-h-none"
           // isMobile ? "max-h-[55vh]" : ""
         )}
-        style={{ maxHeight: "55vh" }}
       >
         <DayPicker
           showOutsideDays={showOutsideDays}
           disabled={{ before: today }}
           className={cn(
-            "p-0 md:p-5 bg-transparent rounded-standar lg:border lg:border-primary-light-30",
+            "p-0 md:p-5 bg-transparent lg:rounded-standar lg:border lg:border-primary-light-30 overflow-x-hidden",
             className
           )}
           classNames={{
             months: cn(
-              "flex flex-col lg:flex-row   lg:space-y-0 lg:space-x-4 overflow-visible lg:overflow-hidden",
+              "flex flex-col lg:flex-row  lg:space-y-0 lg:space-x-4 overflow-visible lg:overflow-hidden px-4 lg:px-0 mb-4"
               // isMobile ? "" : ""
             ),
             month: cn(
@@ -93,7 +92,7 @@ function Calendar({
             ),
             day: cn(
               buttonVariants({ variant: "link" }),
-              "h-full w-full min-w-10 min-h-10 p-0 font-normal aria-selected:opacity-100 hover:bg-primary-light-30 hover:underline-none"
+              "h-full w-full lg:min-w-10 lg:min-h-10 p-0 font-normal aria-selected:opacity-100 hover:bg-primary-light-30 hover:underline-none"
             ),
             day_range_start: "day-range-start",
             day_range_end: "day-range-end",
@@ -129,7 +128,7 @@ function Calendar({
               }, []);
 
               return (
-                <tfoot className="">
+                <tfoot className="lg:hidden">
                   <tr>
                     <td
                       colSpan={7}
@@ -143,7 +142,7 @@ function Calendar({
                             "w-full"
                           )}
                         >
-                          Cargar más meses
+                          Load more months
                         </button>
                       )}
                     </td>

@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { DateRangePicker } from "@/components/DateRangePicker";
-import { GuestSelector } from "@/components/GuestSelector";
-import { RoomSelector } from "@/components/RoomSelector";
+import { DateRangePicker } from "@/components/sections/CheckAvailabiliy/components/DateRangePicker";
+import { GuestSelector } from "@/components/sections/CheckAvailabiliy/components/GuestSelector";
+// import { RoomSelector } from "@/components/RoomSelector";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
@@ -17,25 +17,37 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import { StayingTypeSelector } from "./StayingTypeSelector";
+import { StayingTypeSelector } from "./components/StayingTypeSelector";
+import { SectionButton } from "./components/SectionButton";
+import { useSelectionStore } from "@/store/useSelectionStore";
 
 type OpenSection = "dates" | "guests" | "rooms" | null;
 
 const formatDateInSpanish = (from: Date | undefined, to: Date | undefined) => {
   return from && to
-    ? `${format(from, "d 'de' MMMM", { locale: es })} - ${format(
+    ? `${format(from, "d 'de' MMM", { locale: es })} - ${format(
         to,
-        "d 'de' MMMM",
+        "d 'de' MMM",
         { locale: es }
       )}`
     : "Agregar fecha";
 };
 
 export const MobileView: React.FC = () => {
+  const { dateRange } = useSelectionStore();
   const [openSection, setOpenSection] = useState<OpenSection>("guests");
   const [selectedDateLabel, setSelectedDateLabel] = useState<string | null>(
     "Agregar fechas"
   );
+
+  // useEffect
+  React.useEffect(() => {
+    if (dateRange) {
+      setSelectedDateLabel(formatDateInSpanish(dateRange.from, dateRange.to));
+    }
+  }, [dateRange]);
+
+ 
 
   const handleSelectDate = (from: Date | undefined, to: Date | undefined) => {
     setSelectedDateLabel(formatDateInSpanish(from, to));
@@ -56,33 +68,33 @@ export const MobileView: React.FC = () => {
           </DialogHeader>
           <div className="flex flex-col gap-4 pt-2 px-4 h-full">
             <ButtonWrapper>
-              {openSection === "guests" ? (
-                <GuestSelector />
-              ) : (
-                <SectionButton
-                  title="Quiénes"
-                  description=""
-                  onClick={() => setOpenSection("guests")}
-                />
-              )}
+              <SectionButton
+                title="¿Quiénes te acompañan?"
+                description=""
+                onClick={() => setOpenSection("guests")}
+                isSelected={openSection === "guests"}
+              >
+                {openSection === "guests" && <GuestSelector />}
+              </SectionButton>
             </ButtonWrapper>
             <ButtonWrapper>
-              {openSection === "dates" ? (
-                <DateRangePicker
-                  onSelect={(from, to) => {
-                    handleSelectDate(from, to);
-                  }}
-                />
-              ) : (
-                <SectionButton
-                  title="Cuando"
-                  description={selectedDateLabel}
-                  onClick={() => setOpenSection("dates")}
-                />
-              )}
+              <SectionButton
+                title="¿Cuando viajas?"
+                description={selectedDateLabel}
+                onClick={() => setOpenSection("dates")}
+                isSelected={openSection === "dates"}
+              >
+                {openSection === "dates" && (
+                  <DateRangePicker
+                    onSelect={(from, to) => {
+                      handleSelectDate(from, to);
+                    }}
+                  />
+                )}
+              </SectionButton>
             </ButtonWrapper>
 
-            <ButtonWrapper>
+            {/* <ButtonWrapper>
               {openSection === "rooms" ? (
                 <RoomSelector />
               ) : (
@@ -92,7 +104,7 @@ export const MobileView: React.FC = () => {
                   onClick={() => setOpenSection("rooms")}
                 />
               )}
-            </ButtonWrapper>
+            </ButtonWrapper> */}
           </div>
           <DialogFooter>
             <DialogClose asChild>
@@ -107,30 +119,11 @@ export const MobileView: React.FC = () => {
   );
 };
 
-const SectionButton: React.FC<{
-  title: string;
-  description: string;
-  onClick: () => void;
-}> = ({ title, description, onClick }) => {
-  return (
-    <div
-      className={cn(
-        buttonVariants({ variant: "outline" }),
-        "flex justify-between border-none"
-      )}
-      onClick={onClick}
-    >
-      <span className="font-bold">{title}</span>
-      <span className="font-thin text-sm">{description}</span>
-    </div>
-  );
-};
-
 const ButtonWrapper: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
   return (
-    <div className="rounded-standar border border-border-light dark:border-border-dark transition-all duration-300">
+    <div className="rounded-standar border border-border-light dark:border-border-dark transition-all duration-300 bg-surface-light dark:bg-surface-2-dark">
       {children}
     </div>
   );

@@ -31,7 +31,7 @@ const LightEffect: React.FC<LightEffectProps> = ({
   return (
     <div
       ref={containerRef}
-      className={` absolute inset-0 rounded-[inherit] z-0 pointer-events-none overflow-hidden bg-reg-500`}
+      className={` absolute inset-0 rounded-[inherit] z-0 pointer-events-none overflow-hidden`}
     >
       <div
         className="absolute rounded-full pointer-events-none transition-opacity duration-200 light-effect"

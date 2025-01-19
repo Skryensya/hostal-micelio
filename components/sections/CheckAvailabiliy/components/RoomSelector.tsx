@@ -5,7 +5,7 @@ import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { SendHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { LightEffect } from "./ui/LightEffect";
+import { LightEffect } from "../../../ui/LightEffect";
 
 export function RoomSelector() {
   return (

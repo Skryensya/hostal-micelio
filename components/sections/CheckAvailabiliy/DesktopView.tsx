@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { DateRangePicker } from "@/components/DateRangePicker";
-import { GuestSelector } from "@/components/GuestSelector";
-import { RoomSelector } from "@/components/RoomSelector";
+import { DateRangePicker } from "@/components/sections/CheckAvailabiliy/components/DateRangePicker";
+import { GuestSelector } from "@/components/sections/CheckAvailabiliy/components/GuestSelector";
+import { RoomSelector } from "@/components/sections/CheckAvailabiliy/components/RoomSelector";
 import { LightEffect } from "@/components/ui/LightEffect";
 
-import { StayingTypeSelector } from "./StayingTypeSelector";
+import { StayingTypeSelector } from "./components/StayingTypeSelector";
 
 export const DesktopView: React.FC = () => {
   return (

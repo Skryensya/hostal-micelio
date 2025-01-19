@@ -8,11 +8,13 @@ export const StayingTypeSelector: React.FC = () => {
   const { selectedTab, setSelectedTab } = useSelectionStore(); // Use the store
 
   return (
-    <div className="mx-auto flex items-center justify-center lg:w-4/12 !mt-0 bg-surface-light dark:bg-surface-dark  rounded-standar lg:rounded-none px-2  ">
+    <div className="mx-auto flex items-center justify-center  w-8/12 lg:w-4/12 !mt-0 rounded-standar lg:rounded-none px-2  ">
       <button
         className={cn(
           `w-fit cursor-pointer px-2 py-2 text-lg`,
-          selectedTab === "hospedaje" ? "font-bold" : ""
+          selectedTab === "hospedaje"
+            ? "font-extrabold"
+            : "font-thin opacity-70"
         )}
         onClick={() => setSelectedTab("hospedaje")}
       >
@@ -21,7 +23,9 @@ export const StayingTypeSelector: React.FC = () => {
       <button
         className={cn(
           `w-fit cursor-pointer px-2 py-2 text-lg whitespace-nowrap `,
-          selectedTab === "larga-estadia" ? "font-bold" : ""
+          selectedTab === "larga-estadia"
+            ? "font-extrabold"
+            : "font-thin opacity-70"
         )}
         onClick={() => setSelectedTab("larga-estadia")}
       >
