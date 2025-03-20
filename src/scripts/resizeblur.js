@@ -1,9 +1,6 @@
-// @ts-expect-error required for sharp
-const sharp = require("sharp");
-// @ts-expect-error required for fs
-const fs = require("fs");
-// @ts-expect-error required for path
-const path = require("path");
+import sharp from "sharp";
+import fs from "fs";
+import path from "path";
 
 const inputFolder = path.join(__dirname, "../public/assets/images/_webp");
 const outputFolder = path.join(

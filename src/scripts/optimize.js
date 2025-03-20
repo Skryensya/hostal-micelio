@@ -1,6 +1,6 @@
-const sharp = require("sharp");
-const fs = require("fs");
-const path = require("path");
+import sharp from "sharp";
+import fs from "fs";
+import path from "path";
 
 const inputFolder = path.join(__dirname, "../public/assets/images/original");
 const outputFolder = path.join(__dirname, "../public/assets/images/_webp");
