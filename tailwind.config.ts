@@ -1,17 +1,15 @@
 import type { Config } from "tailwindcss";
+import animate from "tailwindcss-animate";
 
 const config: Config = {
   darkMode: ["class"],
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
       backgroundImage: {
         // "room-gradient": "linear-gradient(19deg, var(--primary-light) 0%, var( --text-dark) 100%)",
-        "room-gradient": "linear-gradient(160deg, var(--primary-light-60) 0%, var(--text-dark) 100%)",
+        "room-gradient":
+          "linear-gradient(160deg, var(--primary-light-60) 0%, var(--text-dark) 100%)",
       },
       container: {
         center: true, // Centers the container (Bootstrap's containers are centered)
@@ -213,6 +211,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [animate],
 };
 export default config;

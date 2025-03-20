@@ -17,7 +17,7 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import { StayingTypeSelector } from "./components/StayingTypeSelector";
+// import { StayingTypeSelector } from "./components/StayingTypeSelector";
 import { SectionButton } from "./components/SectionButton";
 import { useSelectionStore } from "@/store/useSelectionStore";
 
@@ -47,8 +47,6 @@ export const MobileView: React.FC = () => {
     }
   }, [dateRange]);
 
- 
-
   const handleSelectDate = (from: Date | undefined, to: Date | undefined) => {
     setSelectedDateLabel(formatDateInSpanish(from, to));
   };
@@ -64,7 +62,7 @@ export const MobileView: React.FC = () => {
         <DialogContent>
           <DialogHeader className="h-fit">
             <DialogTitle className="hidden">Cotiza tu estadía</DialogTitle>
-            <StayingTypeSelector />
+            {/* <StayingTypeSelector /> */}
           </DialogHeader>
           <div className="flex flex-col gap-4 pt-2 px-4 h-full">
             <ButtonWrapper>

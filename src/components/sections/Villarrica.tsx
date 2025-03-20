@@ -1,6 +1,6 @@
 import React from "react";
 import { MapPin } from "lucide-react";
-import { HoverCard } from "@/components/composed/HoverCard";
+import { HoverCard } from "@/components/composed/_HoverCard";
 import ATTRACTIONS from "@/db/ATTRACTIONS.json";
 // import { cn } from "@/lib/utils";
 

@@ -1,5 +1,5 @@
 import { Binoculars } from "lucide-react";
-import { HoverCard } from "../composed/HoverCard";
+import { HoverCard } from "../composed/_HoverCard";
 
 export function Offers() {
   // create a fancy button per room, with its name and a url of /room/[slug]
