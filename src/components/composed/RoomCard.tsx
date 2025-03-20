@@ -15,10 +15,7 @@ export default function RoomCard({
   const images = ROOM_IMAGES[slug] || [];
 
   return (
-    <a
-      href={`/habitaciones/${slug}`}
-      className="flex flex-col h-full w-full group  "
-    >
+    <button className="flex flex-col h-full w-full group border border-white/10  rounded-2xl p-1 ">
       <div
         className={`relative w-full overflow-hidden rounded-xl bg-gray-200 aspect-[4/3] lg:aspect-square`}
       >
@@ -33,6 +30,6 @@ export default function RoomCard({
         </div>
         <p className="text-base mt-1 mb-4 line-clamp-2">{description}</p>
       </div>
-    </a>
+    </button>
   );
 }

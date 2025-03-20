@@ -1,21 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { useState } from "react";
 import { motion } from "framer-motion";
-
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type ImageType = {
   src: string;
   alt: string;
+};
+
+type Transition = {
+  target: number;
+  direction: "next" | "prev";
 };
 
 export function ImageCarousel({
@@ -25,125 +22,160 @@ export function ImageCarousel({
   imgs: ImageType[];
   aspectRatio?: "square" | "video";
 }) {
-  const [api, setApi] = useState(null);
-  const [current, setCurrent] = useState<number>(0);
-  const [canScrollNext, setCanScrollNext] = useState<boolean>(false);
-  const [canScrollPrev, setCanScrollPrev] = useState<boolean>(false);
+  const [current, setCurrent] = useState(0);
+  const [transition, setTransition] = useState<Transition | null>(null);
+  const total = imgs.length;
 
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
+  if (total <= 0) return null;
 
-    const updateButtons = () => {
-      setCanScrollNext(api.canScrollNext());
-      setCanScrollPrev(api.canScrollPrev());
-    };
-
-    setCurrent(api.selectedScrollSnap());
-    updateButtons();
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap());
-      updateButtons();
-    });
-  }, [api]);
-
-  const visibleDots = (index: number) => {
-    const totalDots = imgs.length;
-    const maxVisibleDots = 5;
-    const start = Math.max(
-      0,
-      Math.min(current - 2, totalDots - maxVisibleDots)
-    );
-    const end = Math.min(totalDots, start + maxVisibleDots);
-    return index >= start && index < end;
-  };
-
-  if (imgs.length === 1) {
+  if (total === 1) {
     return (
       <div className="relative w-full h-full">
         <Image
           src={imgs[0].src}
           alt={imgs[0].alt}
           fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover bg-gray-200"
+          priority
+          sizes="(max-width: 768px) 100vw,
+                 (max-width: 1200px) 50vw,
+                 33vw"
         />
       </div>
     );
   }
 
+  // Funciones para navegar evitando nuevos clicks durante transición
+  const goNext = () => {
+    if (transition) return;
+    const nextIndex = (current + 1) % total;
+    setTransition({ target: nextIndex, direction: "next" });
+  };
+
+  const goPrev = () => {
+    if (transition) return;
+    const prevIndex = (current - 1 + total) % total;
+    setTransition({ target: prevIndex, direction: "prev" });
+  };
+
+  // Determinamos las imágenes y animaciones según la dirección
+  let topImage: ImageType | null = null;
+  let bottomImage: ImageType;
+  let topInitial = {};
+  let topAnimate = {};
+
+  if (transition) {
+    if (transition.direction === "next") {
+      // Para avanzar: la imagen actual está encima y se desvanece (fade out)
+      topImage = imgs[current];
+      bottomImage = imgs[transition.target];
+      topInitial = { opacity: 1 };
+      topAnimate = { opacity: 0 };
+    } else {
+      // Para retroceder: la imagen destino se coloca encima y se desvanece (fade in)
+      bottomImage = imgs[current];
+      topImage = imgs[transition.target];
+      topInitial = { opacity: 0 };
+      topAnimate = { opacity: 1 };
+    }
+  } else {
+    // Sin transición, mostramos la imagen actual de fondo
+    bottomImage = imgs[current];
+  }
+
+  // Cuando finaliza la animación, actualizamos el índice actual
+  const handleAnimationComplete = () => {
+    if (transition) {
+      setCurrent(transition.target);
+      setTransition(null);
+    }
+  };
+
   return (
-    <div className="w-full h-full relative group">
-      <Carousel
-        opts={{
-          align: "center",
-        }}
-        setApi={(api) => setApi(api)}
-        className="w-full h-full"
+    <div className="relative w-full h-full group overflow-hidden">
+      <div
+        className={`relative w-full h-full ${
+          aspectRatio === "video"
+            ? "aspect-[4/3]"
+            : "lg:aspect-square aspect-[4/3]"
+        }`}
       >
-        <CarouselContent className="-ml-0">
-          {imgs.map((image, index) => (
-            <CarouselItem key={index} className="w-full h-full pl-0">
-              <div
-                className={`relative w-full h-full ${
-                  aspectRatio === "video"
-                    ? "aspect-[4/3]"
-                    : "lg:aspect-square aspect-[4/3]"
-                }`}
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        {/* dot components */}
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center items-center space-x-2">
-          {imgs.map((_, index) =>
-            visibleDots(index) ? (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <div
-                  className={`rounded-full transition-colors duration-200 ${
-                    index === current
-                      ? "bg-white w-2.5 h-2.5"
-                      : index === current - 1 || index === current + 1
-                      ? "bg-white/80 w-2 h-2"
-                      : "bg-white/70 w-1.5 h-1.5"
-                  }
-                ${index === 0 ? " h-2.5 w-2.5 " : ""}
-                `}
-                />
-              </motion.div>
-            ) : null
-          )}
+        {/* Imagen de fondo (siempre cargada) */}
+        <div className="absolute inset-0">
+          <Image
+            src={bottomImage.src}
+            alt={bottomImage.alt}
+            fill
+            className="object-cover bg-gray-200"
+            priority={current === 0}
+            loading={current === 0 ? "eager" : "lazy"}
+            sizes="(max-width: 768px) 100vw,
+                   (max-width: 1200px) 50vw,
+                   33vw"
+          />
         </div>
-        {canScrollPrev && (
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 translate-x-12 opacity-0 group-hover:opacity-80 transition-opacity duration-300">
-            <CarouselPrevious className="bg-gray-400/50 hover:bg-gray-400/75 text-text-dark">
-              <ChevronLeft className="h-6 w-6" />
-            </CarouselPrevious>
-          </div>
+
+        {/* Imagen de transición */}
+        {topImage && (
+          <motion.div
+            className="absolute inset-0"
+            initial={topInitial}
+            animate={topAnimate}
+            transition={{ duration: 0.4 }}
+            onAnimationComplete={handleAnimationComplete}
+          >
+            <Image
+              src={topImage.src}
+              alt={topImage.alt}
+              fill
+              className="object-cover bg-gray-200"
+              loading="eager"
+              sizes="(max-width: 768px) 100vw,
+                     (max-width: 1200px) 50vw,
+                     33vw"
+            />
+          </motion.div>
         )}
-        {canScrollNext && (
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 -translate-x-12 opacity-0 group-hover:opacity-80 transition-opacity duration-300">
-            <CarouselNext className="bg-gray-400/50 hover:bg-gray-400/75 text-text-dark">
-              <ChevronRight className="h-6 w-6" />
-            </CarouselNext>
-          </div>
-        )}
-      </Carousel>
+      </div>
+
+      {/* Botones de navegación */}
+      <button
+        onClick={goPrev}
+        className="absolute left-3 top-1/2 -translate-y-1/2 opacity-0 
+                   group-hover:opacity-80 transition-opacity duration-300 
+                   bg-gray-400/50 hover:bg-gray-400/75 rounded-full p-1"
+      >
+        <ChevronLeft className="h-6 w-6" />
+      </button>
+      <button
+        onClick={goNext}
+        className="absolute right-3 top-1/2 -translate-y-1/2 opacity-0 
+                   group-hover:opacity-80 transition-opacity duration-300 
+                   bg-gray-400/50 hover:bg-gray-400/75 rounded-full p-1"
+      >
+        <ChevronRight className="h-6 w-6" />
+      </button>
+
+      {/* Dots de navegación */}
+      <div className="absolute bottom-3 left-0 right-0 flex justify-center items-center gap-2">
+        {imgs.map((_, index) => {
+          const isActive = current === index;
+          return (
+            <div
+              key={index}
+              onClick={() => {
+                if (transition) return;
+                if (index === current) return;
+                const direction = index > current ? "next" : "prev";
+                setTransition({ target: index, direction });
+              }}
+              className={`cursor-pointer rounded-full ${
+                isActive ? "w-3 h-3 bg-white" : "w-2 h-2 bg-white/70"
+              }`}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }

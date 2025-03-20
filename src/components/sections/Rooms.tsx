@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export function Rooms() {
   return (
     <div className="container mx-auto py-10">
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         <AnimatePresence>
           {ROOMS.map((room) => (
             <motion.div
