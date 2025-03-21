@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ModeToggle } from "@/components/ModeToggle";
-import { Flower } from "lucide-react";
+// import { Flower } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react"; // Icon for burger menu
@@ -44,20 +44,18 @@ export function Header() {
     open: { opacity: 1, y: 0 },
     closed: { opacity: 0, y: -20 },
   };
-
+return null
   return (
     <header
       id="header"
       className={cn(
-        "py-2 fixed left-0 right-0 top-0 bg-surface-light-80 dark:bg-surface-dark-80 z-50 transition-all border-b border-border-light dark:border-border-dark backdrop-blur"
+        "py-2 sticky left-0 right-0 top-0 bg-surface-light dark:bg-surface-dark z-50 transition-all   "
       )}
     >
       <div className="flex flex-col">
         <div className="py-0 flex items-center justify-between container mx-auto">
           <Link href={"/"} className="flex items-center gap-4">
-            <div className="h1 !font-extralight flex">
-              Hostal Micelio <Flower size={20} />
-            </div>
+            <div className="h1 !font-light flex leading-8">Hostal Micelio</div>
           </Link>
 
           <div className="flex items-center gap-4">

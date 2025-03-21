@@ -50,8 +50,8 @@ export function GettingHere() {
               </Link>
             </div>
           </div>
-          <div className="col-span-12 lg:col-span-7 overflow-hidden rounded-xl border border-border-light relative">
-            <span className="absolute inset-0  dark:bg-surface-dark  pointer-events-none opacity-[25%]"></span>
+          <div className="col-span-12 lg:col-span-7 overflow-hidden rounded-xl border border-border-light dark:border-border-dark relative">
+            <span className="absolute inset-0  dark:bg-surface-dark  pointer-events-none opacity-[5%]"></span>
             <iframe
               src={GOOGLE_MAPS_EMBED_LINK}
               className="w-full h-[300px] lg:h-[500px]"

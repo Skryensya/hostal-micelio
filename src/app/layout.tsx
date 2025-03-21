@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 
 import { Header } from "@/components/sections/Header";
 import { Footer } from "@/components/sections/Footer";
-import { poppins, balooBhaijaan2, nunitoSans } from "./fonts";
+import { balooBhaijaan2, nunito, croissantOne } from "./fonts";
 
 export const metadata: Metadata = {
   title: "Hostal Micelio | Él lugar más acogedor de Villarrica",
@@ -25,7 +25,7 @@ export default function RootLayout({
       style={{ filter: isGrayscale ? "grayscale(100%)" : "none" }}
     >
       <body
-        className={`${poppins.variable} ${balooBhaijaan2.variable} ${nunitoSans.variable} font-sans antialiased min-h-screen bg-surface-light text-text-light dark:bg-surface-dark dark:text-text-dark`}
+        className={`${croissantOne.variable} ${balooBhaijaan2.variable} ${nunito.variable} font-sans antialiased min-h-screen bg-surface-light text-text-light dark:bg-surface-dark dark:text-text-dark`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />

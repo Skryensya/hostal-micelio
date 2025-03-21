@@ -1,16 +1,17 @@
 :root {
-  --font-poppins: "Poppins", sans-serif;
+  // --font-poppins: "Poppins", sans-serif;
   --font-baloo-bhaijaan-2: "Baloo Bhaijaan 2";
-  --font-nunito-sans: "Nunito Sans", sans-serif;
+  --font-nunito: "Nunito", sans-serif;
+  --font-croissant-one: "Croissant One", serif;
 
   .font-poppins,
   .font-heading {
-    font-family: var(--font-poppins);
+    font-family: var(--font-croissant-one);
   }
   .font-baloo-bhaijaan-2,
   .font-body,
   body {
-    font-family: var(--font-nunito-sans);
+    font-family: var(--font-nunito);
     text-underline-offset: 2px;
   }
 }
@@ -26,7 +27,7 @@ h5,
 .h4,
 .h5,
 .h6 {
-  font-family: var(--font-poppins);
+  font-family: var(--font-croissant-one);
   font-weight: 600;
 }
 p > a {
