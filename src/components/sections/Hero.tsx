@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useRef,
   useCallback,
-  KeyboardEvent,
+  // KeyboardEvent,
 } from "react";
 import Image from "next/image";
 import { ChevronRight, ChevronLeft, Play, Pause } from "lucide-react";
@@ -289,16 +289,16 @@ export function Hero() {
   }, []);
 
   // Navegación de puntos con teclado
-  const handleDotKeydown = (event: KeyboardEvent<HTMLDivElement>) => {
-    const dotsCount = slides.length;
-    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-      event.preventDefault();
-      setActiveSlide((prev) => (prev + 1) % dotsCount);
-    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-      event.preventDefault();
-      setActiveSlide((prev) => (prev - 1 + dotsCount) % dotsCount);
-    }
-  };
+  // const handleDotKeydown = (event: KeyboardEvent<HTMLDivElement>) => {
+  //   const dotsCount = slides.length;
+  //   if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+  //     event.preventDefault();
+  //     setActiveSlide((prev) => (prev + 1) % dotsCount);
+  //   } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+  //     event.preventDefault();
+  //     setActiveSlide((prev) => (prev - 1 + dotsCount) % dotsCount);
+  //   }
+  // };
 
   return (
     <div className="bg-surface-3-light-50 dark:bg-surface-3-dark-50 pt-12 pb-16">
