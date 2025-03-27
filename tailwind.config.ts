@@ -95,6 +95,32 @@ const config: Config = {
             90: "var(--surface-2-dark-90)",
           },
         },
+        "surface-3": {
+          light: {
+            DEFAULT: "var(--surface-3-light)",
+            10: "var(--surface-3-light-10)",
+            20: "var(--surface-3-light-20)",
+            30: "var(--surface-3-light-30)",
+            40: "var(--surface-3-light-40)",
+            50: "var(--surface-3-light-50)",
+            60: "var(--surface-3-light-60)",
+            70: "var(--surface-3-light-70)",
+            80: "var(--surface-3-light-80)",
+            90: "var(--surface-3-light-90)",
+          },
+          dark: {
+            DEFAULT: "var(--surface-3-dark)", // 100% opacity
+            10: "var(--surface-3-dark-10)",
+            20: "var(--surface-3-dark-20)",
+            30: "var(--surface-3-dark-30)",
+            40: "var(--surface-3-dark-40)",
+            50: "var(--surface-3-dark-50)",
+            60: "var(--surface-3-dark-60)",
+            70: "var(--surface-3-dark-70)",
+            80: "var(--surface-3-dark-80)",
+            90: "var(--surface-3-dark-90)",
+          },
+        },
         primary: {
           light: {
             DEFAULT: "var(--primary-light)", // 100% opacity

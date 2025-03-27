@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useRef,
   useCallback,
-  // KeyboardEvent,
+  KeyboardEvent,
 } from "react";
 import Image from "next/image";
 import { ChevronRight, ChevronLeft, Play, Pause } from "lucide-react";
@@ -132,62 +132,64 @@ const PlayPauseButton = ({
   progress: number;
 }) => {
   return (
-    <button
-      className={cn(
-        "group w-10 h-10 rounded-full flex items-center justify-center",
-        !isLoaded && "opacity-50 cursor-not-allowed"
-      )}
-      onClick={onToggle}
-      aria-label={isPlaying ? "Pausar carrusel" : "Reproducir carrusel"}
-      disabled={!isLoaded}
-      tabIndex={isLoaded ? 0 : -1}
-    >
-      <svg width="40" height="40" viewBox="0 0 40 40" className="absolute">
-        <circle
-          cx="20"
-          cy="20"
-          r="18"
-          fill="none"
-          className="stroke-translate"
-          strokeWidth="3"
-        />
-        <circle
-          cx="20"
-          cy="20"
-          r="18"
-          fill="none"
-          className="stroke-primary-light"
-          strokeWidth="3"
-          strokeDasharray={`${progress * 113.1} 113.1`}
-          strokeLinecap="round"
-          transform="rotate(-90 20 20)"
-        />
-      </svg>
-
-      <div
+    <div className="p-1">
+      <button
         className={cn(
-          buttonVariants({ variant: "outline", size: "icon" }),
-          "z-10 rounded-full h-10"
+          "group w-10 h-10  rounded-full flex items-center justify-center",
+          !isLoaded && "opacity-50 cursor-not-allowed"
         )}
+        onClick={onToggle}
+        aria-label={isPlaying ? "Pausar carrusel" : "Reproducir carrusel"}
+        disabled={!isLoaded}
+        tabIndex={isLoaded ? 0 : -1}
       >
-        <LightEffect />
-        {isPlaying ? (
-          <Pause
-            size={16}
-            fill="#f4d7eb"
-            stroke="#f4d7eb"
-            className="text-text-dark transition-all duration-300"
+        <svg width="40" height="40" viewBox="0 0 40 40" className="absolute">
+          <circle
+            cx="20"
+            cy="20"
+            r="18"
+            fill="none"
+            className="stroke-translate"
+            strokeWidth="3"
           />
-        ) : (
-          <Play
-            size={16}
-            fill="#f4d7eb"
-            stroke="#f4d7eb"
-            className="text-text-dark transition-all duration-300"
+          <circle
+            cx="20"
+            cy="20"
+            r="18"
+            fill="none"
+            className="stroke-primary-light"
+            strokeWidth="3"
+            strokeDasharray={`${progress * 113.1} 113.1`}
+            strokeLinecap="round"
+            transform="rotate(-90 20 20)"
           />
-        )}
-      </div>
-    </button>
+        </svg>
+
+        <div
+          className={cn(
+            buttonVariants({ variant: "neutral", size: "icon" }),
+            "z-10 rounded-full h-10 bg-black/20"
+          )}
+        >
+          <LightEffect />
+          {isPlaying ? (
+            <Pause
+              size={16}
+              fill="#f4d7eb"
+              stroke="#f4d7eb"
+              className="text-text-dark transition-all duration-300"
+            />
+          ) : (
+            <Play
+              size={16}
+              fill="#f4d7eb"
+              stroke="#f4d7eb"
+              className="text-text-dark transition-all duration-300"
+            />
+          )}
+        </div>
+      </button>
+    </div>
   );
 };
 
@@ -208,7 +210,7 @@ const NavigationButton = ({
   return (
     <button
       className={cn(
-        ` group outline-none`,
+        "group outline-none",
         !isLoaded && "opacity-50 cursor-not-allowed"
       )}
       onClick={onClick}
@@ -216,11 +218,11 @@ const NavigationButton = ({
       disabled={disabled}
       tabIndex={isLoaded ? 0 : -1}
     >
-      <div className="rounded-full p-1 group-focus-visible:outline outline-[#458bfb] outline-offset-0 group-focus-visible:ring group-focus-visible:ring-white ring-offset-[1px]">
+      <div className="rounded-full m-1 group-focus-visible:outline outline-[#458bfb] outline-offset-0 group-focus-visible:ring group-focus-visible:ring-white ring-offset-[1px] bg-black/20">
         <div
           className={cn(
-            "shadow-xl backdrop-invert-25 bg-white/10",
-            buttonVariants({ variant: "outline", size: "icon" })
+            "shadow-xl",
+            buttonVariants({ variant: "neutral", size: "icon" })
           )}
         >
           <LightEffect />
@@ -287,89 +289,81 @@ export function Hero() {
   }, []);
 
   // Navegación de puntos con teclado
-  // const handleDotKeydown = (event: KeyboardEvent<HTMLDivElement>) => {
-  //   const dotsCount = slides.length;
-  //   if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-  //     event.preventDefault();
-  //     setActiveSlide((prev) => (prev + 1) % dotsCount);
-  //   } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-  //     event.preventDefault();
-  //     setActiveSlide((prev) => (prev - 1 + dotsCount) % dotsCount);
-  //   }
-  // };
+  const handleDotKeydown = (event: KeyboardEvent<HTMLDivElement>) => {
+    const dotsCount = slides.length;
+    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+      event.preventDefault();
+      setActiveSlide((prev) => (prev + 1) % dotsCount);
+    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+      event.preventDefault();
+      setActiveSlide((prev) => (prev - 1 + dotsCount) % dotsCount);
+    }
+  };
 
   return (
-    <div className="bg-white">
-      <div className="bg-surface-light-80 dark:bg-surface-dark-80   pb-16">
-        <div className="container mx-auto grid grid-cols-12 gap-4">
-          <div className="col-span-2 gap-4 flex flex-col justify-between">
-            <div className="w-full h-full flex justify-center items-center">
-              <Image
-                src="/assets/logos/LOGO_COLOR.png"
-                alt="Hostal Micelio Logo"
-                className="aspect-square"
-                width={200}
-                height={200}
-              />
-            </div>
-            <div
-              className="light text-text-light container transition-opacity duration-1000  "
-              style={{ opacity: isLoaded ? 1 : 0 }}
-            >
-              <h2 className="text-2xl md:text-2xl font-bold mb-4">
-                {slides[activeSlide].title}
-              </h2>
-              <p className="text-base md:text-lg lg:text-xl text-pretty font-medium">
-                {slides[activeSlide].description}
-              </p>
+    <div className="bg-surface-3-light-50 dark:bg-surface-3-dark-50 pt-12 pb-16">
+      {/* Botón para saltar el hero (accesibilidad) */}
+      <button
+        onClick={() => {}}
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-text-dark px-4 py-2 rounded-md z-10"
+        tabIndex={0}
+      >
+        Saltar Hero
+      </button>
+      <div className="container mx-auto grid grid-cols-12 gap-4 isolate">
+        <div className="col-span-4 z-20">
+          <div className="gap-4 flex flex-col justify-center w-[120%] h-full">
+            <div className="bg-surface-light dark:bg-surface-2-dark p-4 pb-8 rounded-xl">
+              <div
+                className=" container transition-opacity duration-1000 min-h-[80%]"
+                // style={{ opacity: isLoaded ? 1 : 0 }}
+              >
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">
+                  {slides[activeSlide].title}
+                </h2>
+                <p className="text-base md:text-lg lg:text-xl text-pretty font-medium">
+                  {slides[activeSlide].description}
+                </p>
+              </div>
             </div>
           </div>
-          <div className="col-span-10 pt-10">
-            <div
-              className="relative     rounded-3xl     isolate bg-white"
-              style={{ height: "550px" }}
-            >
-              {/* Botón para saltar el hero (accesibilidad) */}
-              <button
-                onClick={() => {}}
-                className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-text-dark px-4 py-2 rounded-md z-10"
-                tabIndex={0}
-              >
-                Saltar Hero
-              </button>
-
-              {/* Slides con efecto fade */}
-              <div className="relative h-full w-full rounded-[inherit] overflow-hidden  ">
-                {slides.map((slide, index) => (
-                  <div
-                    key={index}
-                    className="absolute top-0 left-0 w-full h-full transition-opacity duration-1000"
-                    style={{ opacity: index === activeSlide ? 1 : 0 }}
-                  >
-                    <SlideImage
-                      image={slide.img}
-                      focusPoint={slide.focusPoint}
-                      thumbnail={slide.thumbnail}
-                      color={slide.color}
-                      onLoad={handleMainImageLoad}
-                    />
-                  </div>
-                ))}
+        </div>
+        <div className="col-span-8">
+          <div
+            className="relative rounded-3xl isolate bg-white"
+            style={{ height: "500px" }}
+          >
+            {/* Slides con efecto fade */}
+            <div className="relative h-full w-full rounded-[inherit] overflow-hidden  ">
+              {slides.map((slide, index) => (
+                <div
+                  key={index}
+                  className="absolute top-0 left-0 w-full h-full transition-opacity duration-1000"
+                  style={{ opacity: index === activeSlide ? 1 : 0 }}
+                >
+                  <SlideImage
+                    image={slide.img}
+                    focusPoint={slide.focusPoint}
+                    thumbnail={slide.thumbnail}
+                    color={slide.color}
+                    onLoad={handleMainImageLoad}
+                  />
+                </div>
+              ))}
+              <div className="absolute top-4 right-0">
+                <Image
+                  src="/assets/logos/LOGO_COLOR.png"
+                  alt="Hostal Micelio Logo"
+                  className="aspect-square md:mr-4"
+                  width={100}
+                  height={100}
+                />
               </div>
-
-              {/* Target para saltar el hero */}
-              <div className="sr-only" tabIndex={-1}></div>
             </div>
-            <div className="flex w-fit justify-between items-center mt-1 gap-4 px-4 -translate-y-16">
-              {/* Botón Play/Pause */}
-              <PlayPauseButton
-                isPlaying={isPlaying}
-                onToggle={togglePlay}
-                isLoaded={isLoaded}
-                progress={progress}
-              />
+
+            <div className="flex justify-between px-2 pb-2 -translate-y-full gap-4">
               {/* Botones de navegación */}
-              <div className="flex items-center">
+              <div className="flex gap-1">
                 <NavigationButton
                   onClick={prevSlide}
                   ariaLabel="Diapositiva anterior"
@@ -386,12 +380,12 @@ export function Hero() {
                 />
               </div>
 
-              {/* Dots de navegación
-              <div
+              {/* Dots de navegación */}
+              {/* <div
                 role="group"
                 aria-label="Navegación de diapositivas"
                 className={cn(
-                  " flex space-x-2 outline-offset-8 rounded-lg",
+                  "absolute bottom-12 -translate-y-1/2 md:translate-y-0 md:left-1/2 right-20 md:right-auto transform -translate-x-1/2 flex space-x-2 outline-offset-8 rounded-lg",
                   !isLoaded && "opacity-50 cursor-not-allowed"
                 )}
                 tabIndex={isLoaded ? 0 : -1}
@@ -401,7 +395,7 @@ export function Hero() {
                   <button
                     key={index}
                     className={cn(
-                      buttonVariants({ variant: "outline", size: "icon" }),
+                      buttonVariants({ variant: "neutral", size: "icon" }),
                       { "bg-primary-light": index === activeSlide },
                       "w-3 h-3 rounded-full"
                     )}
@@ -415,7 +409,18 @@ export function Hero() {
                   </button>
                 ))}
               </div> */}
+
+              {/* Botón Play/Pause */}
+              <PlayPauseButton
+                isPlaying={isPlaying}
+                onToggle={togglePlay}
+                isLoaded={isLoaded}
+                progress={progress}
+              />
             </div>
+
+            {/* Target para saltar el hero */}
+            <div className="sr-only" tabIndex={-1}></div>
           </div>
         </div>
       </div>

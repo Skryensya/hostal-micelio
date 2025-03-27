@@ -24,6 +24,9 @@
   --surface-2-light: hsl(27, 87%, 88%);
   --surface-2-dark: hsl(277, 28%, 37%);
 
+  --surface-3-light: hsl(0, 80%, 92%);
+  --surface-3-dark: hsl(277, 25%, 70%);
+
   --primary-light: hsl(318, 61%, 71%);
   --primary-dark: hsl(310, 40%, 29%);
 
@@ -37,7 +40,7 @@
   --border-dark: hsl(319, 57%, 90%);
 }
 
-$colors: "primary", "secondary", "surface", "surface-2", "accent";
+$colors: "primary", "secondary", "surface", "surface-2","surface-3", "accent";
 $themes: "light", "dark";
 $steps: (
   "10": 0.1,

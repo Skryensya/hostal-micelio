@@ -24,7 +24,7 @@ export function WavyDivider({
     );
   }
   return (
-    <div className={"relative -translate-y-1.5 "}>
+    <div className={"relative -translate-y-1.5 -translate-x-10 w-[130%]"}>
       <div
         className={
           "wavy-divider--bottom absolute z-20 h-5 inset-0 translate-y-1 " +

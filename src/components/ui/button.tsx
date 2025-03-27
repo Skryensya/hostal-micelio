@@ -16,6 +16,7 @@ const buttonVariants = cva(
         outline: "border border-border-light dark:border-border-dark",
         secondary: "bg-secondary-light text-text-light",
         link: "text-text-light dark:text-text-dark font-medium border-none hover:underline !shadow-none visited:text-text-light-70 hover:text-primary-light",
+        neutral: "border border-border-light dark:border-border-dark bg-surface-3-light-60 dark:bg-surface-3-dark-60  ",
       },
       size: {
         default: "h-12 rounded-standar px-6 py-4 text-base",
@@ -35,8 +36,14 @@ export interface ButtonProps
   asChild?: boolean;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps & { noLight?: boolean }>(
-  ({ className, variant, size, asChild = false, noLight = false, ...props }, ref) => {
+const Button = React.forwardRef<
+  HTMLButtonElement,
+  ButtonProps & { noLight?: boolean }
+>(
+  (
+    { className, variant, size, asChild = false, noLight = false, ...props },
+    ref
+  ) => {
     const Comp = asChild ? Slot : "button";
     const buttonRef = React.useRef<HTMLButtonElement>(null);
 

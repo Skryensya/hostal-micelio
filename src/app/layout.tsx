@@ -25,7 +25,7 @@ export default function RootLayout({
       style={{ filter: isGrayscale ? "grayscale(100%)" : "none" }}
     >
       <body
-        className={`${croissantOne.variable} ${balooBhaijaan2.variable} ${nunito.variable} font-sans antialiased min-h-screen bg-surface-light text-text-light dark:bg-surface-dark dark:text-text-dark`}
+        className={`${croissantOne.variable} ${balooBhaijaan2.variable} ${nunito.variable} font-sans antialiased min-h-screen bg-surface-light text-text-light dark:bg-surface-dark dark:text-text-dark overflow-x-hidden`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />

@@ -28,9 +28,9 @@ const SELECTIONS = [
     title: "Hospedaje",
     description: "Explora las habitaciones del Hostal Micelio",
     imgUrl:
-      "/assets/images/_webp/rooms/parque-nacional-huerquehue/PHOTO_00.webp",
+      "/assets/images/_webp/rooms/huerquehue/PHOTO_00.webp",
     blurUrl:
-      "/assets/images/_thumbnails/rooms/parque-nacional-huerquehue/PHOTO_00.webp",
+      "/assets/images/_thumbnails/rooms/huerquehue/PHOTO_00.webp",
     color: "#6c513e",
     link: "/habitaciones",
     alt: "View of laguna san rafael Room",
@@ -39,9 +39,9 @@ const SELECTIONS = [
     title: "Larga estadía",
     description: "¡En temporada baja puedes quedarte por más tiempo!",
     imgUrl:
-      "/assets/images/_webp/rooms/parque-nacional-conguillio/PHOTO_00.webp",
+      "/assets/images/_webp/rooms/conguillio/PHOTO_00.webp",
     blurUrl:
-      "/assets/images/_thumbnails/rooms/parque-nacional-conguillio/PHOTO_00.webp",
+      "/assets/images/_thumbnails/rooms/conguillio/PHOTO_00.webp",
     color: "#6c513e",
     link: "/larga-estadía",
     alt: "View of parque nacional conguillio Room",
@@ -50,9 +50,9 @@ const SELECTIONS = [
     title: "Eventos",
     description: "Descubre nuestros eventos temáticos",
     imgUrl:
-      "/assets/images/_webp/rooms/parque-nacional-huerquehue/PHOTO_00.webp",
+      "/assets/images/_webp/rooms/huerquehue/PHOTO_00.webp",
     blurUrl:
-      "/assets/images/_thumbnails/rooms/parque-nacional-huerquehue/PHOTO_00.webp",
+      "/assets/images/_thumbnails/rooms/huerquehue/PHOTO_00.webp",
     color: "#6c513e",
     link: "/eventos",
     alt: "View of parque nacional huerquehue Room",
