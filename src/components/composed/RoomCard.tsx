@@ -8,8 +8,8 @@ export default function RoomCard({
   slug,
   name,
   description,
-  beds,
-  capacity,
+  // beds,
+  // capacity,
 }: Partial<RoomType>) {
   const images = ROOM_IMAGES[slug] || [];
 
