@@ -87,7 +87,7 @@ const SlideImage = React.memo(
     return (
       <div style={{ backgroundColor: color }}>
         <div
-          className="relative h-[550px] overflow-hidden"
+          className="relative h-[450px] md:h-[550px] overflow-hidden"
           style={{
             backgroundImage: `url(${image})`,
             backgroundSize: "cover",
@@ -336,11 +336,11 @@ export function Hero() {
         </div>
         <div className="col-span-12 md:col-span-8 order-1 md:order-2">
           <div
-            className="relative md:rounded-3xl isolate bg-white  h-[550px] "
+            className="relative md:rounded-3xl isolate bg-white  h-[450px] md:h-[550px] "
             // style={{ height: "500px" }}
           >
             {/* Slides con efecto fade */}
-            <div className="relative h-[550px] w-full rounded-[inherit] overflow-hidden">
+            <div className="relative h-[450px] md:h-[550px] w-full rounded-[inherit] overflow-hidden">
               {slides.map((slide, index) => (
                 <div
                   key={index}
