@@ -4,11 +4,11 @@ import type { Room as RoomType } from "@/lib/types";
 import ROOM_IMAGES from "@/db/ROOM_IMAGES.json";
 import { ImageCarousel } from "../ImageCarousel";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { LightEffect } from "@/components/ui/LightEffect";
 
-interface RoomCardProps extends Partial<RoomType> {}
+type RoomCardProps = Partial<RoomType>;
 
 function RoomCardSkeleton() {
   return (
@@ -31,8 +31,9 @@ function RoomCardSkeleton() {
 }
 
 export default function RoomCard({ slug, name, description }: RoomCardProps) {
-  const images = ROOM_IMAGES[slug] || [];
   const [isLoading, setIsLoading] = useState(true);
+  
+  const images = useMemo(() => ROOM_IMAGES[slug] || [], [slug]);
 
   useEffect(() => {
     const imgPromises = images.map((src) => {
