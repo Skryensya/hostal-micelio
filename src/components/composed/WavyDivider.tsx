@@ -1,5 +1,5 @@
 export function WavyDivider({
-  backgroundClassNames = ["bg-white", "bg-surface-light dark:bg-surface-dark"],
+  backgroundClassNames = ["bg-white", "bg-surface-light dark:bg-surface-dark",],
   direction = "top",
 }: {
   backgroundClassNames?: string[];
@@ -24,7 +24,7 @@ export function WavyDivider({
     );
   }
   return (
-    <div className={"relative -translate-y-1.5 -translate-x-10 w-[130%]"}>
+    <div className={"relative -translate-y-1.5  z-20"}>
       <div
         className={
           "wavy-divider--bottom absolute z-20 h-5 inset-0 translate-y-1 " +

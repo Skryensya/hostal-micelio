@@ -6,11 +6,16 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export function Rooms() {
   return (
-    <div className="max-w-screen-lg mx-auto py-10">
+    <section className="  container mx-auto max-w-screen-lg  py-10">
       <div className="flex items-center justify-center">
-        <h2 className="text-xl font-bold mb-6">Conoce nuestras habitaciones</h2>
+        <h2 className="text-2xl font-bold mb-8" id="habitaciones">
+          Conoce nuestras habitaciones
+        </h2>
       </div>
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 p-6 bg-surface-3-light-50 dark:bg-surface-3-dark-50 rounded-3xl">
+      <div
+        className="grid sm:grid-cols-2 md:grid-cols-3 gap-2  "
+        aria-labelledby="habitaciones"
+      >
         <AnimatePresence>
           {ROOMS.map((room) => (
             <motion.div
@@ -25,6 +30,6 @@ export function Rooms() {
           ))}
         </AnimatePresence>
       </div>
-    </div>
+    </section>
   );
 }

@@ -21,6 +21,7 @@ type SlideType = {
   description: string;
   focusPoint: string;
   color: string;
+  cardColorClassName: string;
 };
 
 type SlideProps = {
@@ -42,6 +43,7 @@ const slides: SlideType[] = [
     title: "Descubre lugares maravillosos",
     description:
       "Conoce todo lo que Villarrica tiene para ofrecer. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. lorem ipsos ",
+    cardColorClassName: "bg-surface-2-light dark:bg-surface-2-dark",
   },
   {
     img: "/assets/images/_webp/hero/PHOTO_01.webp",
@@ -51,6 +53,7 @@ const slides: SlideType[] = [
     title: "Relájate en el paraíso",
     description:
       "Despierta en lujosos hoteles y paisajes serenos. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. lorem ipsos ",
+    cardColorClassName: "bg-surface-2-light dark:bg-surface-2-dark",
   },
   {
     img: "/assets/images/_webp/hero/PHOTO_02.webp",
@@ -60,6 +63,7 @@ const slides: SlideType[] = [
     title: "¡La aventura en espera!",
     description:
       "Experimenta emocionantes aventuras y crea memorias únicas. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. lorem ipsos ",
+    cardColorClassName: "bg-surface-2-light dark:bg-surface-2-dark",
   },
 ];
 
@@ -95,7 +99,7 @@ const SlideImage = React.memo(
           <Image
             src={thumbnail}
             alt=""
-            className="absolute inset-0 w-full h-full object-cover object-bottom blur"
+            className="absolute inset-0 w-full h-full object-cover object-bottom "
             fill
             priority
             loading="eager"
@@ -301,7 +305,7 @@ export function Hero() {
   // };
 
   return (
-    <div className="bg-surface-3-light-50 dark:bg-surface-3-dark-50 pt-12 pb-16">
+    <div className="bg-surface-3-light-50 dark:bg-surface-3-dark-50 pt-12 md:pt-24 pb-4 md:pb-16 -z-10">
       {/* Botón para saltar el hero (accesibilidad) */}
       <button
         onClick={() => {}}
@@ -310,15 +314,17 @@ export function Hero() {
       >
         Saltar Hero
       </button>
-      <div className="container mx-auto grid grid-cols-12 gap-4 isolate">
-        <div className="col-span-4 z-20">
-          <div className="gap-4 flex flex-col justify-center w-[120%] h-full">
-            <div className="bg-surface-light dark:bg-surface-2-dark p-4 pb-8 rounded-xl">
+      <div className="container mx-auto grid grid-cols-12 gap-2 md:gap-4 isolate px-0 md:px-4 relative">
+        <div className="col-span-12 md:col-span-4 z-20 order-2 md:order-1">
+          <div className="gap-4 flex flex-col justify-center w-full px-2 md:px-0 mx-auto md:mx-0 md:w-[110%] h-full ">
+            <div
+              className={`${slides[activeSlide].cardColorClassName} pt-2 pb-4 md:pt-4 md:pb-8 rounded-2xl`}
+            >
               <div
                 className=" container transition-opacity duration-1000 min-h-[80%]"
                 // style={{ opacity: isLoaded ? 1 : 0 }}
               >
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">
+                <h2 className="text-2xl md:text-3xl font-bold mb-2 md:mb-4 leading-tight md:leading-tight">
                   {slides[activeSlide].title}
                 </h2>
                 <p className="text-base md:text-lg lg:text-xl text-pretty font-medium">
@@ -328,13 +334,13 @@ export function Hero() {
             </div>
           </div>
         </div>
-        <div className="col-span-8">
+        <div className="col-span-12 md:col-span-8 order-1 md:order-2">
           <div
-            className="relative rounded-3xl isolate bg-white"
-            style={{ height: "500px" }}
+            className="relative md:rounded-3xl isolate bg-white  h-[550px] "
+            // style={{ height: "500px" }}
           >
             {/* Slides con efecto fade */}
-            <div className="relative h-full w-full rounded-[inherit] overflow-hidden  ">
+            <div className="relative h-[550px] w-full rounded-[inherit] overflow-hidden">
               {slides.map((slide, index) => (
                 <div
                   key={index}
@@ -350,18 +356,18 @@ export function Hero() {
                   />
                 </div>
               ))}
-              <div className="absolute top-4 right-0">
+              <div className="absolute top-6 md:top-4 left-2 md:left-auto right-auto md:right-2 md:right-0">
                 <Image
                   src="/assets/logos/LOGO_COLOR.png"
                   alt="Hostal Micelio Logo"
-                  className="aspect-square md:mr-4"
+                  className="aspect-square md:mr-4 w-28 h-28 md:w-32 md:h-32"
                   width={100}
                   height={100}
                 />
               </div>
             </div>
 
-            <div className="flex justify-between px-2 pb-2 -translate-y-full gap-4">
+            <div className="flex justify-between px-2 pb-2 -translate-y-full gap-4 absolute left-0 right-0 md:static md:bottom-auto md:left-auto md:right-auto ">
               {/* Botones de navegación */}
               <div className="flex gap-1">
                 <NavigationButton
