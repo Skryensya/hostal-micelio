@@ -33,7 +33,7 @@ export function Header() {
               </div>
             </Link>
 
-            <div className="flex items-center gap-2 md:gap-4">
+            <div className="flex items-center gap-2 md:gap-4 z-[120]">
               {/* Navegación para escritorio */}
               <nav className="hidden lg:flex items-center gap-4 text-lg">
                 {NAV_LINKS.map((link) => (

@@ -79,6 +79,7 @@ const SlideContentSkeleton = React.memo(() => {
     </div>
   );
 });
+
 SlideContentSkeleton.displayName = "SlideContentSkeleton";
 
 // Componente para la imagen del slide
@@ -119,6 +120,7 @@ const SlideImage = React.memo(
     );
   }
 );
+
 SlideImage.displayName = "SlideImage";
 
 // Componente para el contenido del slide
@@ -305,7 +307,7 @@ export function Hero() {
   // };
 
   return (
-    <div className="bg-surface-3-light-50 dark:bg-surface-3-dark-50 pt-12 md:pt-24 pb-4 md:pb-16 -z-10">
+    <div className="bg-surface-3-light-50 dark:bg-surface-3-dark-50 pt-12 md:pt-24 pb-8 md:pb-16 -z-10">
       {/* Botón para saltar el hero (accesibilidad) */}
       <button
         onClick={() => {}}
@@ -314,9 +316,9 @@ export function Hero() {
       >
         Saltar Hero
       </button>
-      <div className="container mx-auto grid grid-cols-12 gap-2 md:gap-4 isolate px-0 md:px-4 relative">
+      <div className="container mx-auto grid grid-cols-12  gap-4 isolate px-0 md:px-4 relative">
         <div className="col-span-12 md:col-span-4 z-20 order-2 md:order-1">
-          <div className="gap-4 flex flex-col justify-center w-full px-2 md:px-0 mx-auto md:mx-0 md:w-[110%] h-full ">
+          <div className="gap-4 flex flex-col justify-center w-full px-4 md:px-0 mx-auto md:mx-0 md:w-[110%] h-full ">
             <div
               className={`${slides[activeSlide].cardColorClassName} pt-2 pb-4 md:pt-4 md:pb-8 rounded-2xl`}
             >
@@ -367,9 +369,9 @@ export function Hero() {
               </div>
             </div>
 
-            <div className="flex justify-between px-2 pb-2 -translate-y-full gap-4 absolute left-0 right-0 md:static md:bottom-auto md:left-auto md:right-auto ">
+            <div className="flex justify-between px-4 pb-4 -translate-y-full gap-4 absolute left-0 right-0 md:static md:bottom-auto md:left-auto md:right-auto ">
               {/* Botones de navegación */}
-              <div className="flex gap-1">
+              <div className="flex gap-1 order-2 md:order-1">
                 <NavigationButton
                   onClick={prevSlide}
                   ariaLabel="Diapositiva anterior"
@@ -417,12 +419,14 @@ export function Hero() {
               </div> */}
 
               {/* Botón Play/Pause */}
-              <PlayPauseButton
-                isPlaying={isPlaying}
-                onToggle={togglePlay}
-                isLoaded={isLoaded}
-                progress={progress}
-              />
+              <div className="flex items-center order-1 md:order-2">
+                <PlayPauseButton
+                  isPlaying={isPlaying}
+                  onToggle={togglePlay}
+                  isLoaded={isLoaded}
+                  progress={progress}
+                />
+              </div>
             </div>
 
             {/* Target para saltar el hero */}
