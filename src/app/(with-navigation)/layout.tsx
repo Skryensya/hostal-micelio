@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import "../styles/main.scss";
+import "@/styles/main.scss";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 import { Header } from "@/components/sections/Header";
 import { Footer } from "@/components/sections/Footer";
-import { balooBhaijaan2, nunito, croissantOne } from "./fonts";
+import { balooBhaijaan2, nunito, croissantOne } from "@/app/fonts";
 import { ReactLenis } from "lenis/react";
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export default function RootLayout({
       style={{ filter: isGrayscale ? "grayscale(100%)" : "none" }}
     >
       <body
-        className={`${croissantOne.variable} ${balooBhaijaan2.variable} ${nunito.variable} font-sans antialiased min-h-screen bg-surface-light text-text-light dark:bg-surface-dark dark:text-text-dark overflow-x-hidden scroll-smooth`}
+        className={`${croissantOne.variable} ${balooBhaijaan2.variable} ${nunito.variable} font-sans antialiased min-h-screen bg-surface-1 dark:text-text overflow-x-hidden scroll-smooth`}
       >
         <ReactLenis root>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

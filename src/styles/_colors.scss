@@ -1,6 +1,7 @@
 /* HOSTAL COLORS HEX  
   #009F98 
-  #E1197C 
+  #E1197C
+  #59578e 
   #561944 
   #F3D39E 
   #EE7934 
@@ -15,57 +16,110 @@
 */
 
 :root {
-  --text-light: hsl(242, 24%, 15%);
-  --text-dark: hsl(319, 100%, 95%);
+  // Brand & Accent
+  --primary: hsl(330, 80%, 49%);
+  --secondary: hsl(22, 85%, 57%);
+  --accent: hsl(177, 100%, 31%);
 
-  --surface-light: hsl(27, 87%, 90%);
-  --surface-dark: hsl(242, 24%, 45%);
+  // Neutrals
+  --neutral-50: hsl(0, 0%, 88%); // #e0e0e0
+  --neutral-100: hsl(0, 0%, 82%); // #d0d0d0
+  --neutral-200: hsl(0, 0%, 75%); // #c0c0c0
+  --neutral-400: hsl(0, 0%, 67%); // #aaaaaa
+  --neutral-700: hsl(0, 0%, 27%); // #444444
+  --neutral-900: hsl(0, 0%, 13%); // #222222
 
-  --surface-2-light: hsl(27, 87%, 88%);
-  --surface-2-dark: hsl(277, 28%, 37%);
+  // Surfaces
+  --surface-1: hsl(0 100% 96%);
+  --surface-2: hsl(357.3 100% 87.1%);
+  --surface-muted: hsl(7.7 100% 93.9%);
+  --surface-inverted: hsl(337.2 43.3% 13.1%);
 
-  --surface-3-light: hsl(0, 80%, 92%);
-  --surface-3-dark: hsl(277, 25%, 70%);
+  // Text
+  --text: hsl(318.2 54.1% 12%);
+  --text-muted: hsl(from var(--text) h s l / 0.6);
+  --text-inverted: hsl(320 42.9% 93.1%);
 
-  --primary-light: hsl(318, 61%, 71%);
-  --primary-dark: hsl(310, 40%, 29%);
+  // Borders
+  --border: var(--text);
+  --border-muted: var(--text-muted);
+  --border-inverted: var(--text-inverted);
 
-  --secondary-light: hsl(22, 85%, 65%);
-  --secondary-dark: hsl(15, 64%, 72%);
+  // Success
+  --success: hsl(122.2 39% 58.8%);
+  --success-foreground: hsl(122.4 100% 10%);
+  --success-bg: hsla(122.2, 39%, 58.8%, 0.1);
+  --success-muted: hsl(121.9 39.2% 69%);
 
-  --accent-light: hsl(170, 55%, 25%);
-  --accent-dark: hsl(170, 80%, 70%);
+  // Warning
+  --warning: hsl(36.2 100% 62.9%);
+  --warning-foreground: hsl(36.4 100% 12.9%);
+  --warning-bg: hsla(36.2, 100%, 62.9%, 0.1);
+  --warning-muted: hsl(35.5 100% 85.1%);
 
-  --border-light: hsl(242, 24%, 20%);
-  --border-dark: hsl(319, 57%, 90%);
+  // Error
+  --error: hsl(3.7 100% 65.1%);
+  --error-foreground: hsl(3.9 100% 12%);
+  --error-bg: hsla(3.7, 100%, 65.1%, 0.1);
+  --error-muted: hsl(4.1 100% 77.1%);
+
+  // Info
+  --info: hsl(207.1 100% 61%);
+  --info-foreground: hsl(206.8 100% 11%);
+  --info-bg: hsla(207.1, 100%, 61%, 0.1);
+  --info-muted: hsl(206.9 100% 82.9%);
 }
 
-$colors: "primary", "secondary", "surface", "surface-2","surface-3", "accent";
-$themes: "light", "dark";
-$steps: (
-  "10": 0.1,
-  "20": 0.2,
-  "30": 0.3,
-  "40": 0.4,
-  "50": 0.5,
-  "60": 0.6,
-  "70": 0.7,
-  "80": 0.8,
-  "90": 0.9,
-  "100": 1,
-  "default": 1,
-);
+.dark {
+  // --primary: hsl(330, 80%, 49%);
+  // --secondary: hsl(22, 85%, 57%);
+  // --accent: hsl(177, 100%, 31%);
 
-@each $color in $colors {
-  @each $theme in $themes {
-    @each $step-name, $opacity in $steps {
-      :root {
-        --#{$color}-#{$theme}-#{$step-name}: color-mix(
-          in srgb,
-          var(--#{$color}-#{$theme}) calc(#{$opacity} * 100%),
-          transparent
-        );
-      }
-    }
-  }
+  // Neutrals
+  --neutral-50: hsl(0, 0%, 10%); // #1a1a1a
+  --neutral-100: hsl(0, 0%, 12%); // #1e1e1e
+  --neutral-200: hsl(0, 0%, 16%); // #2a2a2a
+  --neutral-400: hsl(0, 0%, 23%); // #3a3a3a
+  --neutral-700: hsl(0, 0%, 80%); // #cccccc
+  --neutral-900: hsl(0, 0%, 94%); // #f0f0f0
+
+  // Surfaces
+  --surface-1: hsl(337.2 43.3% 13.1%);
+  --surface-2: hsl(335.9 100% 42.9%);
+  --surface-muted: hsl(336.1 100% 32%);
+  --surface-inverted: hsl(0 100% 98%);
+
+  // Text
+  --text: hsl(320 42.9% 93.1%);
+  --text-muted: hsl(from var(--text) h s l / 0.5);
+  --text-inverted: hsl(318.2 54.1% 12%);
+
+  // // Borders
+  // --border:  var(--text);
+  // --border-muted: var(--text-muted);
+  // --border-inverted: var(--text-inverted);
+
+  // // Success
+  // --success: hsl(122.2 39% 58.8%);
+  // --success-foreground: hsl(122.4 100% 10%);
+  // --success-bg: hsla(122.2, 39%, 58.8%, 0.1);
+  // --success-muted: hsl(121.9 39.2% 69%);
+
+  // // Warning
+  // --warning: hsl(36.2 100% 62.9%);
+  // --warning-foreground: hsl(36.4 100% 12.9%);
+  // --warning-bg: hsla(36.2, 100%, 62.9%, 0.1);
+  // --warning-muted: hsl(35.5 100% 85.1%);
+
+  // // Error
+  // --error: hsl(3.7 100% 65.1%);
+  // --error-foreground: hsl(3.9 100% 12%);
+  // --error-bg: hsla(3.7, 100%, 65.1%, 0.1);
+  // --error-muted: hsl(4.1 100% 77.1%);
+
+  // // Info
+  // --info: hsl(207.1 100% 61%);
+  // --info-foreground: hsl(206.8 100% 11%);
+  // --info-bg: hsla(207.1, 100%, 61%, 0.1);
+  // --info-muted: hsl(206.9 100% 82.9%);
 }
