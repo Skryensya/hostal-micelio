@@ -12,7 +12,7 @@ type RoomCardProps = Partial<RoomType>;
 
 function RoomCardSkeleton() {
   return (
-    <div className="grid grid-cols-1 h-full w-full bg-surface-3-light-70 dark:bg-surface-3-dark-70 rounded-xl overflow-hidden shadow-md shadow-primary/10 ">
+    <div className="grid grid-cols-1 h-full w-full bg-surface-2 text-text rounded-xl overflow-hidden  ">
       <Skeleton className="w-full aspect-video" />
       <div className="flex flex-col flex-1 p-4 h-48">
         <span className="text-xs font-bold font-mono opacity-60 mb-2">
@@ -32,7 +32,7 @@ function RoomCardSkeleton() {
 
 export default function RoomCard({ slug, name, description }: RoomCardProps) {
   const [isLoading, setIsLoading] = useState(true);
-  
+
   const images = useMemo(() => ROOM_IMAGES[slug] || [], [slug]);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function RoomCard({ slug, name, description }: RoomCardProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 h-full w-full group bg-surface-3-light-70 dark:bg-surface-3-dark-70 rounded-[2rem] overflow-hidden shadow-md shadow-primary/10">
+    <div className="grid grid-cols-1 h-full w-full group bg-surface-2 text-text rounded-[2rem] overflow-hidden ">
       <ImageCarousel imgs={images} aspectRatio="video" />
 
       <div className="flex flex-col justify-between p-4 min-h-48">

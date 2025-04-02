@@ -11,12 +11,11 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary:
-          "bg-primary-light text-text-light dark:bg-primary-dark dark:text-text-dark",
-        outline: "border border-border-light dark:border-border-dark",
-        secondary: "bg-secondary-light text-text-light",
-        link: "text-text-light dark:text-text-dark font-medium border-none hover:underline !shadow-none visited:text-text-light-70 hover:text-primary-light",
-        neutral: "border border-border-light dark:border-border-dark bg-surface-3-light-60 dark:bg-surface-3-dark-60  ",
+        primary: "bg-primary text-text",
+        outline: "border border-border text-text",
+        secondary: "bg-secondary text-text",
+        link: "text-text font-medium border-none hover:underline !shadow-none visited:text-text-70 hover:text-primary",
+        neutral: "border border-border bg-neutral-50/60 dark:bg-neutral-900/40 text-text",
       },
       size: {
         default: "h-12 rounded-standar px-6 py-4 text-base",

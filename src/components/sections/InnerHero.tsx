@@ -35,7 +35,7 @@ export function InnerHero({ title }: { title?: string }) {
       </div>
       <WavyDivider
         backgroundClassNames={[
-          "bg-white/50 dark:bg-white/20",
+          "bg-neutral-50/50 dark:bg-white/20",
           "bg-surface-light dark:bg-surface-dark",
           "bg-surface-light dark:bg-surface-dark",
         ]}

@@ -26,7 +26,7 @@ export default function RootLayout({
       style={{ filter: isGrayscale ? "grayscale(100%)" : "none" }}
     >
       <body
-        className={`${croissantOne.variable} ${balooBhaijaan2.variable} ${nunito.variable} font-sans antialiased min-h-screen bg-surface-1 dark:text-text overflow-x-hidden scroll-smooth`}
+        className={`${croissantOne.variable} ${balooBhaijaan2.variable} ${nunito.variable} font-sans antialiased min-h-screen bg-surface-1 text-text overflow-x-hidden scroll-smooth`}
       >
         <ReactLenis root>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

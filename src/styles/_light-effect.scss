@@ -1,9 +1,9 @@
 .light-effect {
   background: radial-gradient(
     circle,
-    var(--surface-dark-90) 0%,
-    var(--surface-dark-70) 50%,
-    var(--surface-dark-10) 80%
+    var(--neutral-50) 0%,
+    var(--neutral-50) 50%,
+    var(--neutral-50) 80%
   );
   filter: blur(10px);
   opacity: 0.1;
@@ -13,9 +13,9 @@
 .dark .light-effect {
   background: radial-gradient(
     circle,
-    var(--surface-light) 0%,
-    var(--surface-light-90) 10%,
-    var(--surface-light-10) 80%
+    var(--neutral-900) 0%,
+    var(--neutral-900) 10%,
+    var(--neutral-900) 80%
   );
   filter: blur(10px);
   opacity: 0.06;

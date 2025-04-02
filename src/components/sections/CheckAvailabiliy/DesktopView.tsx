@@ -12,7 +12,7 @@ export const DesktopView: React.FC = () => {
     <div className="container mx-auto py-10 hidden md:block">
       {/* <StayingTypeSelector /> */}
       <div className="flex justify-center items-center">
-        <div className="relative flex flex-col items-center gap-y-4 md:flex-row flex-shrink rounded-standar md:rounded-full p-1 bg-primary-light-30 dark:bg-primary-dark-30 w-fit">
+        <div className="relative flex flex-col items-center gap-y-4 md:flex-row flex-shrink rounded-standar md:rounded-full p-1 bg-primary text-text-always-light w-fit">
           <DateRangePicker />
           <GuestSelector />
           <RoomSelector />

@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export function Rooms() {
   return (
-    <section className="  container mx-auto max-w-screen-lg  py-10">
+    <section className="container mx-auto max-w-screen-lg  py-10">
       <div className="flex items-center justify-center">
         <h2 className="text-2xl font-bold mb-8" id="habitaciones">
           Conoce nuestras habitaciones

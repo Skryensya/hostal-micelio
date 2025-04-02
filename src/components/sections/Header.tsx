@@ -22,7 +22,7 @@ export function Header() {
       {/* Header fijo en la parte superior */}
       <div
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 bg-surface-light dark:bg-surface-dark shadow-md"
+          "fixed top-0 left-0 right-0 z-50 bg-surface-inverted dark:bg-surface-1 shadow-md text-text-inverted dark:text-text"
         )}
       >
         <div className="flex flex-col pt-2">
@@ -57,9 +57,9 @@ export function Header() {
           <WavyDivider
             direction="bottom"
             backgroundClassNames={[
-              "bg-surface-light dark:bg-surface-dark",
-              "bg-surface-light dark:bg-surface-dark",
-              "bg-white/50 dark:bg-white/20",
+              "bg-surface-always-dark",
+              "bg-surface-always-dark",
+              "bg-neutral-50/50",
             ]}
           />
         </div>
@@ -75,7 +75,7 @@ export function Header() {
               : { opacity: 0, scale: 0.95, y: -20 }
           }
           transition={{ duration: 0.4, ease: "easeInOut" }}
-          className={`lg:hidden fixed top-20 right-2 md:right-4 w-64 bg-surface-2-light dark:bg-surface-2-dark rounded-2xl shadow-xl z-50 overflow-hidden ${
+          className={`lg:hidden fixed top-20 right-2 md:right-4 w-64 bg-surface-2  rounded-2xl shadow-xl z-50 overflow-hidden ${
             !isMenuOpen ? "pointer-events-none" : ""
           }`}
         >

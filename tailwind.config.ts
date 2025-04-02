@@ -4,62 +4,60 @@ import animate from "tailwindcss-animate";
 // Define reusable variables for colors, fonts, and other theme extensions
 export const colors = {
   // Brand & Accent
-  primary: "var(--primary)",
-  secondary: "var(--secondary)",
-  accent: "var(--accent)",
+  primary: "hsl(var(--primary) / <alpha-value>)",
+  secondary: "hsl(var(--secondary) / <alpha-value>)",
+  accent: "hsl(var(--accent) / <alpha-value>)",
   // Neutrals
   neutral: {
-    50: "var(--neutral-50)",
-    100: "var(--neutral-100)",
-    200: "var(--neutral-200)",
-    400: "var(--neutral-400)",
-    700: "var(--neutral-700)",
-    900: "var(--neutral-900)",
+    50: "hsl(var(--neutral-50) / <alpha-value>)",
+    100: "hsl(var(--neutral-100) / <alpha-value>)",
+    200: "hsl(var(--neutral-200) / <alpha-value>)",
+    400: "hsl(var(--neutral-400) / <alpha-value>)",
+    700: "hsl(var(--neutral-700) / <alpha-value>)",
+    900: "hsl(var(--neutral-900) / <alpha-value>)",
   },
   // Surfaces
   surface: {
-    1: "var(--surface-1)",
-    2: "var(--surface-2)", 
-    muted: "var(--surface-muted)",
-    inverted: "var(--surface-inverted)",
+    1: "hsl(var(--surface-1) / <alpha-value>)",
+    2: "hsl(var(--surface-2) / <alpha-value>)",
+    muted: "hsl(var(--surface-muted) / <alpha-value>)",
+    inverted: "hsl(var(--surface-inverted) / <alpha-value>)",
+    "always-light": "hsl(var(--surface-always-light) / <alpha-value>)",
+    "always-dark": "hsl(var(--surface-always-dark) / <alpha-value>)",
   },
   // Text
   text: {
-    DEFAULT: "var(--text)",
-    muted: "var(--text-muted)",
-    inverted: "var(--text-inverted)",
+    DEFAULT: "hsl(var(--text) / <alpha-value>)",
+    muted: "hsl(var(--text) / 0.5)",
+    inverted: "hsl(var(--text-inverted) / <alpha-value>)",
+    "always-light": "hsl(var(--text-always-light) / <alpha-value>)",
+    "always-dark": "hsl(var(--text-always-dark) / <alpha-value>)",
   },
   // Borders
   border: {
-    DEFAULT: "var(--border)",
-    muted: "var(--border-muted)",
-    inverted: "var(--border-inverted)",
+    DEFAULT: "hsl(var(--border) / <alpha-value>)",
+    muted: "hsl(var(--border-muted) / <alpha-value>)",
+    inverted: "hsl(var(--border-inverted) / <alpha-value>)",
+    "always-light": "hsl(var(--border-always-light) / <alpha-value>)",
+    "always-dark": "hsl(var(--border-always-dark) / <alpha-value>)",
   },
 
   // Status
   success: {
-    DEFAULT: "var(--success)",
-    fg: "var(--success-foreground)",
-    bg: "var(--success-bg)",
-    muted: "var(--success-muted)",
+    DEFAULT: "hsl(var(--success) / <alpha-value>)",
+    muted: "hsl(var(--success-muted) / <alpha-value>)",
   },
   warning: {
-    DEFAULT: "var(--warning)",
-    fg: "var(--warning-foreground)",
-    bg: "var(--warning-bg)",
-    muted: "var(--warning-muted)",
+    DEFAULT: "hsl(var(--warning) / <alpha-value>)",
+    muted: "hsl(var(--warning-muted) / <alpha-value>)",
   },
   error: {
-    DEFAULT: "var(--error)",
-    fg: "var(--error-foreground)",
-    bg: "var(--error-bg)",
-    muted: "var(--error-muted)",
+    DEFAULT: "hsl(var(--error) / <alpha-value>)",
+    muted: "hsl(var(--error-muted) / <alpha-value>)",
   },
   info: {
-    DEFAULT: "var(--info)",
-    fg: "var(--info-foreground)",
-    bg: "var(--info-bg)",
-    muted: "var(--info-muted)",
+    DEFAULT: "hsl(var(--info) / <alpha-value>)",
+    muted: "hsl(var(--info-muted) / <alpha-value>)",
   },
 };
 

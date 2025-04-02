@@ -30,7 +30,7 @@ const CalendarContent = ({
   showOutsideDays?: boolean;
 }) => {
   return (
-    <div className="w-full h-full flex justify-center items-center lg:rounded-standar lg:p-0  lg:rounded-[40px] overflow-hidden">
+    <div className="w-full h-full flex justify-center items-center lg:rounded-standar lg:p-0 lg:rounded-[40px] overflow-hidden">
       <LightEffect />
       <Calendar
         initialFocus
@@ -102,16 +102,14 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
         ref={dateButtonRef}
         className={cn(
           "transition-all duration-300 flex flex-col lg:flex-row rounded-standar w-full",
-          activeButton ? "hover:bg-primary-light-20" : ""
+          activeButton ? "hover:bg-neutral-100/50" : ""
         )}
       >
         <div
           className={cn(
             "flex flex-col items-start rounded-standar px-6 py-3  min-w-[170px]",
-            activeButton === "from"
-              ? "bg-primary-light-50 dark:bg-primary-dark-50"
-              : "",
-            activeButton ? "" : "hover:bg-primary-light-20"
+            activeButton === "from" ? "bg-neutral-50/50" : "",
+            activeButton ? "" : "hover:bg-neutral-100/10"
           )}
           onClick={() => {
             setActiveButton("from");
@@ -123,10 +121,8 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
         <div
           className={cn(
             "flex flex-col items-start rounded-standar px-6  py-3  min-w-[200px] ",
-            activeButton === "to"
-              ? "bg-primary-light-50 dark:bg-primary-dark-50 pr-8"
-              : "",
-            activeButton ? "" : "hover:bg-primary-light-20"
+            activeButton === "to" ? "bg-primary/10 pr-8" : "",
+            activeButton ? "" : "hover:bg-primary/50"
           )}
           onClick={() => {
             if (dateRange?.from) {

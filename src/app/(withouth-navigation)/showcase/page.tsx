@@ -11,14 +11,17 @@ const ColorCard = ({ color, name, value }) => (
   <div className="flex items-center rounded-lg border border-border bg-white/50 dark:bg-black/50 overflow-hidden">
     <div
       className="w-20 h-20  mr-4  border-r border-border"
-      style={{ backgroundColor: color }}
+      style={{ backgroundColor: removeAlpha(color) }}
     ></div>
     <div className="p-2">
       <div className="text-sm text-text capitalize">{name}</div>
-      <div className="text-xs text-text-muted">{value}</div>
+      <div className="text-xs text-text-muted">{removeAlpha(value)}</div>
     </div>
   </div>
 );
+const removeAlpha = (color) => {
+  return color.replace(" / <alpha-value>", "");
+};
 
 const ColorsPage = () => {
   // Function to check if a value is an object (nested color)
@@ -34,6 +37,7 @@ const ColorsPage = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {/* Combined Grid for Objects and Single Colors */}
         {Object.entries(colors).map(([colorName, colorValue]) => {
+          // console.log(colorName, colorValue);
           if (isObject(colorValue)) {
             // Nested color (e.g., neutral, primary)
             return (
@@ -45,13 +49,13 @@ const ColorsPage = () => {
                 <h2 className="text-lg font-semibold capitalize mb-2">
                   {colorName}
                 </h2>
-                <div className="flex flex-col gap-2">
-                  {Object.entries(colorValue).map(([shade, hexValue]) => (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                  {Object.entries(colorValue).map(([shade, hslValue]) => (
                     <ColorCard
                       key={`${colorName}-${shade}`}
-                      color={hexValue}
+                      color={hslValue}
                       name={shade}
-                      value={hexValue}
+                      value={hslValue}
                     />
                   ))}
                 </div>

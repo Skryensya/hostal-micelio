@@ -12,7 +12,7 @@ import { ChevronRight, ChevronLeft, Play, Pause } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { LightEffect } from "@/components/ui/LightEffect";
-
+import { WavyDivider } from "@/components/composed/WavyDivider";
 // Types
 type SlideType = {
   img: string;
@@ -43,7 +43,7 @@ const slides: SlideType[] = [
     title: "Descubre lugares maravillosos",
     description:
       "Conoce todo lo que Villarrica tiene para ofrecer. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. lorem ipsos ",
-    cardColorClassName: "bg-surface-2-light dark:bg-surface-2-dark",
+    cardColorClassName: "bg-primary",
   },
   {
     img: "/assets/images/_webp/hero/PHOTO_01.webp",
@@ -53,7 +53,7 @@ const slides: SlideType[] = [
     title: "Relájate en el paraíso",
     description:
       "Despierta en lujosos hoteles y paisajes serenos. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. lorem ipsos ",
-    cardColorClassName: "bg-surface-2-light dark:bg-surface-2-dark",
+    cardColorClassName: "bg-primary",
   },
   {
     img: "/assets/images/_webp/hero/PHOTO_02.webp",
@@ -63,7 +63,7 @@ const slides: SlideType[] = [
     title: "¡La aventura en espera!",
     description:
       "Experimenta emocionantes aventuras y crea memorias únicas. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. lorem ipsos ",
-    cardColorClassName: "bg-surface-2-light dark:bg-surface-2-dark",
+    cardColorClassName: "bg-primary",
   },
 ];
 
@@ -71,10 +71,10 @@ const slides: SlideType[] = [
 const SlideContentSkeleton = React.memo(() => {
   return (
     <div className="md:w-8/12 lg:w-6/12 my-12 rounded-lg">
-      <div className="h-10 bg-text-light-30 dark:bg-text-dark-30 rounded-lg w-8/12 mb-4" />
+      <div className="h-10 bg-neutral-200 rounded-lg w-8/12 mb-4" />
       <div className="space-y-3">
-        <div className="h-6 bg-text-light-30 dark:bg-text-dark-30 rounded-lg w-11/12" />
-        <div className="h-6 bg-text-light-30 dark:bg-text-dark-30 rounded-lg w-10/12" />
+        <div className="h-6 bg-neutral-200 rounded-lg w-11/12" />
+        <div className="h-6 bg-neutral-200 rounded-lg w-10/12" />
       </div>
     </div>
   );
@@ -141,7 +141,7 @@ const PlayPauseButton = ({
     <div className="p-1">
       <button
         className={cn(
-          "group w-10 h-10  rounded-full flex items-center justify-center",
+          "group w-10 h-10 rounded-full flex items-center justify-center",
           !isLoaded && "opacity-50 cursor-not-allowed"
         )}
         onClick={onToggle}
@@ -155,15 +155,8 @@ const PlayPauseButton = ({
             cy="20"
             r="18"
             fill="none"
+            stroke="var(--primary)"
             className="stroke-translate"
-            strokeWidth="3"
-          />
-          <circle
-            cx="20"
-            cy="20"
-            r="18"
-            fill="none"
-            className="stroke-primary-light"
             strokeWidth="3"
             strokeDasharray={`${progress * 113.1} 113.1`}
             strokeLinecap="round"
@@ -174,25 +167,11 @@ const PlayPauseButton = ({
         <div
           className={cn(
             buttonVariants({ variant: "neutral", size: "icon" }),
-            "z-10 rounded-full h-10 bg-black/20"
+            "z-10 rounded-full h-10"
           )}
         >
           <LightEffect />
-          {isPlaying ? (
-            <Pause
-              size={16}
-              fill="#f4d7eb"
-              stroke="#f4d7eb"
-              className="text-text-dark transition-all duration-300"
-            />
-          ) : (
-            <Play
-              size={16}
-              fill="#f4d7eb"
-              stroke="#f4d7eb"
-              className="text-text-dark transition-all duration-300"
-            />
-          )}
+          {isPlaying ? <Pause size={16} /> : <Play size={16} />}
         </div>
       </button>
     </div>
@@ -233,9 +212,9 @@ const NavigationButton = ({
         >
           <LightEffect />
           {direction === "prev" ? (
-            <ChevronLeft className="text-text-dark transition-all duration-300" />
+            <ChevronLeft className=" transition-all duration-300" />
           ) : (
-            <ChevronRight className="translate-x-0.5 text-text-dark transition-all duration-300" />
+            <ChevronRight className="translate-x-0.5  transition-all duration-300" />
           )}
         </div>
       </div>
@@ -307,89 +286,90 @@ export function Hero() {
   // };
 
   return (
-    <div className="bg-surface-3-light-50 dark:bg-surface-3-dark-50 pt-12 md:pt-24 pb-8 md:pb-16 -z-10">
-      {/* Botón para saltar el hero (accesibilidad) */}
-      <button
-        onClick={() => {}}
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-text-dark px-4 py-2 rounded-md z-10"
-        tabIndex={0}
-      >
-        Saltar Hero
-      </button>
-      <div className="container mx-auto grid grid-cols-12  gap-4 isolate px-0 md:px-4 relative">
-        <div className="col-span-12 md:col-span-4 z-20 order-2 md:order-1">
-          <div className="gap-4 flex flex-col justify-center w-full px-4 md:px-0 mx-auto md:mx-0 md:w-[110%] h-full ">
-            <div
-              className={`${slides[activeSlide].cardColorClassName} pt-2 pb-4 md:pt-4 md:pb-8 rounded-2xl`}
-            >
+    <>
+      <div className="bg-surface-2 pt-12 md:pt-24 pb-8 md:pb-16 -z-10">
+        {/* Botón para saltar el hero (accesibilidad) */}
+        <button
+          onClick={() => {}}
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-text-dark px-4 py-2 rounded-md z-10"
+          tabIndex={0}
+        >
+          Saltar Hero
+        </button>
+        <div className="container mx-auto grid grid-cols-12  gap-4 isolate px-0 md:px-4 relative">
+          <div className="col-span-12 md:col-span-4 z-20 order-2 md:order-1">
+            <div className="gap-4 flex flex-col justify-center w-full px-4 md:px-0 mx-auto md:mx-0 md:w-[110%] h-full ">
               <div
-                className=" container transition-opacity duration-1000 min-h-[80%]"
-                // style={{ opacity: isLoaded ? 1 : 0 }}
+                className={`${slides[activeSlide].cardColorClassName} pt-2 pb-4 md:pt-4 md:pb-8 rounded-2xl`}
               >
-                <h2 className="text-2xl md:text-3xl font-bold mb-2 md:mb-4 leading-tight md:leading-tight">
-                  {slides[activeSlide].title}
-                </h2>
-                <p className="text-base md:text-lg lg:text-xl text-pretty font-medium">
-                  {slides[activeSlide].description}
-                </p>
+                <div
+                  className=" container transition-opacity duration-1000 min-h-[80%]"
+                  // style={{ opacity: isLoaded ? 1 : 0 }}
+                >
+                  <h2 className="text-2xl md:text-3xl font-bold mb-2 md:mb-4 leading-tight md:leading-tight">
+                    {slides[activeSlide].title}
+                  </h2>
+                  <p className="text-base md:text-lg lg:text-xl text-pretty font-medium">
+                    {slides[activeSlide].description}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="col-span-12 md:col-span-8 order-1 md:order-2">
-          <div
-            className="relative md:rounded-3xl isolate bg-white  h-[450px] md:h-[550px] "
-            // style={{ height: "500px" }}
-          >
-            {/* Slides con efecto fade */}
-            <div className="relative h-[450px] md:h-[550px] w-full rounded-[inherit] overflow-hidden">
-              {slides.map((slide, index) => (
-                <div
-                  key={index}
-                  className="absolute top-0 left-0 w-full h-full transition-opacity duration-1000"
-                  style={{ opacity: index === activeSlide ? 1 : 0 }}
-                >
-                  <SlideImage
-                    image={slide.img}
-                    focusPoint={slide.focusPoint}
-                    thumbnail={slide.thumbnail}
-                    color={slide.color}
-                    onLoad={handleMainImageLoad}
+          <div className="col-span-12 md:col-span-8 order-1 md:order-2">
+            <div
+              className="relative md:rounded-3xl isolate bg-surface-muted  h-[450px] md:h-[550px] "
+              // style={{ height: "500px" }}
+            >
+              {/* Slides con efecto fade */}
+              <div className="relative h-[450px] md:h-[550px] w-full rounded-[inherit] overflow-hidden">
+                {slides.map((slide, index) => (
+                  <div
+                    key={index}
+                    className="absolute top-0 left-0 w-full h-full transition-opacity duration-1000"
+                    style={{ opacity: index === activeSlide ? 1 : 0 }}
+                  >
+                    <SlideImage
+                      image={slide.img}
+                      focusPoint={slide.focusPoint}
+                      thumbnail={slide.thumbnail}
+                      color={slide.color}
+                      onLoad={handleMainImageLoad}
+                    />
+                  </div>
+                ))}
+                <div className="absolute top-6 md:top-4 left-2 md:left-auto right-auto   md:right-0">
+                  <Image
+                    src="/assets/logos/LOGO_COLOR.png"
+                    alt="Hostal Micelio Logo"
+                    className="aspect-square md:mr-4 w-28 h-28 md:w-32 md:h-32"
+                    width={100}
+                    height={100}
                   />
                 </div>
-              ))}
-              <div className="absolute top-6 md:top-4 left-2 md:left-auto right-auto md:right-2 md:right-0">
-                <Image
-                  src="/assets/logos/LOGO_COLOR.png"
-                  alt="Hostal Micelio Logo"
-                  className="aspect-square md:mr-4 w-28 h-28 md:w-32 md:h-32"
-                  width={100}
-                  height={100}
-                />
-              </div>
-            </div>
-
-            <div className="flex justify-between px-4 pb-4 -translate-y-full gap-4 absolute left-0 right-0 md:static md:bottom-auto md:left-auto md:right-auto ">
-              {/* Botones de navegación */}
-              <div className="flex gap-1 order-2 md:order-1">
-                <NavigationButton
-                  onClick={prevSlide}
-                  ariaLabel="Diapositiva anterior"
-                  disabled={!isLoaded}
-                  direction="prev"
-                  isLoaded={isLoaded}
-                />
-                <NavigationButton
-                  onClick={nextSlide}
-                  ariaLabel="Siguiente diapositiva"
-                  disabled={!isLoaded}
-                  direction="next"
-                  isLoaded={isLoaded}
-                />
               </div>
 
-              {/* Dots de navegación */}
-              {/* <div
+              <div className="flex justify-between px-4 pb-4 -translate-y-full gap-4 absolute left-0 right-0 md:static md:bottom-auto md:left-auto md:right-auto ">
+                {/* Botones de navegación */}
+                <div className="flex gap-1 order-2 md:order-1">
+                  <NavigationButton
+                    onClick={prevSlide}
+                    ariaLabel="Diapositiva anterior"
+                    disabled={!isLoaded}
+                    direction="prev"
+                    isLoaded={isLoaded}
+                  />
+                  <NavigationButton
+                    onClick={nextSlide}
+                    ariaLabel="Siguiente diapositiva"
+                    disabled={!isLoaded}
+                    direction="next"
+                    isLoaded={isLoaded}
+                  />
+                </div>
+
+                {/* Dots de navegación */}
+                {/* <div
                 role="group"
                 aria-label="Navegación de diapositivas"
                 className={cn(
@@ -418,22 +398,30 @@ export function Hero() {
                 ))}
               </div> */}
 
-              {/* Botón Play/Pause */}
-              <div className="flex items-center order-1 md:order-2">
-                <PlayPauseButton
-                  isPlaying={isPlaying}
-                  onToggle={togglePlay}
-                  isLoaded={isLoaded}
-                  progress={progress}
-                />
+                {/* Botón Play/Pause */}
+                <div className="flex items-center order-1 md:order-2">
+                  <PlayPauseButton
+                    isPlaying={isPlaying}
+                    onToggle={togglePlay}
+                    isLoaded={isLoaded}
+                    progress={progress}
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* Target para saltar el hero */}
-            <div className="sr-only" tabIndex={-1}></div>
+              {/* Target para saltar el hero */}
+              <div className="sr-only" tabIndex={-1}></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <WavyDivider
+        backgroundClassNames={[
+          "bg-neutral-50/50 dark:bg-white/20",
+          "bg-surface-1",
+          "bg-surface-1",
+        ]}
+      />
+    </>
   );
 }

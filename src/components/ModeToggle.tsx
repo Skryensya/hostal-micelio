@@ -27,11 +27,13 @@ export function ModeToggle() {
       variant="link"
       size="icon"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      title={theme === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+      title={
+        theme === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"
+      }
+      className="text-text-always-dark"
     >
-      <Sun className="h-[1.2rem] w-[1.2rem] dark:block hidden !text-text-dark" />
-      <Moon className="h-[1.2rem] w-[1.2rem] dark:hidden !text-text-light" />
-      <span className="sr-only">Toggle theme</span>
+      <Sun className="h-[1.2rem] w-[1.2rem] dark:block hidden" />
+      <Moon className="h-[1.2rem] w-[1.2rem] dark:hidden" />
     </Button>
   );
 }
