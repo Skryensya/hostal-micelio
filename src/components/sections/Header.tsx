@@ -22,7 +22,7 @@ export function Header() {
       {/* Header fijo en la parte superior */}
       <div
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 bg-surface-inverted dark:bg-surface-1 shadow-md text-text-inverted dark:text-text"
+          "fixed top-0 left-0 right-0 z-50 bg-surface-3 shadow-md text-text"
         )}
       >
         <div className="flex flex-col pt-2">
@@ -54,14 +54,7 @@ export function Header() {
             </div>
           </div>
 
-          <WavyDivider
-            direction="bottom"
-            backgroundClassNames={[
-              "bg-surface-always-dark",
-              "bg-surface-always-dark",
-              "bg-neutral-50/50",
-            ]}
-          />
+          <WavyDivider direction="bottom" backgroundClass="bg-surface-3" />
         </div>
       </div>
 

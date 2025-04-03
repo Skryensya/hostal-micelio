@@ -5,12 +5,11 @@ import CONTACT_INFO from "@/db/CONTACT_INFO.json";
 import { WavyDivider } from "../composed/WavyDivider";
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
   return (
     <div className="mt-20">
-      <WavyDivider
-        backgroundClassNames={["bg-primary-light  ", "bg-surface-2-dark"]}
-      />
-      <footer className="bg-surface-2-dark text-text-dark py-8 relative">
+      <WavyDivider backgroundClass="bg-surface-3" />
+      <footer className="bg-surface-3 text-text-inverted py-8 relative">
         <div className="container mx-auto px-4">
           {/* Level 1: Logo and Links */}
           <div className="flex flex-col md:flex-row justify-between items-center mb-6">
@@ -81,7 +80,8 @@ const Footer = () => {
           {/* Level 2: Socials and Copyright */}
           <div className="flex flex-col md:flex-row justify-between items-center border-t border-border-dark pt-4  gap-4 md:pt-4">
             <p className="text-sm order-1">
-              &copy; 2024 Hostal Micelio. Todos los derechos reservados.
+              &copy; {currentYear} Hostal Micelio. Todos los derechos
+              reservados.
             </p>
             <div className="flex gap-4 md:order-2">
               <span>Siguenos</span>
@@ -104,7 +104,6 @@ const Footer = () => {
             </div>
           </div>
         </div>
- 
       </footer>
     </div>
   );

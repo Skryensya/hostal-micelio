@@ -33,13 +33,7 @@ export function InnerHero({ title }: { title?: string }) {
           )}
         </div>
       </div>
-      <WavyDivider
-        backgroundClassNames={[
-          "bg-neutral-50/50 dark:bg-white/20",
-          "bg-surface-light dark:bg-surface-dark",
-          "bg-surface-light dark:bg-surface-dark",
-        ]}
-      />
+      <WavyDivider backgroundClass="bg-surface-1" />
       <div
         ref={endOfHeroRef}
         tabIndex={-1}

@@ -40,7 +40,11 @@ const ReviewCard = ({
           title="5 estrellas"
         >
           <span className="text-sm font-bold pt-1">5</span>
-          <StarIcon className="w-5 h-5 " fill="rgb(253 224 71)" stroke="rgba(0 0 0, 90%)" />
+          <StarIcon
+            className="w-5 h-5 "
+            fill="rgb(253 224 71)"
+            stroke="rgba(0 0 0, 90%)"
+          />
         </div>
       </CardHeader>
       <CardContent className="p-4 md:px-6 nd:pt-4">
@@ -55,7 +59,7 @@ const ReviewCard = ({
             href={review.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-primary hover:underline flex flex-row items-center gap-1 font-medium"
+            className="text-sm text-text hover:underline flex flex-row items-center gap-1 font-medium"
           >
             <span className="pt-1">
               Ir a la reseña <span className="sr-only">de {review.name}</span>

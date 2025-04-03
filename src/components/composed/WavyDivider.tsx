@@ -1,48 +1,43 @@
-export function WavyDivider({
-  backgroundClassNames = ["bg-white", "bg-surface-light dark:bg-surface-dark",],
-  direction = "top",
-}: {
-  backgroundClassNames?: string[];
+import { cn } from "@/lib/utils";
+
+type WavyDividerProps = {
+  backgroundClass?: string;
   direction?: "top" | "bottom";
-}) {
-  if (direction === "top") {
-    return (
-      <div className={"relative h-1"}>
-        <div
-          className={
-            "wavy-divider absolute  h-10 inset-0 translate-y-[-20px]" +
-            backgroundClassNames[0]
-          }
-        ></div>
-        <div
-          className={
-            "wavy-divider absolute z-10 h-10 inset-0 translate-y-[-15px] " +
-            backgroundClassNames[1]
-          }
-        ></div>
-      </div>
-    );
-  }
+};
+
+export function WavyDivider({
+  backgroundClass,
+  direction = "top",
+}: WavyDividerProps) {
+  const isTop = direction === "top";
+
   return (
-    <div className={"relative -translate-y-1.5  z-20"}>
+    <div className={cn("relative", isTop ? "h-1" : "-translate-y-1.5 z-20")}>
       <div
-        className={
-          "wavy-divider--bottom absolute z-20 h-10 inset-0 translate-y-1 " +
-          backgroundClassNames[0]
-        }
-      ></div>
-      {/* <div
-        className={
-          "wavy-divider--bottom absolute z-10 h-10 inset-0 translate-y-2 " +
-          backgroundClassNames[1]
-        }
-      ></div> */}
+        className={cn(
+          isTop
+            ? "wavy-divider h-5 -translate-y-5"
+            : "wavy-divider--bottom h-6 translate-y-2",
+          "absolute inset-0 bg-white/20"
+        )}
+      />
       <div
-        className={
-          "wavy-divider--bottom absolute  h-10 inset-0 translate-y-3 " +
-          backgroundClassNames[2]
-        }
-      ></div>
+        className={cn(
+          isTop
+            ? "wavy-divider h-5 -translate-y-5"
+            : "wavy-divider--bottom h-6 translate-y-2",
+          "absolute inset-0 bg-surface-1/50"
+        )}
+      />
+      <div
+        className={cn(
+          isTop
+            ? "wavy-divider h-5 -translate-y-[15px]"
+            : "wavy-divider--bottom h-6 translate-y-1 z-10",
+          "absolute inset-0",
+          backgroundClass
+        )}
+      />
     </div>
   );
 }

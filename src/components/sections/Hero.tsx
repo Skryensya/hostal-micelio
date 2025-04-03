@@ -43,7 +43,7 @@ const slides: SlideType[] = [
     title: "Descubre lugares maravillosos",
     description:
       "Conoce todo lo que Villarrica tiene para ofrecer. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. lorem ipsos ",
-    cardColorClassName: "bg-primary",
+    cardColorClassName: "bg-surface-1",
   },
   {
     img: "/assets/images/_webp/hero/PHOTO_01.webp",
@@ -53,7 +53,7 @@ const slides: SlideType[] = [
     title: "Relájate en el paraíso",
     description:
       "Despierta en lujosos hoteles y paisajes serenos. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. lorem ipsos ",
-    cardColorClassName: "bg-primary",
+    cardColorClassName: "bg-surface-1",
   },
   {
     img: "/assets/images/_webp/hero/PHOTO_02.webp",
@@ -63,7 +63,7 @@ const slides: SlideType[] = [
     title: "¡La aventura en espera!",
     description:
       "Experimenta emocionantes aventuras y crea memorias únicas. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. lorem ipsos ",
-    cardColorClassName: "bg-primary",
+    cardColorClassName: "bg-surface-1",
   },
 ];
 
@@ -415,13 +415,7 @@ export function Hero() {
           </div>
         </div>
       </div>
-      <WavyDivider
-        backgroundClassNames={[
-          "bg-neutral-50/50 dark:bg-white/20",
-          "bg-surface-1",
-          "bg-surface-1",
-        ]}
-      />
+      <WavyDivider backgroundClass="bg-surface-1" />
     </>
   );
 }

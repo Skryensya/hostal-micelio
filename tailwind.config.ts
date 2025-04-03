@@ -20,6 +20,7 @@ export const colors = {
   surface: {
     1: "hsl(var(--surface-1) / <alpha-value>)",
     2: "hsl(var(--surface-2) / <alpha-value>)",
+    3: "hsl(var(--surface-3) / <alpha-value>)",
     muted: "hsl(var(--surface-muted) / <alpha-value>)",
     inverted: "hsl(var(--surface-inverted) / <alpha-value>)",
     "always-light": "hsl(var(--surface-always-light) / <alpha-value>)",
