@@ -1,8 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @import "./_colors.scss";
+
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+
 @import "./_globals.scss";
 @import "./_typography.scss";
 @import "./_gradients.scss";

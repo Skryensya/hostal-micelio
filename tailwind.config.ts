@@ -104,7 +104,7 @@ const animation = {
 
 // Tailwind configuration
 const config: Config = {
-  darkMode: ["class"], // Enables dark mode with the "class" strategy
+  darkMode: ["class", "[data-mode='dark']"], // Enables dark mode with the "class" strategy
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"], // Paths to scan for Tailwind classes
   theme: {
     extend: {
