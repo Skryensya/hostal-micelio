@@ -166,7 +166,7 @@ const PlayPauseButton = ({
 
         <div
           className={cn(
-            buttonVariants({ variant: "neutral", size: "icon" }),
+            buttonVariants({ variant: "ghost", size: "icon" }),
             "z-10 rounded-full h-10"
           )}
         >
@@ -207,7 +207,7 @@ const NavigationButton = ({
         <div
           className={cn(
             "shadow-xl",
-            buttonVariants({ variant: "neutral", size: "icon" })
+            buttonVariants({ variant: "ghost", size: "icon" })
           )}
         >
           <LightEffect />
@@ -383,7 +383,7 @@ export function Hero() {
                   <button
                     key={index}
                     className={cn(
-                      buttonVariants({ variant: "neutral", size: "icon" }),
+                      buttonVariants({ variant: "ghost", size: "icon" }),
                       { "bg-primary-light": index === activeSlide },
                       "w-3 h-3 rounded-full"
                     )}

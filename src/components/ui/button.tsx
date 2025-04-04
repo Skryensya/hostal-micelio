@@ -12,10 +12,10 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary: "bg-primary text-text",
-        outline: "border border-border text-text",
         secondary: "bg-secondary text-text",
         link: "text-text font-medium border-none hover:underline !shadow-none visited:text-text-70 hover:text-primary",
-        neutral: "border border-border bg-neutral-50/60 dark:bg-neutral-900/40 text-text",
+        outline: "border border-border text-text bg-transparent",
+        ghost: "bg-neutral-50/20 text-text",
       },
       size: {
         default: "h-12 rounded-standar px-6 py-4 text-base",

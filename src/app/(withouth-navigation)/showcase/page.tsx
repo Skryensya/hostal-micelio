@@ -1,7 +1,7 @@
 import React from "react";
 import { colors } from "../../../../tailwind.config";
 import { ModeToggle } from "@/components/ModeToggle";
-
+import { ButtonShowcase } from "@/components/sections/ButtonShowcase";
 // Add metadata to disable layout
 export const metadata = {
   layout: false,
@@ -30,6 +30,7 @@ const ColorsPage = () => {
 
   return (
     <div className="container mx-auto py-8">
+      <ButtonShowcase />
       <div className="flex justify-end fixed top-0 right-0">
         <ModeToggle />
       </div>

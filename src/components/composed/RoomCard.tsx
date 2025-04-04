@@ -65,7 +65,7 @@ export default function RoomCard({ slug, name, description }: RoomCardProps) {
           <p className="text-base mt-1 mb-4 line-clamp-2">{description}</p>
         </div>
         <div className="flex items-center justify-end gap-2">
-          <Button variant="neutral" size="small">
+          <Button variant="ghost" size="small">
             <span>Ver detalles</span>
             <LightEffect />
           </Button>

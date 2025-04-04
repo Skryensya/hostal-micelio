@@ -28,14 +28,14 @@ export function Header() {
         <div className="flex flex-col pt-2">
           <div className="py-0 flex items-center justify-between container mx-auto px-4">
             <Link href="/" className="flex items-center">
-              <div className="h1 flex leading-6 tracking-tight opacity-90 hover:opacity-100 transition-opacity">
+              <div className="h1 flex leading-6 tracking-tight opacity-100 hover:opacity-90 transition-opacity">
                 Hostal Micelio
               </div>
             </Link>
 
             <div className="flex items-center gap-2 md:gap-4 z-[120]">
               {/* Navegación para escritorio */}
-              <nav className="hidden lg:flex items-center gap-4 text-lg">
+              <nav className="hidden lg:flex items-center gap-4 text-lg font-semibold">
                 {NAV_LINKS.map((link) => (
                   <Link key={link.href} href={link.href}>
                     {link.label}
