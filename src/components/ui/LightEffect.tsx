@@ -5,7 +5,7 @@ interface LightEffectProps {
 }
 
 const LightEffect: React.FC<LightEffectProps> = ({
-  lightSize = 500,
+  lightSize = 400,
  
 }) => {
   const [lightPosition, setLightPosition] = React.useState({ x: 0, y: 0 });

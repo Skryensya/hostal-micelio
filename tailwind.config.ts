@@ -4,9 +4,18 @@ import animate from "tailwindcss-animate";
 // Define reusable variables for colors, fonts, and other theme extensions
 export const colors = {
   // Brand & Accent
-  primary: "hsl(var(--primary) / <alpha-value>)",
-  secondary: "hsl(var(--secondary) / <alpha-value>)",
-  accent: "hsl(var(--accent) / <alpha-value>)",
+  primary: {
+    DEFAULT: "hsl(var(--primary) / <alpha-value>)",
+    inverted: "hsl(var(--primary-inverted) / <alpha-value>)",
+  },
+  secondary: {
+    DEFAULT: "hsl(var(--secondary) / <alpha-value>)",
+    inverted: "hsl(var(--secondary-inverted) / <alpha-value>)",
+  },
+  accent: {
+    DEFAULT: "hsl(var(--accent) / <alpha-value>)",
+    inverted: "hsl(var(--accent-inverted) / <alpha-value>)",
+  },
   // Neutrals
   neutral: {
     50: "hsl(var(--neutral-50) / <alpha-value>)",
@@ -23,24 +32,24 @@ export const colors = {
     3: "hsl(var(--surface-3) / <alpha-value>)",
     muted: "hsl(var(--surface-muted) / <alpha-value>)",
     inverted: "hsl(var(--surface-inverted) / <alpha-value>)",
-    "always-light": "hsl(var(--surface-always-light) / <alpha-value>)",
-    "always-dark": "hsl(var(--surface-always-dark) / <alpha-value>)",
+    "on-light": "hsl(var(--surface-on-light) / <alpha-value>)",
+    "on-dark": "hsl(var(--surface-on-dark) / <alpha-value>)",
   },
   // Text
   text: {
     DEFAULT: "hsl(var(--text) / <alpha-value>)",
     muted: "hsl(var(--text) / 0.5)",
     inverted: "hsl(var(--text-inverted) / <alpha-value>)",
-    "always-light": "hsl(var(--text-always-light) / <alpha-value>)",
-    "always-dark": "hsl(var(--text-always-dark) / <alpha-value>)",
+    "on-light": "hsl(var(--text-on-light) / <alpha-value>)",
+    "on-dark": "hsl(var(--text-on-dark) / <alpha-value>)",
   },
   // Borders
   border: {
     DEFAULT: "hsl(var(--border) / <alpha-value>)",
     muted: "hsl(var(--border-muted) / <alpha-value>)",
     inverted: "hsl(var(--border-inverted) / <alpha-value>)",
-    "always-light": "hsl(var(--border-always-light) / <alpha-value>)",
-    "always-dark": "hsl(var(--border-always-dark) / <alpha-value>)",
+    "on-light": "hsl(var(--border-on-light) / <alpha-value>)",
+    "on-dark": "hsl(var(--border-on-dark) / <alpha-value>)",
   },
 
   // Status

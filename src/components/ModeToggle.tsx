@@ -16,7 +16,7 @@ export function ModeToggle() {
 
   if (!mounted) {
     return (
-      <Button variant="link" size="icon" className="opacity-0">
+      <Button variant="ghost" size="icon" className="opacity-100">
         <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100" />
       </Button>
     );
@@ -24,13 +24,13 @@ export function ModeToggle() {
 
   return (
     <Button
-      variant="link"
+      variant="ghost"
       size="icon"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       title={
         theme === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"
       }
-      className="text-text-always-dark"
+      className="text-text"
     >
       <Sun className="h-[1.2rem] w-[1.2rem] dark:block hidden" />
       <Moon className="h-[1.2rem] w-[1.2rem] dark:hidden" />

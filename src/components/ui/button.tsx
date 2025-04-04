@@ -15,7 +15,7 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-text",
         link: "text-text font-medium border-none hover:underline !shadow-none visited:text-text-70 hover:text-primary",
         outline: "border border-border text-text bg-transparent",
-        ghost: "bg-neutral-50/20 text-text",
+        ghost: "bg-white/20 text-text",
       },
       size: {
         default: "h-12 rounded-standar px-6 py-4 text-base",

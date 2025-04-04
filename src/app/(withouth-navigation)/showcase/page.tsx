@@ -3,12 +3,9 @@ import { colors } from "../../../../tailwind.config";
 import { ModeToggle } from "@/components/ModeToggle";
 import { ButtonShowcase } from "@/components/sections/ButtonShowcase";
 // Add metadata to disable layout
-export const metadata = {
-  layout: false,
-};
 
 const ColorCard = ({ color, name, value }) => (
-  <div className="flex items-center rounded-lg border border-border bg-white/50 dark:bg-black/50 overflow-hidden">
+  <div className="flex grow items-center rounded-lg border border-border bg-white/50 dark:bg-black/50 overflow-hidden">
     <div
       className="w-20 h-20  mr-4  border-r border-border"
       style={{ backgroundColor: removeAlpha(color) }}
@@ -19,9 +16,8 @@ const ColorCard = ({ color, name, value }) => (
     </div>
   </div>
 );
-const removeAlpha = (color) => {
-  return color.replace(" / <alpha-value>", "");
-};
+
+const removeAlpha = (color) => color.replace(" / <alpha-value>", "");
 
 const ColorsPage = () => {
   // Function to check if a value is an object (nested color)
@@ -30,12 +26,12 @@ const ColorsPage = () => {
 
   return (
     <div className="container mx-auto py-8">
-      <ButtonShowcase />
-      <div className="flex justify-end fixed top-0 right-0">
+      <div className="flex justify-end fixed top-4 right-4 ">
         <ModeToggle />
       </div>
+      <ButtonShowcase />
       <h1 className="text-2xl font-bold mb-4">Color Palette</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="flex flex-col gap-4">
         {/* Combined Grid for Objects and Single Colors */}
         {Object.entries(colors).map(([colorName, colorValue]) => {
           // console.log(colorName, colorValue);
@@ -50,7 +46,7 @@ const ColorsPage = () => {
                 <h2 className="text-lg font-semibold capitalize mb-2">
                   {colorName}
                 </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                <div className="flex flex-wrap gap-2">
                   {Object.entries(colorValue).map(([shade, hslValue]) => (
                     <ColorCard
                       key={`${colorName}-${shade}`}

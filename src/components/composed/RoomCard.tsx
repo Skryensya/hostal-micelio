@@ -58,7 +58,7 @@ export default function RoomCard({ slug, name, description }: RoomCardProps) {
 
       <div className="flex flex-col justify-between p-4 min-h-48">
         <div className="flex flex-col">
-          <span className="text-xs font-bold font-mono opacity-60 leading-[20px]">
+          <span className="text-xs font-bold font-mono text-text-muted leading-[20px]">
             Parque Nacional
           </span>
           <h3 className="font-bold text-xl">{name}</h3>
