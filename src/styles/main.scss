@@ -1,9 +1,6 @@
-@import "./_colors.scss";
-
 @import "tailwindcss";
-@config "../../tailwind.config.ts";
 
-
+@import "./_colors.scss";
 @import "./_globals.scss";
 @import "./_typography.scss";
 @import "./_gradients.scss";
@@ -13,3 +10,5 @@
 @import "./_review-card.scss";
 @import "./_light-effect.scss";
 @import "./_wavy-divider.scss";
+
+@config "../../tailwind.config.ts";

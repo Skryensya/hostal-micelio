@@ -6,7 +6,6 @@ import { ImageCarousel } from "../ImageCarousel";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { LightEffect } from "@/components/ui/LightEffect";
 
 type RoomCardProps = Partial<RoomType>;
 
@@ -67,7 +66,6 @@ export default function RoomCard({ slug, name, description }: RoomCardProps) {
         <div className="flex items-center justify-end gap-2">
           <Button variant="ghost" size="small">
             <span>Ver detalles</span>
-            <LightEffect />
           </Button>
         </div>
       </div>

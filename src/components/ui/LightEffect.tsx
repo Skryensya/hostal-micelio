@@ -1,13 +1,10 @@
 import * as React from "react";
 
 interface LightEffectProps {
-  lightSize?: number; 
+  lightSize?: number;
 }
 
-const LightEffect: React.FC<LightEffectProps> = ({
-  lightSize = 400,
- 
-}) => {
+const LightEffect: React.FC<LightEffectProps> = ({ lightSize = 400 }) => {
   const [lightPosition, setLightPosition] = React.useState({ x: 0, y: 0 });
   const containerRef = React.useRef<HTMLDivElement>(null);
 
@@ -34,9 +31,8 @@ const LightEffect: React.FC<LightEffectProps> = ({
       className={` absolute inset-0 rounded-[inherit] z-0 pointer-events-none overflow-hidden`}
     >
       <div
-        className="absolute rounded-full pointer-events-none transition-opacity duration-200 light-effect"
+        className="absolute rounded-full pointer-events-none light-effect"
         style={{
-   
           width: `${lightSize}px`,
           height: `${lightSize}px`,
           left: lightPosition.x - lightSize / 2,

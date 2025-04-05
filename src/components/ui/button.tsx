@@ -13,7 +13,7 @@ const buttonVariants = cva(
       variant: {
         primary: "bg-primary text-text",
         secondary: "bg-secondary text-text",
-        link: "text-text font-medium border-none hover:underline !shadow-none visited:text-text-70 hover:text-primary",
+        link: "text-text font-medium border-none hover:underline !shadow-none visited:text-text/70 hover:text-inverted",
         outline: "border border-border text-text bg-transparent",
         ghost: "bg-white/20 text-text",
       },

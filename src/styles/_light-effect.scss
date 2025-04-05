@@ -1,33 +1,25 @@
 .light-effect {
   background: radial-gradient(
     circle,
-    hsla(var(--primary) / 0.6) 0%,
-    hsla(var(--primary) / 0.3) 50%,
-    hsla(var(--primary) / 0.1) 80%
+    hsla(var(--neutral-10) / 0.6) 0%,
+    hsla(var(--neutral-10) / 0.3) 50%,
+    hsla(var(--neutral-10) / 0.1) 80%
   );
   filter: blur(5px);
-  opacity: 0.2;
-  animation: pulse 10s infinite ease-in-out;
+  opacity: 0.3;
+  // animation: pulse 10s infinite ease-in-out;
 }
 
-.dark .light-effect {
-  background: radial-gradient(
-    circle,
-    hsla(var(--neutral-10) / 0.8) 0%,
-    hsla(var(--neutral-10) / 0.6) 50%,
-    hsla(var(--neutral-10) / 0.2) 80%
-  );
-  filter: blur(5px);
-  opacity: 0.2;
-  animation: pulse 10s infinite ease-in-out;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.5);
+.dark {
+  .light-effect {
+    background: radial-gradient(
+      circle,
+      hsla(var(--neutral-10) / 0.8) 0%,
+      hsla(var(--neutral-10) / 0.6) 50%,
+      hsla(var(--neutral-10) / 0.2) 80%
+    );
+    filter: blur(5px);
+    opacity: 0.1;
+    // animation: grow-shrink 10s infinite ease-in-out;
   }
 }

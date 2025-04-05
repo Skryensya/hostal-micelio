@@ -16,7 +16,7 @@ export function ModeToggle() {
 
   if (!mounted) {
     return (
-      <Button variant="ghost" size="icon" className="opacity-100">
+      <Button variant="link" size="icon" className="opacity-100">
         <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100" />
       </Button>
     );
@@ -24,7 +24,7 @@ export function ModeToggle() {
 
   return (
     <Button
-      variant="ghost"
+      variant="link"
       size="icon"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       title={

@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <div className="mt-20">
       <WavyDivider backgroundClass="bg-surface-3" />
-      <footer className="bg-surface-3 text-text-inverted py-8 relative">
+      <footer className="bg-surface-3 text py-8 relative">
         <div className="container mx-auto px-4">
           {/* Level 1: Logo and Links */}
           <div className="flex flex-col md:flex-row justify-between items-center mb-6">
@@ -33,16 +33,16 @@ const Footer = () => {
                 />
               </div>
               <nav className="flex  flex-row flex-wrap  items-center text-balance gap-4 ">
-                <a href="#about" className="hover:text-gray-400">
+                <a href="#about" className="hover:text-text-muted">
                   Acerca de
                 </a>
-                <a href="#rooms" className="hover:text-gray-400">
+                <a href="#rooms" className="hover:text-text-muted">
                   Habitaciones
                 </a>
-                <a href="#services" className="hover:text-gray-400">
+                <a href="#services" className="hover:text-text-muted">
                   Servicios
                 </a>
-                <a href="#contact" className="hover:text-gray-400">
+                <a href="#contact" className="hover:text-text-muted">
                   Contacto
                 </a>
               </nav>
@@ -51,14 +51,14 @@ const Footer = () => {
               {/* CONTACT_INFO */}
               <a
                 href={`tel:${CONTACT_INFO.phone}`}
-                className="hover:text-gray-400 flex gap-2 items-center underline"
+                className="hover:text-text-muted flex gap-2 items-center underline"
               >
                 {CONTACT_INFO.prettyPhone}
                 <Phone className="h-5" />
               </a>
               <a
                 href={`mailto:${CONTACT_INFO.email}`}
-                className="hover:text-gray-400 flex gap-2 items-center underline"
+                className="hover:text-text-muted flex gap-2 items-center underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -67,7 +67,7 @@ const Footer = () => {
               </a>
               <a
                 href={`mailto:${CONTACT_INFO.email}`}
-                className="hover:text-gray-400 flex gap-2 items-center underline "
+                className="hover:text-text-muted flex gap-2 items-center underline "
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -87,7 +87,7 @@ const Footer = () => {
               <span>Siguenos</span>
               <a
                 href="https://facebook.com"
-                className="hover:text-gray-400"
+                className="hover:text-text-muted"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -95,7 +95,7 @@ const Footer = () => {
               </a>
               <a
                 href="https://instagram.com"
-                className="hover:text-gray-400"
+                className="hover:text-text-muted"
                 target="_blank"
                 rel="noopener noreferrer"
               >

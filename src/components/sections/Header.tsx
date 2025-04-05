@@ -28,7 +28,7 @@ export function Header() {
         <div className="flex flex-col pt-2">
           <div className="py-0 flex items-center justify-between container mx-auto px-4">
             <Link href="/" className="flex items-center">
-              <div className="h1 flex leading-6 tracking-tight opacity-100 hover:opacity-90 transition-opacity text-shadow-sm text-shadow-primary text-text">
+              <div className="h1 flex leading-6 tracking-tight opacity-100 hover:opacity-90 transition-opacity text-shadow-xs text-shadow-primary dark:text-shadow-primary text-text">
                 Hostal Micelio
               </div>
             </Link>

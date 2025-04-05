@@ -37,7 +37,7 @@ export const colors = {
   },
   // Text
   text: {
-    DEFAULT: "hsl(var(--text) / <alpha-value>)",
+    DEFAULT: "hsl(var(--text))",
     muted: "hsl(var(--text) / 0.5)",
     inverted: "hsl(var(--text-inverted) / <alpha-value>)",
     "on-light": "hsl(var(--text-on-light) / <alpha-value>)",
@@ -48,11 +48,11 @@ export const colors = {
     DEFAULT: "hsl(var(--border) / <alpha-value>)",
     muted: "hsl(var(--border-muted) / <alpha-value>)",
     inverted: "hsl(var(--border-inverted) / <alpha-value>)",
-    "on-light": "hsl(var(--border-on-light) / <alpha-value>)",
+    "on-light": "hsl(var(--border-on-light) / <Salpha-value>)",
     "on-dark": "hsl(var(--border-on-dark) / <alpha-value>)",
   },
 
-  // Status
+  // Statusx
   success: {
     DEFAULT: "hsl(var(--success) / <alpha-value>)",
     muted: "hsl(var(--success-muted) / <alpha-value>)",
