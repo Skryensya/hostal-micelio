@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "process-images": "node src/scripts/optimize.mjs",
+    "process-images": "node src/scripts/optimize.mjs && node src/scripts/resizeblur.mjs",
     "generate-room-images-object": "bash src/scripts/createImageObject.bash"
   },
   "dependencies": {

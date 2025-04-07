@@ -1,14 +1,13 @@
-import sharp from "sharp";
-import fs from "fs";
+import { fileURLToPath } from "url";
 import path from "path";
+import fs from "fs";
+import sharp from "sharp";
 
-const __dirname = path.resolve();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const inputFolder = path.join(__dirname, "../public/assets/images/_webp");
-const outputFolder = path.join(
-  __dirname,
-  "../public/assets/images/_thumbnails"
-);
+const inputFolder = path.join(__dirname, "../../public/assets/images/_webp");
+const outputFolder = path.join(__dirname, "../../public/assets/images/_thumbnails");
 
 if (!fs.existsSync(outputFolder)) {
   fs.mkdirSync(outputFolder, { recursive: true });
