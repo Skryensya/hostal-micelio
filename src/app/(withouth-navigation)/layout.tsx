@@ -3,7 +3,7 @@ import "@/styles/main.scss";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 import { balooBhaijaan2, nunito, croissantOne } from "@/app/fonts";
-import { ReactLenis } from "lenis/react";
+// import { ReactLenis } from "lenis/react";
 
 export const metadata: Metadata = {
   title: "Hostal Micelio | Él lugar más acogedor de Villarrica",
@@ -26,11 +26,11 @@ export default function RootLayout({
       <body
         className={`${croissantOne.variable} ${balooBhaijaan2.variable} ${nunito.variable} font-sans antialiased min-h-screen bg-surface-1 dark:text-text overflow-x-hidden scroll-smooth`}
       >
-        <ReactLenis root>
+        {/* <ReactLenis root> */}
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
           </ThemeProvider>
-        </ReactLenis>
+        {/* </ReactLenis> */}
       </body>
     </html>
   );
