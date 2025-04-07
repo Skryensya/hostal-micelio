@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "process-images": "node scripts/optimize.js && node scripts/resizeblur.js",
-    "generate-room-images-object": "bash scripts/createImageObject.bash"
+    "process-images": "node src/scripts/optimize.mjs",
+    "generate-room-images-object": "bash src/scripts/createImageObject.bash"
   },
   "dependencies": {
     "@fontsource/baloo-bhaijaan-2": "^5.1.0",
@@ -45,6 +45,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.1.1",
     "sass": "^1.79.4",
+    "sharp": "^0.34.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "turbopack": "^0.0.1",

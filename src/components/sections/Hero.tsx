@@ -36,8 +36,8 @@ type SlideProps = {
 const SLIDE_DURATION = 7000; // 7 segundos
 const slides: SlideType[] = [
   {
-    img: "/assets/images/_webp/hero/PHOTO_00.webp",
-    thumbnail: "/assets/images/_thumbnails/hero/PHOTO_00.webp",
+    img: "/assets/images/_webp/hero/00.webp",
+    thumbnail: "/assets/images/_thumbnails/hero/00.webp",
     focusPoint: "center bottom",
     color: "#799bb9",
     title: "Descubre lugares maravillosos",
@@ -46,8 +46,8 @@ const slides: SlideType[] = [
     cardColorClassName: "bg-surface-1",
   },
   {
-    img: "/assets/images/_webp/hero/PHOTO_01.webp",
-    thumbnail: "/assets/images/_thumbnails/hero/PHOTO_01.webp",
+    img: "/assets/images/_webp/hero/01.webp",
+    thumbnail: "/assets/images/_thumbnails/hero/01.webp",
     focusPoint: "75% 75%",
     color: "#6c513e",
     title: "Relájate en el paraíso",
@@ -56,8 +56,8 @@ const slides: SlideType[] = [
     cardColorClassName: "bg-surface-1",
   },
   {
-    img: "/assets/images/_webp/hero/PHOTO_02.webp",
-    thumbnail: "/assets/images/_thumbnails/hero/PHOTO_02.webp",
+    img: "/assets/images/_webp/hero/02.webp",
+    thumbnail: "/assets/images/_thumbnails/hero/02.webp",
     focusPoint: "center bottom",
     color: "#47504a",
     title: "¡La aventura en espera!",

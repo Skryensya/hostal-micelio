@@ -21,14 +21,7 @@ export function WavyDivider({
           "absolute inset-0 bg-white/20"
         )}
       />
-      <div
-        className={cn(
-          isTop
-            ? "wavy-divider h-5 -translate-y-5"
-            : "wavy-divider--bottom h-6 translate-y-2",
-          "absolute inset-0 bg-surface-1/50"
-        )}
-      />
+ 
       <div
         className={cn(
           isTop

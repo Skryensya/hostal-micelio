@@ -1,259 +1,259 @@
 {
   "laguna-san-rafael": [
     {
-      "src": "/assets/images/_webp/rooms/laguna-san-rafael/PHOTO_00.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/laguna-san-rafael/PHOTO_00.webp",
+      "src": "/assets/images/_webp/rooms/laguna-san-rafael/00.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/laguna-san-rafael/00.webp",
       "alt": "View of laguna san rafael Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/laguna-san-rafael/PHOTO_01.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/laguna-san-rafael/PHOTO_01.webp",
+      "src": "/assets/images/_webp/rooms/laguna-san-rafael/01.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/laguna-san-rafael/01.webp",
       "alt": "View of laguna san rafael Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/laguna-san-rafael/PHOTO_02.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/laguna-san-rafael/PHOTO_02.webp",
+      "src": "/assets/images/_webp/rooms/laguna-san-rafael/02.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/laguna-san-rafael/02.webp",
       "alt": "View of laguna san rafael Room"
     }
   ],
   "conguillio": [
     {
-      "src": "/assets/images/_webp/rooms/conguillio/PHOTO_00.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/conguillio/PHOTO_00.webp",
+      "src": "/assets/images/_webp/rooms/conguillio/00.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/conguillio/00.webp",
       "alt": "View of parque nacional conguillio Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/conguillio/PHOTO_01.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/conguillio/PHOTO_01.webp",
+      "src": "/assets/images/_webp/rooms/conguillio/01.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/conguillio/01.webp",
       "alt": "View of parque nacional conguillio Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/conguillio/PHOTO_02.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/conguillio/PHOTO_02.webp",
+      "src": "/assets/images/_webp/rooms/conguillio/02.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/conguillio/02.webp",
       "alt": "View of parque nacional conguillio Room"
     }
   ],
   "huerquehue": [
     {
-      "src": "/assets/images/_webp/rooms/huerquehue/PHOTO_00.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/huerquehue/PHOTO_00.webp",
+      "src": "/assets/images/_webp/rooms/huerquehue/00.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/huerquehue/00.webp",
       "alt": "View of parque nacional huerquehue Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/huerquehue/PHOTO_01.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/huerquehue/PHOTO_01.webp",
+      "src": "/assets/images/_webp/rooms/huerquehue/01.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/huerquehue/01.webp",
       "alt": "View of parque nacional huerquehue Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/huerquehue/PHOTO_02.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/huerquehue/PHOTO_02.webp",
+      "src": "/assets/images/_webp/rooms/huerquehue/02.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/huerquehue/02.webp",
       "alt": "View of parque nacional huerquehue Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/huerquehue/PHOTO_03.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/huerquehue/PHOTO_03.webp",
+      "src": "/assets/images/_webp/rooms/huerquehue/03.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/huerquehue/03.webp",
       "alt": "View of parque nacional huerquehue Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/huerquehue/PHOTO_04.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/huerquehue/PHOTO_04.webp",
+      "src": "/assets/images/_webp/rooms/huerquehue/04.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/huerquehue/04.webp",
       "alt": "View of parque nacional huerquehue Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/huerquehue/PHOTO_05.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/huerquehue/PHOTO_05.webp",
+      "src": "/assets/images/_webp/rooms/huerquehue/05.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/huerquehue/05.webp",
       "alt": "View of parque nacional huerquehue Room"
     }
   ],
   "nahuelbuta": [
     {
-      "src": "/assets/images/_webp/rooms/nahuelbuta/PHOTO_00.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/nahuelbuta/PHOTO_00.webp",
+      "src": "/assets/images/_webp/rooms/nahuelbuta/00.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/nahuelbuta/00.webp",
       "alt": "View of parque nacional nahuelbuta Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/nahuelbuta/PHOTO_01.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/nahuelbuta/PHOTO_01.webp",
+      "src": "/assets/images/_webp/rooms/nahuelbuta/01.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/nahuelbuta/01.webp",
       "alt": "View of parque nacional nahuelbuta Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/nahuelbuta/PHOTO_02.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/nahuelbuta/PHOTO_02.webp",
+      "src": "/assets/images/_webp/rooms/nahuelbuta/02.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/nahuelbuta/02.webp",
       "alt": "View of parque nacional nahuelbuta Room"
     }
   ],
   "pumalin": [
     {
-      "src": "/assets/images/_webp/rooms/pumalin/PHOTO_00.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/pumalin/PHOTO_00.webp",
+      "src": "/assets/images/_webp/rooms/pumalin/00.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/pumalin/00.webp",
       "alt": "View of parque nacional pumalin Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/pumalin/PHOTO_01.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/pumalin/PHOTO_01.webp",
+      "src": "/assets/images/_webp/rooms/pumalin/01.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/pumalin/01.webp",
       "alt": "View of parque nacional pumalin Room"
     }
   ],
   "queulat": [
     {
-      "src": "/assets/images/_webp/rooms/queulat/PHOTO_00.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/queulat/PHOTO_00.webp",
+      "src": "/assets/images/_webp/rooms/queulat/00.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/queulat/00.webp",
       "alt": "View of parque nacional queulat Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/queulat/PHOTO_01.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/queulat/PHOTO_01.webp",
+      "src": "/assets/images/_webp/rooms/queulat/01.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/queulat/01.webp",
       "alt": "View of parque nacional queulat Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/queulat/PHOTO_02.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/queulat/PHOTO_02.webp",
+      "src": "/assets/images/_webp/rooms/queulat/02.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/queulat/02.webp",
       "alt": "View of parque nacional queulat Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/queulat/PHOTO_03.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/queulat/PHOTO_03.webp",
+      "src": "/assets/images/_webp/rooms/queulat/03.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/queulat/03.webp",
       "alt": "View of parque nacional queulat Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/queulat/PHOTO_04.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/queulat/PHOTO_04.webp",
+      "src": "/assets/images/_webp/rooms/queulat/04.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/queulat/04.webp",
       "alt": "View of parque nacional queulat Room"
     }
   ],
   "rapa-nui": [
     {
-      "src": "/assets/images/_webp/rooms/rapa-nui/PHOTO_00.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/rapa-nui/PHOTO_00.webp",
+      "src": "/assets/images/_webp/rooms/rapa-nui/00.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/rapa-nui/00.webp",
       "alt": "View of parque nacional rapa nui Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/rapa-nui/PHOTO_01.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/rapa-nui/PHOTO_01.webp",
+      "src": "/assets/images/_webp/rooms/rapa-nui/01.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/rapa-nui/01.webp",
       "alt": "View of parque nacional rapa nui Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/rapa-nui/PHOTO_02.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/rapa-nui/PHOTO_02.webp",
+      "src": "/assets/images/_webp/rooms/rapa-nui/02.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/rapa-nui/02.webp",
       "alt": "View of parque nacional rapa nui Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/rapa-nui/PHOTO_03.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/rapa-nui/PHOTO_03.webp",
+      "src": "/assets/images/_webp/rooms/rapa-nui/03.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/rapa-nui/03.webp",
       "alt": "View of parque nacional rapa nui Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/rapa-nui/PHOTO_04.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/rapa-nui/PHOTO_04.webp",
+      "src": "/assets/images/_webp/rooms/rapa-nui/04.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/rapa-nui/04.webp",
       "alt": "View of parque nacional rapa nui Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/rapa-nui/PHOTO_05.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/rapa-nui/PHOTO_05.webp",
+      "src": "/assets/images/_webp/rooms/rapa-nui/05.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/rapa-nui/05.webp",
       "alt": "View of parque nacional rapa nui Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/rapa-nui/PHOTO_06.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/rapa-nui/PHOTO_06.webp",
+      "src": "/assets/images/_webp/rooms/rapa-nui/06.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/rapa-nui/06.webp",
       "alt": "View of parque nacional rapa nui Room"
     }
   ],
   "villarrica": [
     {
-      "src": "/assets/images/_webp/rooms/villarrica/PHOTO_00.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/villarrica/PHOTO_00.webp",
+      "src": "/assets/images/_webp/rooms/villarrica/00.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/villarrica/00.webp",
       "alt": "View of parque nacional villarrica Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/villarrica/PHOTO_01.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/villarrica/PHOTO_01.webp",
+      "src": "/assets/images/_webp/rooms/villarrica/01.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/villarrica/01.webp",
       "alt": "View of parque nacional villarrica Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/villarrica/PHOTO_02.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/villarrica/PHOTO_02.webp",
+      "src": "/assets/images/_webp/rooms/villarrica/02.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/villarrica/02.webp",
       "alt": "View of parque nacional villarrica Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/villarrica/PHOTO_03.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/villarrica/PHOTO_03.webp",
+      "src": "/assets/images/_webp/rooms/villarrica/03.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/villarrica/03.webp",
       "alt": "View of parque nacional villarrica Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/villarrica/PHOTO_04.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/villarrica/PHOTO_04.webp",
+      "src": "/assets/images/_webp/rooms/villarrica/04.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/villarrica/04.webp",
       "alt": "View of parque nacional villarrica Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/villarrica/PHOTO_05.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/villarrica/PHOTO_05.webp",
+      "src": "/assets/images/_webp/rooms/villarrica/05.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/villarrica/05.webp",
       "alt": "View of parque nacional villarrica Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/villarrica/PHOTO_06.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/villarrica/PHOTO_06.webp",
+      "src": "/assets/images/_webp/rooms/villarrica/06.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/villarrica/06.webp",
       "alt": "View of parque nacional villarrica Room"
     }
   ],
   "torres-del-paine": [
     {
-      "src": "/assets/images/_webp/rooms/torres-del-paine/PHOTO_00.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/PHOTO_00.webp",
+      "src": "/assets/images/_webp/rooms/torres-del-paine/00.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/00.webp",
       "alt": "View of torres del paine Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/torres-del-paine/PHOTO_01.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/PHOTO_01.webp",
+      "src": "/assets/images/_webp/rooms/torres-del-paine/01.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/01.webp",
       "alt": "View of torres del paine Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/torres-del-paine/PHOTO_02.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/PHOTO_02.webp",
+      "src": "/assets/images/_webp/rooms/torres-del-paine/02.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/02.webp",
       "alt": "View of torres del paine Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/torres-del-paine/PHOTO_03.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/PHOTO_03.webp",
+      "src": "/assets/images/_webp/rooms/torres-del-paine/03.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/03.webp",
       "alt": "View of torres del paine Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/torres-del-paine/PHOTO_04.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/PHOTO_04.webp",
+      "src": "/assets/images/_webp/rooms/torres-del-paine/04.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/04.webp",
       "alt": "View of torres del paine Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/torres-del-paine/PHOTO_05.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/PHOTO_05.webp",
+      "src": "/assets/images/_webp/rooms/torres-del-paine/05.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/05.webp",
       "alt": "View of torres del paine Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/torres-del-paine/PHOTO_06.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/PHOTO_06.webp",
+      "src": "/assets/images/_webp/rooms/torres-del-paine/06.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/06.webp",
       "alt": "View of torres del paine Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/torres-del-paine/PHOTO_07.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/PHOTO_07.webp",
+      "src": "/assets/images/_webp/rooms/torres-del-paine/07.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/07.webp",
       "alt": "View of torres del paine Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/torres-del-paine/PHOTO_08.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/PHOTO_08.webp",
+      "src": "/assets/images/_webp/rooms/torres-del-paine/08.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/08.webp",
       "alt": "View of torres del paine Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/torres-del-paine/PHOTO_09.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/PHOTO_09.webp",
+      "src": "/assets/images/_webp/rooms/torres-del-paine/09.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/09.webp",
       "alt": "View of torres del paine Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/torres-del-paine/PHOTO_10.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/PHOTO_10.webp",
+      "src": "/assets/images/_webp/rooms/torres-del-paine/10.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/10.webp",
       "alt": "View of torres del paine Room"
     },
     {
-      "src": "/assets/images/_webp/rooms/torres-del-paine/PHOTO_11.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/PHOTO_11.webp",
+      "src": "/assets/images/_webp/rooms/torres-del-paine/11.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/torres-del-paine/11.webp",
       "alt": "View of torres del paine Room"
     }
   ]

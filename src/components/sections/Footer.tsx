@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <div className="mt-20">
       <WavyDivider backgroundClass="bg-surface-3" />
-      <footer className="bg-surface-3 text py-8 relative">
+      <footer className="bg-surface-3 font-semibold py-8 relative">
         <div className="container mx-auto px-4">
           {/* Level 1: Logo and Links */}
           <div className="flex flex-col md:flex-row justify-between items-center mb-6">

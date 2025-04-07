@@ -3,23 +3,23 @@
     {
       "name": "Nataly",
       "description": "Nataly, cercana y carismática, busca nuevas formas de sorprender a sus huéspedes, creando una comunidad que crece de forma orgánica.",
-      "picture1": "/assets/images/_webp/team/allison/PHOTO_00.webp",
-      "picture2": "/assets/images/_webp/team/allison/PHOTO_01.webp"
+      "picture1": "/assets/images/_webp/team/allison/00.webp",
+      "picture2": "/assets/images/_webp/team/allison/01.webp"
     }
   ],
   "permanent": [
     {
       "name": "Marcela",
       "description": "Marcela cuida cada detalle en Hostal Micelio, manteniendo cada habitación y espacio común impecables para el confort de los huéspedes.",
-      "picture1": "/assets/images/_webp/team/allison/PHOTO_00.webp",
-      "picture2": "/assets/images/_webp/team/allison/PHOTO_01.webp"
+      "picture1": "/assets/images/_webp/team/allison/00.webp",
+      "picture2": "/assets/images/_webp/team/allison/01.webp"
     },
     {
       "name": "Jaime",
       "subtitle": "Apoyo administrativo y creativo",
       "description": "Jaime resuelve con eficiencia los desafíos administrativos y aporta ideas frescas que enriquecen el ambiente del hostal.",
-      "picture1": "/assets/images/_webp/team/allison/PHOTO_00.webp",
-      "picture2": "/assets/images/_webp/team/allison/PHOTO_01.webp"
+      "picture1": "/assets/images/_webp/team/allison/00.webp",
+      "picture2": "/assets/images/_webp/team/allison/01.webp"
     }
   ],
   "temporary": [

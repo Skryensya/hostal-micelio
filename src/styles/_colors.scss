@@ -25,6 +25,8 @@
   --neutral-700: 0 0% 27%; // #444444
   --neutral-900: 0 0% 13%; // #222222
 
+    --to-transform:   #a0618d;
+
   // Brand & Accent
   --primary: 314 80% 71%;
   --secondary: 22 85% 57%;
@@ -33,24 +35,21 @@
   --primary-inverted: 314.1 69.9% 42.9%;
   --secondary-inverted: 22.2 85.5% 45.9%;
   --accent-inverted: 177.2 100% 21%;
- 
 
- 
   // Surfaces
-  --surface-1: 300 57% 92%;
-  --surface-2: 277 67% 87%;
-  --surface-3: 284 40% 60%;
-  --surface-muted: 7.7 100% 93.9%;
-  --surface-inverted: 337.2 43.3% 13.1%;
-  --surface-on-light: var(--surface-1);
-  --surface-on-dark: var(--surface-inverted);
+  --surface-1: 284 57% 95%;
+  --surface-2: 284 37% 85%;
+  --surface-3: 284 40% 70%; 
+  // --surface-inverted: 337.2 43.3% 13.1%;
+  // --surface-on-light: var(--surface-1);
+  // --surface-on-dark: var(--surface-inverted);
 
   // Text
   --text: 317.8 52.9% 10%;
   --text-muted: hsla(var(--text) / 0.6);
   --text-inverted: 320 42.9% 93.1%;
-  --text-on-light: var(--text);
-  --text-on-dark: var(--text-inverted);
+  --text-on-light: 317.8 52.9% 10%;
+  --text-on-dark: 320 42.9% 93.1%; 
 
   // Borders
   --border: var(--text);
@@ -85,16 +84,15 @@
   --secondary-inverted: 22 85% 57%;
   --accent-inverted: 177 100% 31%;
 
-  --to-transform: #59578e;
   // Surfaces
-  --surface-1: 280 35.3% 38%;
-  --surface-2: 280 22% 47.9%;
-  --surface-3: 280 31.1% 32%;
+  --surface-1: 280 21.1% 26%;
+  --surface-2: 280 22% 37.9%;
+  --surface-3: 280 25.3% 30%;
+ 
   // --surface-muted: 336.1 100% 32%;
   --surface-inverted: 0 100% 98%;
 
   // Text
-  --text: 320 42.9% 93.1%;
-  // --text-muted: 320 42.9% 93.1%;
+  --text: 320 42.9% 93.1%; 
   --text-inverted: 318.2 54.1% 12%;
 }
