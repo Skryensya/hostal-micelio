@@ -25,7 +25,7 @@ import { Room, RoomImage } from "@/lib/types";
 import ROOMS from "@/db/ROOMS.json";
 import ROOM_IMAGES from "@/db/ROOM_IMAGES.json";
 import { ImagesShowcaseGrid } from "@/components/ImagesShowcaseGrid";
-
+import { RoomConfigurationToggle } from "@/components/RoomConfigurationToggle";
 export function RoomModal({
   open,
   setOpen,
@@ -45,13 +45,13 @@ export function RoomModal({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-[625px]">
-          <DialogHeader className="pb-4 pt-1 pl-1">
+          <DialogHeader className="pb-4 pt-1 px-2">
             <span className="text-xs font-bold font-mono text-text-muted leading-[10px] mb-1 ">
               Parque Nacional
             </span>
             <DialogTitle>{room?.name}</DialogTitle>
           </DialogHeader>
-          
+
           <RoomDashboard room={room} roomImages={roomImages} />
         </DialogContent>
       </Dialog>
@@ -84,14 +84,18 @@ const RoomDashboard = ({
 }) => {
   return (
     <div>
-      <div className="bg-white/20  px-6 md:px-2 -mx-4 py-2 -my-2 h-[266px] md:h-[316px] ">
+      <div className="bg-surface-1  px-6 md:px-2 -mx-4 py-2 -my-2 h-[266px] md:h-[316px] ">
         {roomImages && roomImages.length > 0 ? (
           <ImagesShowcaseGrid imgs={roomImages} />
         ) : null}
       </div>
-      <div className="my-4">
+      <div className="my-4 px-2">
+        <RoomConfigurationToggle beds={room?.beds || []} />
         <p>{room?.description || "No hay descripción"}</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
+          quos.
+        </p>
       </div>
     </div>
   );

@@ -46,7 +46,7 @@ const DialogContent = React.forwardRef<
       {children}
       <DialogPrimitive.Close
         className={cn(
-          buttonVariants({ variant: "ghost", size: "icon" }),
+          buttonVariants({ variant: "outline", size: "icon" }),
           "absolute right-5 top-5 aspect-square p-0 h-[40px] w-[40px]"
         )}
       >
