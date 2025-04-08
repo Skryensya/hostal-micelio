@@ -1,4 +1,4 @@
-import { Breadcrumb } from "@/components/composed/Breadcrumb";
+import { Breadcrumb } from "@/components/composed/_Breadcrumb";
 
 import { InnerHero } from "@/components/sections/InnerHero";
 export default function RoomsPage() {

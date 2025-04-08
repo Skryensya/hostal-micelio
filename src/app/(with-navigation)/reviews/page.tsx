@@ -1,6 +1,6 @@
 import { InnerHero } from "@/components/sections/InnerHero";
 import { ReviewSection } from "@/components/sections/ReviewSection";
-import { Breadcrumb } from "@/components/composed/Breadcrumb";
+import { Breadcrumb } from "@/components/composed/_Breadcrumb";
 
 export default function ReviewsPage() {
   return (

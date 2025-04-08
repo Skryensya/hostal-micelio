@@ -1,10 +1,10 @@
-import { DesktopView } from "./DesktopView";
+// import { DesktopView } from "./DesktopView";
 // import { MobileView } from "./MobileView";
 
 export function CheckAvailability() {
   return (
     <>
-      <DesktopView />
+      {/* <DesktopView /> */}
       {/* <MobileView /> */}
     </>
   );

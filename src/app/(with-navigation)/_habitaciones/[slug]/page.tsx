@@ -6,7 +6,7 @@ import { Bed, Users, Bath } from "lucide-react";
 import { ImageCarousel } from "@/components/ImageCarousel";
 import { Card, CardContent } from "@/components/ui/card";
 // import { DateRangePicker } from "@/components/DateRangePicker";
-import { Breadcrumb } from "@/components/composed/Breadcrumb";
+import { Breadcrumb } from "@/components/composed/_Breadcrumb";
 import { InnerHero } from "@/components/sections/InnerHero"; 
 
 interface PageProps {

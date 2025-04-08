@@ -3,8 +3,21 @@
 import ROOMS from "@/db/ROOMS.json";
 import RoomCard from "../composed/RoomCard";
 import { motion, AnimatePresence } from "framer-motion";
+import { RoomModal } from "../composed/RoomModal";
+import { useState } from "react";
+import { Gallery } from "@/components/Gallery";
 
 export function Rooms() {
+  const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
+
+  const handleOpenModal = (roomSlug: string) => {
+    setSelectedRoom(roomSlug);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedRoom(null);
+  };
+
   return (
     <section className="container mx-auto max-w-screen-lg  py-10">
       <div className="flex items-center justify-center">
@@ -25,11 +38,20 @@ export function Rooms() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <RoomCard {...room} />
+              <RoomCard
+                {...room}
+                onViewDetails={() => handleOpenModal(room.slug)}
+              />
             </motion.div>
           ))}
         </AnimatePresence>
       </div>
+      <RoomModal
+        open={selectedRoom !== null}
+        setOpen={handleCloseModal}
+        roomSlug={selectedRoom || ""}
+      />
+      <Gallery />
     </section>
   );
 }

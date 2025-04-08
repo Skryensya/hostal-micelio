@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { LightEffect } from "@/components/ui/LightEffect";
 
 const buttonVariants = cva(
-  "relative inline-flex items-center justify-center whitespace-nowrap rounded-standar font-medium outline-offset-2 disabled:pointer-events-none disabled:opacity-50 transition-all duration-300 overflow-hidden",
+  "relative inline-flex items-center justify-center whitespace-nowrap rounded-standar font-medium outline-offset-2 disabled:pointer-events-none disabled:opacity-50 transition-all duration-300 overflow-hidden ",
   {
     variants: {
       variant: {
