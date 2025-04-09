@@ -1,0 +1,32 @@
+[
+  {
+    "id": "HCO",
+    "label": "Compartida",
+    "price": 17000
+  },
+  {
+    "id": "HIN",
+    "label": "Individual",
+    "price": 30000
+  },
+  {
+    "id": "HDB",
+    "label": "Doble",
+    "price": 45000
+  },
+  {
+    "id": "HMA",
+    "label": "Matrimonial",
+    "price": 45000
+  },
+  {
+    "id": "HMACB",
+    "label": "Matrimonial con baño",
+    "price": 55000
+  },
+  {
+    "id": "HT",
+    "label": "Triple",
+    "price": 65000
+  }
+]

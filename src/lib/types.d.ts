@@ -6,6 +6,7 @@ export type Room = {
   beds: string[]; // Identificadores de las camas
   capacity: number; // Capacidad máxima de personas
   hasPrivateToilet?: boolean; // Indica si tiene baño privado (opcional)
+  roomOptions: string[]; // Identificadores de las opciones de habitación
 };
 
 export type RoomImage = {
@@ -31,4 +32,10 @@ export type Review = {
   comment: string; // Comentario del huesped
   url: string; // URL de la imagen del huesped
   hue: number; // Color de fondo del avatar
+};
+
+export type RoomOption = {
+  id: string;
+  label: string;
+  price: number;
 };
