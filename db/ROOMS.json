@@ -31,7 +31,7 @@
     "slug": "laguna-san-rafael",
     "description": "Dormitorio compartido con 6 camas individuales, 2 de ellas literas, y luz natural.",
     "floor": 0,
-    "beds": ["B02", "B02", "B03", "B03"],
+    "beds": ["B02", "B02", "B03", "B03", "B04", "B04"],
     "capacity": 6,
     "hasPrivateToilet": false
   },
@@ -40,8 +40,8 @@
     "slug": "torres-del-paine",
     "description": "Habitación con 2 camas individuales de 1,5 plazas, vista al volcán Villarrica y luz natural.",
     "floor": 1,
-    "beds": ["B02", "B02"],
-    "capacity": 2,
+    "beds": ["B02", "B03", "B04"],
+    "capacity": 3,
     "hasPrivateToilet": false
   },
   {
@@ -49,9 +49,9 @@
     "slug": "huerquehue",
     "description": "Habitación individual con una cama de 1,5 plazas y vista al volcán.",
     "floor": 2,
-    "beds": ["B02"],
-    "capacity": 1,
-    "hasPrivateToilet": true
+    "beds": ["B02", "B02"],
+    "capacity": 2,
+    "hasPrivateToilet": false
   },
   {
     "name": "Pumalin",
@@ -60,14 +60,14 @@
     "floor": 2,
     "beds": ["B02", "B02"],
     "capacity": 2,
-    "hasPrivateToilet": true
+    "hasPrivateToilet": false
   },
   {
     "name": "Nahuelbuta",
     "slug": "nahuelbuta",
     "description": "Habitación con una cama de 1,5 plazas.",
     "floor": 2,
-    "beds": ["B02"],
+    "beds": ["B02", "B02"],
     "capacity": 1,
     "hasPrivateToilet": false
   },
@@ -78,6 +78,6 @@
     "floor": 2,
     "beds": ["B01", "B02"],
     "capacity": 3,
-    "hasPrivateToilet": true
+    "hasPrivateToilet": false
   }
 ]

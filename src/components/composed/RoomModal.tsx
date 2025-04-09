@@ -25,7 +25,7 @@ import { Room, RoomImage } from "@/lib/types";
 import ROOMS from "@/db/ROOMS.json";
 import ROOM_IMAGES from "@/db/ROOM_IMAGES.json";
 import { ImagesShowcaseGrid } from "@/components/ImagesShowcaseGrid";
-import { RoomConfigurationToggle } from "@/components/RoomConfigurationToggle";
+// import { RoomConfigurationToggle } from "@/components/RoomConfigurationToggle";
 export function RoomModal({
   open,
   setOpen,
@@ -90,7 +90,7 @@ const RoomDashboard = ({
         ) : null}
       </div>
       <div className="my-4 px-2">
-        <RoomConfigurationToggle beds={room?.beds || []} />
+        {/* <RoomConfigurationToggle beds={room?.beds || []} /> */}
         <p>{room?.description || "No hay descripción"}</p>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,

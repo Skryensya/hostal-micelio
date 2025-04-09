@@ -6,12 +6,22 @@
   },
   "B02": {
     "name": "Cama Individual",
-    "size": "1,5",
+    "size": "1.5 plaza",
     "capacity": 1
   },
   "B03": {
-    "name": "Cama Litera",
-    "size": "literas",
+    "name": "Cama Camarote Abajo",
+    "size": "1.5 plaza",
+    "capacity": 1
+  },
+  "B04": {
+    "name": "Cama Camarote Arriba",
+    "size": "1.5 plaza",
+    "capacity": 1
+  },
+  "B05": {
+    "name": "Cama Individual chica",
+    "size": "1 plaza",
     "capacity": 1
   }
 }
