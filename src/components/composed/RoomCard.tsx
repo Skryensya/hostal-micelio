@@ -1,12 +1,13 @@
 "use client";
 
-import type { Room as RoomType } from "@/lib/types";
+import type { Room as RoomType, RoomOption } from "@/lib/types";
 import ROOM_IMAGES from "@/db/ROOM_IMAGES.json";
 import { ImageCarousel } from "../ImageCarousel";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import ROOM_OPTIONS from "@/db/ROOM_OPTIONS.json";
+import BedIcons from "@/components/BedIcons";
 
 type RoomCardProps = Partial<RoomType> & {
   onViewDetails?: () => void;
@@ -25,10 +26,7 @@ function RoomCardSkeleton() {
           <div className="font-bold text-xl">
             <Skeleton className="w-40 h-6 mt-2" />
           </div>
-          <div className="text-base mt-1 mb-4 line-clamp-2 text-left">
-            <Skeleton className="w-full h-5 mb-1" />
-            <Skeleton className="w-5/6 h-5" />
-          </div>
+          {/* Se elimina la descripción */}
         </div>
         <div className="flex items-center justify-end gap-2">
           <Skeleton className="w-24 h-8" />
@@ -41,18 +39,21 @@ function RoomCardSkeleton() {
 export default function RoomCard({
   slug,
   name,
-  description,
   onViewDetails,
   selectedFormat,
   defaultFormat,
   hasPrivateToilet,
+  beds, // beds es un arreglo de IDs (ej. ["B01", "B03", "B04"])
 }: RoomCardProps) {
   const [isLoading, setIsLoading] = useState(true);
 
+  // Cálculo del precio de la habitación
   const roomPrice = useMemo(() => {
-    const serachBy = selectedFormat || defaultFormat;
-    if (!serachBy) return null;
-    const roomOption = ROOM_OPTIONS.find((option) => option.id === serachBy);
+    const searchBy = selectedFormat || defaultFormat;
+    if (!searchBy) return null;
+    const roomOption = ROOM_OPTIONS.find(
+      (option: RoomOption) => option.id === searchBy
+    );
     const basePrice = roomOption ? roomOption.price : 0;
     const privateToiletPrice = hasPrivateToilet ? 10000 : 0;
     return basePrice + privateToiletPrice;
@@ -61,15 +62,15 @@ export default function RoomCard({
   const images = useMemo(() => ROOM_IMAGES[slug] || [], [slug]);
 
   useEffect(() => {
-    const imgPromises = images.map((src) => {
-      return new Promise((resolve) => {
-        const img = new Image();
-        img.src = src;
-        img.onload = () => resolve(true);
-        img.onerror = () => resolve(true);
-      });
-    });
-
+    const imgPromises = images.map(
+      (src) =>
+        new Promise((resolve) => {
+          const img = new Image();
+          img.src = src;
+          img.onload = () => resolve(true);
+          img.onerror = () => resolve(true);
+        })
+    );
     Promise.all(imgPromises).then(() => setIsLoading(false));
   }, [images]);
 
@@ -80,9 +81,9 @@ export default function RoomCard({
   return (
     <button
       onClick={onViewDetails}
-      className="items-start justify-start cursor-pointer grid grid-cols-1 h-full w-full group bg-surface-2 text-text rounded-[2rem] focus:outline-offset-4"
+      className="relative items-start justify-start cursor-pointer grid grid-cols-1 h-full w-full group bg-surface-2 text-text rounded-[2rem] focus:outline-offset-4"
     >
-      {images.length > 0 ? (
+      {images.length > 0 && (
         <div className="h-full w-full rounded-t-[2rem]">
           <ImageCarousel
             imgs={images}
@@ -90,7 +91,7 @@ export default function RoomCard({
             className="rounded-t-[2rem] overflow-hidden"
           />
         </div>
-      ) : null}
+      )}
 
       <div className="flex flex-col justify-between p-4 min-h-48">
         <div className="flex flex-col items-start">
@@ -98,9 +99,7 @@ export default function RoomCard({
             Parque Nacional
           </span>
           <h3 className="font-bold text-xl">{name}</h3>
-          <p className="text-base mt-1 mb-4 line-clamp-2 text-left">
-            {description}
-          </p>
+          {/* Se ha eliminado la descripción para mostrar únicamente el título */}
         </div>
         {roomPrice && (
           <div className="text-xs font-bold font-mono text-text-muted leading-[20px]">
@@ -118,6 +117,9 @@ export default function RoomCard({
           </Button>
         </div>
       </div>
+
+      {/* Se extrae la lógica de las camas a nuestro componente BedIcons */}
+      <BedIcons beds={beds} />
     </button>
   );
 }

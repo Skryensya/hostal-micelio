@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Gallery } from "@/components/Gallery";
 import { RoomOptionsSelector } from "@/components/RoomOptionsSelector";
 import { RoomOption } from "@/lib/types";
+import ROOM_OPTIONS from "@/db/ROOM_OPTIONS.json";
 
 export function Rooms() {
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
@@ -31,25 +32,38 @@ export function Rooms() {
           room.defaultFormat === selectedOption ||
           room.alternativeFormats.includes(selectedOption)
       ).sort((a, b) => {
-        // Si ambos tienen el formato como default, mantén el orden original
+        // First sort by format (default format first)
         if (
           a.defaultFormat === selectedOption &&
           b.defaultFormat === selectedOption
         ) {
-          return 0;
+          // If both have the format as default, sort by price
+          const aPrice = ROOM_OPTIONS.find(opt => opt.id === selectedOption)?.price || 0;
+          const bPrice = ROOM_OPTIONS.find(opt => opt.id === selectedOption)?.price || 0;
+          const aTotal = aPrice + (a.hasPrivateToilet ? 10000 : 0);
+          const bTotal = bPrice + (b.hasPrivateToilet ? 10000 : 0);
+          return aTotal - bTotal;
         }
-        // Si a tiene el formato como default, va primero
         if (a.defaultFormat === selectedOption) {
           return -1;
         }
-        // Si b tiene el formato como default, va primero
         if (b.defaultFormat === selectedOption) {
           return 1;
         }
-        // Si ninguno tiene el formato como default, mantén el orden original
-        return 0;
+        // If neither has the format as default, sort by price
+        const aPrice = ROOM_OPTIONS.find(opt => opt.id === selectedOption)?.price || 0;
+        const bPrice = ROOM_OPTIONS.find(opt => opt.id === selectedOption)?.price || 0;
+        const aTotal = aPrice + (a.hasPrivateToilet ? 10000 : 0);
+        const bTotal = bPrice + (b.hasPrivateToilet ? 10000 : 0);
+        return aTotal - bTotal;
       })
-    : ROOMS;
+    : ROOMS.sort((a, b) => {
+        const aPrice = ROOM_OPTIONS.find(opt => opt.id === a.defaultFormat)?.price || 0;
+        const bPrice = ROOM_OPTIONS.find(opt => opt.id === b.defaultFormat)?.price || 0;
+        const aTotal = aPrice + (a.hasPrivateToilet ? 10000 : 0);
+        const bTotal = bPrice + (b.hasPrivateToilet ? 10000 : 0);
+        return aTotal - bTotal;
+      });
 
   return (
     <section className="container mx-auto py-10">
