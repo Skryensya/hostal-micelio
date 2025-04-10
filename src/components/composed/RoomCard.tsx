@@ -6,9 +6,11 @@ import { ImageCarousel } from "../ImageCarousel";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
+import ROOM_OPTIONS from "@/db/ROOM_OPTIONS.json";
 
 type RoomCardProps = Partial<RoomType> & {
   onViewDetails?: () => void;
+  selectedFormat?: string | null;
 };
 
 function RoomCardSkeleton() {
@@ -17,16 +19,16 @@ function RoomCardSkeleton() {
       <Skeleton className="w-full aspect-video rounded-t-[2rem]" />
       <div className="flex flex-col justify-between p-4 min-h-48">
         <div className="flex flex-col items-start">
-          <span className="text-xs font-bold font-mono text-text-muted leading-[20px]">
+          <div className="text-xs font-bold font-mono text-text-muted leading-[20px]">
             <Skeleton className="w-32 h-4" />
-          </span>
-          <h3 className="font-bold text-xl">
+          </div>
+          <div className="font-bold text-xl">
             <Skeleton className="w-40 h-6 mt-2" />
-          </h3>
-          <p className="text-base mt-1 mb-4 line-clamp-2 text-left">
+          </div>
+          <div className="text-base mt-1 mb-4 line-clamp-2 text-left">
             <Skeleton className="w-full h-5 mb-1" />
             <Skeleton className="w-5/6 h-5" />
-          </p>
+          </div>
         </div>
         <div className="flex items-center justify-end gap-2">
           <Skeleton className="w-24 h-8" />
@@ -41,8 +43,20 @@ export default function RoomCard({
   name,
   description,
   onViewDetails,
+  selectedFormat,
+  defaultFormat,
+  hasPrivateToilet,
 }: RoomCardProps) {
   const [isLoading, setIsLoading] = useState(true);
+
+  const roomPrice = useMemo(() => {
+    const serachBy = selectedFormat || defaultFormat;
+    if (!serachBy) return null;
+    const roomOption = ROOM_OPTIONS.find((option) => option.id === serachBy);
+    const basePrice = roomOption ? roomOption.price : 0;
+    const privateToiletPrice = hasPrivateToilet ? 10000 : 0;
+    return basePrice + privateToiletPrice;
+  }, [selectedFormat, defaultFormat, hasPrivateToilet]);
 
   const images = useMemo(() => ROOM_IMAGES[slug] || [], [slug]);
 
@@ -70,7 +84,11 @@ export default function RoomCard({
     >
       {images.length > 0 ? (
         <div className="h-full w-full rounded-t-[2rem]">
-          <ImageCarousel imgs={images} aspectRatio="video" className="rounded-t-[2rem] overflow-hidden" />
+          <ImageCarousel
+            imgs={images}
+            aspectRatio="video"
+            className="rounded-t-[2rem] overflow-hidden"
+          />
         </div>
       ) : null}
 
@@ -80,10 +98,22 @@ export default function RoomCard({
             Parque Nacional
           </span>
           <h3 className="font-bold text-xl">{name}</h3>
-          <p className="text-base mt-1 mb-4 line-clamp-2 text-left">{description}</p>
+          <p className="text-base mt-1 mb-4 line-clamp-2 text-left">
+            {description}
+          </p>
         </div>
+        {roomPrice && (
+          <div className="text-xs font-bold font-mono text-text-muted leading-[20px]">
+            {roomPrice}
+          </div>
+        )}
         <div className="flex items-center justify-end gap-2">
-          <Button variant="ghost" size="small" onClick={onViewDetails} tabIndex={-1}>
+          <Button
+            variant="ghost"
+            size="small"
+            onClick={onViewDetails}
+            tabIndex={-1}
+          >
             <span>Ver detalles</span>
           </Button>
         </div>

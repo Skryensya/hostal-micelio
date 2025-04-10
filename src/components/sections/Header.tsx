@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
@@ -16,19 +16,42 @@ const NAV_LINKS = [
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // Estado que controla la visibilidad del header.
+  const [showHeader, setShowHeader] = useState(true);
+  // Referencia para guardar la posición del scroll.
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Si el usuario hace scroll hacia arriba, mostramos el header
+      if (window.scrollY < lastScrollY.current) {
+        setShowHeader(true);
+      } 
+      // Si se desplaza hacia abajo, lo ocultamos
+      else if (window.scrollY > lastScrollY.current) {
+        setShowHeader(false);
+      }
+      lastScrollY.current = window.scrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
-      {/* Header fijo en la parte superior */}
+      {/* Header fijo en la parte superior con animación */}
       <div
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 bg-surface-3 shadow-md text-text"
+          "fixed top-0 left-0 right-0 z-50 bg-surface-3 shadow-md text-text transition-transform duration-300",
+          // Si showHeader es false, se desplaza 150% hacia arriba para ocultar el wavy divider
+          showHeader ? "translate-y-0" : "-translate-y-[150%]"
         )}
       >
         <div className="flex flex-col pt-2">
           <div className="py-0 flex items-center justify-between container mx-auto px-4">
             <Link href="/" className="flex items-center">
-              <div className="h1 flex leading-6 tracking-tight opacity-100 transition-opacity ">
+              <div className="h1 flex leading-6 tracking-tight opacity-100 transition-opacity">
                 Hostal Micelio
               </div>
             </Link>
@@ -68,7 +91,7 @@ export function Header() {
               : { opacity: 0, scale: 0.95, y: -20 }
           }
           transition={{ duration: 0.4, ease: "easeInOut" }}
-          className={`lg:hidden fixed top-20 right-2 md:right-4 w-64 bg-surface-2  rounded-2xl shadow-xl z-50 overflow-hidden ${
+          className={`lg:hidden fixed top-20 right-2 md:right-4 w-64 bg-surface-2 rounded-2xl shadow-xl z-50 overflow-hidden ${
             !isMenuOpen ? "pointer-events-none" : ""
           }`}
         >

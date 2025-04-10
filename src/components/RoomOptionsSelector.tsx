@@ -1,18 +1,68 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import ROOM_OPTIONS from "@/db/ROOM_OPTIONS.json";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { RoomOption } from "@/lib/types";
-// Sort the options by price
+import { Users, User, Undo } from "lucide-react";
+
+// Ordena las opciones por precio
 const roomOptions = ROOM_OPTIONS.sort((a, b) => a.price - b.price);
+
+const getRoomIcon = (id: string) => {
+  switch (id) {
+    case "HCO":
+      return (
+        <div className="flex flex-col items-center">
+          <Users className="w-6 h-6" />
+          <span className="text-xs mt-1">1+</span>
+        </div>
+      );
+    case "HIN":
+      return (
+        <div className="flex flex-col items-center">
+          <User className="w-6 h-6" />
+          <span className="text-xs mt-1">1</span>
+        </div>
+      );
+    case "HDB":
+      return (
+        <div className="flex flex-col items-center">
+          <Users className="w-6 h-6" />
+          <span className="text-xs mt-1">2</span>
+        </div>
+      );
+    case "HMA":
+      return (
+        <div className="flex flex-col items-center">
+          <Users className="w-6 h-6" />
+          <span className="text-xs mt-1">2</span>
+        </div>
+      );
+    case "HT":
+      return (
+        <div className="flex flex-col items-center">
+          <Users className="w-6 h-6" />
+          <span className="text-xs mt-1">3</span>
+        </div>
+      );
+    default:
+      return (
+        <div className="flex flex-col items-center">
+          <Users className="w-6 h-6" />
+          <span className="text-xs mt-1">1+</span>
+        </div>
+      );
+  }
+};
 
 export const RoomOptionsSelector = ({
   onSelect,
+  filteredRoomsCount,
 }: {
   onSelect: (option: RoomOption) => void;
+  filteredRoomsCount: number;
 }) => {
   const [selectedOption, setSelectedOption] = useState<RoomOption | null>(null);
 
@@ -23,39 +73,56 @@ export const RoomOptionsSelector = ({
   }, [selectedOption, onSelect]);
 
   return (
-    <div>
-      <div className="text-lg font-bold mb-4 font-mono">Formatos</div>
-      <div className=" grid grid-cols-2 lg:flex lg:flex-col gap-2 lg:gap-4  ">
-        {roomOptions.map((option, index) => (
-          <button
-            key={index}
-            onClick={() => setSelectedOption(option)}
-            className={cn(
-              "cursor-default transition-all duration-200 h-full w-full bg-primary/40",
-              selectedOption === option && "bg-primary/80"
-            )}
-          >
-            <Card className="cursor-default transition-all duration-200 h-full w-full bg-primary/40">
-              <CardContent className="p-4">
-                <div className="flex flex-col h-full">
-                  <span className="text-xs font-mono text-text-muted">
-                    habitación
-                  </span>
-                  <h3 className="!text-base !font-medium font-body mb-2">
-                    {option.label}
-                  </h3>
-
-                  <div className="flex items-center justify-between mt-auto pt-2">
-                    <Badge variant="outline">Precio</Badge>
-                    <span className="font-semibold text-sm">
-                      ${option.price.toLocaleString("es-CL")}
-                    </span>
+    <div className="py-10">
+      <div className="text-lg font-bold sm:font-mono mb-4">
+        ¿Qué tipo de habitación buscas?
+      </div>
+      <div className="flex flex-col gap-2 sm:gap-4">
+        {/* Contenedor de opciones: vertical en móvil y wrap en pantallas grandes */}
+        <div className="grid grid-cols-2 grid-flow-row sm:flex  sm:flex-wrap gap-2 ">
+          {roomOptions.map((option, index) => (
+            <button
+              key={index}
+              onClick={() => setSelectedOption(option)}
+              className={cn(
+                "cursor-default transition-all duration-200 w-full sm:w-fit bg-white/50 dark:transparent border border-primary/80 rounded-xl   grow",
+                selectedOption === option && "bg-primary/30",
+                index === roomOptions.length - 1 &&
+                  index % 2 === 0 &&
+                  "col-span-2"
+              )}
+            >
+              <Card className="cursor-default transition-all duration-200 w-full bg-primary/20">
+                <CardContent className="p-3">
+                  <div className="flex items-center gap-2">
+                    <div className="p-1 bg-primary/20 rounded">
+                      {getRoomIcon(option.id)}
+                    </div>
+                    <div className="text-left">
+                      <h3 className="!text-base font-body font-semibold">
+                        Habitación {option.label}
+                      </h3>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          </button>
-        ))}
+                </CardContent>
+              </Card>
+            </button>
+          ))}
+        </div>
+        {selectedOption && (
+          <div className="flex justify-between items-center mt-2">
+            <button
+              onClick={() => setSelectedOption(null)}
+              className="flex items-center gap-1 text-sm text-text-muted hover:text-text transition-colors duration-200 w-fit h-6 px-4"
+            >
+              <Undo className="w-4 h-4" />
+              <span>Ver todas </span>
+            </button>
+            <span className="text-sm text-text-muted">
+              {filteredRoomsCount} {filteredRoomsCount === 1 ? 'habitación' : 'habitaciones'} encontradas
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

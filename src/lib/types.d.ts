@@ -6,7 +6,9 @@ export type Room = {
   beds: string[]; // Identificadores de las camas
   capacity: number; // Capacidad máxima de personas
   hasPrivateToilet?: boolean; // Indica si tiene baño privado (opcional)
-  roomOptions: string[]; // Identificadores de las opciones de habitación
+  defaultFormat: string; // Formato principal de la habitación
+  alternativeFormats: string[]; // Formatos alternativos disponibles
+  roomOptions: RoomOption[]; // Opciones de habitación disponibles
 };
 
 export type RoomImage = {

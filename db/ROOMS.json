@@ -7,7 +7,8 @@
     "beds": ["B01"],
     "capacity": 2,
     "hasPrivateToilet": true,
-    "roomOptions": ["HMACB"]
+    "defaultFormat": "HMA",
+    "alternativeFormats": []
   },
   {
     "name": "Conguillío",
@@ -17,7 +18,8 @@
     "beds": ["B02", "B02", "B02"],
     "capacity": 3,
     "hasPrivateToilet": false,
-    "roomOptions": ["HCO", "HDB", "HT"]
+    "defaultFormat": "HT",
+    "alternativeFormats": ["HCO", "HDB"]
   },
   {
     "name": "Villarrica",
@@ -27,7 +29,8 @@
     "beds": ["B01"],
     "capacity": 2,
     "hasPrivateToilet": false,
-    "roomOptions": ["HMA"]
+    "defaultFormat": "HMA",
+    "alternativeFormats": []
   },
   {
     "name": "Laguna San Rafael",
@@ -37,7 +40,8 @@
     "beds": ["B02", "B02", "B03", "B03", "B04", "B04"],
     "capacity": 6,
     "hasPrivateToilet": false,
-    "roomOptions": ["HCO", "HDB", "HT"]
+    "defaultFormat": "HCO",
+    "alternativeFormats": ["HDB", "HT"]
   },
   {
     "name": "Torres del Paine",
@@ -47,7 +51,8 @@
     "beds": ["B02", "B03", "B04"],
     "capacity": 3,
     "hasPrivateToilet": false,
-    "roomOptions": ["HT", "HDB", "HIN"]
+    "defaultFormat": "HT",
+    "alternativeFormats": ["HDB", "HIN"]
   },
   {
     "name": "Huerquehue",
@@ -57,7 +62,8 @@
     "beds": ["B02", "B02"],
     "capacity": 2,
     "hasPrivateToilet": false,
-    "roomOptions": ["HDB", "HIN"]
+    "defaultFormat": "HIN",
+    "alternativeFormats": ["HDB"]
   },
   {
     "name": "Pumalin",
@@ -67,7 +73,8 @@
     "beds": ["B02", "B02"],
     "capacity": 2,
     "hasPrivateToilet": false,
-    "roomOptions": ["HDB", "HIN"]
+    "defaultFormat": "HDB",
+    "alternativeFormats": ["HIN"]
   },
   {
     "name": "Nahuelbuta",
@@ -77,7 +84,8 @@
     "beds": ["B02", "B02"],
     "capacity": 1,
     "hasPrivateToilet": false,
-    "roomOptions": ["HDB", "HIN"]
+    "defaultFormat": "HIN",
+    "alternativeFormats": ["HDB"]
   },
   {
     "name": "Queulat",
@@ -87,6 +95,7 @@
     "beds": ["B01", "B02"],
     "capacity": 3,
     "hasPrivateToilet": false,
-    "roomOptions": ["HMA", "HT", "HDB"]
+    "defaultFormat": "HMA",
+    "alternativeFormats": ["HT", "HDB"]
   }
-]
+] 
