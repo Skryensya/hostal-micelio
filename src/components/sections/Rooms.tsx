@@ -38,8 +38,10 @@ export function Rooms() {
           b.defaultFormat === selectedOption
         ) {
           // If both have the format as default, sort by price
-          const aPrice = ROOM_OPTIONS.find(opt => opt.id === selectedOption)?.price || 0;
-          const bPrice = ROOM_OPTIONS.find(opt => opt.id === selectedOption)?.price || 0;
+          const aPrice =
+            ROOM_OPTIONS.find((opt) => opt.id === selectedOption)?.price || 0;
+          const bPrice =
+            ROOM_OPTIONS.find((opt) => opt.id === selectedOption)?.price || 0;
           const aTotal = aPrice + (a.hasPrivateToilet ? 10000 : 0);
           const bTotal = bPrice + (b.hasPrivateToilet ? 10000 : 0);
           return aTotal - bTotal;
@@ -51,15 +53,19 @@ export function Rooms() {
           return 1;
         }
         // If neither has the format as default, sort by price
-        const aPrice = ROOM_OPTIONS.find(opt => opt.id === selectedOption)?.price || 0;
-        const bPrice = ROOM_OPTIONS.find(opt => opt.id === selectedOption)?.price || 0;
+        const aPrice =
+          ROOM_OPTIONS.find((opt) => opt.id === selectedOption)?.price || 0;
+        const bPrice =
+          ROOM_OPTIONS.find((opt) => opt.id === selectedOption)?.price || 0;
         const aTotal = aPrice + (a.hasPrivateToilet ? 10000 : 0);
         const bTotal = bPrice + (b.hasPrivateToilet ? 10000 : 0);
         return aTotal - bTotal;
       })
     : ROOMS.sort((a, b) => {
-        const aPrice = ROOM_OPTIONS.find(opt => opt.id === a.defaultFormat)?.price || 0;
-        const bPrice = ROOM_OPTIONS.find(opt => opt.id === b.defaultFormat)?.price || 0;
+        const aPrice =
+          ROOM_OPTIONS.find((opt) => opt.id === a.defaultFormat)?.price || 0;
+        const bPrice =
+          ROOM_OPTIONS.find((opt) => opt.id === b.defaultFormat)?.price || 0;
         const aTotal = aPrice + (a.hasPrivateToilet ? 10000 : 0);
         const bTotal = bPrice + (b.hasPrivateToilet ? 10000 : 0);
         return aTotal - bTotal;
@@ -73,28 +79,34 @@ export function Rooms() {
         </h2>
         <div className="max-w-[80ch] space-y-4 text-pretty">
           <p>
-            En Hostal Micelio ofrecemos diferentes formatos de habitación para
-            que encuentres el ideal para ti. Nuestro precio se basa en el tipo
-            de habitación, no en el número de personas, y estos formatos son
-            solo una guía. Siempre estamos dispuestos a llegar a acuerdos
-            personalizados para ajustarnos a tus necesidades.
+            En Hostal Micelio contamos con 9 habitaciones listas para recibirte,
+            en distintos formatos pensados para que encuentres el ideal según
+            cómo viajes: solo, en pareja o en grupo.
           </p>
           <p>
-            Por ejemplo, si viajas solo y todas las habitaciones simples están
-            ocupadas, te ofrecemos una habitación más amplia disponible al
-            precio de una simple, garantizando tu comodidad y atención.
-            ¡Queremos que disfrutes de una experiencia única en Hostal Micelio!
+          El precio se basa en la cantidad de personas, y a partir de eso buscamos el formato de habitación, o múltiples habitaciones, que mejor se adapte a tus necesidades. Esto nos permite ofrecer una experiencia más justa y personalizada. Siempre que haya disponibilidad, estaremos encantados de encontrar la mejor opción para ti.
+          </p>
+          <p>
+            Por ejemplo, si viajas solo y ya no quedan habitaciones simples,
+            haremos lo posible por ofrecerte una más amplia al precio de una
+            simple. Queremos que disfrutes de una estadía cómoda, flexible y
+            hecha a tu medida en Hostal Micelio.
+          </p>
+          <p>
+            Todas nuestras habitaciones incluyen desayuno, acceso a las duchas,
+            toallas limpias y jabón. Todo lo esencial para que te sientas como
+            en casa desde el primer día.
           </p>
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-4 justify-center h-full">
+      <div className=" h-full">
         <RoomOptionsSelector
           onSelect={handleSelectOption}
           filteredRoomsCount={filteredRooms.length}
         />
         <div
-          className="grid sm:grid-cols-2 md:grid-cols-3 gap-2"
+          className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2"
           aria-labelledby="habitaciones"
         >
           <AnimatePresence>

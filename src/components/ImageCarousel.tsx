@@ -5,18 +5,25 @@ import { motion, useAnimation } from "framer-motion";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useGallery } from "./GalleryProvider";
 
 // Componente de imagen simple
 type ImageType = {
   src: string;
   alt: string;
+  aspectRatio: "square" | "video" | "vertical";
+  className?: string;
 };
 
 type Transition = {
   target: number;
   direction: "next" | "prev";
 };
+
+const ASPECT_RATIOS = {
+  square: "lg:aspect-square aspect-[4/3]",
+  video: "aspect-[16/9]",
+  card: "aspect-[5/4]",
+} as const;
 
 function SingleImageView({
   src,
@@ -26,16 +33,14 @@ function SingleImageView({
 }: {
   src: string;
   alt: string;
-  aspectRatio: "square" | "video";
+  aspectRatio: keyof typeof ASPECT_RATIOS;
   className?: string;
 }) {
   return (
     <div
       className={cn(
         "relative w-full h-full",
-        aspectRatio === "square"
-          ? "lg:aspect-square aspect-[4/3]"
-          : "aspect-[4/3]",
+        ASPECT_RATIOS[aspectRatio],
         className
       )}
     >
@@ -117,15 +122,16 @@ export function ImageCarousel({
   aspectRatio = "square",
   ctaRef,
   className,
+  onClick,
 }: {
   imgs?: ImageType[];
-  aspectRatio?: "square" | "video";
+  aspectRatio?: keyof typeof ASPECT_RATIOS;
   ctaRef?: React.RefObject<HTMLElement>;
   className?: string;
+  onClick?: () => void;
 }) {
-  const {
-    /* openGallery,  */
-  } = useGallery(); // Se elimina la función para abrir en galería
+  const countdownControls = useAnimation();
+  const isHoveredRef = useRef(false);
   const [current, setCurrent] = useState(0);
   const [transition, setTransition] = useState<Transition | null>(null);
   const total = imgs?.length || 0;
@@ -254,9 +260,6 @@ export function ImageCarousel({
   };
 
   // Lógica robusta de la barra de cuenta atrás (desktop)
-  const countdownControls = useAnimation();
-  const isHoveredRef = useRef(false);
-
   const handleMouseEnter = async () => {
     if (window.innerWidth >= 640) {
       isHoveredRef.current = true;
@@ -271,6 +274,7 @@ export function ImageCarousel({
         }
       } catch (error) {
         countdownControls.set({ width: "0%" });
+        console.error(error);
       }
     }
   };
@@ -294,16 +298,14 @@ export function ImageCarousel({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "relative w-full h-full outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 group",
+        "relative w-full h-full outline-none group",
+        ASPECT_RATIOS[aspectRatio],
         className
       )}
     >
-      <div
-        className={`relative w-full h-full ${
-          aspectRatio === "video"
-            ? "aspect-[4/3]"
-            : "lg:aspect-square aspect-[4/3]"
-        }`}
+      <button
+        onClick={onClick}
+        className={`relative w-full h-full ${ASPECT_RATIOS[aspectRatio]}`}
       >
         {/* Imagen base */}
         <div className="absolute inset-0">
@@ -344,7 +346,7 @@ export function ImageCarousel({
           initial={{ width: "0%" }}
           animate={countdownControls}
         />
-      </div>
+      </button>
 
       {/* Se eliminó el botón de expandir (Gallery Opener) */}
 

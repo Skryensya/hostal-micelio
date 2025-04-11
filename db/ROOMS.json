@@ -82,7 +82,7 @@
     "description": "Habitación con una cama de 1,5 plazas.",
     "floor": 2,
     "beds": ["B02", "B02"],
-    "capacity": 1,
+    "capacity": 2,
     "hasPrivateToilet": false,
     "defaultFormat": "HIN",
     "alternativeFormats": ["HDB"]

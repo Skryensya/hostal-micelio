@@ -10,7 +10,7 @@ export interface BedIconsProps {
   beds?: string[];
 }
 
-export default function BedIcons({ beds }: BedIconsProps) {
+export function BedIcons({ beds }: BedIconsProps) {
   // Agrupar los IDs de camas para contar la cantidad por tipo
   const groupedBeds = useMemo(() => {
     if (!beds) return {} as Record<string, number>;
@@ -49,14 +49,15 @@ export default function BedIcons({ beds }: BedIconsProps) {
   };
 
   return (
-    <div className="absolute bottom-2 left-2 flex gap-1">
+    <div className=" flex gap-1 divide-x-1 ">
       {bunkPairs > 0 && (
-        <div className="flex items-center gap-1" title="Cama litera">
+        <div
+          className="flex items-center gap-1 px-2"
+          title={`${bunkPairs} ${bunkPairs === 1 ? "Camarote" : "Camarotes"}`}
+        >
           {/* BunkBed se renderiza sin className */}
+          <span className="text-xs font-bold">{bunkPairs}</span>
           <BunkBed />
-          <span className="text-xs font-bold">
-            {bunkPairs} {bunkPairs === 1 ? "litera" : "literas"}
-          </span>
         </div>
       )}
 
@@ -65,11 +66,13 @@ export default function BedIcons({ beds }: BedIconsProps) {
         if (!bedInfo) return null;
         const Icon = getBedIcon(bedId);
         return (
-          <div key={bedId} className="flex items-center gap-1" title={bedInfo.name}>
+          <div
+            key={bedId}
+            className="flex items-center gap-1 px-2"
+            title={`${count} ${bedInfo.name}`}
+          >
+            <span className="text-xs font-bold">{count}</span>
             <Icon className="w-5 h-5" />
-            <span className="text-xs font-bold">
-              {count} {count === 1 ? "cama" : "camas"}
-            </span>
           </div>
         );
       })}

@@ -8,7 +8,7 @@ export type Room = {
   hasPrivateToilet?: boolean; // Indica si tiene baño privado (opcional)
   defaultFormat: string; // Formato principal de la habitación
   alternativeFormats: string[]; // Formatos alternativos disponibles
-  roomOptions: RoomOption[]; // Opciones de habitación disponibles
+  roomOptions?: RoomOption[]; // Opciones de habitación disponibles
 };
 
 export type RoomImage = {

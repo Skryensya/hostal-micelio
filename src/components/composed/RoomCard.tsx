@@ -3,38 +3,16 @@
 import type { Room as RoomType, RoomOption } from "@/lib/types";
 import ROOM_IMAGES from "@/db/ROOM_IMAGES.json";
 import { ImageCarousel } from "../ImageCarousel";
-import { Skeleton } from "@/components/ui/skeleton";
+import { RoomCardSkeleton } from "@/components/composed/RoomCardSkeleton";
 import { useEffect, useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import ROOM_OPTIONS from "@/db/ROOM_OPTIONS.json";
-import BedIcons from "@/components/BedIcons";
-
+import ROOM_OPTIONS from "@/db/ROOM_OPTIONS.json"; 
+import { WavyDivider } from "@/components/composed/WavyDivider";
+import { User } from "lucide-react";
 type RoomCardProps = Partial<RoomType> & {
   onViewDetails?: () => void;
   selectedFormat?: string | null;
 };
-
-function RoomCardSkeleton() {
-  return (
-    <div className="grid grid-cols-1 h-full w-full bg-surface-2 text-text rounded-[2rem] overflow-hidden">
-      <Skeleton className="w-full aspect-video rounded-t-[2rem]" />
-      <div className="flex flex-col justify-between p-4 min-h-48">
-        <div className="flex flex-col items-start">
-          <div className="text-xs font-bold font-mono text-text-muted leading-[20px]">
-            <Skeleton className="w-32 h-4" />
-          </div>
-          <div className="font-bold text-xl">
-            <Skeleton className="w-40 h-6 mt-2" />
-          </div>
-          {/* Se elimina la descripción */}
-        </div>
-        <div className="flex items-center justify-end gap-2">
-          <Skeleton className="w-24 h-8" />
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function RoomCard({
   slug,
@@ -43,7 +21,9 @@ export default function RoomCard({
   selectedFormat,
   defaultFormat,
   hasPrivateToilet,
-  beds, // beds es un arreglo de IDs (ej. ["B01", "B03", "B04"])
+  // beds, beds es un arreglo de IDs (ej. ["B01", "B03", "B04"])
+  capacity,
+  description,
 }: RoomCardProps) {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -58,6 +38,15 @@ export default function RoomCard({
     const privateToiletPrice = hasPrivateToilet ? 10000 : 0;
     return basePrice + privateToiletPrice;
   }, [selectedFormat, defaultFormat, hasPrivateToilet]);
+
+  const roomFormat = useMemo(() => {
+    const searchBy = selectedFormat || defaultFormat;
+    if (!searchBy) return null;
+    const roomOption = ROOM_OPTIONS.find(
+      (option: RoomOption) => option.id === searchBy
+    );
+    return roomOption ? roomOption.label : null;
+  }, [selectedFormat, defaultFormat]);
 
   const images = useMemo(() => ROOM_IMAGES[slug] || [], [slug]);
 
@@ -79,34 +68,56 @@ export default function RoomCard({
   }
 
   return (
-    <button
-      onClick={onViewDetails}
-      className="relative items-start justify-start cursor-pointer grid grid-cols-1 h-full w-full group bg-surface-2 text-text rounded-[2rem] focus:outline-offset-4"
-    >
+    <div className="relative items-start justify-start cursor-pointer grid grid-cols-1 h-full w-full group bg-surface-2 text-text rounded-[2rem] focus:outline-offset-4 overflow-hidden isolate border">
+      {/* Header */}
+      <div className="absolute top-0 inset-x-0 w-full ">
+        <div className="bg-surface-2 z-10 relative flex justify-between items-end px-4">
+          <div className="flex flex-col items-start translate-y-1  ">
+            <span className="text-xs translate-y-1 text-text-muted">
+              Parque Nacional
+            </span>
+            <h3 className="font-bold text-xl">{name}</h3>
+          </div>
+          <div className="flex items-center mb-2 text-xs">
+            <User className="w-4 h-4" /> {capacity}
+          </div>
+        </div>
+        <WavyDivider direction="bottom" backgroundClass="bg-surface-2" />
+      </div>
+
+      {/* Carousel */}
       {images.length > 0 && (
-        <div className="h-full w-full rounded-t-[2rem]">
+        <div className="h-full w-full z-0 max-h-[250px]">
           <ImageCarousel
             imgs={images}
-            aspectRatio="video"
-            className="rounded-t-[2rem] overflow-hidden"
+            aspectRatio="card"
+            className="overflow-hidden"
           />
         </div>
       )}
 
-      <div className="flex flex-col justify-between p-4 min-h-48">
-        <div className="flex flex-col items-start">
-          <span className="text-xs font-bold font-mono text-text-muted leading-[20px]">
-            Parque Nacional
-          </span>
-          <h3 className="font-bold text-xl">{name}</h3>
-          {/* Se ha eliminado la descripción para mostrar únicamente el título */}
-        </div>
-        {roomPrice && (
-          <div className="text-xs font-bold font-mono text-text-muted leading-[20px]">
-            {roomPrice}
+      {/* Body */}
+      <div className="flex flex-col justify-between px-3 py-2 min-h-40 h-full">
+        <p className="text-sm  pb-10">{description}</p>
+
+        <div className="flex items-center gap-2"></div>
+        {/* Footer */}
+        <div className="flex items-center justify-between gap-2 border-t pt-2 pl-3">
+          <div className="flex flex-col items-start gap-1">
+            <div className="text-xs font-bold font-mono leading-[20px]">
+              Habitación {roomFormat}
+            </div>
+            <div className="">
+              <span className="text-sm font-bold font-mono leading-[20px]">
+                {roomPrice.toLocaleString("es-CL", {
+                  style: "currency",
+                  currency: "CLP",
+                })}
+                CLP
+              </span>
+              <span className="text-sm text-text-muted"> / Noche</span>
+            </div>
           </div>
-        )}
-        <div className="flex items-center justify-end gap-2">
           <Button
             variant="ghost"
             size="small"
@@ -119,7 +130,6 @@ export default function RoomCard({
       </div>
 
       {/* Se extrae la lógica de las camas a nuestro componente BedIcons */}
-      <BedIcons beds={beds} />
-    </button>
+    </div>
   );
 }

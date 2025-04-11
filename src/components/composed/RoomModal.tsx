@@ -25,6 +25,8 @@ import { Room, RoomImage } from "@/lib/types";
 import ROOMS from "@/db/ROOMS.json";
 import ROOM_IMAGES from "@/db/ROOM_IMAGES.json";
 import { ImagesShowcaseGrid } from "@/components/ImagesShowcaseGrid";
+import { BedIcons } from "@/components/BedIcons";
+import { User } from "lucide-react";
 // import { RoomConfigurationToggle } from "@/components/RoomConfigurationToggle";
 export function RoomModal({
   open,
@@ -45,11 +47,21 @@ export function RoomModal({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-[625px]">
-          <DialogHeader className="pb-4 pt-1 px-2">
-            <span className="text-xs font-bold font-mono text-text-muted leading-[10px] mb-1 ">
-              Parque Nacional
-            </span>
-            <DialogTitle>{room?.name}</DialogTitle>
+          <DialogHeader className="pb-2 px-2 -translate-y-1">
+            <div className="flex items-end gap-12">
+              <div>
+                <span className="text-xs font-bold font-mono text-text-muted leading-[10px] mb-1 ">
+                  Parque Nacional
+                </span>
+                <DialogTitle>{room?.name}</DialogTitle>
+              </div>
+
+              <div>
+                <div className="flex items-center mb-0.5 text-xs">
+                  <User className="w-4 h-4" /> {room?.capacity}
+                </div>
+              </div>
+            </div>
           </DialogHeader>
 
           <RoomDashboard room={room} roomImages={roomImages} />
@@ -63,6 +75,9 @@ export function RoomModal({
       <DrawerContent>
         <DrawerHeader className="text-left ">
           <DrawerTitle>{room?.name}</DrawerTitle>
+          <div className="flex items-center gap-2">
+            <BedIcons beds={room?.beds || []} />
+          </div>
         </DrawerHeader>
         <RoomDashboard room={room} roomImages={roomImages} />
         <DrawerFooter className="pt-2">
