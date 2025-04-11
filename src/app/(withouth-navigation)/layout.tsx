@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/main.scss"; 
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { PostHogProvider } from "@/components/PostHogProvider";
 
 import { balooBhaijaan2, nunito, croissantOne } from "@/app/fonts";
 // import { ReactLenis } from "lenis/react";
@@ -12,9 +13,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   const isGrayscale = false;
 
   return (
@@ -27,9 +26,11 @@ export default function RootLayout({
         className={`${croissantOne.variable} ${balooBhaijaan2.variable} ${nunito.variable} font-sans antialiased min-h-screen bg-surface-1 dark:text-text overflow-x-hidden scroll-smooth`}
       >
         {/* <ReactLenis root> */}
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
-          </ThemeProvider>
+          <PostHogProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              {children}
+            </ThemeProvider>
+          </PostHogProvider>
         {/* </ReactLenis> */}
       </body>
     </html>
