@@ -22,8 +22,8 @@ export function Rooms() {
     setSelectedRoom(null);
   };
 
-  const handleSelectOption = (option: RoomOption) => {
-    setSelectedOption(option.id);
+  const handleSelectOption = (option: RoomOption | null) => {
+    setSelectedOption(option?.id || null);
   };
 
   const filteredRooms = selectedOption
@@ -106,7 +106,7 @@ export function Rooms() {
           filteredRoomsCount={filteredRooms.length}
         />
         <div
-          className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2"
+          className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
           aria-labelledby="habitaciones"
         >
           <AnimatePresence>

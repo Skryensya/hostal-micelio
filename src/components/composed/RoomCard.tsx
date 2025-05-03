@@ -6,7 +6,7 @@ import { ImageCarousel } from "../ImageCarousel";
 import { RoomCardSkeleton } from "@/components/composed/RoomCardSkeleton";
 import { useEffect, useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import ROOM_OPTIONS from "@/db/ROOM_OPTIONS.json"; 
+import ROOM_OPTIONS from "@/db/ROOM_OPTIONS.json";
 import { WavyDivider } from "@/components/composed/WavyDivider";
 import { User } from "lucide-react";
 type RoomCardProps = Partial<RoomType> & {
@@ -68,10 +68,10 @@ export default function RoomCard({
   }
 
   return (
-    <div className="relative items-start justify-start cursor-pointer grid grid-cols-1 h-full w-full group bg-surface-2 text-text rounded-[2rem] focus:outline-offset-4 overflow-hidden isolate border">
+    <div className="relative items-start justify-start cursor-pointer grid grid-cols-1 h-full w-full group bg-surface-2 text-text rounded-[2rem] focus:outline-offset-4 overflow-hidden isolate shadow-md  ">
       {/* Header */}
       <div className="absolute top-0 inset-x-0 w-full ">
-        <div className="bg-surface-2 z-10 relative flex justify-between items-end px-4">
+        <div className="bg-surface-2 z-10 relative flex justify-between items-end px-4 pt-1">
           <div className="flex flex-col items-start translate-y-1  ">
             <span className="text-xs translate-y-1 text-text-muted">
               Parque Nacional
@@ -87,7 +87,7 @@ export default function RoomCard({
 
       {/* Carousel */}
       {images.length > 0 && (
-        <div className="h-full w-full z-0 max-h-[250px]">
+        <div className="h-full w-full z-0 max-h-[250px] overflow-hidden border border-surface-2 rounded-t-[2rem]">
           <ImageCarousel
             imgs={images}
             aspectRatio="card"
@@ -102,12 +102,12 @@ export default function RoomCard({
 
         <div className="flex items-center gap-2"></div>
         {/* Footer */}
-        <div className="flex items-center justify-between gap-2 border-t pt-2 pl-3">
+        <div className="flex items-center justify-between gap-2 border-t pt-2 pl-2">
           <div className="flex flex-col items-start gap-1">
             <div className="text-xs font-bold font-mono leading-[20px]">
               Habitación {roomFormat}
             </div>
-            <div className="">
+            <div className="pb-1">
               <span className="text-sm font-bold font-mono leading-[20px]">
                 {roomPrice.toLocaleString("es-CL", {
                   style: "currency",
@@ -119,6 +119,7 @@ export default function RoomCard({
             </div>
           </div>
           <Button
+            className="mr-1"
             variant="ghost"
             size="small"
             onClick={onViewDetails}

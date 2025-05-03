@@ -297,10 +297,10 @@ export function Hero() {
           Saltar Hero
         </button>
         <div className="container mx-auto grid grid-cols-12  gap-4 isolate px-0 md:px-4 relative">
-          <div className="col-span-12 md:col-span-4 z-20 order-2 md:order-1">
-            <div className="gap-4 flex flex-col justify-center w-full px-4 md:px-0 mx-auto md:mx-0 md:w-[110%] h-full ">
+          <div className="col-span-12 md:col-span-3 z-20 order-2 md:order-1 pointer-events-none">
+            <div className="gap-4 flex flex-col justify-center w-full px-4 md:px-0 mx-auto md:mx-0 md:w-[200%] max-w-[450px] h-full ">
               <div
-                className={`${slides[activeSlide].cardColorClassName} pt-2 pb-4 md:pt-4 md:pb-8 rounded-2xl`}
+                className={`${slides[activeSlide].cardColorClassName} pt-2 pb-4 md:pt-4 md:pb-8 rounded-2xl pointer-events-auto`}
               >
                 <div
                   className=" container transition-opacity duration-1000 min-h-[80%]"
@@ -316,7 +316,7 @@ export function Hero() {
               </div>
             </div>
           </div>
-          <div className="col-span-12 md:col-span-8 order-1 md:order-2">
+          <div className="col-span-12 md:col-span-9 order-1 md:order-2">
             <div
               className="relative md:rounded-3xl isolate bg-surface-muted  h-[450px] md:h-[550px] "
               // style={{ height: "500px" }}

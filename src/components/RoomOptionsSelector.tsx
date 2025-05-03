@@ -64,13 +64,21 @@ export const RoomOptionsSelector = ({
   onSelect: (option: RoomOption) => void;
   filteredRoomsCount: number;
 }) => {
-  const [selectedOption, setSelectedOption] = useState<RoomOption | null>(null);
+  const [selectedOption, setSelectedOption] = useState<RoomOption | null>();
 
   useEffect(() => {
-    if (selectedOption) {
-      onSelect(selectedOption);
-    }
+    // Send the selectedOption to parent, or null when deselected
+    onSelect(selectedOption || null);
   }, [selectedOption, onSelect]);
+
+  const handleOptionClick = (option: RoomOption) => {
+    // Toggle selection - if clicking the same option, deselect it
+    setSelectedOption(option === selectedOption ? null : option);
+  };
+
+  const handleReset = () => {
+    setSelectedOption(null);
+  };
 
   return (
     <div className="py-10">
@@ -83,7 +91,7 @@ export const RoomOptionsSelector = ({
           {roomOptions.map((option, index) => (
             <button
               key={index}
-              onClick={() => setSelectedOption(option)}
+              onClick={() => handleOptionClick(option)}
               className={cn(
                 "cursor-default transition-all duration-200 w-full sm:w-fit bg-white/50 dark:transparent border border-primary/80 rounded-xl   grow",
                 selectedOption === option && "bg-primary/30",
@@ -112,7 +120,7 @@ export const RoomOptionsSelector = ({
         {selectedOption && (
           <div className="flex justify-between items-center mt-2">
             <button
-              onClick={() => setSelectedOption(null)}
+              onClick={handleReset}
               className="flex items-center gap-1 text-sm text-text-muted hover:text-text transition-colors duration-200 w-fit h-6 px-4"
             >
               <Undo className="w-4 h-4" />
