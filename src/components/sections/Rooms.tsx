@@ -1,79 +1,88 @@
 "use client";
 
+import { useState, useEffect, useMemo } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import ROOMS from "@/db/ROOMS.json";
+import ROOM_OPTIONS from "@/db/ROOM_OPTIONS.json";
 import RoomCard from "../composed/RoomCard";
 import { motion, AnimatePresence } from "framer-motion";
 import { RoomModal } from "../composed/RoomModal";
-import { useState } from "react";
 import { Gallery } from "@/components/Gallery";
 import { RoomOptionsSelector } from "@/components/RoomOptionsSelector";
 import { RoomOption } from "@/lib/types";
-import ROOM_OPTIONS from "@/db/ROOM_OPTIONS.json";
+
+// Precompute price map for faster lookups
+const PRICE_MAP: Record<string, number> = ROOM_OPTIONS.reduce(
+  (map, opt) => ({ ...map, [opt.id]: opt.price }),
+  {}
+);
 
 export function Rooms() {
-  const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const initialRoom = searchParams.get("habitacion");
+
+  const [selectedRoom, setSelectedRoom] = useState<string | null>(initialRoom);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
+  // Sync state when URL param changes
+  useEffect(() => {
+    if (initialRoom !== selectedRoom) {
+      setSelectedRoom(initialRoom);
+    }
+  }, [initialRoom]);
+
+  const setRoomInUrl = (slug: string | null) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (slug) {
+      params.set("habitacion", slug);
+    } else {
+      params.delete("habitacion");
+    }
+    const query = params.toString();
+    // Prevent scroll reset
+    router.replace(query ? `${pathname}?${query}` : pathname, {
+      scroll: false,
+    });
+  };
 
   const handleOpenModal = (roomSlug: string) => {
     setSelectedRoom(roomSlug);
+    setRoomInUrl(roomSlug);
   };
 
   const handleCloseModal = () => {
     setSelectedRoom(null);
+    setRoomInUrl(null);
   };
 
   const handleSelectOption = (option: RoomOption | null) => {
     setSelectedOption(option?.id || null);
   };
 
-  const filteredRooms = selectedOption
-    ? ROOMS.filter(
-        (room) =>
-          room.defaultFormat === selectedOption ||
-          room.alternativeFormats.includes(selectedOption)
-      ).sort((a, b) => {
-        // First sort by format (default format first)
-        if (
-          a.defaultFormat === selectedOption &&
-          b.defaultFormat === selectedOption
-        ) {
-          // If both have the format as default, sort by price
-          const aPrice =
-            ROOM_OPTIONS.find((opt) => opt.id === selectedOption)?.price || 0;
-          const bPrice =
-            ROOM_OPTIONS.find((opt) => opt.id === selectedOption)?.price || 0;
-          const aTotal = aPrice + (a.hasPrivateToilet ? 10000 : 0);
-          const bTotal = bPrice + (b.hasPrivateToilet ? 10000 : 0);
-          return aTotal - bTotal;
-        }
-        if (a.defaultFormat === selectedOption) {
-          return -1;
-        }
-        if (b.defaultFormat === selectedOption) {
-          return 1;
-        }
-        // If neither has the format as default, sort by price
-        const aPrice =
-          ROOM_OPTIONS.find((opt) => opt.id === selectedOption)?.price || 0;
-        const bPrice =
-          ROOM_OPTIONS.find((opt) => opt.id === selectedOption)?.price || 0;
-        const aTotal = aPrice + (a.hasPrivateToilet ? 10000 : 0);
-        const bTotal = bPrice + (b.hasPrivateToilet ? 10000 : 0);
-        return aTotal - bTotal;
-      })
-    : ROOMS.sort((a, b) => {
-        const aPrice =
-          ROOM_OPTIONS.find((opt) => opt.id === a.defaultFormat)?.price || 0;
-        const bPrice =
-          ROOM_OPTIONS.find((opt) => opt.id === b.defaultFormat)?.price || 0;
-        const aTotal = aPrice + (a.hasPrivateToilet ? 10000 : 0);
-        const bTotal = bPrice + (b.hasPrivateToilet ? 10000 : 0);
-        return aTotal - bTotal;
-      });
+  const filteredRooms = useMemo(() => {
+    const roomsToSort = selectedOption
+      ? ROOMS.filter(
+          (r) =>
+            r.defaultFormat === selectedOption ||
+            r.alternativeFormats.includes(selectedOption)
+        )
+      : [...ROOMS];
+
+    return roomsToSort.sort((a, b) => {
+      const fmt = selectedOption || a.defaultFormat;
+      const priceA = PRICE_MAP[fmt] || 0;
+      const priceB = PRICE_MAP[fmt] || 0;
+      const totalA = priceA + (a.hasPrivateToilet ? 10000 : 0);
+      const totalB = priceB + (b.hasPrivateToilet ? 10000 : 0);
+      return totalA - totalB;
+    });
+  }, [selectedOption]);
 
   return (
     <section className="container mx-auto py-10">
-      <div className=" ">
+      <div>
         <h2 className="text-2xl font-bold mb-8" id="habitaciones">
           Conoce nuestras habitaciones
         </h2>
@@ -84,7 +93,12 @@ export function Rooms() {
             cómo viajes: solo, en pareja o en grupo.
           </p>
           <p>
-          El precio se basa en la cantidad de personas, y a partir de eso buscamos el formato de habitación, o múltiples habitaciones, que mejor se adapte a tus necesidades. Esto nos permite ofrecer una experiencia más justa y personalizada. Siempre que haya disponibilidad, estaremos encantados de encontrar la mejor opción para ti.
+            El precio se basa en la cantidad de personas, y a partir de eso
+            buscamos el formato de habitación, o múltiples habitaciones, que
+            mejor se adapte a tus necesidades. Esto nos permite ofrecer una
+            experiencia más justa y personalizada. Siempre que haya
+            disponibilidad, estaremos encantados de encontrar la mejor opción
+            para ti.
           </p>
           <p>
             Por ejemplo, si viajas solo y ya no quedan habitaciones simples,
@@ -92,21 +106,16 @@ export function Rooms() {
             simple. Queremos que disfrutes de una estadía cómoda, flexible y
             hecha a tu medida en Hostal Micelio.
           </p>
-          <p>
-            Todas nuestras habitaciones incluyen desayuno, acceso a las duchas,
-            toallas limpias y jabón. Todo lo esencial para que te sientas como
-            en casa desde el primer día.
-          </p>
         </div>
       </div>
 
-      <div className=" h-full">
+      <div>
         <RoomOptionsSelector
           onSelect={handleSelectOption}
           filteredRoomsCount={filteredRooms.length}
         />
         <div
-          className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
           aria-labelledby="habitaciones"
         >
           <AnimatePresence>
@@ -130,7 +139,7 @@ export function Rooms() {
       </div>
 
       <RoomModal
-        open={selectedRoom !== null}
+        open={Boolean(selectedRoom)}
         setOpen={handleCloseModal}
         roomSlug={selectedRoom || ""}
       />

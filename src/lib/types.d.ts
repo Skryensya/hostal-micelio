@@ -9,6 +9,7 @@ export type Room = {
   defaultFormat: string; // Formato principal de la habitación
   alternativeFormats: string[]; // Formatos alternativos disponibles
   roomOptions?: RoomOption[]; // Opciones de habitación disponibles
+  amenities: ('breakfast' | 'privateBathroom' | 'shower' | 'towels' | 'privateToilet')[]; // Amenidades disponibles
 };
 
 export type RoomImage = {
