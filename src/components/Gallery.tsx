@@ -89,7 +89,7 @@ export function Gallery() {
       <DialogContent className="fixed inset-0 w-screen h-screen p-0 border-0 bg-transparent shadow-none select-none">
         <div className="relative w-full h-full translate-x-1/2 translate-y-1/2 flex flex-col items-center justify-between gap-8 select-none">
           {/* Contenedor principal de la imagen con zoom y pan */}
-          <div className="h-full w-full mt-24 lg:mt-10 mb-10">
+          <div className="h-full w-full mt-24 lg:mt-10 mb-10 translate-y-[50px]">
             <div
               ref={imageContainerRef}
               className="relative w-full max-w-sm md:max-w-4xl mx-auto aspect-[4/3] overflow-hidden px-2 sm:px-0"

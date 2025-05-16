@@ -2,10 +2,11 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import ROOM_FORMATS from "@/db/ROOM_FORMATS.json";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { RoomOption } from "@/lib/types";
 import { Users, User, Undo } from "lucide-react";
+import { useSelectionStore } from "@/store/useSelectionStore";
 
 // Ordena las opciones por precio
 const roomOptions = ROOM_FORMATS.sort((a, b) => a.price - b.price);
@@ -61,23 +62,23 @@ export const RoomOptionsSelector = ({
   onSelect,
   filteredRoomsCount,
 }: {
-  onSelect: (option: RoomOption) => void;
+  onSelect: (option: RoomOption | null) => void;
   filteredRoomsCount: number;
 }) => {
-  const [selectedOption, setSelectedOption] = useState<RoomOption | null>();
+  const { selectedFormat, setSelectedFormat, clearSelectedFormat } = useSelectionStore();
 
   useEffect(() => {
-    // Send the selectedOption to parent, or null when deselected
-    onSelect(selectedOption || null);
-  }, [selectedOption, onSelect]);
+    // Send the selectedFormat to parent
+    onSelect(selectedFormat);
+  }, [selectedFormat, onSelect]);
 
   const handleOptionClick = (option: RoomOption) => {
     // Toggle selection - if clicking the same option, deselect it
-    setSelectedOption(option === selectedOption ? null : option);
+    setSelectedFormat(option === selectedFormat ? null : option);
   };
 
   const handleReset = () => {
-    setSelectedOption(null);
+    clearSelectedFormat();
   };
 
   return (
@@ -94,7 +95,7 @@ export const RoomOptionsSelector = ({
               onClick={() => handleOptionClick(option)}
               className={cn(
                 "cursor-default transition-all duration-200 w-full sm:w-fit bg-white/50 dark:transparent border border-primary/80 rounded-xl   grow",
-                selectedOption === option && "bg-primary/30",
+                selectedFormat === option && "bg-primary/30",
                 index === roomOptions.length - 1 &&
                   index % 2 === 0 &&
                   "col-span-2"
@@ -117,7 +118,7 @@ export const RoomOptionsSelector = ({
             </button>
           ))}
         </div>
-        {selectedOption && (
+        {selectedFormat && (
           <div className="flex justify-between items-center mt-2">
             <button
               onClick={handleReset}

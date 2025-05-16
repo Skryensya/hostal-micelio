@@ -1,15 +1,14 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useMemo } from "react";
+import { useRouter } from "next/navigation";
 import ROOMS from "@/db/ROOMS.json";
 import ROOM_FORMATS from "@/db/ROOM_FORMATS.json";
 import RoomCard from "../composed/RoomCard";
 import { motion, AnimatePresence } from "framer-motion";
-import { RoomModal } from "../composed/RoomModal";
-import { Gallery } from "@/components/Gallery";
 import { RoomOptionsSelector } from "@/components/RoomOptionsSelector";
-import { RoomOption, Room } from "@/lib/types";
+import { Room } from "@/lib/types";
+import { useSelectionStore } from "@/store/useSelectionStore";
 
 // Precompute price map for faster lookups
 const PRICE_MAP: Record<string, number> = ROOM_FORMATS.reduce(
@@ -22,67 +21,31 @@ const typedRooms = ROOMS as Room[];
 
 export function Rooms() {
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const initialRoom = searchParams.get("habitacion");
+  const { selectedFormat } = useSelectionStore();
 
-  const [selectedRoom, setSelectedRoom] = useState<string | null>(initialRoom);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
-
-  // Sync state when URL param changes
-  useEffect(() => {
-    if (initialRoom !== selectedRoom) {
-      setSelectedRoom(initialRoom);
-    }
-  }, [initialRoom, selectedRoom]);
-
-  const setRoomInUrl = (slug: string | null) => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (slug) {
-      params.set("habitacion", slug);
-    } else {
-      params.delete("habitacion");
-    }
-    const query = params.toString();
-    // Prevent scroll reset
-    router.replace(query ? `${pathname}?${query}` : pathname, {
-      scroll: false,
-    });
-  };
-
-  const handleOpenModal = (roomSlug: string) => {
-    setSelectedRoom(roomSlug);
-    setRoomInUrl(roomSlug);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedRoom(null);
-    setRoomInUrl(null);
-  };
-
-  const handleSelectOption = (option: RoomOption | null) => {
-    setSelectedOption(option?.id || null);
+  const handleViewRoom = (roomSlug: string) => {
+    router.push(`/habitaciones/${roomSlug}`);
   };
 
   const filteredRooms = useMemo(() => {
-    const roomsToSort = selectedOption
+    const roomsToSort = selectedFormat
       ? typedRooms.filter(
           (r) =>
-            r.defaultFormat === selectedOption ||
-            r.alternativeFormats.includes(selectedOption)
+            r.defaultFormat === selectedFormat.id ||
+            r.alternativeFormats.includes(selectedFormat.id)
         )
       : [...typedRooms];
 
     return roomsToSort.sort((a, b) => {
-      const fmtA = selectedOption || a.defaultFormat;
-      const fmtB = selectedOption || b.defaultFormat;
+      const fmtA = selectedFormat?.id || a.defaultFormat;
+      const fmtB = selectedFormat?.id || b.defaultFormat;
       const priceA = PRICE_MAP[fmtA] || 0;
       const priceB = PRICE_MAP[fmtB] || 0;
       const totalA = priceA + (a.hasPrivateToilet ? 10000 : 0);
       const totalB = priceB + (b.hasPrivateToilet ? 10000 : 0);
       return totalA - totalB;
     });
-  }, [selectedOption]);
+  }, [selectedFormat]);
 
   return (
     <section className="container mx-auto py-10">
@@ -115,7 +78,7 @@ export function Rooms() {
 
       <div>
         <RoomOptionsSelector
-          onSelect={handleSelectOption}
+          onSelect={() => {}}
           filteredRoomsCount={filteredRooms.length}
         />
         <div
@@ -133,21 +96,14 @@ export function Rooms() {
               >
                 <RoomCard
                   {...room}
-                  onViewDetails={() => handleOpenModal(room.slug)}
-                  selectedFormat={selectedOption}
+                  onViewDetails={() => handleViewRoom(room.slug)}
+                  selectedFormat={selectedFormat?.id || null}
                 />
               </motion.div>
             ))}
           </AnimatePresence>
         </div>
       </div>
-
-      <RoomModal
-        open={Boolean(selectedRoom)}
-        setOpen={handleCloseModal}
-        roomSlug={selectedRoom || ""}
-      />
-      <Gallery />
     </section>
   );
 }

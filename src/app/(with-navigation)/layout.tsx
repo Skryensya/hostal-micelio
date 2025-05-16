@@ -7,6 +7,7 @@ import { Footer } from "@/components/sections/Footer";
 import { balooBhaijaan2, nunito, croissantOne } from "@/app/fonts";
 // import { ReactLenis } from "lenis/react";
 import { GalleryProvider } from "@/components/GalleryProvider";
+import { Gallery } from "@/components/Gallery";
 import { PostHogProvider } from "@/components/PostHogProvider";
 
 export const metadata: Metadata = {
@@ -34,10 +35,11 @@ export default function RootLayout({
           <GalleryProvider>
             {/* <ReactLenis root> */}
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Header />
-            {children} 
-            <Footer />
-          </ThemeProvider>
+              <Header />
+              {children} 
+              <Footer />
+              <Gallery />
+            </ThemeProvider>
             {/* </ReactLenis> */}
           </GalleryProvider>
         </PostHogProvider>

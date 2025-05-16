@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { DateRange } from "react-day-picker";
 import { checkAvailabilityTemplate } from "@/lib/whatsapp_templates/availability";
+import { RoomOption } from "@/lib/types";
 
 // const FIFTEEN_MINUTES = 15 * 60 * 1000; // 15 minutes in milliseconds
 const FIVE_MINUTES = 5 * 60 * 1000; // 15 seconds in milliseconds
@@ -10,9 +11,12 @@ interface SelectionState {
   adults: number;
   children: number;
   dateRange: DateRange | undefined;
+  selectedFormat: RoomOption | null;
   setAdults: (value: string | number) => void;
   setChildren: (value: string | number) => void;
   setDateRange: (range: DateRange | undefined) => void;
+  setSelectedFormat: (format: RoomOption | null) => void;
+  clearSelectedFormat: () => void;
   incrementChildren: () => void;
   decrementChildren: () => void;
   decrementAdults: () => void;
@@ -59,6 +63,7 @@ export const useSelectionStore = create<SelectionState>()(
       children: 0,
       dateRange: undefined,
       selectedTab: "hospedaje",
+      selectedFormat: null,
       setSelectedTab: (tab: "hospedaje" | "larga-estadia") => set({ selectedTab: tab }),
       setAdults: (value) => {
         const newValue =
@@ -71,6 +76,8 @@ export const useSelectionStore = create<SelectionState>()(
         set({ children: Math.max(0, newValue) });
       },
       setDateRange: (range) => set({ dateRange: range }),
+      setSelectedFormat: (format) => set({ selectedFormat: format }),
+      clearSelectedFormat: () => set({ selectedFormat: null }),
       incrementChildren: () =>
         set((state) => ({ children: state.children + 1 })),
       decrementChildren: () =>

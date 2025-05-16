@@ -41,4 +41,5 @@ export type RoomOption = {
   id: string;
   label: string;
   price: number;
+  amenities: string[];
 };
