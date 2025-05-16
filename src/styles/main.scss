@@ -12,4 +12,8 @@
 @import "./_wavy-divider.scss";
 @import "./_bg-pattern.scss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @config "../../tailwind.config.ts";
+
+

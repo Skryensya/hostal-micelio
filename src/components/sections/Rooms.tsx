@@ -3,19 +3,22 @@
 import { useState, useEffect, useMemo } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import ROOMS from "@/db/ROOMS.json";
-import ROOM_OPTIONS from "@/db/ROOM_OPTIONS.json";
+import ROOM_FORMATS from "@/db/ROOM_FORMATS.json";
 import RoomCard from "../composed/RoomCard";
 import { motion, AnimatePresence } from "framer-motion";
 import { RoomModal } from "../composed/RoomModal";
 import { Gallery } from "@/components/Gallery";
 import { RoomOptionsSelector } from "@/components/RoomOptionsSelector";
-import { RoomOption } from "@/lib/types";
+import { RoomOption, Room } from "@/lib/types";
 
 // Precompute price map for faster lookups
-const PRICE_MAP: Record<string, number> = ROOM_OPTIONS.reduce(
+const PRICE_MAP: Record<string, number> = ROOM_FORMATS.reduce(
   (map, opt) => ({ ...map, [opt.id]: opt.price }),
   {}
 );
+
+// Type assertion for ROOMS data
+const typedRooms = ROOMS as Room[];
 
 export function Rooms() {
   const router = useRouter();
@@ -31,7 +34,7 @@ export function Rooms() {
     if (initialRoom !== selectedRoom) {
       setSelectedRoom(initialRoom);
     }
-  }, [initialRoom]);
+  }, [initialRoom, selectedRoom]);
 
   const setRoomInUrl = (slug: string | null) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -63,17 +66,18 @@ export function Rooms() {
 
   const filteredRooms = useMemo(() => {
     const roomsToSort = selectedOption
-      ? ROOMS.filter(
+      ? typedRooms.filter(
           (r) =>
             r.defaultFormat === selectedOption ||
             r.alternativeFormats.includes(selectedOption)
         )
-      : [...ROOMS];
+      : [...typedRooms];
 
     return roomsToSort.sort((a, b) => {
-      const fmt = selectedOption || a.defaultFormat;
-      const priceA = PRICE_MAP[fmt] || 0;
-      const priceB = PRICE_MAP[fmt] || 0;
+      const fmtA = selectedOption || a.defaultFormat;
+      const fmtB = selectedOption || b.defaultFormat;
+      const priceA = PRICE_MAP[fmtA] || 0;
+      const priceB = PRICE_MAP[fmtB] || 0;
       const totalA = priceA + (a.hasPrivateToilet ? 10000 : 0);
       const totalB = priceB + (b.hasPrivateToilet ? 10000 : 0);
       return totalA - totalB;

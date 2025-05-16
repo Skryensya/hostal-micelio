@@ -48,7 +48,7 @@ export const colors = {
     DEFAULT: "hsl(var(--border) / <alpha-value>)",
     muted: "hsl(var(--border-muted) / <alpha-value>)",
     inverted: "hsl(var(--border-inverted) / <alpha-value>)",
-    "on-light": "hsl(var(--border-on-light) / <Salpha-value>)",
+    "on-light": "hsl(var(--border-on-light) / <alpha-value>)",
     "on-dark": "hsl(var(--border-on-dark) / <alpha-value>)",
   },
 
@@ -104,8 +104,8 @@ const animation = {
 
 // Tailwind configuration
 const config: Config = {
-  darkMode: ["class", "[data-mode='dark']"], // Enables dark mode with the "class" strategy
-  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"], // Paths to scan for Tailwind classes
+  // darkMode: ["class", "[data-mode='dark']"], // Enables dark mode with the "class" strategy
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}", "./db/**/*.{json}"], // Paths to scan for Tailwind classes
   theme: {
     extend: {
       colors, // Extend colors using the reusable variable
@@ -113,6 +113,16 @@ const config: Config = {
       fontFamily, // Extend font families
       container, // Extend container settings
       animation, // Extend animations
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
     },
   },
   plugins: [animate], // Add plugins

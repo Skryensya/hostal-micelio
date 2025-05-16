@@ -8,10 +8,10 @@ import { WavyDivider } from "@/components/composed/WavyDivider";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { href: "/", label: "Inicio" },
-  { href: "/habitaciones", label: "Habitaciones" },
-  { href: "/sobre-nosotros", label: "Sobre nosotros" },
-  { href: "/reviews", label: "Reseñas" },
+  // { href: "/", label: "Inicio" },
+  { href: "#habitaciones", label: "Habitaciones" },
+  { href: "#como-llegar", label: "Como llegar" },
+  { href: "#reviews", label: "Reseñas" },
 ];
 
 export function Header() {

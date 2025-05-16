@@ -1,14 +1,14 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import ROOM_OPTIONS from "@/db/ROOM_OPTIONS.json";
+import ROOM_FORMATS from "@/db/ROOM_FORMATS.json";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { RoomOption } from "@/lib/types";
 import { Users, User, Undo } from "lucide-react";
 
 // Ordena las opciones por precio
-const roomOptions = ROOM_OPTIONS.sort((a, b) => a.price - b.price);
+const roomOptions = ROOM_FORMATS.sort((a, b) => a.price - b.price);
 
 const getRoomIcon = (id: string) => {
   switch (id) {

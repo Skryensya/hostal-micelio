@@ -1,9 +1,10 @@
-
 import * as React from "react";
+import { useMemo } from "react";
 
 // import { cn } from "@/lib/utils";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { Button } from "@/components/ui/button";
+import ROOM_AMENITIES from "@/db/ROOM_AMENITIES.json";
 import {
   Dialog,
   DialogContent,
@@ -27,7 +28,10 @@ import ROOMS from "@/db/ROOMS.json";
 import ROOM_IMAGES from "@/db/ROOM_IMAGES.json";
 import { ImagesShowcaseGrid } from "@/components/ImagesShowcaseGrid";
 import { BedIcons } from "@/components/BedIcons";
-import { User } from "lucide-react";
+
+import { RoomAmenities } from "./RoomAmenities";
+import { RoomBeds } from "./RoomBeds";
+
 // import { RoomConfigurationToggle } from "@/components/RoomConfigurationToggle";
 export function RoomModal({
   open,
@@ -38,10 +42,12 @@ export function RoomModal({
   setOpen: (open: boolean) => void;
   roomSlug: string;
 }) {
-  const room: Room | undefined = ROOMS.find((room) => room.slug === roomSlug);
+  const room: Room | undefined = ROOMS.find(
+    (room) => room.slug === roomSlug
+  ) as Room | undefined;
   const roomImages: RoomImage[] | undefined =
     ROOM_IMAGES[roomSlug as keyof typeof ROOM_IMAGES];
-  console.log({ room, roomImages });
+
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
@@ -57,11 +63,11 @@ export function RoomModal({
                 <DialogTitle>{room?.name}</DialogTitle>
               </div>
 
-              <div>
+              {/* <div>
                 <div className="flex items-center mb-0.5 text-xs">
                   <User className="w-4 h-4" /> {room?.capacity}
                 </div>
-              </div>
+              </div> */}
             </div>
           </DialogHeader>
 
@@ -98,6 +104,45 @@ const RoomDashboard = ({
   room: Room | undefined;
   roomImages: RoomImage[] | undefined;
 }) => {
+  const amenities = useMemo(() => {
+    const searchBy = room?.defaultFormat;
+    if (!searchBy) return null;
+    let roomAmenities = ROOM_AMENITIES.filter(
+      (amenity) => searchBy.includes(amenity.id) && amenity.featured
+    );
+
+    const PrivateBathroomAmenity = ROOM_AMENITIES.find(
+      (amenity) => amenity.id === "private-bathroom"
+    );
+    const FemaleOnlyRoomAmenity = ROOM_AMENITIES.find(
+      (amenity) => amenity.id === "female-only-room"
+    );
+    const MaleOnlyRoomAmenity = ROOM_AMENITIES.find(
+      (amenity) => amenity.id === "male-only-room"
+    );
+
+    if (room?.hasPrivateToilet) {
+      roomAmenities.push(PrivateBathroomAmenity);
+      // remote the shared bathroom
+      roomAmenities = roomAmenities.filter(
+        (amenity) => amenity.id !== "shared-bathroom"
+      );
+    }
+    if (room?.gender === "male") roomAmenities.push(MaleOnlyRoomAmenity);
+    if (room?.gender === "female") roomAmenities.push(FemaleOnlyRoomAmenity);
+
+    if (room?.defaultFormat && room?.defaultFormat !== "HCO") {
+      roomAmenities = roomAmenities.filter(
+        (amenity) => amenity.id !== "female-only-room"
+      );
+      roomAmenities = roomAmenities.filter(
+        (amenity) => amenity.id !== "male-only-room"
+      );
+    }
+
+    return roomAmenities.sort((a, b) => a.order - b.order);
+  }, [room?.defaultFormat, room?.hasPrivateToilet, room?.gender]);
+
   return (
     <div>
       <div className="bg-surface-1  px-6 md:px-2 -mx-4 py-2 -my-2 h-[266px] md:h-[316px] ">
@@ -112,6 +157,14 @@ const RoomDashboard = ({
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
           quos.
         </p>
+        <div className="flex items-center justify-between gap-2 mt-4">
+          <div className="w-1/2">
+            <RoomBeds beds={room?.beds || []} />
+          </div>
+          <div className="w-1/2">
+            <RoomAmenities amenities={amenities || []} />
+          </div>
+        </div>
       </div>
     </div>
   );

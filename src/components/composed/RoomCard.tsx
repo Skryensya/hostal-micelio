@@ -6,44 +6,16 @@ import { ImageCarousel } from "../ImageCarousel";
 import { RoomCardSkeleton } from "@/components/composed/RoomCardSkeleton";
 import { useEffect, useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import ROOM_OPTIONS from "@/db/ROOM_OPTIONS.json";
+import ROOM_FORMATS from "@/db/ROOM_FORMATS.json";
 import { WavyDivider } from "@/components/composed/WavyDivider";
-import {
-  User,
-  EggFried,
-  Toilet,
-  Home,
-} from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-
-const AMENITIES_DICTIONARY = {
-  breakfast: {
-    icon: EggFried,
-    label: "Desayuno incluido",
-  },
-  "shared-bathroom": {
-    icon: Toilet,
-    label: "Uso de baños compartidos",
-  },
-  "private-bathroom": {
-    icon: Toilet,
-    label: "Acceso a baño privado",
-  },
-  "shared-spaces": {
-    icon: Home,
-    label: "Uso de los espacios comunes",
-  },
-} as const;
+import { User } from "lucide-react";
+import ROOM_AMENITIES from "@/db/ROOM_AMENITIES.json";
+import { RoomAmenities } from "./RoomAmenities";
+import { RoomBeds } from "./RoomBeds";
 
 type RoomCardProps = Partial<RoomType> & {
   onViewDetails?: () => void;
   selectedFormat?: string | null;
-  amenities?: (keyof typeof AMENITIES_DICTIONARY)[];
 };
 
 export default function RoomCard({
@@ -53,10 +25,10 @@ export default function RoomCard({
   selectedFormat,
   defaultFormat,
   hasPrivateToilet,
-  // beds, beds es un arreglo de IDs (ej. ["B01", "B03", "B04"])
   capacity,
   description,
-  amenities = [],
+  gender,
+  beds,
 }: RoomCardProps) {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -64,7 +36,7 @@ export default function RoomCard({
   const roomPrice = useMemo(() => {
     const searchBy = selectedFormat || defaultFormat;
     if (!searchBy) return null;
-    const roomOption = ROOM_OPTIONS.find(
+    const roomOption = ROOM_FORMATS.find(
       (option: RoomOption) => option.id === searchBy
     );
     const basePrice = roomOption ? roomOption.price : 0;
@@ -75,11 +47,50 @@ export default function RoomCard({
   const roomFormat = useMemo(() => {
     const searchBy = selectedFormat || defaultFormat;
     if (!searchBy) return null;
-    const roomOption = ROOM_OPTIONS.find(
+    const roomOption = ROOM_FORMATS.find(
       (option: RoomOption) => option.id === searchBy
     );
-    return roomOption ? roomOption.label : null;
+    return roomOption ? roomOption : null;
   }, [selectedFormat, defaultFormat]);
+
+  const amenities = useMemo(() => {
+    const searchBy = roomFormat?.amenities;
+    if (!searchBy) return null;
+    let roomAmenities = ROOM_AMENITIES.filter(
+      (amenity) => searchBy.includes(amenity.id) && amenity.featured
+    );
+
+    const PrivateBathroomAmenity = ROOM_AMENITIES.find(
+      (amenity) => amenity.id === "private-bathroom"
+    );
+    const FemaleOnlyRoomAmenity = ROOM_AMENITIES.find(
+      (amenity) => amenity.id === "female-only-room"
+    );
+    const MaleOnlyRoomAmenity = ROOM_AMENITIES.find(
+      (amenity) => amenity.id === "male-only-room"
+    );
+
+    if (hasPrivateToilet) {
+      roomAmenities.push(PrivateBathroomAmenity);
+      // remote the shared bathroom
+      roomAmenities = roomAmenities.filter(
+        (amenity) => amenity.id !== "shared-bathroom"
+      );
+    }
+    if (gender === "male") roomAmenities.push(MaleOnlyRoomAmenity);
+    if (gender === "female") roomAmenities.push(FemaleOnlyRoomAmenity);
+
+    if (selectedFormat && selectedFormat !== "HCO") {
+      roomAmenities = roomAmenities.filter(
+        (amenity) => amenity.id !== "female-only-room"
+      );
+      roomAmenities = roomAmenities.filter(
+        (amenity) => amenity.id !== "male-only-room"
+      );
+    }
+
+    return roomAmenities.sort((a, b) => a.order - b.order);
+  }, [roomFormat, hasPrivateToilet, gender]);
 
   const images = useMemo(() => ROOM_IMAGES[slug] || [], [slug]);
 
@@ -101,7 +112,7 @@ export default function RoomCard({
   }
 
   return (
-    <div className="relative items-start justify-start cursor-pointer flex flex-col h-full w-full group bg-surface-2 text-text rounded-[1.6rem] focus:outline-offset-4 overflow-hidden isolate shadow-md @container">
+    <div className="relative items-start justify-start cursor-pointer flex flex-col h-fit md:h-full w-full group bg-surface-2 text-text rounded-[1.6rem] focus:outline-offset-4 overflow-hidden isolate shadow-md @container">
       {/* Header */}
       <div className="absolute top-0 inset-x-0 w-full ">
         <div className="bg-surface-2 z-10 relative flex justify-between items-end px-4 pt-1 ">
@@ -112,7 +123,7 @@ export default function RoomCard({
             <h3 className="font-bold text-xl">{name}</h3>
           </div>
           <div className="items-center mb-2 text-xs flex @max-xs:hidden">
-            <User className="w-4 h-4" /> {capacity}
+            <User className="w-5 h-5" /> {capacity}
           </div>
         </div>
         <WavyDivider direction="bottom" backgroundClass="bg-surface-2" />
@@ -130,63 +141,48 @@ export default function RoomCard({
       )}
 
       {/* Body */}
-      <div className="flex flex-col justify-between px-3 py-2 h-full w-full">
-        <div>
-          <h4 className="text-sm font-semibold mb-2">Amenidades</h4>
-          <div className="grid grid-cols-2 gap-2">
-            {amenities.map((key) => {
-              const amenity = AMENITIES_DICTIONARY[key];
-              if (!amenity) return null;
-              const IconComponent = amenity.icon;
-              return (
-                <TooltipProvider key={key}>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <div className="flex items-center gap-2 text-sm">
-                        <IconComponent className="w-4 h-4 text-text-muted" />
-                        <span>{amenity.label}</span>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{amenity.label}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              );
-            })}
+      <div className="flex flex-col md:justify-between px-3 pt-2 h-full w-full">
+        <div className="flex flex-col justify-between h-full gap-2 mb-4">
+          <p className="text-sm   ">{description}</p>
+          <div className="flex flex-col gap-2">
+            <RoomBeds beds={beds} />
+            <RoomAmenities amenities={amenities} />
           </div>
         </div>
 
-        <p className="text-sm pb-10">{description}</p>
-
-        <div className="flex items-center gap-2"></div>
         {/* Footer */}
-        <div className="border-t pt-2">
-          <div className="text-xs font-semibold font-mono leading-[20px]">
-            Habitación {roomFormat}
-          </div>
-          <div className="flex items-center justify-between gap-2 w-full">
-            <div className="flex flex-col items-start gap-1">
-              <div className="pb-1  @max-sm:flex-col  @max-sm:flex">
-                <span className="text-sm font-thin font-mono leading-[20px] @max-xs:text-xs">
+        <div className="-mx-4 pt-4">
+          <WavyDivider
+            direction="top"
+            backgroundClass="bg-primary/20"
+            noAlpha
+          />
+          <div className="px-4 bg-primary/20 pb-4 pt-2 mt-[1px]">
+            <div className="text-sm font-thin italic font-mono leading-[20px] pb-2">
+              Habitación {roomFormat?.label}
+            </div>
+            <div className="flex items-center justify-between gap-2 w-full  ">
+              <div className="px-4 py-1.5 flex gap-1 rounded-full bg-white/50">
+                <span className="md:text-lg font-semibold italic font-mono leading-[20px]   @max-xs:text-xs">
                   {roomPrice.toLocaleString("es-CL", {
                     style: "currency",
                     currency: "CLP",
                   })}
                   CLP
                 </span>
-                <span className="text-sm text-text-muted"> / Noche</span>
+                <span className="text-sm text-text"> / Noche</span>
               </div>
+
+              <Button
+                className="mr-1"
+                variant="primary"
+                size="small"
+                onClick={onViewDetails}
+                tabIndex={-1}
+              >
+                <span>Ver detalles</span>
+              </Button>
             </div>
-            <Button
-              className="mr-1"
-              variant="ghost"
-              size="small"
-              onClick={onViewDetails}
-              tabIndex={-1}
-            >
-              <span>Ver detalles</span>
-            </Button>
           </div>
         </div>
       </div>

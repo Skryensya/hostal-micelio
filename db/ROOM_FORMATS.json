@@ -1,0 +1,56 @@
+[
+  {
+    "id": "HCO",
+    "label": "Compartida",
+    "price": 17000,
+    "amenities": ["shared-bathroom", "shared-spaces", "wifi", "shared-kitchen"]
+  },
+  {
+    "id": "HIN",
+    "label": "Individual",
+    "price": 30000,
+    "amenities": [
+      "shared-bathroom",
+      "shared-spaces",
+      "wifi",
+      "shared-kitchen",
+      "breakfast"
+    ]
+  },
+  {
+    "id": "HDB",
+    "label": "Doble",
+    "price": 45000,
+    "amenities": [
+      "shared-bathroom",
+      "shared-spaces",
+      "wifi",
+      "shared-kitchen",
+      "breakfast"
+    ]
+  },
+  {
+    "id": "HMA",
+    "label": "Matrimonial",
+    "price": 45000,
+    "amenities": [
+      "shared-bathroom",
+      "shared-spaces",
+      "wifi",
+      "shared-kitchen",
+      "breakfast"
+    ]
+  },
+  {
+    "id": "HT",
+    "label": "Triple",
+    "price": 65000,
+    "amenities": [
+      "shared-bathroom",
+      "shared-spaces",
+      "wifi",
+      "shared-kitchen",
+      "breakfast"
+    ]
+  }
+]

@@ -8,7 +8,8 @@
     "capacity": 2,
     "hasPrivateToilet": true,
     "defaultFormat": "HMA",
-    "alternativeFormats": []
+    "alternativeFormats": [],
+    "gender": null
   },
   {
     "name": "Conguillío",
@@ -19,7 +20,8 @@
     "capacity": 3,
     "hasPrivateToilet": false,
     "defaultFormat": "HT",
-    "alternativeFormats": ["HCO", "HDB"]
+    "alternativeFormats": [ "HDB"],
+    "gender": null
   },
   {
     "name": "Villarrica",
@@ -30,7 +32,8 @@
     "capacity": 2,
     "hasPrivateToilet": false,
     "defaultFormat": "HMA",
-    "alternativeFormats": []
+    "alternativeFormats": [],
+    "gender": null
   },
   {
     "name": "Laguna San Rafael",
@@ -41,18 +44,20 @@
     "capacity": 6,
     "hasPrivateToilet": false,
     "defaultFormat": "HCO",
-    "alternativeFormats": ["HDB", "HT"]
+    "alternativeFormats": ["HDB", "HT"],
+    "gender": "male"
   },
   {
     "name": "Torres del Paine",
     "slug": "torres-del-paine",
     "description": "Habitación con 2 camas individuales de 1,5 plazas, vista al volcán Villarrica y luz natural.",
     "floor": 1,
-    "beds": ["B02", "B03", "B04"],
-    "capacity": 3,
+    "beds": ["B03", "B04", "B03", "B04"],
+    "capacity": 4,
     "hasPrivateToilet": false,
-    "defaultFormat": "HT",
-    "alternativeFormats": ["HDB", "HIN"]
+    "defaultFormat": "HCO",
+    "alternativeFormats": ["HCO", "HDB", "HT"],
+    "gender": "female"
   },
   {
     "name": "Huerquehue",
@@ -63,7 +68,8 @@
     "capacity": 2,
     "hasPrivateToilet": false,
     "defaultFormat": "HIN",
-    "alternativeFormats": ["HDB"]
+    "alternativeFormats": ["HDB"],
+    "gender": null
   },
   {
     "name": "Pumalin",
@@ -74,7 +80,8 @@
     "capacity": 2,
     "hasPrivateToilet": false,
     "defaultFormat": "HDB",
-    "alternativeFormats": ["HIN"]
+    "alternativeFormats": ["HIN"],
+    "gender": null
   },
   {
     "name": "Nahuelbuta",
@@ -85,7 +92,8 @@
     "capacity": 2,
     "hasPrivateToilet": false,
     "defaultFormat": "HIN",
-    "alternativeFormats": ["HDB"]
+    "alternativeFormats": ["HDB"],
+    "gender": null
   },
   {
     "name": "Queulat",
@@ -96,6 +104,7 @@
     "capacity": 3,
     "hasPrivateToilet": false,
     "defaultFormat": "HMA",
-    "alternativeFormats": ["HT", "HDB"]
+    "alternativeFormats": ["HT", "HDB"],
+    "gender": null
   }
-] 
+]

@@ -9,7 +9,7 @@ export type Room = {
   defaultFormat: string; // Formato principal de la habitación
   alternativeFormats: string[]; // Formatos alternativos disponibles
   roomOptions?: RoomOption[]; // Opciones de habitación disponibles
-  amenities: ('breakfast' | 'privateBathroom' | 'shower' | 'towels' | 'privateToilet')[]; // Amenidades disponibles
+  gender?: "male" | "female" | null; // Género de la habitación
 };
 
 export type RoomImage = {
