@@ -51,6 +51,7 @@ function SingleImageView({
         className="object-cover bg-gray-200"
         priority
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        draggable={false}
       />
     </div>
   );
@@ -164,13 +165,49 @@ export function ImageCarousel({
     navigateTo(prevIndex, "prev");
   }, [current, total, navigateTo]);
 
+  // Lógica robusta de la barra de cuenta atrás (desktop)
+  const handleMouseEnter = useCallback(async () => {
+    if (window.innerWidth >= 640) {
+      isHoveredRef.current = true;
+      try {
+        await countdownControls.start({
+          width: "100%",
+          transition: { duration: 3, ease: "easeIn" },
+        });
+        if (isHoveredRef.current) {
+          goNext();
+          countdownControls.set({ width: "0%" });
+        }
+      } catch (error) {
+        countdownControls.set({ width: "0%" });
+        console.error(error);
+      }
+    }
+  }, [countdownControls, goNext]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (window.innerWidth >= 640) {
+      isHoveredRef.current = false;
+      countdownControls.stop();
+      countdownControls.set({ width: "0%" });
+    }
+  }, [countdownControls]);
+
   const goToIndex = useCallback(
     (index: number) => {
       if (transitionRef.current || index === current || total <= 0) return;
       const direction = index > current ? "next" : "prev";
       navigateTo(index, direction);
+      
+      // Reset countdown animation when navigation dot is clicked
+      if (window.innerWidth >= 640) {
+        countdownControls.set({ width: "0%" });
+        if (isHoveredRef.current) {
+          handleMouseEnter();
+        }
+      }
     },
-    [current, navigateTo, total]
+    [current, navigateTo, total, countdownControls, handleMouseEnter]
   );
 
   // Al terminar la animación, actualizamos el estado y liberamos el ref.
@@ -259,34 +296,6 @@ export function ImageCarousel({
     touchEndX.current = null;
   };
 
-  // Lógica robusta de la barra de cuenta atrás (desktop)
-  const handleMouseEnter = async () => {
-    if (window.innerWidth >= 640) {
-      isHoveredRef.current = true;
-      try {
-        await countdownControls.start({
-          width: "100%",
-          transition: { duration: 3, ease: "easeIn" },
-        });
-        if (isHoveredRef.current) {
-          goNext();
-          countdownControls.set({ width: "0%" });
-        }
-      } catch (error) {
-        countdownControls.set({ width: "0%" });
-        console.error(error);
-      }
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (window.innerWidth >= 640) {
-      isHoveredRef.current = false;
-      countdownControls.stop();
-      countdownControls.set({ width: "0%" });
-    }
-  };
-
   return (
     <div
       ref={containerRef}
@@ -317,6 +326,7 @@ export function ImageCarousel({
             priority={current === 0}
             loading={current === 0 ? "eager" : "lazy"}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            draggable={false}
           />
         </div>
 
@@ -336,6 +346,7 @@ export function ImageCarousel({
               className="object-cover bg-gray-200"
               loading="eager"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              draggable={false}
             />
           </motion.div>
         )}

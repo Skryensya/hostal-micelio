@@ -89,7 +89,7 @@ const container = {
   center: true,
   padding: "1rem",
   screens: {
-    sm: "576px",
+    sm: "540px",
     md: "720px",
     lg: "960px",
     xl: "1140px",

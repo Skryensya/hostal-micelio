@@ -296,14 +296,14 @@ export function Hero() {
         >
           Saltar Hero
         </button>
-        <div className="container mx-auto grid grid-cols-12  gap-4 isolate px-0 md:px-4 relative">
+        <div className="max-w-7xl mx-auto grid grid-cols-12  gap-4 isolate px-0 md:px-4 relative">
           <div className="col-span-12 md:col-span-3 z-20 order-2 md:order-1 pointer-events-none">
             <div className="gap-4 flex flex-col justify-center w-full px-4 md:px-0 mx-auto md:mx-0 md:w-[200%] max-w-[450px] h-full ">
               <div
                 className={`${slides[activeSlide].cardColorClassName} pt-2 pb-4 md:pt-4 md:pb-8 rounded-2xl pointer-events-auto`}
               >
                 <div
-                  className=" container transition-opacity duration-1000 min-h-[80%]"
+                  className="max-w-7xl transition-opacity duration-1000 min-h-[80%]"
                   // style={{ opacity: isLoaded ? 1 : 0 }}
                 >
                   <h2 className="text-2xl md:text-3xl font-bold mb-2 md:mb-4 leading-tight md:leading-tight">

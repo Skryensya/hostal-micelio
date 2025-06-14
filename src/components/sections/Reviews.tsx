@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const Reviews = () => {
   return (
-    <div className="container mx-auto py-8 ">
+    <div className="max-w-7xl mx-auto py-8 ">
       <h2 className="mb-6 text-2xl flex items-center gap-2">
         <MessageCircle className="w-8 h-8" />
         Lo que dicen nuestros Huespedes

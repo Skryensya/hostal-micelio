@@ -5,7 +5,7 @@ export function Menu() {
   return (
     // the food of the hostal
     (<div className="h-96 ">
-      <div className="container mx-auto ">
+      <div className="max-w-7xl mx-auto ">
         <div className="py-10">Menu</div>
       </div>
     </div>)

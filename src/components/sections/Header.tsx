@@ -16,17 +16,22 @@ const NAV_LINKS = [
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // Variable que controla si el header se oculta en scroll o no
+  const hideOnScroll = false; // Cambiar a false para mantener el header siempre visible
   // Estado que controla la visibilidad del header.
   const [showHeader, setShowHeader] = useState(true);
   // Referencia para guardar la posición del scroll.
   const lastScrollY = useRef(0);
 
   useEffect(() => {
+    // Solo agregar el listener si hideOnScroll está habilitado
+    if (!hideOnScroll) return;
+
     const handleScroll = () => {
       // Si el usuario hace scroll hacia arriba, mostramos el header
       if (window.scrollY < lastScrollY.current) {
         setShowHeader(true);
-      } 
+      }
       // Si se desplaza hacia abajo, lo ocultamos
       else if (window.scrollY > lastScrollY.current) {
         setShowHeader(false);
@@ -36,7 +41,7 @@ export function Header() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [hideOnScroll]);
 
   return (
     <>
@@ -44,12 +49,12 @@ export function Header() {
       <div
         className={cn(
           "fixed top-0 left-0 right-0 z-50 bg-surface-3 shadow-md text-text transition-transform duration-300",
-          // Si showHeader es false, se desplaza 150% hacia arriba para ocultar el wavy divider
-          showHeader ? "translate-y-0" : "-translate-y-[150%]"
+          // Si hideOnScroll está deshabilitado o showHeader es true, se muestra el header
+          !hideOnScroll || showHeader ? "translate-y-0" : "-translate-y-[150%]"
         )}
       >
-        <div className="flex flex-col pt-2">
-          <div className="py-0 flex items-center justify-between container mx-auto px-4">
+        <div className="pt-2">
+          <div className="py-0 flex items-center justify-between max-w-7xl mx-auto px-4">
             <Link href="/" className="flex items-center">
               <div className="h1 flex leading-6 tracking-tight opacity-100 transition-opacity">
                 Hostal Micelio

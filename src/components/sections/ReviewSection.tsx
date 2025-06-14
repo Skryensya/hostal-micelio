@@ -19,7 +19,7 @@ export function ReviewSection() {
   }
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="max-w-7xl mx-auto py-8">
       <div className="masonry-container" ref={ref}>
         {REVIEWS.sort((a, b) => a.comment.length - b.comment.length).map(
           (review, index) => (

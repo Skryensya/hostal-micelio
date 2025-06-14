@@ -48,7 +48,7 @@ export function Rooms() {
   }, [selectedFormat]);
 
   return (
-    <section className="container mx-auto py-10">
+    <section className="max-w-7xl mx-auto py-10">
       <div>
         <h2 className="text-2xl font-bold mb-8" id="habitaciones">
           Conoce nuestras habitaciones

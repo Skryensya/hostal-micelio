@@ -5,7 +5,7 @@ export function Offers() {
   // create a fancy button per room, with its name and a url of /room/[slug]
 
   return (
-    <div className="container mx-auto py-10 min-h-96">
+    <div className="max-w-7xl mx-auto py-10 min-h-96">
       <h2 className="mb-6 text-2xl flex items-center gap-2 z-90">
         <Binoculars className="h-8 w-8" />
         Podrás encontrar

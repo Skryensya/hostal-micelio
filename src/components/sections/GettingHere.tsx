@@ -11,7 +11,7 @@ const GOOGLE_MAPS_EMBED_LINK =
 export function GettingHere() {
   return (
     <div className="min-h-96 md:px-4 py-10  lg:px-8">
-      <div className="container mx-auto">
+      <div className="max-w-7xl mx-auto">
         <h2 className="flex text-2xl items-center gap-2 pb-6">
           <Milestone /> Como llegar
         </h2>
