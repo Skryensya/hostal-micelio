@@ -10,18 +10,18 @@ const GOOGLE_MAPS_EMBED_LINK =
 
 export function GettingHere() {
   return (
-    <div className="min-h-96 md:px-4 py-10  lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="flex text-2xl items-center gap-2 pb-6">
+    <div className="min-h-96 py-10 md:px-4 lg:px-8">
+      <div className="mx-auto max-w-6xl">
+        <h2 className="flex items-center gap-2 pb-6 text-2xl">
           <Milestone /> Como llegar
         </h2>
         <div className="grid grid-cols-12 gap-4 md:gap-12">
-          <div className="col-span-12 lg:col-span-5 text-lg">
-            <p className="mb-4 ">
+          <div className="col-span-12 text-lg lg:col-span-5">
+            <p className="mb-4">
               El <strong>Hostal Micelio</strong> se encuentra en{" "}
               <a
                 href="https://maps.app.goo.gl/5v4wGHi4YDYywrHw9"
-                 target="_blank"
+                target="_blank"
               >
                 Francisco Bilbao 969
               </a>
@@ -37,7 +37,7 @@ export function GettingHere() {
               nuestro hostal en el punto de partida ideal para explorar todo lo
               que esta hermosa localidad tiene para ofrecer.
             </p>
-            <div className="flex flex-col md:flex-row items-center justify-start gap-4 mt-8">
+            <div className="mt-8 flex flex-col items-center justify-start gap-4 md:flex-row">
               <Link href={GOOGLE_MAPS_LINK} target="_blank">
                 <Button>Ver en Google maps</Button>
               </Link>
@@ -50,11 +50,11 @@ export function GettingHere() {
               </Link>
             </div>
           </div>
-          <div className="col-span-12 lg:col-span-7 overflow-hidden rounded-xl border border-border-light dark:border-border-dark relative">
-            <span className="absolute inset-0  dark:bg-surface-dark  pointer-events-none opacity-[5%]"></span>
+          <div className="border-border-light dark:border-border-dark relative col-span-12 overflow-hidden rounded-xl border lg:col-span-7">
+            <span className="dark:bg-surface-dark pointer-events-none absolute inset-0 opacity-[5%]"></span>
             <iframe
               src={GOOGLE_MAPS_EMBED_LINK}
-              className="w-full h-[300px] lg:h-[500px]"
+              className="h-[300px] w-full lg:h-[500px]"
               style={{ border: 0 }}
               loading="lazy"
             ></iframe>

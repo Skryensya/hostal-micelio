@@ -23,7 +23,7 @@ export function InnerHero({ title }: { title?: string }) {
       </button>
 
       <div className="bg-room-gradient">
-        <div className="h-[200px] max-w-7xl flex items-center">
+        <div className="h-[200px] max-w-6xl flex items-center">
           {title && (
             <div className="flex flex-col justify-end h-full">
               <h1 className="text-3xl md:text-4xl pb-6 text-text-light ">

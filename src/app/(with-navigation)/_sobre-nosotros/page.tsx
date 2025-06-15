@@ -5,7 +5,7 @@ export default function RoomsPage() {
   return (
     <div>
       <InnerHero title="Conoce nuestra historia"></InnerHero>
-      <div className="max-w-7xl mx-auto px-4  mt-8">
+      <div className="mx-auto mt-8 max-w-6xl px-4">
         <div className="max-w-4xl space-y-6 text-lg">
           <p>
             Lejos del ruido de la ciudad, el Hostal Micelio ofrece un refugio

@@ -63,7 +63,7 @@ export default function RoomPage({ params }: { params: { slug: string } }) {
 
   return (
     <main className="pt-32 pb-10 ">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4">
         <h1 className="text-3xl font-bold mb-6">{room.name}</h1>
         <div className="flex flex-col md:flex-row justify-between gap-8">
           <div className="w-full md:w-4/12 order-2 md:order-1">

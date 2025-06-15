@@ -10,7 +10,7 @@ const Footer = () => {
     <div className="mt-20">
       <WavyDivider backgroundClass="bg-surface-3" />
       <footer className="bg-surface-3 font-semibold py-8 relative">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-6xl mx-auto px-4">
           {/* Level 1: Logo and Links */}
           <div className="flex flex-col md:flex-row justify-between items-center mb-6">
             <div className="flex flex-col md:flex-row  gap-x-4 items-center space-y-4">

@@ -25,7 +25,7 @@ const ColorsPage = () => {
     typeof item === "object" && !Array.isArray(item) && item !== null;
 
   return (
-    <div className="max-w-7xl mx-auto py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex justify-end fixed top-4 right-4 ">
         <ModeToggle />
       </div>

@@ -15,7 +15,7 @@ export type BreadcrumbLevel = {
 
 export function Breadcrumb({ levels }: { levels: BreadcrumbLevel[] }) {
   return (
-    <div className="max-w-7xl mx-auto py-4">
+    <div className="max-w-6xl mx-auto px-4 py-4">
       <BreadcrumbUI>
         <BreadcrumbList className="text-lg">
           {levels.map((level, index) => (

@@ -79,7 +79,7 @@ const Team = () => {
   const { owner, permanent, temporary } = TEAM;
 
   return (
-    <div className="max-w-7xl mx-auto py-6  ">
+    <div className="max-w-6xl mx-auto px-4 py-6  ">
       <h2 className="mb-8 text-3xl flex items-center justify-start gap-2">
         Nuestro Equipo
         <Flower2 className="h-8 w-8" />

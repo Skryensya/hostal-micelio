@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef, useMemo } from "react";
+import { useState, useCallback, useRef, useMemo, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -133,11 +133,23 @@ export function ImageCarousel({
 }) {
   const countdownControls = useAnimation();
   const isHoveredRef = useRef(false);
+  const isMountedRef = useRef(false);
   const [current, setCurrent] = useState(0);
   const [transition, setTransition] = useState<Transition | null>(null);
   const total = imgs?.length || 0;
   const transitionRef = useRef<Transition | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Marcar el componente como montado
+  useEffect(() => {
+    isMountedRef.current = true;
+    // Inicializar el estado de los controles después del montaje
+    countdownControls.set({ width: "0%" });
+    
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, [countdownControls]);
 
   // Refs para eventos táctiles
   const touchStartX = useRef<number | null>(null);
@@ -167,26 +179,28 @@ export function ImageCarousel({
 
   // Lógica robusta de la barra de cuenta atrás (desktop)
   const handleMouseEnter = useCallback(async () => {
-    if (window.innerWidth >= 640) {
+    if (window.innerWidth >= 640 && isMountedRef.current) {
       isHoveredRef.current = true;
       try {
         await countdownControls.start({
           width: "100%",
           transition: { duration: 3, ease: "easeIn" },
         });
-        if (isHoveredRef.current) {
+        if (isHoveredRef.current && isMountedRef.current) {
           goNext();
           countdownControls.set({ width: "0%" });
         }
       } catch (error) {
-        countdownControls.set({ width: "0%" });
+        if (isMountedRef.current) {
+          countdownControls.set({ width: "0%" });
+        }
         console.error(error);
       }
     }
   }, [countdownControls, goNext]);
 
   const handleMouseLeave = useCallback(() => {
-    if (window.innerWidth >= 640) {
+    if (window.innerWidth >= 640 && isMountedRef.current) {
       isHoveredRef.current = false;
       countdownControls.stop();
       countdownControls.set({ width: "0%" });
@@ -200,7 +214,7 @@ export function ImageCarousel({
       navigateTo(index, direction);
       
       // Reset countdown animation when navigation dot is clicked
-      if (window.innerWidth >= 640) {
+      if (window.innerWidth >= 640 && isMountedRef.current) {
         countdownControls.set({ width: "0%" });
         if (isHoveredRef.current) {
           handleMouseEnter();

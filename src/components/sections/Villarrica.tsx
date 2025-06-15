@@ -8,7 +8,7 @@ export function Villarrica() {
   // showcase tours and things to do in Villarrica, partners and stuff
   return (
     <div className="">
-      <div className="max-w-7xl mx-auto  py-10">
+      <div className="max-w-6xl mx-auto px-4  py-10">
         <div className="">
           <h2 className="mb-6 text-2xl flex items-center gap-2">
             <MapPin />

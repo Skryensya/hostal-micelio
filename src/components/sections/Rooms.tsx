@@ -13,7 +13,7 @@ import { useSelectionStore } from "@/store/useSelectionStore";
 // Precompute price map for faster lookups
 const PRICE_MAP: Record<string, number> = ROOM_FORMATS.reduce(
   (map, opt) => ({ ...map, [opt.id]: opt.price }),
-  {}
+  {},
 );
 
 // Type assertion for ROOMS data
@@ -32,25 +32,44 @@ export function Rooms() {
       ? typedRooms.filter(
           (r) =>
             r.defaultFormat === selectedFormat.id ||
-            r.alternativeFormats.includes(selectedFormat.id)
+            r.alternativeFormats.includes(selectedFormat.id),
         )
       : [...typedRooms];
 
     return roomsToSort.sort((a, b) => {
-      const fmtA = selectedFormat?.id || a.defaultFormat;
-      const fmtB = selectedFormat?.id || b.defaultFormat;
-      const priceA = PRICE_MAP[fmtA] || 0;
-      const priceB = PRICE_MAP[fmtB] || 0;
-      const totalA = priceA + (a.hasPrivateToilet ? 10000 : 0);
-      const totalB = priceB + (b.hasPrivateToilet ? 10000 : 0);
-      return totalA - totalB;
+      if (selectedFormat) {
+        // Priorizar habitaciones que tienen el formato seleccionado como default
+        const aIsDefault = a.defaultFormat === selectedFormat.id;
+        const bIsDefault = b.defaultFormat === selectedFormat.id;
+        
+        if (aIsDefault && !bIsDefault) return -1;
+        if (!aIsDefault && bIsDefault) return 1;
+        
+        // Si ambas son default o ambas son alternativas, ordenar por precio
+        const fmtA = selectedFormat.id;
+        const fmtB = selectedFormat.id;
+        const priceA = PRICE_MAP[fmtA] || 0;
+        const priceB = PRICE_MAP[fmtB] || 0;
+        const totalA = priceA + (a.hasPrivateToilet ? 10000 : 0);
+        const totalB = priceB + (b.hasPrivateToilet ? 10000 : 0);
+        return totalA - totalB;
+      } else {
+        // Sin filtro, ordenar por precio del formato default
+        const fmtA = a.defaultFormat;
+        const fmtB = b.defaultFormat;
+        const priceA = PRICE_MAP[fmtA] || 0;
+        const priceB = PRICE_MAP[fmtB] || 0;
+        const totalA = priceA + (a.hasPrivateToilet ? 10000 : 0);
+        const totalB = priceB + (b.hasPrivateToilet ? 10000 : 0);
+        return totalA - totalB;
+      }
     });
   }, [selectedFormat]);
 
   return (
-    <section className="max-w-7xl mx-auto py-10">
+    <section className="mx-auto max-w-6xl px-4 py-10">
       <div>
-        <h2 className="text-2xl font-bold mb-8" id="habitaciones">
+        <h2 className="mb-8 text-2xl font-bold" id="habitaciones">
           Conoce nuestras habitaciones
         </h2>
         <div className="max-w-[80ch] space-y-4 text-pretty">
@@ -82,7 +101,7 @@ export function Rooms() {
           filteredRoomsCount={filteredRooms.length}
         />
         <div
-          className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
           aria-labelledby="habitaciones"
         >
           <AnimatePresence>

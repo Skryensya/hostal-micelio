@@ -70,11 +70,11 @@ const slides: SlideType[] = [
 // Skeleton para el contenido (se mantiene igual)
 const SlideContentSkeleton = React.memo(() => {
   return (
-    <div className="md:w-8/12 lg:w-6/12 my-12 rounded-lg">
-      <div className="h-10 bg-neutral-200 rounded-lg w-8/12 mb-4" />
+    <div className="my-12 rounded-lg md:w-8/12 lg:w-6/12">
+      <div className="mb-4 h-10 w-8/12 rounded-lg bg-neutral-200" />
       <div className="space-y-3">
-        <div className="h-6 bg-neutral-200 rounded-lg w-11/12" />
-        <div className="h-6 bg-neutral-200 rounded-lg w-10/12" />
+        <div className="h-6 w-11/12 rounded-lg bg-neutral-200" />
+        <div className="h-6 w-10/12 rounded-lg bg-neutral-200" />
       </div>
     </div>
   );
@@ -88,7 +88,7 @@ const SlideImage = React.memo(
     return (
       <div style={{ backgroundColor: color }}>
         <div
-          className="relative h-[450px] md:h-[550px] overflow-hidden"
+          className="relative h-[450px] overflow-hidden md:h-[550px]"
           style={{
             backgroundImage: `url(${image})`,
             backgroundSize: "cover",
@@ -100,7 +100,7 @@ const SlideImage = React.memo(
           <Image
             src={thumbnail}
             alt=""
-            className="absolute inset-0 w-full h-full object-cover object-bottom "
+            className="absolute inset-0 h-full w-full object-cover object-bottom"
             fill
             priority
             loading="eager"
@@ -109,7 +109,7 @@ const SlideImage = React.memo(
           <Image
             src={image}
             alt=""
-            className="absolute inset-0 w-full h-full object-cover object-bottom"
+            className="absolute inset-0 h-full w-full object-cover object-bottom"
             fill
             loading="lazy"
             fetchPriority="low"
@@ -118,7 +118,7 @@ const SlideImage = React.memo(
         </div>
       </div>
     );
-  }
+  },
 );
 
 SlideImage.displayName = "SlideImage";
@@ -141,8 +141,8 @@ const PlayPauseButton = ({
     <div className="p-1">
       <button
         className={cn(
-          "group w-10 h-10 rounded-full flex items-center justify-center",
-          !isLoaded && "opacity-50 cursor-not-allowed"
+          "group flex h-10 w-10 items-center justify-center rounded-full",
+          !isLoaded && "cursor-not-allowed opacity-50",
         )}
         onClick={onToggle}
         aria-label={isPlaying ? "Pausar carrusel" : "Reproducir carrusel"}
@@ -167,7 +167,7 @@ const PlayPauseButton = ({
         <div
           className={cn(
             buttonVariants({ variant: "ghost", size: "icon" }),
-            "z-10 rounded-full h-10"
+            "z-10 h-10 rounded-full",
           )}
         >
           <LightEffect />
@@ -196,25 +196,25 @@ const NavigationButton = ({
     <button
       className={cn(
         "group outline-none",
-        !isLoaded && "opacity-50 cursor-not-allowed"
+        !isLoaded && "cursor-not-allowed opacity-50",
       )}
       onClick={onClick}
       aria-label={ariaLabel}
       disabled={disabled}
       tabIndex={isLoaded ? 0 : -1}
     >
-      <div className="rounded-full m-1 group-focus-visible:outline outline-[#458bfb] outline-offset-0 group-focus-visible:ring group-focus-visible:ring-white ring-offset-[1px] bg-black/20">
+      <div className="m-1 rounded-full bg-black/20 ring-offset-[1px] outline-offset-0 outline-[#458bfb] group-focus-visible:ring group-focus-visible:ring-white group-focus-visible:outline">
         <div
           className={cn(
             "shadow-xl",
-            buttonVariants({ variant: "ghost", size: "icon" })
+            buttonVariants({ variant: "ghost", size: "icon" }),
           )}
         >
           <LightEffect />
           {direction === "prev" ? (
-            <ChevronLeft className=" transition-all duration-300" />
+            <ChevronLeft className="transition-all duration-300" />
           ) : (
-            <ChevronRight className="translate-x-0.5  transition-all duration-300" />
+            <ChevronRight className="translate-x-0.5 transition-all duration-300" />
           )}
         </div>
       </div>
@@ -287,46 +287,46 @@ export function Hero() {
 
   return (
     <>
-      <div className="bg-surface-2 pt-12 md:pt-24 pb-8 md:pb-16 -z-10">
+      <div className="bg-surface-2 -z-10 pt-12 pb-8 md:pt-24 md:pb-16">
         {/* Botón para saltar el hero (accesibilidad) */}
         <button
           onClick={() => {}}
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-text-dark px-4 py-2 rounded-md z-10"
+          className="text-text-dark sr-only z-10 rounded-md bg-blue-600 px-4 py-2 focus:not-sr-only focus:absolute focus:top-4 focus:left-4"
           tabIndex={0}
         >
           Saltar Hero
         </button>
-        <div className="max-w-7xl mx-auto grid grid-cols-12  gap-4 isolate px-0 md:px-4 relative">
-          <div className="col-span-12 md:col-span-3 z-20 order-2 md:order-1 pointer-events-none">
-            <div className="gap-4 flex flex-col justify-center w-full px-4 md:px-0 mx-auto md:mx-0 md:w-[200%] max-w-[450px] h-full ">
+        <div className="relative isolate mx-auto grid max-w-6xl grid-cols-12 gap-4 px-0 md:px-4">
+          <div className="pointer-events-none z-20 order-2 col-span-12 md:order-1 md:col-span-3">
+            <div className="mx-auto flex h-full w-full max-w-[450px] flex-col justify-center gap-4 px-4 md:mx-0 md:w-[200%] md:px-0">
               <div
-                className={`${slides[activeSlide].cardColorClassName} pt-2 pb-4 md:pt-4 md:pb-8 rounded-2xl pointer-events-auto`}
+                className={`${slides[activeSlide].cardColorClassName} pointer-events-auto rounded-2xl px-4 pt-2 pb-4 md:pt-4 md:pb-8`}
               >
                 <div
-                  className="max-w-7xl transition-opacity duration-1000 min-h-[80%]"
+                  className="min-h-[80%] max-w-6xl transition-opacity duration-1000"
                   // style={{ opacity: isLoaded ? 1 : 0 }}
                 >
-                  <h2 className="text-2xl md:text-3xl font-bold mb-2 md:mb-4 leading-tight md:leading-tight">
+                  <h2 className="mb-2 text-2xl leading-tight font-bold md:mb-4 md:text-3xl md:leading-tight">
                     {slides[activeSlide].title}
                   </h2>
-                  <p className="text-base md:text-lg lg:text-xl text-pretty font-medium">
+                  <p className="text-base font-medium text-pretty md:text-lg lg:text-xl">
                     {slides[activeSlide].description}
                   </p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="col-span-12 md:col-span-9 order-1 md:order-2">
+          <div className="order-1 col-span-12 md:order-2 md:col-span-9">
             <div
-              className="relative md:rounded-3xl isolate bg-surface-muted  h-[450px] md:h-[550px] "
+              className="bg-surface-muted relative isolate h-[450px] md:h-[550px] md:rounded-3xl"
               // style={{ height: "500px" }}
             >
               {/* Slides con efecto fade */}
-              <div className="relative h-[450px] md:h-[550px] w-full rounded-[inherit] overflow-hidden">
+              <div className="relative h-[450px] w-full overflow-hidden rounded-[inherit] md:h-[550px]">
                 {slides.map((slide, index) => (
                   <div
                     key={index}
-                    className="absolute top-0 left-0 w-full h-full transition-opacity duration-1000"
+                    className="absolute top-0 left-0 h-full w-full transition-opacity duration-1000"
                     style={{ opacity: index === activeSlide ? 1 : 0 }}
                   >
                     <SlideImage
@@ -338,20 +338,20 @@ export function Hero() {
                     />
                   </div>
                 ))}
-                <div className="absolute top-6 md:top-4 left-2 md:left-auto right-auto   md:right-0">
+                <div className="absolute top-6 right-auto left-2 md:top-4 md:right-0 md:left-auto">
                   <Image
                     src="/assets/logos/LOGO_COLOR.png"
                     alt="Hostal Micelio Logo"
-                    className="aspect-square md:mr-4 w-28 h-28 md:w-32 md:h-32"
+                    className="aspect-square h-28 w-28 md:mr-4 md:h-32 md:w-32"
                     width={100}
                     height={100}
                   />
                 </div>
               </div>
 
-              <div className="flex justify-between px-4 pb-4 -translate-y-full gap-4 absolute left-0 right-0 md:static md:bottom-auto md:left-auto md:right-auto ">
+              <div className="absolute right-0 left-0 flex -translate-y-full justify-between gap-4 px-4 pb-4 md:static md:right-auto md:bottom-auto md:left-auto">
                 {/* Botones de navegación */}
-                <div className="flex gap-1 order-2 md:order-1">
+                <div className="order-2 flex gap-1 md:order-1">
                   <NavigationButton
                     onClick={prevSlide}
                     ariaLabel="Diapositiva anterior"
@@ -399,7 +399,7 @@ export function Hero() {
               </div> */}
 
                 {/* Botón Play/Pause */}
-                <div className="flex items-center order-1 md:order-2">
+                <div className="order-1 flex items-center md:order-2">
                   <PlayPauseButton
                     isPlaying={isPlaying}
                     onToggle={togglePlay}
