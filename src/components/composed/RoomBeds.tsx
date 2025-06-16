@@ -28,7 +28,14 @@ const BED_LABELS: Record<string, string> = {
   B04: "Cama camarote",
 };
 
-export function RoomBeds({ beds, roomType }: RoomBedsProps) {
+const BED_COLORS: Record<string, string> = {
+  B01: "bg-gradient-to-br from-rose-400 to-pink-600 text-white shadow-lg", // Matrimonial - Rosa romántico
+  B02: "bg-gradient-to-br from-blue-400 to-indigo-600 text-white shadow-lg", // Individual - Azul sereno
+  B03: "bg-gradient-to-br from-emerald-400 to-green-600 text-white shadow-lg", // Camarote - Verde aventurero
+  B04: "bg-gradient-to-br from-emerald-400 to-green-600 text-white shadow-lg", // Camarote - Verde aventurero
+};
+
+export function RoomBeds({ beds }: RoomBedsProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   if (!beds?.length) return null;
@@ -102,7 +109,9 @@ export function RoomBeds({ beds, roomType }: RoomBedsProps) {
             <TooltipProvider key={`${bedId}-${index}`}>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="border-border relative flex h-8 w-8 items-center justify-center rounded border bg-white/50">
+                  <div
+                    className={`relative flex h-8 w-8 items-center justify-center rounded ${BED_COLORS[bedId]}`}
+                  >
                     {Icon && <Icon className="h-5 w-5" />}
                   </div>
                 </TooltipTrigger>
@@ -126,7 +135,7 @@ export function RoomBeds({ beds, roomType }: RoomBedsProps) {
             return (
               <div
                 key={`${bedId}-${index}`}
-                className="border-border flex h-8 w-8 items-center justify-center rounded border bg-white/50"
+                className={`flex h-8 w-8 items-center justify-center rounded ${BED_COLORS[bedId]}`}
               >
                 {Icon && <Icon className="h-5 w-5" />}
               </div>
@@ -148,11 +157,9 @@ export function RoomBeds({ beds, roomType }: RoomBedsProps) {
             {bedsList.map((bedLabel, index) => (
               <li
                 key={index}
-                className="flex items-center gap-2 rounded py-0 text-sm pl-3"
+                className="flex items-center gap-2 rounded py-0 pl-3 text-sm"
               >
-                <div
-                  className={`h-1 w-1 rounded-full bg-text flex-shrink-0`}
-                />
+                <div className={`bg-text h-1 w-1 flex-shrink-0 rounded-full`} />
                 <span className="text-text">{bedLabel}</span>
               </li>
             ))}

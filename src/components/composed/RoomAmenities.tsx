@@ -8,6 +8,7 @@ import {
   Venus,
   KeyRound,
 } from "lucide-react";
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -42,7 +43,7 @@ const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
 
 export function RoomAmenities({ amenities }: RoomAmenitiesProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  
+
   if (!amenities?.length) return null;
 
   return (
@@ -59,12 +60,12 @@ export function RoomAmenities({ amenities }: RoomAmenitiesProps) {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div
-                    className={`border-border relative flex h-8 w-8 items-center justify-center rounded border ${a.color}`}
+                    className={`relative flex h-8 w-8 items-center justify-center rounded ${a.color}`}
                   >
                     {Icon && <Icon className={`h-5 w-5`} />}
                     {a.id === "private-bathroom" && (
                       <div className="absolute -right-1.5 -bottom-1.5 flex items-center justify-center">
-                        <KeyRound className="stroke-black-300 h-5 w-5 scale-90 fill-yellow-300" />
+                        <KeyRound className="h-6 w-6 fill-yellow-400 stroke-white stroke-2 drop-shadow-md" />
                       </div>
                     )}
                   </div>
@@ -94,7 +95,7 @@ export function RoomAmenities({ amenities }: RoomAmenitiesProps) {
                 {Icon && <Icon className={`h-5 w-5`} />}
                 {a.id === "private-bathroom" && (
                   <div className="absolute -right-1.5 -bottom-1.5 flex items-center justify-center">
-                    <KeyRound className="stroke-black-300 h-5 w-5 scale-90 fill-yellow-300" />
+                    <KeyRound className="h-6 w-6 fill-yellow-400 stroke-white stroke-2 drop-shadow-md" />
                   </div>
                 )}
               </div>
@@ -116,9 +117,9 @@ export function RoomAmenities({ amenities }: RoomAmenitiesProps) {
             {amenities.map((a) => (
               <li
                 key={a.id}
-                className="flex items-center gap-2 rounded py-0 text-sm pl-3"
+                className="flex items-center gap-2 rounded py-0 pl-3 text-sm"
               >
-                <div className="h-1 w-1 rounded-full bg-text flex-shrink-0" />
+                <div className="bg-text h-1 w-1 flex-shrink-0 rounded-full" />
                 <span className="text-text">{a.label}</span>
               </li>
             ))}

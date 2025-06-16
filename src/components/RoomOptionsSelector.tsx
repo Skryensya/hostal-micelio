@@ -15,16 +15,16 @@ import { LightEffect } from "@/components/ui/LightEffect";
 const roomOptions = ROOM_FORMATS.sort((a, b) => a.price - b.price);
 
 const getGradientColor = (roomId: string) => {
-  // Mapeo específico por room ID para mayor precisión
+  // Mapeo específico por room ID para mayor precisión - colors with improved contrast
   const roomColorMap = {
-    HCO: "#3b82f6", // blue-500
-    HIN: "#10b981", // emerald-500
-    HDB: "#8b5cf6", // purple-500
-    HMA: "#f43f5e", // rose-500
-    HT: "#f59e0b", // amber-500
+    HCO: "#0891b2", // cyan-600 - celeste más claro y diferenciado
+    HIN: "#047857", // emerald-700 - más intenso
+    HDB: "#7c3aed", // purple-600 - más intenso
+    HMA: "#be185d", // pink-700 - más romántico y apropiado
+    HT: "#d97706", // amber-600 - más intenso
   };
 
-  return roomColorMap[roomId] || "#6b7280"; // gray-500 as fallback
+  return roomColorMap[roomId] || "#374151"; // gray-700 as fallback - más intenso
 };
 
 // Descripciones para cada tipo de habitación
@@ -256,14 +256,16 @@ export const RoomOptionsSelector = ({
                 className={cn(
                   "relative z-10 w-full rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:scale-[1.02]",
                   isSelected
-                    ? "text-text shadow-sm"
-                    : "text-text",
+                    ? "text-white shadow-sm"
+                    : "text-gray-700",
                 )}
                 style={{
-                  backgroundColor: isSelected ? `${gradientColor}80` : `${gradientColor}20`,
+                  backgroundColor: isSelected 
+                    ? `${gradientColor}90` // 80% opacity for moderate intensity when selected
+                    : `${gradientColor}20`, // 20% opacity for lighter color when not selected
                 }}
               >
-                {isSelected ? "✓ Seleccionado" : "Ver habitaciones"}
+                {isSelected ? "Seleccionado" : "Ver habitaciones"}
                 <LightEffect />
               </button>
             </div>

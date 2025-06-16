@@ -3,42 +3,42 @@
     "id": "male-only-room",
     "label": "Habitación solo para hombres",
     "featured": true,
-    "color": "bg-blue-500/50 dark:bg-indigo-900/90",
+    "color": "bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-lg",
     "order": 1
   },
   {
     "id": "female-only-room",
     "label": "Habitación solo para mujeres",
     "featured": true,
-    "color": "bg-pink-500/50 dark:bg-indigo-900/90",
+    "color": "bg-gradient-to-br from-pink-400 to-pink-600 text-white shadow-lg",
     "order": 2
   },
   {
     "id": "private-bathroom",
     "label": "Acceso a baño privado",
     "featured": true,
-    "color": "bg-indigo-500/70 dark:bg-indigo-900/90",
+    "color": "bg-gradient-to-br from-emerald-400 to-emerald-600 text-white shadow-lg",
     "order": 3
   },
   {
     "id": "shared-bathroom",
     "label": "Acceso a los 5 baños compartidos",
     "featured": true,
-    "color": "bg-indigo-500/30 dark:bg-indigo-900/80",
+    "color": "bg-gradient-to-br from-cyan-400 to-cyan-600 text-white shadow-lg",
     "order": 4
   },
   {
     "id": "breakfast",
     "label": "Desayuno incluido",
     "featured": true,
-    "color": "bg-yellow-500/30 dark:bg-yellow-900/80",
+    "color": "bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-lg",
     "order": 5
   },
   {
     "id": "shared-spaces",
     "label": "Uso de los espacios comunes",
     "featured": true,
-    "color": "bg-green-500/30 dark:bg-green-900/80",
+    "color": "bg-gradient-to-br from-green-400 to-green-600 text-white shadow-lg",
     "order": 6
   },
 
@@ -46,14 +46,14 @@
     "id": "shared-kitchen",
     "label": "Uso de la cocina compartida",
     "featured": true,
-    "color": "bg-orange-500/30 dark:bg-orange-900/80",
+    "color": "bg-gradient-to-br from-orange-400 to-red-500 text-white shadow-lg",
     "order": 7
   },
   {
     "id": "wifi",
     "label": "Wifi",
     "featured": true,
-    "color": "bg-purple-500/30 dark:bg-purple-500/10",
+    "color": "bg-gradient-to-br from-purple-400 to-purple-600 text-white shadow-lg",
     "order": 8
   }
 ]
