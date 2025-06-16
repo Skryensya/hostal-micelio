@@ -8,6 +8,8 @@ import {
   Venus,
   KeyRound,
 } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Tooltip,
   TooltipContent,
@@ -39,13 +41,17 @@ const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
 };
 
 export function RoomAmenities({ amenities }: RoomAmenitiesProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
   if (!amenities?.length) return null;
 
   return (
     <section className=" ">
-      <p className=" font-bold pb-1 !font-body">Comodidades</p>
+      <span className="text-text-muted mb-1 flex items-center gap-1 text-sm">
+        Comodidades
+      </span>
       {/* ─── Lista de íconos con tooltip (desktop / tablet) ─── */}
-      <div className="hidden sm:flex flex-wrap gap-1">
+      <div className="hidden flex-wrap gap-1 sm:flex">
         {amenities.map((a) => {
           const Icon = ICONS[a.id];
           return (
@@ -53,12 +59,12 @@ export function RoomAmenities({ amenities }: RoomAmenitiesProps) {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div
-                    className={` relative h-8 w-8 border border-border flex items-center justify-center ${a.color}`}
+                    className={`border-border relative flex h-8 w-8 items-center justify-center rounded border ${a.color}`}
                   >
-                    {Icon && <Icon className={`h-5 w-5 `} />}
+                    {Icon && <Icon className={`h-5 w-5`} />}
                     {a.id === "private-bathroom" && (
-                      <div className="absolute -bottom-1.5 -right-1.5 flex items-center justify-center">
-                        <KeyRound className="h-5 w-5 scale-90 fill-yellow-300 stroke-black-300" />
+                      <div className="absolute -right-1.5 -bottom-1.5 flex items-center justify-center">
+                        <KeyRound className="stroke-black-300 h-5 w-5 scale-90 fill-yellow-300" />
                       </div>
                     )}
                   </div>
@@ -72,27 +78,53 @@ export function RoomAmenities({ amenities }: RoomAmenitiesProps) {
         })}
       </div>
 
-      {/* ─── Lista simple (solo móvil) ─── */}
-      <ul className="flex flex-col gap-1 md:mb-6 sm:hidden">
-        {amenities.map((a) => {
-          const Icon = ICONS[a.id];
-          return (
-            <li key={a.id} className="flex items-center gap-3">
+      {/* ─── Iconos horizontales (solo móvil) ─── */}
+      <div className="sm:hidden">
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="flex items-center gap-1 rounded p-1 transition-all duration-200 hover:bg-white/30"
+        >
+          {amenities.map((a) => {
+            const Icon = ICONS[a.id];
+            return (
               <div
-                className={`relative h-8 w-8 border border-border flex items-center justify-center ${a.color}`}
+                key={a.id}
+                className={`border-border relative flex h-8 w-8 items-center justify-center rounded border ${a.color}`}
               >
                 {Icon && <Icon className={`h-5 w-5`} />}
                 {a.id === "private-bathroom" && (
-                  <div className="absolute -bottom-1.5 -right-1.5 flex items-center justify-center">
-                    <KeyRound className="h-5 w-5 scale-90 fill-yellow-300 stroke-black-300" />
+                  <div className="absolute -right-1.5 -bottom-1.5 flex items-center justify-center">
+                    <KeyRound className="stroke-black-300 h-5 w-5 scale-90 fill-yellow-300" />
                   </div>
                 )}
               </div>
-              <span className="text-sm">{a.label}</span>
-            </li>
-          );
-        })}
-      </ul>
+            );
+          })}
+        </button>
+      </div>
+
+      {/* ─── Lista expandida (solo móvil) ─── */}
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.ul
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className="mt-2 flex flex-col gap-1 overflow-hidden sm:hidden"
+          >
+            {amenities.map((a) => (
+              <li
+                key={a.id}
+                className="flex items-center gap-2 rounded py-0 text-sm pl-3"
+              >
+                <div className="h-1 w-1 rounded-full bg-text flex-shrink-0" />
+                <span className="text-text">{a.label}</span>
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

@@ -20,7 +20,7 @@ type Transition = {
 };
 
 const ASPECT_RATIOS = {
-  square: "lg:aspect-square aspect-[4/3]",
+  square: "aspect-square",
   video: "aspect-[16/9]",
   card: "aspect-[5/4]",
 } as const;
@@ -39,16 +39,16 @@ function SingleImageView({
   return (
     <div
       className={cn(
-        "relative w-full h-full",
+        "relative h-full w-full",
         ASPECT_RATIOS[aspectRatio],
-        className
+        className,
       )}
     >
       <Image
         src={src || "/placeholder.svg"}
         alt={alt}
         fill
-        className="object-cover bg-gray-200"
+        className="bg-gray-200 object-cover"
         priority
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         draggable={false}
@@ -57,7 +57,7 @@ function SingleImageView({
   );
 }
 
-// Botón de navegación – se muestran siempre en móvil
+// Botón de navegación – se muestran siempre en móvil y en hover en desktop
 function NavigationButton({
   onClick,
   direction,
@@ -74,10 +74,9 @@ function NavigationButton({
       onClick={onClick}
       aria-label={label}
       tabIndex={-1} // Evitamos que el botón reciba focus
-      className={`block sm:hidden absolute ${position} top-1/2 -translate-y-1/2 opacity-100 
-                  transition-opacity duration-300 bg-gray-400/50 hover:bg-gray-400/75 rounded-full p-1`}
+      className={`absolute ${position} top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 hover:bg-black/70`}
     >
-      <Icon className="h-6 w-6" />
+      <Icon className="h-5 w-5" />
     </button>
   );
 }
@@ -93,7 +92,7 @@ function NavigationDots({
 }) {
   return (
     <div
-      className="absolute bottom-4 left-0 right-0 flex justify-center items-center gap-2"
+      className="absolute right-0 bottom-4 left-0 flex items-center justify-center gap-2"
       role="tablist"
     >
       {Array.from({ length: total }).map((_, index) => {
@@ -108,8 +107,8 @@ function NavigationDots({
             role="tab"
             className={`cursor-pointer rounded-full transition-all duration-300 ${
               isActive
-                ? "w-3 h-3 bg-white"
-                : "w-2 h-2 bg-white/70 hover:bg-white/90"
+                ? "h-3 w-3 bg-white"
+                : "h-2 w-2 bg-white/70 hover:bg-white/90"
             }`}
           />
         );
@@ -145,7 +144,7 @@ export function ImageCarousel({
     isMountedRef.current = true;
     // Inicializar el estado de los controles después del montaje
     countdownControls.set({ width: "0%" });
-    
+
     return () => {
       isMountedRef.current = false;
     };
@@ -162,7 +161,7 @@ export function ImageCarousel({
       setTransition({ target, direction });
       transitionRef.current = { target, direction };
     },
-    []
+    [],
   );
 
   const goNext = useCallback(() => {
@@ -212,7 +211,7 @@ export function ImageCarousel({
       if (transitionRef.current || index === current || total <= 0) return;
       const direction = index > current ? "next" : "prev";
       navigateTo(index, direction);
-      
+
       // Reset countdown animation when navigation dot is clicked
       if (window.innerWidth >= 640 && isMountedRef.current) {
         countdownControls.set({ width: "0%" });
@@ -221,7 +220,7 @@ export function ImageCarousel({
         }
       }
     },
-    [current, navigateTo, total, countdownControls, handleMouseEnter]
+    [current, navigateTo, total, countdownControls, handleMouseEnter],
   );
 
   // Al terminar la animación, actualizamos el estado y liberamos el ref.
@@ -321,14 +320,14 @@ export function ImageCarousel({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "relative w-full h-full outline-none group",
+        "group relative h-full w-full outline-none",
         ASPECT_RATIOS[aspectRatio],
-        className
+        className,
       )}
     >
       <button
         onClick={onClick}
-        className={`relative w-full h-full ${ASPECT_RATIOS[aspectRatio]}`}
+        className={`relative h-full w-full ${ASPECT_RATIOS[aspectRatio]}`}
       >
         {/* Imagen base */}
         <div className="absolute inset-0">
@@ -336,7 +335,7 @@ export function ImageCarousel({
             src={bottomImage.src || "/placeholder.svg"}
             alt={bottomImage.alt}
             fill
-            className="object-cover bg-gray-200"
+            className="bg-gray-200 object-cover"
             priority={current === 0}
             loading={current === 0 ? "eager" : "lazy"}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -357,7 +356,7 @@ export function ImageCarousel({
               src={topImage.src || "/placeholder.svg"}
               alt={topImage.alt}
               fill
-              className="object-cover bg-gray-200"
+              className="bg-gray-200 object-cover"
               loading="eager"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               draggable={false}
@@ -367,7 +366,7 @@ export function ImageCarousel({
 
         {/* Barra de cuenta atrás (sólo en desktop) */}
         <motion.div
-          className="hidden sm:block absolute bottom-0 left-0 h-1 bg-primary"
+          className="bg-primary absolute bottom-0 left-0 hidden h-1 sm:block"
           initial={{ width: "0%" }}
           animate={countdownControls}
         />

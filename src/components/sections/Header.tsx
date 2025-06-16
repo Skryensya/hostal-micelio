@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { ModeToggle } from "@/components/ModeToggle";
+// import { ModeToggle } from "@/components/ModeToggle";
 import { WavyDivider } from "@/components/composed/WavyDivider";
 import { cn } from "@/lib/utils";
 
@@ -71,7 +71,7 @@ export function Header() {
                 ))}
               </nav>
 
-              <ModeToggle />
+              {/* <ModeToggle /> */}
 
               {/* Botón para menú móvil */}
               <div className="flex aspect-square w-10 items-center justify-center lg:hidden">

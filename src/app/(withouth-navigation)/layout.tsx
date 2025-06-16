@@ -27,7 +27,7 @@ export default function RootLayout({
       >
         {/* <ReactLenis root> */}
           <PostHogProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
               {children}
             </ThemeProvider>
           </PostHogProvider>

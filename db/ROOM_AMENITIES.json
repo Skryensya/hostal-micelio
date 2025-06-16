@@ -1,14 +1,14 @@
 [
   {
     "id": "male-only-room",
-    "label": "Habitación compartida solo para hombres",
+    "label": "Habitación solo para hombres",
     "featured": true,
     "color": "bg-blue-500/50 dark:bg-indigo-900/90",
     "order": 1
   },
   {
     "id": "female-only-room",
-    "label": "Habitación compartida solo para mujeres",
+    "label": "Habitación solo para mujeres",
     "featured": true,
     "color": "bg-pink-500/50 dark:bg-indigo-900/90",
     "order": 2

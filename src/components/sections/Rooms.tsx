@@ -36,33 +36,20 @@ export function Rooms() {
         )
       : [...typedRooms];
 
+    // Siempre ordenar por precio de menor a mayor
     return roomsToSort.sort((a, b) => {
-      if (selectedFormat) {
-        // Priorizar habitaciones que tienen el formato seleccionado como default
-        const aIsDefault = a.defaultFormat === selectedFormat.id;
-        const bIsDefault = b.defaultFormat === selectedFormat.id;
-        
-        if (aIsDefault && !bIsDefault) return -1;
-        if (!aIsDefault && bIsDefault) return 1;
-        
-        // Si ambas son default o ambas son alternativas, ordenar por precio
-        const fmtA = selectedFormat.id;
-        const fmtB = selectedFormat.id;
-        const priceA = PRICE_MAP[fmtA] || 0;
-        const priceB = PRICE_MAP[fmtB] || 0;
-        const totalA = priceA + (a.hasPrivateToilet ? 10000 : 0);
-        const totalB = priceB + (b.hasPrivateToilet ? 10000 : 0);
-        return totalA - totalB;
-      } else {
-        // Sin filtro, ordenar por precio del formato default
-        const fmtA = a.defaultFormat;
-        const fmtB = b.defaultFormat;
-        const priceA = PRICE_MAP[fmtA] || 0;
-        const priceB = PRICE_MAP[fmtB] || 0;
-        const totalA = priceA + (a.hasPrivateToilet ? 10000 : 0);
-        const totalB = priceB + (b.hasPrivateToilet ? 10000 : 0);
-        return totalA - totalB;
-      }
+      // Calcular precio para habitación A
+      const formatA = selectedFormat?.id || a.defaultFormat;
+      const priceA = PRICE_MAP[formatA] || 0;
+      const totalA = priceA + (a.hasPrivateToilet ? 10000 : 0);
+      
+      // Calcular precio para habitación B
+      const formatB = selectedFormat?.id || b.defaultFormat;
+      const priceB = PRICE_MAP[formatB] || 0;
+      const totalB = priceB + (b.hasPrivateToilet ? 10000 : 0);
+      
+      // Ordenar de menor a mayor precio
+      return totalA - totalB;
     });
   }, [selectedFormat]);
 
@@ -101,7 +88,7 @@ export function Rooms() {
           filteredRoomsCount={filteredRooms.length}
         />
         <div
-          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          className="flex flex-col gap-8"
           aria-labelledby="habitaciones"
         >
           <AnimatePresence>

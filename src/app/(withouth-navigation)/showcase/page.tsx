@@ -1,6 +1,6 @@
 import React from "react";
 import { colors } from "../../../../tailwind.config";
-import { ModeToggle } from "@/components/ModeToggle";
+// import { ModeToggle } from "@/components/ModeToggle";
 import { ButtonShowcase } from "@/components/sections/ButtonShowcase";
 // Add metadata to disable layout
 
@@ -26,9 +26,9 @@ const ColorsPage = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="flex justify-end fixed top-4 right-4 ">
+      {/* <div className="flex justify-end fixed top-4 right-4 ">
         <ModeToggle />
-      </div>
+      </div> */}
       <ButtonShowcase />
       <h1 className="text-2xl font-bold mb-4">Color Palette</h1>
       <div className="flex flex-col gap-4">
