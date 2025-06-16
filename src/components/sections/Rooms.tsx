@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ROOMS from "@/db/ROOMS.json";
 import ROOM_FORMATS from "@/db/ROOM_FORMATS.json";
 import RoomCard from "../composed/RoomCard";
+import { RoomCardSkeleton } from "../composed/RoomCardSkeleton";
 import { motion, AnimatePresence } from "framer-motion";
 import { RoomOptionsSelector } from "@/components/RoomOptionsSelector";
 import { Room } from "@/lib/types";
@@ -22,10 +23,23 @@ const typedRooms = ROOMS as Room[];
 export function Rooms() {
   const router = useRouter();
   const { selectedFormat } = useSelectionStore();
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const handleViewRoom = (roomSlug: string) => {
     router.push(`/habitaciones/${roomSlug}`);
   };
+
+  // Handle smooth transition when filter changes
+  useEffect(() => {
+    if (selectedFormat !== undefined) {
+      setIsTransitioning(true);
+      const timer = setTimeout(() => {
+        setIsTransitioning(false);
+      }, 150);
+
+      return () => clearTimeout(timer);
+    }
+  }, [selectedFormat]);
 
   const filteredRooms = useMemo(() => {
     const roomsToSort = selectedFormat
@@ -91,23 +105,40 @@ export function Rooms() {
           className="flex flex-col gap-8"
           aria-labelledby="habitaciones"
         >
-          <AnimatePresence>
-            {filteredRooms.map((room) => (
-              <motion.div
-                key={room.slug}
-                layout
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <RoomCard
-                  {...room}
-                  onViewDetails={() => handleViewRoom(room.slug)}
-                  selectedFormat={selectedFormat?.id || null}
-                />
-              </motion.div>
-            ))}
-          </AnimatePresence>
+          {filteredRooms.length === 0 ? (
+            // Show skeletons only when no data
+            <>
+              {[...Array(3)].map((_, i) => (
+                <RoomCardSkeleton key={i} />
+              ))}
+            </>
+          ) : (
+            <div className={`transition-opacity duration-200 ${isTransitioning ? 'opacity-60' : 'opacity-100'}`}>
+              <AnimatePresence mode="wait">
+                {filteredRooms.map((room) => (
+                  <motion.div
+                    key={room.slug}
+                    layout
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ 
+                      duration: 0.25,
+                      ease: "easeOut",
+                      layout: { duration: 0.3, ease: "easeInOut" }
+                    }}
+                    className="mb-8 last:mb-0"
+                  >
+                    <RoomCard
+                      {...room}
+                      onViewDetails={() => handleViewRoom(room.slug)}
+                      selectedFormat={selectedFormat?.id || null}
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          )}
         </div>
       </div>
     </section>

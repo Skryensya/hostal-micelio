@@ -1,58 +1,81 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { WavyDivider } from "@/components/composed/WavyDivider";
 
 export function RoomCardSkeleton() {
   return (
-    <div className="relative flex flex-col h-fit md:h-full w-full bg-surface-2 text-text rounded-[1.6rem] overflow-hidden isolate shadow-md">
-      {/* Header */}
-      <div className="absolute inset-x-0 top-0 z-10 flex flex-col">
-        <div className="px-4 pt-1 flex justify-between items-end bg-surface-2">
-          <div className="flex flex-col items-start translate-y-1">
-            <Skeleton className="w-24 h-3 mb-1" />
-            <Skeleton className="w-40 h-6" />
+    <div className="relative overflow-hidden rounded-3xl border-2 shadow border-gray-200">
+      {/* Gradient background container */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-gray-100/40 via-gray-50/20 to-gray-50" />
+
+      {/* Content container */}
+      <div className="relative flex flex-col gap-4 p-4 md:flex-row md:gap-6">
+        {/* Image Section */}
+        <div className="w-full flex-shrink-0 md:w-80">
+          <div className="h-48 w-full overflow-hidden rounded-xl md:h-64">
+            <Skeleton className="h-full w-full" />
           </div>
-          <Skeleton className="w-10 h-4 mb-2" />
-        </div>
-        {/* Divider igual al componente real */}
-        <WavyDivider direction="bottom" backgroundClass="bg-surface-2" />
-      </div>
-
-      {/* Imagen / Carousel */}
-      <Skeleton className="w-full aspect-square border border-surface-2 rounded-t-[1.6rem]" />
-
-      {/* Body */}
-      <div className="flex flex-col px-3 pt-2 gap-4 h-full">
-        {/* Descripción */}
-        <div className="flex flex-col gap-1">
-          <Skeleton className="w-full h-4" />
-          <Skeleton className="w-5/6 h-4" />
         </div>
 
-        {/* Camas */}
-        <div className="flex gap-2">
-          {[...Array(3)].map((_, i) => (
-            <Skeleton key={i} className="h-4 w-12 rounded" />
-          ))}
-        </div>
+        {/* Content Section */}
+        <div className="flex flex-1 flex-col justify-between">
+          {/* Header */}
+          <div className="mb-3">
+            <div className="mb-2 flex items-start justify-between">
+              <div className="flex-1">
+                {/* Room name */}
+                <Skeleton className="mb-2 h-6 w-48" />
 
-        {/* Amenidades */}
-        <div className="flex gap-1 flex-wrap">
-          {[...Array(4)].map((_, i) => (
-            <Skeleton key={i} className="h-8 w-8 rounded-lg" />
-          ))}
-        </div>
+                {/* Tags container */}
+                <div className="mb-2 flex flex-wrap gap-2">
+                  <Skeleton className="h-5 w-32 rounded-full" />
+                  <Skeleton className="h-5 w-24 rounded-full" />
+                  <Skeleton className="h-5 w-28 rounded-full" />
+                </div>
 
-        {/* Footer */}
-        <div className="mt-auto -mx-4">
-          {/* Divider superior */}
-          <WavyDivider direction="top" backgroundClass="bg-primary/20 " noAlpha />
+                {/* Capacity */}
+                <div className="flex items-center gap-1">
+                  <Skeleton className="h-3 w-3 rounded" />
+                  <Skeleton className="h-4 w-20" />
+                </div>
+              </div>
 
-          <div className="px-4 bg-primary/20 pb-4 pt-2 mt-1">
-            <Skeleton className="w-24 h-4 mb-2" />
+              {/* Price */}
+              <div className="ml-4 text-right">
+                <Skeleton className="mb-1 h-7 w-24" />
+                <Skeleton className="h-3 w-16" />
+              </div>
+            </div>
 
-            <div className="flex items-center justify-between gap-2">
-              <Skeleton className="h-8 w-28 rounded-full" />
-              <Skeleton className="h-8 w-24 rounded-full" />
+            {/* Description */}
+            <div className="space-y-1">
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-4/5" />
+            </div>
+          </div>
+
+          {/* Amenities & Beds & CTA - Same line */}
+          <div className="grid items-end gap-4 md:grid-cols-9">
+            {/* Beds */}
+            <div className="col-span-2 space-y-1">
+              <Skeleton className="h-3 w-12" />
+              <div className="flex gap-1">
+                <Skeleton className="h-4 w-8" />
+                <Skeleton className="h-4 w-8" />
+              </div>
+            </div>
+
+            {/* Amenities */}
+            <div className="col-span-4 space-y-1">
+              <Skeleton className="h-3 w-16" />
+              <div className="flex gap-1 flex-wrap">
+                {[...Array(4)].map((_, i) => (
+                  <Skeleton key={i} className="h-6 w-6 rounded" />
+                ))}
+              </div>
+            </div>
+
+            {/* CTA Button */}
+            <div className="col-span-3 flex justify-end">
+              <Skeleton className="h-8 w-32 rounded-full" />
             </div>
           </div>
         </div>
