@@ -10,22 +10,10 @@ import { useSelectionStore } from "@/store/useSelectionStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { getRoomColors } from "@/lib/roomColors";
 import { LightEffect } from "@/components/ui/LightEffect";
+import { getRoomGradientColor } from "@/lib/roomColors";
 
 // Ordena las opciones por precio
 const roomOptions = ROOM_FORMATS.sort((a, b) => a.price - b.price);
-
-const getGradientColor = (roomId: string) => {
-  // Mapeo específico por room ID para mayor precisión - colors with improved contrast
-  const roomColorMap = {
-    HCO: "#0891b2", // cyan-600 - celeste más claro y diferenciado
-    HIN: "#047857", // emerald-700 - más intenso
-    HDB: "#7c3aed", // purple-600 - más intenso
-    HMA: "#be185d", // pink-700 - más romántico y apropiado
-    HT: "#d97706", // amber-600 - más intenso
-  };
-
-  return roomColorMap[roomId] || "#374151"; // gray-700 as fallback - más intenso
-};
 
 // Descripciones para cada tipo de habitación
 const roomDescriptions = {
@@ -163,7 +151,7 @@ export const RoomOptionsSelector = ({
           const isSelected = selectedFormat === option;
           const description =
             roomDescriptions[option.id] || roomDescriptions.default;
-          const gradientColor = getGradientColor(option.id);
+          const gradientColor = getRoomGradientColor(option.id);
 
           return (
             <div
@@ -256,13 +244,13 @@ export const RoomOptionsSelector = ({
                 className={cn(
                   "relative z-10 w-full rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:scale-[1.02]",
                   isSelected
-                    ? "text-white shadow-sm"
-                    : "text-gray-700",
+                    ? "text-white shadow-sm "
+                    : "text-text ",
                 )}
                 style={{
                   backgroundColor: isSelected 
-                    ? `${gradientColor}90` // 80% opacity for moderate intensity when selected
-                    : `${gradientColor}20`, // 20% opacity for lighter color when not selected
+                    ? `${gradientColor}BB` // 80% opacity for moderate intensity when selected
+                    : `${gradientColor}30`, // 20% opacity for lighter color when not selected
                 }}
               >
                 {isSelected ? "Seleccionado" : "Ver habitaciones"}

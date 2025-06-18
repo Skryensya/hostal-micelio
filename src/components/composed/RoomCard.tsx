@@ -15,13 +15,13 @@ import { RoomBeds } from "./RoomBeds";
 // Function to get room type color with improved contrast
 const getRoomTypeColor = (roomId: string | undefined) => {
   const roomColorMap = {
-    HCO: "#0891b2", // cyan-600 - celeste más claro y diferenciado
-    HIN: "#047857", // emerald-700 - más intenso
-    HDB: "#7c3aed", // purple-600 - más intenso
-    HMA: "#be185d", // pink-700 - más romántico y apropiado
-    HT: "#d97706", // amber-600 - más intenso
+    HCO: "#10b981", // emerald-500
+    HIN: "#3b82f6", // blue-500
+    HDB: "#8b5cf6", // purple-500
+    HMA: "#f43f5e", // rose-500
+    HT: "#f59e0b",  // amber-500
   };
-  return roomColorMap[roomId] || "#374151"; // gray-700 as fallback - más intenso
+  return roomColorMap[roomId] || "#6b7280"; // gray-500 as fallback
 };
 
 // Function to get consistent badge styles - ALL badges will have the same structure
@@ -42,35 +42,35 @@ const getBadgeStyles = (
   const variants = {
     primary: customColor
       ? {
-          backgroundColor: `${customColor}25`, // Light opacity for subtle look
+          backgroundColor: `${customColor}15`, // Light opacity for subtle look
           color: customColor,
-          border: `1px solid ${customColor}40`,
+          border: `1px solid ${customColor}30`,
         }
       : {},
     "gender-male": {
-      backgroundColor: "#dbeafe", // blue-100 - much softer
-      color: "#1e40af", // blue-700 for contrast
-      border: "1px solid #93c5fd", // blue-300 border
+      backgroundColor: "#dbeafe", // blue-100
+      color: "#3b82f6", // blue-500
+      border: "1px solid #93c5fd", // blue-300
     },
     "gender-female": {
-      backgroundColor: "#fce7f3", // pink-100 - much softer
-      color: "#be185d", // pink-700 for contrast
-      border: "1px solid #f9a8d4", // pink-300 border
+      backgroundColor: "#fce7f3", // pink-100
+      color: "#f43f5e", // rose-500
+      border: "1px solid #f9a8d4", // pink-300
     },
     mixed: {
-      backgroundColor: "#f3f4f6", // gray-100 - much softer
-      color: "#374151", // gray-700 for contrast
-      border: "1px solid #d1d5db", // gray-300 border
+      backgroundColor: "#f3f4f6", // gray-100
+      color: "#6b7280", // gray-500
+      border: "1px solid #d1d5db", // gray-300
     },
     breakfast: {
-      backgroundColor: "#fef3c7", // amber-100 - much softer
-      color: "#d97706", // amber-600 for contrast
-      border: "1px solid #fcd34d", // amber-300 border
+      backgroundColor: "#fef3c7", // amber-100
+      color: "#f59e0b", // amber-500
+      border: "1px solid #fcd34d", // amber-300
     },
     "private-bathroom": {
-      backgroundColor: "#d1fae5", // emerald-100 - much softer
-      color: "#047857", // emerald-700 for contrast
-      border: "1px solid #86efac", // emerald-300 border
+      backgroundColor: "#d1fae5", // emerald-100
+      color: "#10b981", // emerald-500
+      border: "1px solid #86efac", // emerald-300
     },
   };
 

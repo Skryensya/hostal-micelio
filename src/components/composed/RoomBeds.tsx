@@ -29,10 +29,10 @@ const BED_LABELS: Record<string, string> = {
 };
 
 const BED_COLORS: Record<string, string> = {
-  B01: "bg-gradient-to-br from-rose-400 to-pink-600 text-white shadow-lg", // Matrimonial - Rosa romántico
-  B02: "bg-gradient-to-br from-blue-400 to-indigo-600 text-white shadow-lg", // Individual - Azul sereno
-  B03: "bg-gradient-to-br from-emerald-400 to-green-600 text-white shadow-lg", // Camarote - Verde aventurero
-  B04: "bg-gradient-to-br from-emerald-400 to-green-600 text-white shadow-lg", // Camarote - Verde aventurero
+  B01: "bg-gradient-to-br from-rose-400 to-rose-500 text-white shadow-lg", // Matrimonial
+  B02: "bg-gradient-to-br from-blue-400 to-blue-500 text-white shadow-lg", // Individual
+  B03: "bg-gradient-to-br from-emerald-400 to-emerald-500 text-white shadow-lg", // Camarote
+  B04: "bg-gradient-to-br from-emerald-400 to-emerald-500 text-white shadow-lg", // Camarote
 };
 
 export function RoomBeds({ beds }: RoomBedsProps) {

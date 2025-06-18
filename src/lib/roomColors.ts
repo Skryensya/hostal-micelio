@@ -1,98 +1,65 @@
-// Tokens de colores sutiles con soporte para dark mode
-export const roomColorTokens = {
-  HCO: {
-    bg: "bg-blue-100/50 dark:bg-blue-800/15",
-    bgSelected: "bg-blue-100/65 dark:bg-blue-700/20",
-    bgHover: "bg-blue-100/55 dark:bg-blue-800/25",
-    border: "border-blue-200/60 dark:border-blue-600/30",
-    borderSelected: "border-blue-300/75 dark:border-blue-500/40",
-    borderHover: "border-blue-250/65 dark:border-blue-600/35",
-    iconBg: "bg-blue-100/55 dark:bg-blue-800/20",
-    iconBgSelected: "bg-blue-200/70 dark:bg-blue-700/25",
-    text: "text-blue-700 dark:text-blue-300",
-    textHover: "text-blue-800 dark:text-blue-200",
-    shadow: "shadow-blue-200/25 dark:shadow-blue-900/20",
-    // Colores para header de card
-    headerBg: "bg-blue-50 dark:bg-blue-900/20",
-    headerText: "text-blue-800 dark:text-blue-200",
-    footerBg: "bg-blue-100 dark:bg-blue-800/20",
-  },
-  HIN: {
-    bg: "bg-emerald-100/45 dark:bg-emerald-900/10",
-    bgSelected: "bg-emerald-100/60 dark:bg-emerald-900/18",
-    bgHover: "bg-emerald-100/50 dark:bg-emerald-900/25",
-    border: "border-emerald-200/55 dark:border-emerald-700/30",
-    borderSelected: "border-emerald-300/70 dark:border-emerald-600/40",
-    borderHover: "border-emerald-250/60 dark:border-emerald-700/35",
-    iconBg: "bg-emerald-100/50 dark:bg-emerald-800/18",
-    iconBgSelected: "bg-emerald-100/65 dark:bg-emerald-800/25",
-    text: "text-emerald-700 dark:text-emerald-300",
-    textHover: "text-emerald-800 dark:text-emerald-200",
-    shadow: "shadow-emerald-200/25 dark:shadow-emerald-900/20",
-    // Colores para header de card
-    headerBg: "bg-emerald-50/80 dark:bg-emerald-900/20",
-    headerText: "text-emerald-800 dark:text-emerald-200",
-    footerBg: "bg-emerald-100/30 dark:bg-emerald-800/20",
-  },
-  HDB: {
-    bg: "bg-purple-100/45 dark:bg-purple-900/10",
-    bgSelected: "bg-purple-100/60 dark:bg-purple-900/18",
-    bgHover: "bg-purple-100/50 dark:bg-purple-900/25",
-    border: "border-purple-200/55 dark:border-purple-700/30",
-    borderSelected: "border-purple-300/70 dark:border-purple-600/40",
-    borderHover: "border-purple-250/60 dark:border-purple-700/35",
-    iconBg: "bg-purple-100/50 dark:bg-purple-800/18",
-    iconBgSelected: "bg-purple-100/65 dark:bg-purple-800/25",
-    text: "text-purple-700 dark:text-purple-300",
-    textHover: "text-purple-800 dark:text-purple-200",
-    shadow: "shadow-purple-200/25 dark:shadow-purple-900/20",
-    // Colores para header de card
-    headerBg: "bg-purple-50/80 dark:bg-purple-900/20",
-    headerText: "text-purple-800 dark:text-purple-200",
-    footerBg: "bg-purple-100/30 dark:bg-purple-800/20",
-  },
-  HMA: {
-    bg: "bg-rose-100/45 dark:bg-rose-900/10",
-    bgSelected: "bg-rose-100/60 dark:bg-rose-900/18",
-    bgHover: "bg-rose-100/50 dark:bg-rose-900/25",
-    border: "border-rose-200/55 dark:border-rose-700/30",
-    borderSelected: "border-rose-300/70 dark:border-rose-600/40",
-    borderHover: "border-rose-250/60 dark:border-rose-700/35",
-    iconBg: "bg-rose-100/50 dark:bg-rose-800/18",
-    iconBgSelected: "bg-rose-100/65 dark:bg-rose-800/25",
-    text: "text-rose-700 dark:text-rose-300",
-    textHover: "text-rose-800 dark:text-rose-200",
-    shadow: "shadow-rose-200/25 dark:shadow-rose-900/20",
-    // Colores para header de card
-    headerBg: "bg-rose-50/80 dark:bg-rose-900/20",
-    headerText: "text-rose-800 dark:text-rose-200",
-    footerBg: "bg-rose-100/30 dark:bg-rose-800/20",
-  },
-  HT: {
-    bg: "bg-amber-100/45 dark:bg-amber-900/10",
-    bgSelected: "bg-amber-100/60 dark:bg-amber-900/18",
-    bgHover: "bg-amber-100/50 dark:bg-amber-900/25",
-    border: "border-amber-200/55 dark:border-amber-700/30",
-    borderSelected: "border-amber-300/70 dark:border-amber-600/40",
-    borderHover: "border-amber-250/60 dark:border-amber-700/35",
-    iconBg: "bg-amber-100/50 dark:bg-amber-800/18",
-    iconBgSelected: "bg-amber-100/65 dark:bg-amber-800/25",
-    text: "text-amber-700 dark:text-amber-300",
-    textHover: "text-amber-800 dark:text-amber-200",
-    shadow: "shadow-amber-200/25 dark:shadow-amber-900/20",
-    // Colores para header de card
-    headerBg: "bg-amber-50/80 dark:bg-amber-900/20",
-    headerText: "text-amber-800 dark:text-amber-200",
-    footerBg: "bg-amber-100/30 dark:bg-amber-800/20",
+// Definición de colores base por tipo de habitación
+const baseColors = {
+  HCO: "emerald", // Verde para habitaciones compartidas - económico y fresco
+  HIN: "blue",    // Azul para habitaciones individuales - premium y profesional
+  HDB: "purple",  // Púrpura para habitaciones dobles - elegante y versátil
+  HMA: "rose",    // Rosa para habitaciones matrimoniales - romántico y acogedor
+  HT: "amber",    // Ámbar para habitaciones triples - cálido y grupal
+} as const;
+
+// Tokens de intensidad para cada uso
+const intensityTokens = {
+  subtle: {
+    bg: (color: string) => `bg-${color}-100/45 dark:bg-${color}-900/10`,
+    bgSelected: (color: string) => `bg-${color}-100/60 dark:bg-${color}-900/18`,
+    bgHover: (color: string) => `bg-${color}-100/50 dark:bg-${color}-900/25`,
+    border: (color: string) => `border-${color}-200/55 dark:border-${color}-700/30`,
+    borderSelected: (color: string) => `border-${color}-300/70 dark:border-${color}-600/40`,
+    borderHover: (color: string) => `border-${color}-250/60 dark:border-${color}-700/35`,
+    iconBg: (color: string) => `bg-${color}-100/50 dark:bg-${color}-800/18`,
+    iconBgSelected: (color: string) => `bg-${color}-100/65 dark:bg-${color}-800/25`,
+    text: (color: string) => `text-${color}-700 dark:text-${color}-300`,
+    textHover: (color: string) => `text-${color}-800 dark:text-${color}-200`,
+    shadow: (color: string) => `shadow-${color}-200/25 dark:shadow-${color}-900/20`,
+    headerBg: (color: string) => `bg-${color}-50/80 dark:bg-${color}-900/20`,
+    headerText: (color: string) => `text-${color}-800 dark:text-${color}-200`,
+    footerBg: (color: string) => `bg-${color}-100/30 dark:bg-${color}-800/20`,
   },
 } as const;
 
 // Función para obtener los colores de una habitación
 export const getRoomColors = (roomId: string) => {
-  return roomColorTokens[roomId] || roomColorTokens.HCO;
+  const baseColor = baseColors[roomId] || baseColors.HCO;
+  return {
+    bg: intensityTokens.subtle.bg(baseColor),
+    bgSelected: intensityTokens.subtle.bgSelected(baseColor),
+    bgHover: intensityTokens.subtle.bgHover(baseColor),
+    border: intensityTokens.subtle.border(baseColor),
+    borderSelected: intensityTokens.subtle.borderSelected(baseColor),
+    borderHover: intensityTokens.subtle.borderHover(baseColor),
+    iconBg: intensityTokens.subtle.iconBg(baseColor),
+    iconBgSelected: intensityTokens.subtle.iconBgSelected(baseColor),
+    text: intensityTokens.subtle.text(baseColor),
+    textHover: intensityTokens.subtle.textHover(baseColor),
+    shadow: intensityTokens.subtle.shadow(baseColor),
+    headerBg: intensityTokens.subtle.headerBg(baseColor),
+    headerText: intensityTokens.subtle.headerText(baseColor),
+    footerBg: intensityTokens.subtle.footerBg(baseColor),
+  };
 };
 
 // Función para obtener el color del formato de habitación
-export const getRoomColorsByFormat = (formatId: string) => {
-  return getRoomColors(formatId);
+export const getRoomColorsByFormat = getRoomColors;
+
+// Color sólido/acento para gradientes y fondos llamativos
+const roomGradientColors: Record<string, string> = {
+  HCO: "#10b981", // emerald-500
+  HIN: "#3b82f6", // blue-500
+  HDB: "#8b5cf6", // purple-500
+  HMA: "#f43f5e", // rose-500
+  HT: "#f59e0b", // amber-500
+};
+
+export const getRoomGradientColor = (roomId: string) => {
+  return roomGradientColors[roomId] || "#a3a3a3"; // gray-400 fallback
 };
