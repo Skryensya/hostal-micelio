@@ -191,11 +191,11 @@ export default function RoomCard({
       />
 
       {/* Content container */}
-      <div className="relative flex flex-col gap-4 p-4 md:flex-row md:gap-6">
+      <div className="relative flex flex-col gap-4 p-3 md:flex-row md:gap-6">
         {/* Image Section */}
         {images.length > 0 && (
           <div className="w-full flex-shrink-0 md:w-80">
-            <div className="h-48 w-full overflow-hidden rounded-xl md:h-64">
+            <div className="h-48 w-full overflow-hidden rounded-2xl md:h-64">
               <ImageCarousel imgs={images} className="h-full overflow-hidden" />
             </div>
           </div>

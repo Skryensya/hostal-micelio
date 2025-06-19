@@ -5,12 +5,20 @@ import ROOM_FORMATS from "@/db/ROOM_FORMATS.json";
 import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { RoomOption } from "@/lib/types";
-import { Users, User, Undo } from "lucide-react";
+import {
+  Users,
+  User,
+  Undo,
+  PointerIcon,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { useSelectionStore } from "@/store/useSelectionStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { getRoomColors } from "@/lib/roomColors";
 import { LightEffect } from "@/components/ui/LightEffect";
 import { getRoomGradientColor } from "@/lib/roomColors";
+import useEmblaCarousel from "embla-carousel-react";
 
 // Ordena las opciones por precio
 const roomOptions = ROOM_FORMATS.sort((a, b) => a.price - b.price);
@@ -83,6 +91,37 @@ const getRoomIcon = (id: string, isSelected: boolean = false) => {
   );
 };
 
+const SwipeIndicator = () => {
+  return (
+    <div className="-mt-2 flex flex-col items-center gap-1 py-1 md:hidden">
+      <span className="text-text-muted/70 text-center text-xs">
+        Desliza para seleccionar
+      </span>
+      <div className="flex items-center gap-1">
+        <ChevronLeft className="text-text-muted/40 h-4 w-4" strokeWidth={1.5} />
+        <motion.div
+          animate={{ rotate: [-15, 15, -15] }}
+          transition={{
+            duration: 3,
+            ease: "easeInOut",
+            repeat: Infinity,
+          }}
+          style={{ originY: 1 }} // Set rotation origin to bottom
+        >
+          <PointerIcon
+            className="text-text-muted/70 h-6 w-6"
+            strokeWidth={1.5}
+          />
+        </motion.div>
+        <ChevronRight
+          className="text-text-muted/40 h-4 w-4"
+          strokeWidth={1.5}
+        />
+      </div>
+    </div>
+  );
+};
+
 export const RoomOptionsSelector = ({
   onSelect,
   filteredRoomsCount,
@@ -92,6 +131,48 @@ export const RoomOptionsSelector = ({
 }) => {
   const { selectedFormat, setSelectedFormat, clearSelectedFormat } =
     useSelectionStore();
+
+  // Embla carousel setup for mobile
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    dragFree: false,
+    containScroll: "trimSnaps",
+    align: "center",
+    skipSnaps: false,
+  });
+
+  // Set first option as default on mobile
+  useEffect(() => {
+    if (!selectedFormat && window.innerWidth < 768) {
+      setSelectedFormat(roomOptions[0]);
+    }
+  }, [selectedFormat, setSelectedFormat]);
+
+  // Sync Embla with selected format
+  useEffect(() => {
+    if (!emblaApi || !selectedFormat) return;
+    const index = roomOptions.findIndex((option) => option === selectedFormat);
+    if (index !== -1) {
+      emblaApi.scrollTo(index);
+    }
+  }, [selectedFormat, emblaApi]);
+
+  // Update selected format when Embla scrolls
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const onSelect = () => {
+      const selectedIndex = emblaApi.selectedScrollSnap();
+      const option = roomOptions[selectedIndex];
+      if (option !== selectedFormat) {
+        setSelectedFormat(option);
+      }
+    };
+
+    emblaApi.on("select", onSelect);
+    return () => {
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi, selectedFormat, setSelectedFormat]);
 
   useEffect(() => {
     onSelect(selectedFormat);
@@ -109,43 +190,140 @@ export const RoomOptionsSelector = ({
     clearSelectedFormat();
   };
 
-  return (
-    <div className="py-6">
-      <div className="mb-6 flex items-center justify-between">
-        <div className="text-lg font-bold sm:font-mono">
-          Tipos de habitación
-        </div>
-        <div className="flex items-center gap-4">
-          {selectedFormat && (
-            <button
-              onClick={handleReset}
-              className="text-text hover:text-text flex items-center gap-1 text-sm transition-colors duration-200"
+  const AvailableRoomsSpan = () => {
+    return (
+      <div className="mt-4 flex w-full items-center justify-between gap-4">
+        <div className="text-text-muted text-sm">
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={filteredRoomsCount}
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -10, opacity: 0 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
+              className="inline-block"
             >
-              <Undo className="h-4 w-4" />
-              <span>Ver todas</span>
-            </button>
-          )}
-          <span className="text-text-muted text-sm">
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={filteredRoomsCount}
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -10, opacity: 0 }}
-                transition={{ duration: 0.2, ease: "easeInOut" }}
-                className="inline-block"
-              >
-                {filteredRoomsCount}
-              </motion.span>
-            </AnimatePresence>{" "}
-            {filteredRoomsCount === 1 ? "habitación" : "habitaciones"}{" "}
-            disponibles
-          </span>
+              {filteredRoomsCount}
+            </motion.span>
+          </AnimatePresence>{" "}
+          {filteredRoomsCount === 1 ? "habitación" : "habitaciones"} disponibles
+        </div>
+
+        {selectedFormat && (
+          <button
+            onClick={handleReset}
+            className="text-text hover:text-text hidden items-center gap-1 text-sm transition-colors duration-200 md:flex"
+          >
+            <Undo className="h-4 w-4" />
+            <span>Ver todas</span>
+          </button>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <div className="pt-6 pb-2">
+      <div className="h2 mb-4 text-lg font-bold sm:font-mono md:mb-10">
+        Tipos de habitación
+      </div>
+
+      {/* Mobile Carousel */}
+      <div className="-mx-4 md:hidden">
+        <div
+          className="overflow-x-hidden overflow-y-visible pb-4"
+          ref={emblaRef}
+        >
+          <div className="flex">
+            {roomOptions.map((option, index) => {
+              const colors = getRoomColors(option.id);
+              const isSelected = selectedFormat === option;
+              const description =
+                roomDescriptions[option.id] || roomDescriptions.default;
+              const gradientColor = getRoomGradientColor(option.id);
+
+              return (
+                <div
+                  key={index}
+                  className={cn(
+                    "group bg-surface-1 dark:bg-surface-2 relative mx-3 flex flex-[0_0_80%] flex-col overflow-hidden rounded-xl border-2",
+                    isSelected && "shadow-lg",
+                  )}
+                  style={{
+                    borderColor: `${gradientColor}70`,
+                  }}
+                >
+                  {/* Gradient corner detail */}
+                  <div
+                    className={cn(
+                      "pointer-events-none absolute top-0 left-0 h-72 w-72 transition-opacity duration-200",
+                      isSelected ? "opacity-35" : "opacity-20",
+                    )}
+                    style={{
+                      background: `radial-gradient(circle at top left, ${gradientColor} 0%, transparent 70%)`,
+                    }}
+                  />
+
+                  {/* Color accent bar - minimal */}
+                  <div
+                    className={cn(
+                      "absolute top-0 right-0 left-0 h-1 rounded-t-xl transition-all duration-200",
+                      colors.bg,
+                    )}
+                  />
+
+                  {/* Mobile Layout - Reorganized */}
+                  <div className="relative z-10 flex h-full flex-col p-4">
+                    {/* Header Section */}
+                    <div className="mb-4">
+                      <h3
+                        className={cn(
+                          "mb-1",
+                          isSelected ? colors.textHover : "text-text",
+                        )}
+                      >
+                        Habitación {option.label}
+                      </h3>
+                      <p className="text-text-muted line-clamp-2 text-sm">
+                        {description}
+                      </p>
+                    </div>
+
+                    {/* Capacity Section */}
+                    <div className="mb-4">
+                      {getRoomIcon(option.id, isSelected)}
+                    </div>
+
+                    {/* Price Section */}
+                    <div className="mt-0">
+                      <div className="text-text-muted text-xs capitalize">
+                        Desde
+                      </div>
+                      <div
+                        className={cn(
+                          "flex items-baseline gap-1 text-xl font-bold",
+                          isSelected ? colors.textHover : "text-text",
+                        )}
+                      >
+                        ${option.price.toLocaleString("es-CL")}
+                        <span className="text-text-muted text-sm font-normal">
+                          / Noche
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      {/* Room Types Grid */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-5">
+      {/* Swipe Indicator - Below Carousel */}
+      <SwipeIndicator />
+
+      {/* Desktop Grid */}
+      <div className="mb-8 hidden grid-cols-2 gap-4 sm:grid-cols-3 md:grid md:grid-cols-5 lg:grid-cols-5">
         {roomOptions.map((option, index) => {
           const colors = getRoomColors(option.id);
           const isSelected = selectedFormat === option;
@@ -158,9 +336,7 @@ export const RoomOptionsSelector = ({
               key={index}
               className={cn(
                 "group bg-surface-1 dark:bg-surface-2 relative flex flex-col overflow-hidden rounded-xl border-2 p-4 transition-all duration-300",
-                isSelected
-                  ? "scale-105 shadow-lg"
-                  : "hover:scale-[1.02]",
+                isSelected ? "scale-105 shadow-lg" : "hover:scale-[1.02]",
               )}
               style={{
                 borderColor: `${gradientColor}70`,
@@ -230,11 +406,14 @@ export const RoomOptionsSelector = ({
                 </div>
                 <div
                   className={cn(
-                    "text-lg font-bold transition-colors duration-200",
+                    "text-lg font-bold inline-flex items-center gap-1 transition-colors duration-200",
                     isSelected ? colors.textHover : "text-text",
                   )}
                 >
                   ${option.price.toLocaleString("es-CL")}
+                  <span className="text-text-muted text-xs font-normal">
+                    / Noche
+                  </span>
                 </div>
               </div>
 
@@ -243,12 +422,10 @@ export const RoomOptionsSelector = ({
                 onClick={() => handleOptionClick(option)}
                 className={cn(
                   "relative z-10 w-full rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:scale-[1.02]",
-                  isSelected
-                    ? "text-white shadow-sm "
-                    : "text-text ",
+                  isSelected ? "text-white shadow-sm" : "text-text",
                 )}
                 style={{
-                  backgroundColor: isSelected 
+                  backgroundColor: isSelected
                     ? `${gradientColor}BB` // 80% opacity for moderate intensity when selected
                     : `${gradientColor}30`, // 20% opacity for lighter color when not selected
                 }}
@@ -260,6 +437,8 @@ export const RoomOptionsSelector = ({
           );
         })}
       </div>
+
+      <AvailableRoomsSpan />
     </div>
   );
 };
