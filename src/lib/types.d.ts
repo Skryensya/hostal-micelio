@@ -61,3 +61,19 @@ export interface ContactInfo {
   facebook: string;
   maps: string;
 }
+
+export interface RoomOption {
+  id: string;
+  label: string;
+  price: number;
+}
+
+export interface Booking {
+  id: string;
+  roomSlug: string;
+  startDay: number;
+  endDay: number;
+  guestName: string;
+  description: string;
+  color: string;
+}
