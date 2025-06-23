@@ -8,12 +8,20 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { format, addDays, startOfMonth } from "date-fns";
+import {
+  format,
+  isWithinInterval,
+  endOfMonth,
+  startOfMonth,
+  max,
+  min,
+} from "date-fns";
 import { es } from "date-fns/locale";
 import { Booking } from "@/lib/types";
 import { BookingModal } from "@/components/composed/BookingModal";
 import ROOMS from "../../db/ROOMS.json";
 import { cn } from "@/lib/utils";
+import { bookingService } from "@/lib/services/bookingService";
 
 // Colores para las reservas
 const BOOKING_COLORS = [
@@ -43,10 +51,11 @@ const BookingPopover: React.FC<BookingPopoverProps> = ({
   children,
 }) => {
   const room = ROOMS.find((r) => r.slug === booking.roomSlug);
-  const duration = booking.endDay - booking.startDay + 1;
-  const monthStart = startOfMonth(new Date());
-  const startDate = addDays(monthStart, booking.startDay - 1);
-  const endDate = addDays(monthStart, booking.endDay - 1);
+  const duration =
+    Math.floor(
+      (booking.endDate.getTime() - booking.startDate.getTime()) /
+        (1000 * 60 * 60 * 24),
+    ) + 1;
 
   return (
     <Popover>
@@ -68,8 +77,8 @@ const BookingPopover: React.FC<BookingPopoverProps> = ({
           <div className="flex items-center gap-2 text-sm text-gray-600">
             <Calendar className="h-4 w-4" />
             <span>
-              {format(startDate, "dd MMM", { locale: es })} -{" "}
-              {format(endDate, "dd MMM yyyy", { locale: es })}
+              {format(booking.startDate, "dd MMM", { locale: es })} -{" "}
+              {format(booking.endDate, "dd MMM yyyy", { locale: es })}
             </span>
           </div>
 
@@ -95,92 +104,133 @@ const BookingPopover: React.FC<BookingPopoverProps> = ({
   );
 };
 
+interface DragState {
+  isSelecting: boolean;
+  startDay: Date;
+  endDay: Date;
+  roomSlug: string;
+}
+
 export default function RoomTimeline() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingBooking, setEditingBooking] = useState<Booking | undefined>();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [dragState, setDragState] = useState<DragState | null>(null);
 
-  const days = Array.from(
-    { length: new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate() },
-    (_, i) => i + 1
+  // Calcular el segundo mes
+  const secondMonth = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth() + 1,
+    1,
   );
+
+  // Obtener los días para ambos meses
+  const getDaysInMonth = (date: Date) => {
+    return Array.from(
+      {
+        length: new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate(),
+      },
+      (_, i) => ({
+        dayNumber: i + 1,
+        date: new Date(date.getFullYear(), date.getMonth(), i + 1),
+      }),
+    );
+  };
+
+  const firstMonthDays = getDaysInMonth(currentDate);
+  const secondMonthDays = getDaysInMonth(secondMonth);
+  const allDays = [...firstMonthDays, ...secondMonthDays];
+
   const today = new Date();
-  const todayDayNumber = today.getMonth() === currentDate.getMonth() && today.getFullYear() === currentDate.getFullYear()
-    ? today.getDate()
-    : -1;
+  const isToday = (date: Date) => {
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
+  };
 
-  // Scroll to today's date only when viewing current month
+  // Cargar reservas del servicio al iniciar
   useEffect(() => {
-    if (scrollRef.current) {
-      const isCurrentMonth = today.getMonth() === currentDate.getMonth() && 
-                           today.getFullYear() === currentDate.getFullYear();
-      
-      if (isCurrentMonth) {
-        const scrollPosition = (todayDayNumber - 1) * 40;
-        scrollRef.current.scrollLeft = Math.max(0, scrollPosition - scrollRef.current.clientWidth / 2);
-      } else {
-        scrollRef.current.scrollLeft = 0;
-      }
-    }
-  }, [currentDate, todayDayNumber]);
-
-  // Cargar reservas del localStorage al iniciar
-  useEffect(() => {
-    const savedBookings = localStorage.getItem("roomBookings");
-    if (savedBookings) {
-      setBookings(JSON.parse(savedBookings));
-    }
+    const loadBookings = async () => {
+      const savedBookings = await bookingService.getAll();
+      setBookings(savedBookings);
+    };
+    loadBookings();
   }, []);
 
-  // Guardar reservas en localStorage cuando cambien
+  // Guardar reservas en el servicio cuando cambien
   useEffect(() => {
-    localStorage.setItem("roomBookings", JSON.stringify(bookings));
+    bookingService.save(bookings);
   }, [bookings]);
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!scrollRef.current) return;
-    setIsDragging(true);
-    setStartX(e.pageX - scrollRef.current.offsetLeft);
-    setScrollLeft(scrollRef.current.scrollLeft);
-  };
+  // Verificar si hay conflicto de fechas para una habitación
+  const checkBookingConflict = (
+    roomSlug: string,
+    startDate: Date,
+    endDate: Date,
+    excludeBookingId?: string,
+  ): boolean => {
+    return bookings.some((booking) => {
+      // Ignorar la reserva actual si estamos editando
+      if (excludeBookingId && booking.id === excludeBookingId) {
+        return false;
+      }
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !scrollRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    scrollRef.current.scrollLeft = scrollLeft - walk;
-  };
+      // Verificar si es la misma habitación
+      if (booking.roomSlug !== roomSlug) {
+        return false;
+      }
 
-  const handleMouseUp = () => setIsDragging(false);
-  const handleMouseLeave = () => setIsDragging(false);
+      // Verificar superposición de fechas
+      return (
+        isWithinInterval(startDate, {
+          start: booking.startDate,
+          end: booking.endDate,
+        }) ||
+        isWithinInterval(endDate, {
+          start: booking.startDate,
+          end: booking.endDate,
+        }) ||
+        isWithinInterval(booking.startDate, { start: startDate, end: endDate })
+      );
+    });
+  };
 
   const handleSaveBooking = (bookingData: Omit<Booking, "id" | "color">) => {
-    if (editingBooking) {
-      // Actualizar reserva existente
-      setBookings((prev) =>
-        prev.map((booking) =>
+    // Verificar conflictos antes de guardar
+    const hasConflict = checkBookingConflict(
+      bookingData.roomSlug,
+      bookingData.startDate,
+      bookingData.endDate,
+      editingBooking?.id,
+    );
+
+    if (hasConflict) {
+      return false;
+    }
+
+    const updatedBookings = editingBooking
+      ? bookings.map((booking) =>
           booking.id === editingBooking.id
             ? { ...booking, ...bookingData }
             : booking,
-        ),
-      );
-    } else {
-      // Crear nueva reserva
-      const newBooking: Booking = {
-        ...bookingData,
-        id: Math.random().toString(36).substr(2, 9),
-        color:
-          BOOKING_COLORS[Math.floor(Math.random() * BOOKING_COLORS.length)],
-      };
-      setBookings((prev) => [...prev, newBooking]);
-    }
+        )
+      : [
+          ...bookings,
+          {
+            ...bookingData,
+            id: Math.random().toString(36).substr(2, 9),
+            color:
+              BOOKING_COLORS[Math.floor(Math.random() * BOOKING_COLORS.length)],
+          },
+        ];
+
+    setBookings(updatedBookings);
     setEditingBooking(undefined);
+    return true;
   };
 
   const handleDeleteBooking = (bookingId: string) => {
@@ -189,21 +239,68 @@ export default function RoomTimeline() {
     }
   };
 
-  // Filtrar reservas para el mes actual
-  const filteredBookings = bookings.filter(booking => {
-    // Obtener el último día del mes actual
-    const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-    
-    // La reserva pertenece a este mes si:
-    // 1. El día de inicio está dentro del rango del mes (1 a último día)
-    // 2. El día de fin está dentro del rango del mes (1 a último día)
-    return booking.startDay >= 1 && booking.startDay <= lastDayOfMonth &&
-           booking.endDay >= 1 && booking.endDay <= lastDayOfMonth;
-  });
+  // Filtrar y ajustar reservas para ambos meses
+  const filteredBookings = bookings
+    .map((booking) => {
+      // Si la reserva no intersecta con ninguno de los dos meses, no la incluimos
+      const firstMonthStart = startOfMonth(currentDate);
+      const secondMonthEnd = endOfMonth(secondMonth);
 
-  const renderBooking = (booking: Booking) => {
-    const width = (booking.endDay - booking.startDay + 1) * 40;
-    const left = (booking.startDay - 1) * 40;
+      const bookingIntersectsMonths =
+        isWithinInterval(firstMonthStart, {
+          start: booking.startDate,
+          end: booking.endDate,
+        }) ||
+        isWithinInterval(secondMonthEnd, {
+          start: booking.startDate,
+          end: booking.endDate,
+        }) ||
+        isWithinInterval(booking.startDate, {
+          start: firstMonthStart,
+          end: secondMonthEnd,
+        });
+
+      if (!bookingIntersectsMonths) return null;
+
+      // Ajustar las fechas al rango visible
+      const adjustedStartDate = max([booking.startDate, firstMonthStart]);
+      const adjustedEndDate = min([booking.endDate, secondMonthEnd]);
+
+      return {
+        ...booking,
+        adjustedStartDate,
+        adjustedEndDate,
+      };
+    })
+    .filter(
+      (
+        booking,
+      ): booking is Booking & {
+        adjustedStartDate: Date;
+        adjustedEndDate: Date;
+      } => booking !== null,
+    );
+
+  const renderBooking = (
+    booking: Booking & { adjustedStartDate: Date; adjustedEndDate: Date },
+  ) => {
+    // Calcular la posición y ancho basado en las fechas ajustadas
+    const daysFromStart = Math.floor(
+      (booking.adjustedStartDate.getTime() - firstMonthDays[0].date.getTime()) /
+        (1000 * 60 * 60 * 24),
+    );
+    const daysUntilEnd = Math.floor(
+      (booking.adjustedEndDate.getTime() - firstMonthDays[0].date.getTime()) /
+        (1000 * 60 * 60 * 24),
+    );
+
+    const width = (daysUntilEnd - daysFromStart + 1) * 40;
+    const left = daysFromStart * 40;
+
+    // Determinar si la reserva continúa en meses adyacentes
+    const continuesFromPreviousMonth =
+      booking.startDate < startOfMonth(currentDate);
+    const continuesIntoNextMonth = booking.endDate > endOfMonth(secondMonth);
 
     return (
       <BookingPopover
@@ -216,37 +313,190 @@ export default function RoomTimeline() {
         onDelete={() => handleDeleteBooking(booking.id)}
       >
         <div
-          className={`absolute top-1 bottom-1 ${booking.color} flex cursor-pointer items-center justify-center rounded-md text-xs font-medium text-white shadow-sm transition-all hover:scale-105 hover:shadow-md`}
+          className={cn(
+            "absolute top-1 bottom-1",
+            booking.color,
+            "flex cursor-pointer items-center justify-center rounded-md text-xs font-medium text-white shadow-sm transition-all hover:scale-105 hover:shadow-md",
+            {
+              "rounded-l-none": continuesFromPreviousMonth,
+              "rounded-r-none": continuesIntoNextMonth,
+            },
+          )}
           style={{ left: `${left}px`, width: `${width}px` }}
-          title={booking.guestName}
+          title={`${booking.guestName} (${format(booking.startDate, "d MMM", { locale: es })} - ${format(booking.endDate, "d MMM", { locale: es })})`}
         >
-          <span className="truncate px-2">{booking.guestName}</span>
+          <div className="relative w-full px-2">
+            <span className="truncate">{booking.guestName}</span>
+            {(continuesFromPreviousMonth || continuesIntoNextMonth) && (
+              <div className="absolute inset-y-0 flex items-center">
+                {continuesFromPreviousMonth && (
+                  <div className="absolute -left-2 flex h-full items-center">
+                    <div className="h-2 w-2 rounded-full bg-white/50" />
+                  </div>
+                )}
+                {continuesIntoNextMonth && (
+                  <div className="absolute -right-2 flex h-full items-center">
+                    <div className="h-2 w-2 rounded-full bg-white/50" />
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </BookingPopover>
     );
   };
 
-  // Función para obtener el día de la semana en español
-  const getDayOfWeek = (dayNumber: number) => {
-    const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), dayNumber);
-    const daysOfWeek = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
-    return daysOfWeek[date.getDay()];
-  };
-
-  // Función para verificar si es fin de semana
-  const isWeekend = (dayNumber: number) => {
-    const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), dayNumber);
-    const dayOfWeek = date.getDay();
-    return dayOfWeek === 0 || dayOfWeek === 6;
-  };
-
   const handlePreviousMonth = () => {
-    setCurrentDate(prev => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
+    setCurrentDate(
+      (prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1),
+    );
   };
 
   const handleNextMonth = () => {
-    setCurrentDate(prev => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
+    setCurrentDate(
+      (prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1),
+    );
   };
+
+  const handleDayMouseDown = (
+    day: { dayNumber: number; date: Date },
+    roomSlug: string,
+    e: React.MouseEvent,
+  ) => {
+    // No iniciar selección si:
+    // 1. Es click derecho
+    // 2. Hay un booking en ese día
+    // 3. NO se está presionando Shift (modo reserva)
+    if (e.button !== 0 || isDateBooked(day.date, roomSlug) || !e.shiftKey) return;
+
+    // Prevenir que el evento llegue al contenedor de scroll
+    e.stopPropagation();
+
+    setDragState({
+      isSelecting: true,
+      startDay: day.date,
+      endDay: day.date,
+      roomSlug,
+    });
+  };
+
+  const handleDayMouseEnter = (
+    day: { dayNumber: number; date: Date },
+    roomSlug: string,
+    e: React.MouseEvent,
+  ) => {
+    // No continuar la selección si NO se presiona Shift
+    if (
+      !dragState?.isSelecting ||
+      roomSlug !== dragState.roomSlug ||
+      !e.shiftKey
+    )
+      return;
+
+    setDragState((prev) =>
+      prev
+        ? {
+            ...prev,
+            endDay: day.date,
+          }
+        : null,
+    );
+  };
+
+  const handleDayMouseUp = (e: React.MouseEvent) => {
+    // No finalizar la selección si NO se presiona Shift
+    if (!dragState || !e.shiftKey) return;
+
+    // Ordenar las fechas de inicio y fin
+    const startDate = new Date(
+      Math.min(dragState.startDay.getTime(), dragState.endDay.getTime()),
+    );
+    const endDate = new Date(
+      Math.max(dragState.startDay.getTime(), dragState.endDay.getTime()),
+    );
+
+    // Verificar si hay conflictos en el rango seleccionado
+    const hasConflict = checkBookingConflict(
+      dragState.roomSlug,
+      startDate,
+      endDate,
+    );
+
+    if (!hasConflict) {
+      // Pre-llenar los datos de la reserva
+      setEditingBooking({
+        id: "", // Será generado al guardar
+        guestName: "",
+        roomSlug: dragState.roomSlug,
+        startDate,
+        endDate,
+        description: "",
+        color: "", // Será generado al guardar
+      });
+      setIsModalOpen(true);
+    }
+
+    setDragState(null);
+  };
+
+  const isDateBooked = (date: Date, roomSlug: string) => {
+    return filteredBookings.some(
+      (booking) =>
+        booking.roomSlug === roomSlug &&
+        isWithinInterval(date, {
+          start: booking.adjustedStartDate,
+          end: booking.adjustedEndDate,
+        }),
+    );
+  };
+
+  const getSelectionStyle = (date: Date, roomSlug: string) => {
+    if (!dragState || dragState.roomSlug !== roomSlug) return "";
+
+    const isInRange = isWithinInterval(date, {
+      start: new Date(
+        Math.min(dragState.startDay.getTime(), dragState.endDay.getTime()),
+      ),
+      end: new Date(
+        Math.max(dragState.startDay.getTime(), dragState.endDay.getTime()),
+      ),
+    });
+
+    return isInRange ? "bg-blue-100 border-blue-200" : "";
+  };
+
+  // Modificar el renderizado de los días en el header
+  const renderMonthHeader = (date: Date, days: typeof firstMonthDays) => (
+    <div className="flex flex-col">
+      <div className="h-8 border-b bg-slate-100 px-3 flex items-center justify-center">
+        <span className="text-sm font-medium text-slate-600">
+          {format(date, "MMMM yyyy", { locale: es })}
+        </span>
+      </div>
+      <div className="flex h-10">
+        {days.map(({ dayNumber, date }) => {
+          const dayOfWeek = format(date, "EEE", { locale: es });
+          const weekend = [0, 6].includes(date.getDay());
+          const isCurrentDay = isToday(date);
+
+          return (
+            <div
+              key={date.toISOString()}
+              className={cn(
+                "flex h-10 w-10 flex-col items-center justify-center border-r border-slate-200 text-xs font-medium",
+                weekend ? "bg-slate-200 text-slate-700" : "text-slate-600",
+                isCurrentDay && "border-blue-300 bg-blue-100 font-bold text-blue-800"
+              )}
+            >
+              <span className="text-[10px] text-slate-500">{dayOfWeek}</span>
+              <span>{dayNumber}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 
   return (
     <div className="mx-auto w-full max-w-6xl overflow-hidden rounded-xl bg-white shadow-lg">
@@ -278,24 +528,29 @@ export default function RoomTimeline() {
             </Button>
           </div>
         </div>
-        <Button
-          onClick={() => {
-            setEditingBooking(undefined);
-            setIsModalOpen(true);
-          }}
-          className="bg-blue-600 text-white shadow-sm hover:bg-blue-700"
-        >
-          <div className="flex items-center gap-2">
-            Agregar Reserva
-            <Plus className="ml-2 h-4 w-4" />
-          </div>
-        </Button>
+        <div className="flex items-center gap-4">
+          <span className="text-sm text-slate-500">
+            Mantén presionado Shift + arrastrar para crear una reserva
+          </span>
+          <Button
+            onClick={() => {
+              setEditingBooking(undefined);
+              setIsModalOpen(true);
+            }}
+            className="bg-blue-600 text-white shadow-sm hover:bg-blue-700"
+          >
+            <div className="flex items-center gap-2">
+              Agregar Reserva
+              <Plus className="ml-2 h-4 w-4" />
+            </div>
+          </Button>
+        </div>
       </div>
 
       <div className="flex">
         {/* Rooms Column */}
         <div className="w-48 border-r bg-slate-50">
-          <div className="flex h-12 items-center border-b bg-slate-100 px-3">
+          <div className="flex h-[4.5rem] items-center justify-center border-b bg-slate-100 px-3">
             <span className="text-sm font-medium text-slate-600">
               Habitaciones
             </span>
@@ -303,7 +558,7 @@ export default function RoomTimeline() {
           {ROOMS.map((room) => (
             <div
               key={room.slug}
-              className="flex h-12 items-center border-b border-slate-200 bg-white px-3 transition-colors hover:bg-slate-50"
+              className="flex h-10 items-center border-b border-slate-200 bg-white px-3 transition-colors hover:bg-slate-50"
             >
               <div>
                 <span className="text-sm font-medium text-slate-700">
@@ -320,52 +575,47 @@ export default function RoomTimeline() {
         {/* Timeline */}
         <div
           ref={scrollRef}
-          className="flex-1 cursor-grab overflow-x-auto active:cursor-grabbing"
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseLeave}
+          className="flex-1 overflow-x-auto"
           style={{ userSelect: "none" }}
         >
-          <div className="relative" style={{ width: `${days.length * 40}px` }}>
+          <div
+            className="relative"
+            style={{ width: `${allDays.length * 40}px` }}
+          >
             {/* Days Header */}
-            <div className="h-12 border-b bg-slate-100 flex">
-              {days.map((day) => {
-                const dayOfWeek = getDayOfWeek(day);
-                const weekend = isWeekend(day);
-                const isToday = day === todayDayNumber;
-
-                return (
-                  <div
-                    key={day}
-                    className={cn(
-                      "w-10 h-12 border-r border-slate-200 flex flex-col items-center justify-center text-xs font-medium",
-                      weekend ? "bg-slate-200 text-slate-700" : "text-slate-600",
-                      isToday && "bg-blue-100 text-blue-800 font-bold border-blue-300"
-                    )}
-                  >
-                    <span className="text-[10px] text-slate-500">{dayOfWeek}</span>
-                    <span>{day}</span>
-                  </div>
-                );
-              })}
+            <div className="flex">
+              {renderMonthHeader(currentDate, firstMonthDays)}
+              {renderMonthHeader(secondMonth, secondMonthDays)}
             </div>
 
             {/* Room Rows */}
             {ROOMS.map((room) => (
-              <div key={room.slug} className="relative h-12 border-b border-slate-200">
+              <div key={room.slug} className="relative h-10 border-b border-slate-200">
                 <div className="flex h-full">
-                  {days.map((day) => {
-                    const weekend = isWeekend(day);
-                    const isToday = day === todayDayNumber;
+                  {allDays.map(({ dayNumber, date }) => {
+                    const weekend = [0, 6].includes(date.getDay());
+                    const isCurrentDay = isToday(date);
+                    const selectionClass = getSelectionStyle(date, room.slug);
+                    const isBooked = isDateBooked(date, room.slug);
+
                     return (
                       <div
-                        key={day}
+                        key={date.toISOString()}
                         className={cn(
-                          "w-10 h-full border-r border-slate-200 transition-colors",
+                          "h-full w-10 border-r border-slate-200 transition-colors",
                           weekend ? "bg-slate-100" : "hover:bg-slate-50",
-                          isToday && "bg-blue-50 border-blue-200"
+                          isCurrentDay && "border-blue-200 bg-blue-50",
+                          selectionClass,
+                          isBooked && "cursor-not-allowed bg-gray-100",
+                          !isBooked && "cursor-pointer"
                         )}
+                        onMouseDown={(e) =>
+                          handleDayMouseDown({ dayNumber, date }, room.slug, e)
+                        }
+                        onMouseEnter={(e) =>
+                          handleDayMouseEnter({ dayNumber, date }, room.slug, e)
+                        }
+                        onMouseUp={handleDayMouseUp}
                       />
                     );
                   })}
@@ -388,6 +638,7 @@ export default function RoomTimeline() {
         }}
         onSave={handleSaveBooking}
         editingBooking={editingBooking}
+        checkBookingConflict={checkBookingConflict}
       />
     </div>
   );

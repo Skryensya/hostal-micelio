@@ -70,10 +70,10 @@ export interface RoomOption {
 
 export interface Booking {
   id: string;
-  roomSlug: string;
-  startDay: number;
-  endDay: number;
   guestName: string;
-  description: string;
+  roomSlug: string;
+  startDate: Date;
+  endDate: Date;
+  description?: string;
   color: string;
 }
