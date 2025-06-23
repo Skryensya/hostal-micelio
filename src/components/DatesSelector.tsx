@@ -41,10 +41,7 @@ export function DatesSelector({
 }: DatesSelectorProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const selectedFormat = useSelectionStore((state) => state.selectedFormat);
-  const gradientColor = selectedFormat
-    ? getRoomGradientColor(selectedFormat.id)
-    : undefined;
+  const { selectedFormat } = useSelectionStore();
   const colors = selectedFormat
     ? getRoomColorsByFormat(selectedFormat.id)
     : undefined;
