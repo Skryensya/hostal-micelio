@@ -13,16 +13,12 @@ import { useSelectionStore } from "@/store/useSelectionStore";
 
 // Mapping for URL format parameters to format IDs
 const FORMAT_URL_MAP: Record<string, string> = {
-  'triple': 'HT',
-  'doble': 'HDB',
-  'matrimonial': 'HMA',
-  'individual': 'HIN',
-  'compartida': 'HCO'
+  triple: "HT",
+  doble: "HDB",
+  matrimonial: "HMA",
+  individual: "HIN",
+  compartida: "HCO",
 };
-
-// Reverse mapping for format IDs to URL parameters
-const REVERSE_FORMAT_URL_MAP: Record<string, string> = Object.entries(FORMAT_URL_MAP)
-  .reduce((acc, [key, value]) => ({ ...acc, [value]: key }), {});
 
 // Precompute price map for faster lookups
 const PRICE_MAP: Record<string, number> = ROOM_FORMATS.reduce(
@@ -43,11 +39,11 @@ export function Rooms() {
   // Set initial format from URL parameter only on first load
   useEffect(() => {
     if (!initialLoad) return;
-    
-    const formatParam = searchParams.get('formato');
+
+    const formatParam = searchParams.get("formato");
     if (formatParam && FORMAT_URL_MAP[formatParam]) {
       const formatId = FORMAT_URL_MAP[formatParam];
-      const format = ROOM_FORMATS.find(f => f.id === formatId);
+      const format = ROOM_FORMATS.find((f) => f.id === formatId);
       if (format && (!selectedFormat || selectedFormat.id !== formatId)) {
         setSelectedFormat(format);
       }
@@ -86,12 +82,12 @@ export function Rooms() {
       const formatA = selectedFormat?.id || a.defaultFormat;
       const priceA = PRICE_MAP[formatA] || 0;
       const totalA = priceA + (a.hasPrivateToilet ? 10000 : 0);
-      
+
       // Calcular precio para habitación B
       const formatB = selectedFormat?.id || b.defaultFormat;
       const priceB = PRICE_MAP[formatB] || 0;
       const totalB = priceB + (b.hasPrivateToilet ? 10000 : 0);
-      
+
       // Ordenar de menor a mayor precio
       return totalA - totalB;
     });
@@ -131,10 +127,7 @@ export function Rooms() {
           onSelect={() => {}}
           filteredRoomsCount={filteredRooms.length}
         />
-        <div
-          className="flex flex-col gap-8"
-          aria-labelledby="habitaciones"
-        >
+        <div className="flex flex-col gap-8" aria-labelledby="habitaciones">
           {filteredRooms.length === 0 ? (
             // Show skeletons only when no data
             <>
@@ -143,7 +136,9 @@ export function Rooms() {
               ))}
             </>
           ) : (
-            <div className={`transition-opacity duration-200 ${isTransitioning ? 'opacity-60' : 'opacity-100'}`}>
+            <div
+              className={`transition-opacity duration-200 ${isTransitioning ? "opacity-60" : "opacity-100"}`}
+            >
               <AnimatePresence mode="wait">
                 {filteredRooms.map((room) => (
                   <motion.div
@@ -152,10 +147,10 @@ export function Rooms() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    transition={{ 
+                    transition={{
                       duration: 0.25,
                       ease: "easeOut",
-                      layout: { duration: 0.3, ease: "easeInOut" }
+                      layout: { duration: 0.3, ease: "easeInOut" },
                     }}
                     className="mb-8 last:mb-0"
                   >

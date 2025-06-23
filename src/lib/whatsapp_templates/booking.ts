@@ -38,8 +38,6 @@ export function generateBookingTemplate({
     if (dateRange.to && dateRange.to > dateRange.from) {
       const formattedToDate = formatDate(dateRange.to, "d 'de' MMMM", { locale: es });
       message += ` hasta el *${formattedToDate}*`;
-
-      const days = numberOfNights + 1;
       message += ` (serían *${numberOfNights}* noches)`;
     }
   }

@@ -60,8 +60,7 @@ interface GuestCounterProps {
   onIncrement: () => void;
   onDecrement: () => void;
   minValue: number;
-  gradientColor?: string;
-  selectedFormat?: typeof ROOM_FORMATS[number];
+  selectedFormat?: (typeof ROOM_FORMATS)[number];
 }
 
 function GuestCounter({
@@ -71,16 +70,17 @@ function GuestCounter({
   onIncrement,
   onDecrement,
   minValue,
-  gradientColor,
   selectedFormat,
 }: GuestCounterProps) {
-  const buttonClassName = selectedFormat ? `border-2 border-${getRoomColorsByFormat(selectedFormat.id).border}` : undefined;
+  const buttonClassName = selectedFormat
+    ? `border-2 border-${getRoomColorsByFormat(selectedFormat.id).border}`
+    : undefined;
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">
         {icon}
-        <span className="text-sm text-text">{label}</span>
+        <span className="text-text text-sm">{label}</span>
       </div>
       <div className="flex items-center gap-2">
         <CounterButton
@@ -91,10 +91,7 @@ function GuestCounter({
           <Minus className="h-3 w-3" />
         </CounterButton>
         <span className="w-4 text-center text-sm">{value}</span>
-        <CounterButton
-          onClick={onIncrement}
-          className={buttonClassName}
-        >
+        <CounterButton onClick={onIncrement} className={buttonClassName}>
           <Plus className="h-3 w-3" />
         </CounterButton>
       </div>
@@ -143,7 +140,6 @@ function CapacityWarning({
   const getWarningMessage = () => {
     // Si excede la capacidad máxima de cualquier habitación
     if (totalGuests > maxCapacity) {
-      const extraGuests = totalGuests - maxCapacity;
       return `Esta habitación tiene capacidad para ${maxCapacity} personas. Puedes continuar con la cotización y te ayudaremos a encontrar la mejor forma de alojar a todo tu grupo de ${totalGuests} personas.`;
     }
 
@@ -323,108 +319,59 @@ function CapacityWarning({
 
 interface GuestsSelectorProps {
   room: Room;
-  onChange?: (adults: number, children: number) => void;
 }
 
-export function GuestsSelector({ room, onChange }: GuestsSelectorProps) {
+export function GuestsSelector({ room }: GuestsSelectorProps) {
   const {
     adults,
     children: childrenCount,
     setAdults,
     setChildren,
     selectedFormat,
-    setSelectedFormat,
+    setSelectedFormat
   } = useSelectionStore();
 
   const totalGuests = adults + childrenCount;
-  const isOverCapacity = totalGuests > room.capacity;
+
+  // Efecto para cambiar automáticamente al formato triple cuando hay 3 personas
+  useEffect(() => {
+    // Solo intentamos cambiar a formato triple si:
+    // 1. Hay exactamente 3 personas
+    // 2. La habitación permite formato triple
+    // 3. No estamos ya en formato triple
+    if (totalGuests === 3 && 
+        room.alternativeFormats.includes("HT") && 
+        selectedFormat?.id !== "HT") {
+      const tripleFormat = ROOM_FORMATS.find(f => f.id === "HT");
+      if (tripleFormat) {
+        setSelectedFormat(tripleFormat);
+      }
+    }
+  }, [totalGuests, room.alternativeFormats, selectedFormat?.id, setSelectedFormat]);
 
   const gradientColor = selectedFormat
     ? getRoomGradientColor(selectedFormat.id)
     : undefined;
 
-  // Función para cambiar manualmente el formato
-  const handleFormatChange = (formatId: string) => {
-    const format = ROOM_FORMATS.find((f) => f.id === formatId);
-    if (format) {
-      setSelectedFormat(format);
-    }
-  };
-
-  // Cambio automático de formato basado en la capacidad y número de huéspedes
-  useEffect(() => {
-    if (!selectedFormat || totalGuests === 0) return;
-
-    const availableFormats = [room.defaultFormat, ...room.alternativeFormats];
-    const currentCapacity = FORMAT_CAPACITIES[selectedFormat.id];
-
-    // Siempre buscar el formato más pequeño que pueda acomodar a los huéspedes
-    const suitableFormats = availableFormats
-      .filter((formatId) => FORMAT_CAPACITIES[formatId] >= totalGuests)
-      .sort((a, b) => FORMAT_CAPACITIES[a] - FORMAT_CAPACITIES[b]);
-
-    // Si hay un formato más pequeño que el actual y puede acomodar a los huéspedes
-    const smallestSuitableFormat = suitableFormats[0];
-    if (
-      smallestSuitableFormat &&
-      FORMAT_CAPACITIES[smallestSuitableFormat] < currentCapacity &&
-      FORMAT_CAPACITIES[smallestSuitableFormat] >= totalGuests
-    ) {
-      const newFormat = ROOM_FORMATS.find(
-        (f) => f.id === smallestSuitableFormat,
-      );
-      if (newFormat && newFormat.id !== selectedFormat.id) {
-        setSelectedFormat(newFormat);
-      }
-      return;
-    }
-
-    // Si el formato actual no puede acomodar a los huéspedes
-    if (totalGuests > currentCapacity) {
-      const newFormat = ROOM_FORMATS.find(
-        (f) => f.id === smallestSuitableFormat,
-      );
-      if (newFormat && newFormat.id !== selectedFormat.id) {
-        setSelectedFormat(newFormat);
-      }
-    }
-  }, [
-    totalGuests,
-    selectedFormat?.id,
-    room.defaultFormat,
-    room.alternativeFormats,
-  ]);
-
-  useEffect(() => {
-    if (totalGuests === 3 && room.alternativeFormats.includes("HT")) {
-      const tripleFormat = ROOM_FORMATS.find((f) => f.id === "HT");
-      if (tripleFormat && selectedFormat?.id !== "HT") {
-        setSelectedFormat(tripleFormat);
-      }
-    }
-  }, [totalGuests, room.alternativeFormats, selectedFormat, setSelectedFormat]);
-
   return (
     <div className={cn("space-y-3")}>
       <GuestCounter
         label="Adultos"
-        icon={<Users className="h-4 w-4 text-text-muted" />}
+        icon={<Users className="text-text-muted h-4 w-4" />}
         value={adults}
         onIncrement={() => setAdults(adults + 1)}
         onDecrement={() => setAdults(adults - 1)}
         minValue={1}
-        gradientColor={gradientColor}
         selectedFormat={selectedFormat}
       />
 
       <GuestCounter
         label="Niños"
-        icon={<Baby className="h-4 w-4 text-text-muted" />}
+        icon={<Baby className="text-text-muted h-4 w-4" />}
         value={childrenCount}
         onIncrement={() => setChildren(childrenCount + 1)}
         onDecrement={() => setChildren(childrenCount - 1)}
         minValue={0}
-        gradientColor={gradientColor}
         selectedFormat={selectedFormat}
       />
 
@@ -446,7 +393,6 @@ export function GuestsSelector({ room, onChange }: GuestsSelectorProps) {
         room={room}
         totalGuests={totalGuests}
         gradientColor={gradientColor}
-        onFormatChange={handleFormatChange}
       />
 
       {/* Enlace de búsqueda de habitaciones alternativas */}

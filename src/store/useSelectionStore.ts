@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { DateRange } from "react-day-picker";
-import { checkAvailabilityTemplate } from "@/lib/whatsapp_templates/availability";
 import { RoomOption } from "@/lib/types";
 
 // const FIFTEEN_MINUTES = 15 * 60 * 1000; // 15 minutes in milliseconds
@@ -21,7 +20,6 @@ interface SelectionState {
   decrementChildren: () => void;
   decrementAdults: () => void;
   incrementAdults: () => void;
-  getWhatsAppLink: () => string;
   selectedTab: "hospedaje" | "larga-estadia";
   setSelectedTab: (tab: "hospedaje" | "larga-estadia") => void;
 }
@@ -58,13 +56,14 @@ const customStorage = {
 
 export const useSelectionStore = create<SelectionState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       adults: 1,
       children: 0,
       dateRange: undefined,
       selectedTab: "hospedaje",
       selectedFormat: null,
-      setSelectedTab: (tab: "hospedaje" | "larga-estadia") => set({ selectedTab: tab }),
+      setSelectedTab: (tab: "hospedaje" | "larga-estadia") =>
+        set({ selectedTab: tab }),
       setAdults: (value) => {
         const newValue =
           typeof value === "string" ? parseInt(value || "1", 10) : value;
@@ -85,17 +84,10 @@ export const useSelectionStore = create<SelectionState>()(
       decrementAdults: () =>
         set((state) => ({ adults: Math.max(1, state.adults - 1) })),
       incrementAdults: () => set((state) => ({ adults: state.adults + 1 })),
-      getWhatsAppLink: () => {
-        const state = get();
-        return checkAvailabilityTemplate(state.dateRange, {
-          adults: state.adults,
-          children: state.children,
-        });
-      },
     }),
     {
       name: "selection-storage",
       storage: customStorage,
-    }
-  )
+    },
+  ),
 );

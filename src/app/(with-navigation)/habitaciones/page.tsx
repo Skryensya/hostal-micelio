@@ -1,11 +1,12 @@
-import { CheckAvailability } from "@/components/sections/CheckAvailabiliy";
+import { Suspense } from 'react';
 import { Rooms } from "@/components/sections/Rooms";
 
 export default function Habitaciones() {
   return (
     <main className="pt-32">
-      <CheckAvailability />
-      <Rooms />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Rooms />
+      </Suspense>
     </main>
   );
 }
