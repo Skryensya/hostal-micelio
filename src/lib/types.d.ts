@@ -1,45 +1,63 @@
-export type Room = {
-  name: string; // Nombre de la habitación
-  slug: string; // Identificador único
-  description: string; // Descripción de la habitación
-  floor: number; // Número de piso
-  beds: string[]; // Identificadores de las camas
-  capacity: number; // Capacidad máxima de personas
-  hasPrivateToilet?: boolean; // Indica si tiene baño privado (opcional)
-  defaultFormat: string; // Formato principal de la habitación
-  alternativeFormats: string[]; // Formatos alternativos disponibles
-  roomOptions?: RoomOption[]; // Opciones de habitación disponibles
-  gender?: "male" | "female" | null; // Género de la habitación
-};
+export interface Room {
+  name: string;
+  slug: string;
+  description: string;
+  floor: number;
+  beds: string[];
+  capacity: number;
+  hasPrivateToilet: boolean;
+  defaultFormat: string;
+  alternativeFormats: string[];
+  gender: string;
+}
 
-export type RoomImage = {
-  src: string; // Ruta de la imagen
-  alt: string; // Descripción alternativa para accesibilidad
-};
-
-export type TeamMember = {
-  name: string; // Nombre del miembro del equipo
-  subtitle: string; // Rol o título dentro del hostal
-  description: string; // Breve descripción de su aporte o personalidad
-  picture1: string; // Ruta a la primera imagen del miembro
-  picture2: string; // Ruta a la segunda imagen del miembro
-};
-export type Bed = {
-  name: string; // Nombre de la cama
-  size: string; // Tamaño de la cama (ej. "matrimonial", "1,5", "literas")
-  capacity: number; // Capacidad máxima de personas
-};
-
-export type Review = {
-  name: string; // Nombre del huesped
-  comment: string; // Comentario del huesped
-  url: string; // URL de la imagen del huesped
-  hue: number; // Color de fondo del avatar
-};
-
-export type RoomOption = {
+export interface RoomFormat {
   id: string;
-  label: string;
+  name: string;
+  description: string;
   price: number;
-  amenities: string[];
-};
+  capacity: number;
+}
+
+export interface RoomAmenity {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+}
+
+export interface Review {
+  id: string;
+  author: string;
+  rating: number;
+  comment: string;
+  date: string;
+  platform: string;
+}
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  bio: string;
+  image: string;
+}
+
+export interface Attraction {
+  id: string;
+  name: string;
+  description: string;
+  distance: string;
+  type: string;
+  image?: string;
+}
+
+export interface ContactInfo {
+  address: string;
+  phone: string;
+  email: string;
+  whatsapp: string;
+  instagram: string;
+  facebook: string;
+  maps: string;
+}
