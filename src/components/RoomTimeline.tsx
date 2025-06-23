@@ -111,10 +111,28 @@ interface DragState {
   roomSlug: string;
 }
 
+type EditingBooking = {
+  id: string;
+  color: string;
+  guestName: string;
+  roomSlug: string;
+  startDate: Date;
+  endDate: Date;
+  description: string;
+} | {
+  id: "";
+  color: "";
+  guestName: string;
+  roomSlug: string;
+  startDate: Date;
+  endDate: Date;
+  description: string;
+};
+
 export default function RoomTimeline() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingBooking, setEditingBooking] = useState<Booking | undefined>();
+  const [editingBooking, setEditingBooking] = useState<EditingBooking | undefined>();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [dragState, setDragState] = useState<DragState | null>(null);
@@ -212,7 +230,7 @@ export default function RoomTimeline() {
       return false;
     }
 
-    const updatedBookings = editingBooking
+    const updatedBookings = editingBooking?.id
       ? bookings.map((booking) =>
           booking.id === editingBooking.id
             ? { ...booking, ...bookingData }
@@ -230,6 +248,7 @@ export default function RoomTimeline() {
 
     setBookings(updatedBookings);
     setEditingBooking(undefined);
+    bookingService.save(updatedBookings);
     return true;
   };
 
@@ -307,7 +326,15 @@ export default function RoomTimeline() {
         key={booking.id}
         booking={booking}
         onEdit={() => {
-          setEditingBooking(booking);
+          setEditingBooking({
+            id: booking.id,
+            color: booking.color,
+            guestName: booking.guestName,
+            roomSlug: booking.roomSlug,
+            startDate: booking.startDate,
+            endDate: booking.endDate,
+            description: booking.description || "",
+          });
           setIsModalOpen(true);
         }}
         onDelete={() => handleDeleteBooking(booking.id)}
@@ -425,15 +452,16 @@ export default function RoomTimeline() {
 
     if (!hasConflict) {
       // Pre-llenar los datos de la reserva
-      setEditingBooking({
-        id: "", // Será generado al guardar
+      const newBooking: EditingBooking = {
+        id: "",
+        color: "",
         guestName: "",
         roomSlug: dragState.roomSlug,
         startDate,
         endDate,
         description: "",
-        color: "", // Será generado al guardar
-      });
+      };
+      setEditingBooking(newBooking);
       setIsModalOpen(true);
     }
 
@@ -637,7 +665,7 @@ export default function RoomTimeline() {
           setEditingBooking(undefined);
         }}
         onSave={handleSaveBooking}
-        editingBooking={editingBooking}
+        editingBooking={editingBooking as Booking}
         checkBookingConflict={checkBookingConflict}
       />
     </div>
