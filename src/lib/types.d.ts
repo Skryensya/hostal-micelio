@@ -68,12 +68,12 @@ export interface RoomOption {
   price: number;
 }
 
-export interface Booking {
+export type Booking = {
   id: string;
   guestName: string;
   roomSlug: string;
   startDate: Date;
   endDate: Date;
-  description?: string;
   color: string;
-}
+  notes?: string;
+};

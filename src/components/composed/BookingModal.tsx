@@ -12,16 +12,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Booking } from "@/lib/types";
 import ROOMS from "../../../db/ROOMS.json";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { DateRangeSelector } from "./DateRangeSelector";
-import { startOfDay } from "date-fns";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"; 
+import { DatesSelector } from "@/components/DatesSelector";
+import { DateRange } from "react-day-picker";
 
 interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (booking: Omit<Booking, "id" | "color">) => boolean;
   editingBooking?: Booking;
-  checkBookingConflict: (roomSlug: string, startDate: Date, endDate: Date, excludeBookingId?: string) => boolean;
+  checkBookingConflict: (
+    roomSlug: string,
+    startDate: Date,
+    endDate: Date,
+    excludeBookingId?: string,
+  ) => boolean;
 }
 
 export function BookingModal({
@@ -33,53 +44,46 @@ export function BookingModal({
 }: BookingModalProps) {
   const [guestName, setGuestName] = useState("");
   const [roomSlug, setRoomSlug] = useState("");
-  const [startDate, setStartDate] = useState<Date>();
-  const [endDate, setEndDate] = useState<Date>();
-  const [description, setDescription] = useState("");
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (editingBooking) {
       setGuestName(editingBooking.guestName);
       setRoomSlug(editingBooking.roomSlug);
-      setStartDate(editingBooking.startDate);
-      setEndDate(editingBooking.endDate);
-      setDescription(editingBooking.description || "");
+      setDateRange({
+        from: editingBooking.startDate,
+        to: editingBooking.endDate
+      });
     } else {
       setGuestName("");
       setRoomSlug("");
-      setStartDate(undefined);
-      setEndDate(undefined);
-      setDescription("");
+      setDateRange(undefined);
     }
     setError(null);
   }, [editingBooking, isOpen]);
-
-  const handleDateChange = (start: Date | undefined, end: Date | undefined) => {
-    if (start) setStartDate(startOfDay(start));
-    if (end) setEndDate(startOfDay(end));
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
     // Validaciones básicas
-    if (!guestName.trim()) {
-      setError("El nombre del huésped es requerido");
-      return;
-    }
     if (!roomSlug) {
       setError("Debes seleccionar una habitación");
       return;
     }
-    if (!startDate || !endDate) {
+    if (!dateRange?.from || !dateRange?.to) {
       setError("Debes seleccionar las fechas de la reserva");
       return;
     }
 
     // Verificar conflictos
-    const hasConflict = checkBookingConflict(roomSlug, startDate, endDate, editingBooking?.id);
+    const hasConflict = checkBookingConflict(
+      roomSlug,
+      dateRange.from,
+      dateRange.to,
+      editingBooking?.id,
+    );
     if (hasConflict) {
       setError("La habitación ya está reservada para las fechas seleccionadas");
       return;
@@ -87,11 +91,11 @@ export function BookingModal({
 
     // Intentar guardar
     const success = onSave({
-      guestName,
+      guestName: guestName.trim() || "Reservado",
       roomSlug,
-      startDate,
-      endDate,
-      description: description.trim() || undefined,
+      startDate: dateRange.from,
+      endDate: dateRange.to,
+      notes: "",
     });
 
     if (success) {
@@ -101,28 +105,33 @@ export function BookingModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={() => onClose()}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="border-neutral-200 bg-white p-5 sm:max-w-[400px]">
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle className="text-lg font-medium text-[hsl(317.8,52.9%,10%)]">
             {editingBooking ? "Editar Reserva" : "Nueva Reserva"}
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="guestName">Nombre del Huésped</Label>
-            <Input
-              id="guestName"
-              value={guestName}
-              onChange={(e) => setGuestName(e.target.value)}
-              placeholder="Nombre completo"
+        <form onSubmit={handleSubmit} className="mt-4 space-y-4">
+          <div className="space-y-1.5">
+            <Label className="text-sm text-[hsl(317.8,52.9%,10%,0.8)]">
+              Fechas
+            </Label>
+            <DatesSelector
+              dateRange={dateRange}
+              onDateRangeChange={setDateRange}
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="room">Habitación</Label>
+          <div className="space-y-1.5">
+            <Label
+              htmlFor="room"
+              className="text-sm text-[hsl(317.8,52.9%,10%,0.8)]"
+            >
+              Habitación
+            </Label>
             <Select value={roomSlug} onValueChange={setRoomSlug}>
-              <SelectTrigger>
+              <SelectTrigger className="h-9 w-full">
                 <SelectValue placeholder="Selecciona una habitación" />
               </SelectTrigger>
               <SelectContent>
@@ -135,41 +144,49 @@ export function BookingModal({
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <Label>Fechas</Label>
-            <DateRangeSelector
-              startDate={startDate}
-              endDate={endDate}
-              onDateChange={handleDateChange}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="description">Descripción (opcional)</Label>
+          <div className="space-y-1.5">
+            <Label
+              htmlFor="guestName"
+              className="text-sm text-[hsl(317.8,52.9%,10%,0.8)]"
+            >
+              Huésped{" "}
+              <span className="text-[hsl(317.8,52.9%,10%,0.6)]">
+                (opcional)
+              </span>
+            </Label>
             <Input
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Notas adicionales"
+              id="guestName"
+              value={guestName}
+              onChange={(e) => setGuestName(e.target.value)}
+              placeholder="Nombre completo o dejar vacío"
+              className="h-9"
             />
           </div>
 
           {error && (
-            <div className="rounded-md bg-red-50 p-3">
-              <p className="text-sm text-red-600">{error}</p>
+            <div className="rounded-md bg-red-50 p-2.5">
+              <p className="text-xs text-red-600">{error}</p>
             </div>
           )}
 
-          <div className="flex justify-end space-x-2">
-            <Button type="button" variant="outline" onClick={onClose}>
+          <div className="flex justify-end gap-2 pt-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onClose}
+              className="h-9"
+            >
               Cancelar
             </Button>
-            <Button type="submit">
-              {editingBooking ? "Guardar Cambios" : "Crear Reserva"}
+            <Button
+              type="submit"
+              className="h-9 bg-[hsl(314,80%,71%)] text-white hover:bg-[hsl(314,80%,61%)]"
+            >
+              {editingBooking ? "Guardar" : "Crear"}
             </Button>
           </div>
         </form>
       </DialogContent>
     </Dialog>
   );
-} 
+}

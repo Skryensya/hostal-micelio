@@ -22,19 +22,20 @@ import { BookingModal } from "@/components/composed/BookingModal";
 import ROOMS from "../../db/ROOMS.json";
 import { cn } from "@/lib/utils";
 import { bookingService } from "@/lib/services/bookingService";
+import { BookingChip } from "@/components/composed/BookingChip";
 
 // Colores para las reservas
 const BOOKING_COLORS = [
-  "bg-blue-500",
-  "bg-emerald-500",
-  "bg-purple-500",
-  "bg-orange-500",
-  "bg-pink-500",
-  "bg-teal-500",
-  "bg-indigo-500",
-  "bg-rose-500",
-  "bg-cyan-500",
-  "bg-amber-500",
+  "bg-[hsl(314,80%,71%)]", // primary
+  "bg-[hsl(177,100%,31%)]", // accent
+  "bg-[hsl(22,85%,57%)]", // secondary
+  "bg-[hsl(280,21.1%,36%)]", // surface-inverted
+  "bg-[hsl(284,40%,74%)]", // surface-3
+  "bg-[#59578e]", // hostal color
+  "bg-[#561944]", // hostal color
+  "bg-[#F3D39E]", // hostal color
+  "bg-[#EE7934]", // hostal color
+  "bg-[#a0618d]", // to-transform
 ];
 
 interface BookingPopoverProps {
@@ -60,43 +61,50 @@ const BookingPopover: React.FC<BookingPopoverProps> = ({
   return (
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent className="w-80">
-        <div className="space-y-4">
-          <div>
-            <h4 className="text-lg font-semibold">{booking.guestName}</h4>
-            <div className="text-sm text-gray-500">{room?.name}</div>
+      <PopoverContent className="w-64 p-3">
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <div>
+              <h4 className="font-medium">{booking.guestName}</h4>
+              <div className="text-xs text-[hsl(317.8,52.9%,10%,0.6)]">{room?.name}</div>
+            </div>
+            <div className="flex gap-1">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 text-[hsl(317.8,52.9%,10%,0.8)] hover:text-[hsl(317.8,52.9%,10%)]"
+                onClick={onEdit}
+              >
+                <Edit className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 text-red-600/80 hover:text-red-600"
+                onClick={() => {
+                  if (confirm("¿Estás seguro de que quieres eliminar esta reserva?")) {
+                    onDelete();
+                  }
+                }}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <Clock className="h-4 w-4" />
-            <span>
-              {duration} día{duration > 1 ? "s" : ""}
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <Calendar className="h-4 w-4" />
+          <div className="flex items-center gap-2 text-xs text-[hsl(317.8,52.9%,10%,0.8)]">
+            <Calendar className="h-3 w-3" />
             <span>
               {format(booking.startDate, "dd MMM", { locale: es })} -{" "}
               {format(booking.endDate, "dd MMM yyyy", { locale: es })}
             </span>
           </div>
 
-          {booking.description && (
-            <div className="rounded-lg bg-gray-50 p-3">
-              <p className="text-sm text-gray-700">{booking.description}</p>
-            </div>
-          )}
-
-          <div className="flex space-x-2 border-t pt-2">
-            <Button variant="outline" onClick={onEdit} className="flex-1">
-              <Edit className="mr-2 h-4 w-4" />
-              Editar
-            </Button>
-            <Button variant="secondary" onClick={onDelete} className="flex-1">
-              <Trash2 className="mr-2 h-4 w-4" />
-              Borrar
-            </Button>
+          <div className="flex items-center gap-2 text-xs text-[hsl(317.8,52.9%,10%,0.8)]">
+            <Clock className="h-3 w-3" />
+            <span>
+              {duration} día{duration > 1 ? "s" : ""}
+            </span>
           </div>
         </div>
       </PopoverContent>
@@ -118,7 +126,7 @@ type EditingBooking = {
   roomSlug: string;
   startDate: Date;
   endDate: Date;
-  description: string;
+  notes: string;
 } | {
   id: "";
   color: "";
@@ -126,7 +134,7 @@ type EditingBooking = {
   roomSlug: string;
   startDate: Date;
   endDate: Date;
-  description: string;
+  notes: string;
 };
 
 export default function RoomTimeline() {
@@ -136,6 +144,54 @@ export default function RoomTimeline() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [dragState, setDragState] = useState<DragState | null>(null);
+  const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Limpiar el intervalo de auto-scroll cuando se desmonta el componente
+  useEffect(() => {
+    return () => {
+      if (scrollIntervalRef.current) {
+        clearInterval(scrollIntervalRef.current);
+      }
+    };
+  }, []);
+
+  // Función para manejar el auto-scroll
+  const handleAutoScroll = (e: React.MouseEvent) => {
+    if (!scrollRef.current || !dragState?.isSelecting) return;
+
+    const container = scrollRef.current;
+    const containerRect = container.getBoundingClientRect();
+    const mouseX = e.clientX - containerRect.left;
+    const scrollSpeed = 15; // píxeles por intervalo
+    const scrollThreshold = 100; // distancia desde el borde para activar el auto-scroll
+
+    // Limpiar el intervalo existente
+    if (scrollIntervalRef.current) {
+      clearInterval(scrollIntervalRef.current);
+      scrollIntervalRef.current = null;
+    }
+
+    // Si el mouse está cerca del borde derecho
+    if (mouseX > containerRect.width - scrollThreshold) {
+      scrollIntervalRef.current = setInterval(() => {
+        container.scrollLeft += scrollSpeed;
+      }, 50);
+    }
+    // Si el mouse está cerca del borde izquierdo
+    else if (mouseX < scrollThreshold) {
+      scrollIntervalRef.current = setInterval(() => {
+        container.scrollLeft -= scrollSpeed;
+      }, 50);
+    }
+  };
+
+  // Detener el auto-scroll cuando se suelta el mouse
+  const stopAutoScroll = () => {
+    if (scrollIntervalRef.current) {
+      clearInterval(scrollIntervalRef.current);
+      scrollIntervalRef.current = null;
+    }
+  };
 
   // Calcular el segundo mes
   const secondMonth = new Date(
@@ -333,42 +389,22 @@ export default function RoomTimeline() {
             roomSlug: booking.roomSlug,
             startDate: booking.startDate,
             endDate: booking.endDate,
-            description: booking.description || "",
+            notes: booking.notes || "",
           });
           setIsModalOpen(true);
         }}
         onDelete={() => handleDeleteBooking(booking.id)}
       >
         <div
-          className={cn(
-            "absolute top-1 bottom-1",
-            booking.color,
-            "flex cursor-pointer items-center justify-center rounded-md text-xs font-medium text-white shadow-sm transition-all hover:scale-105 hover:shadow-md",
-            {
-              "rounded-l-none": continuesFromPreviousMonth,
-              "rounded-r-none": continuesIntoNextMonth,
-            },
-          )}
+          className="absolute top-1 bottom-1"
           style={{ left: `${left}px`, width: `${width}px` }}
-          title={`${booking.guestName} (${format(booking.startDate, "d MMM", { locale: es })} - ${format(booking.endDate, "d MMM", { locale: es })})`}
         >
-          <div className="relative w-full px-2">
-            <span className="truncate">{booking.guestName}</span>
-            {(continuesFromPreviousMonth || continuesIntoNextMonth) && (
-              <div className="absolute inset-y-0 flex items-center">
-                {continuesFromPreviousMonth && (
-                  <div className="absolute -left-2 flex h-full items-center">
-                    <div className="h-2 w-2 rounded-full bg-white/50" />
-                  </div>
-                )}
-                {continuesIntoNextMonth && (
-                  <div className="absolute -right-2 flex h-full items-center">
-                    <div className="h-2 w-2 rounded-full bg-white/50" />
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+          <BookingChip
+            booking={booking}
+            showDates={false}
+            continuesFromPreviousMonth={continuesFromPreviousMonth}
+            continuesIntoNextMonth={continuesIntoNextMonth}
+          />
         </div>
       </BookingPopover>
     );
@@ -421,6 +457,8 @@ export default function RoomTimeline() {
     )
       return;
 
+    handleAutoScroll(e);
+
     setDragState((prev) =>
       prev
         ? {
@@ -432,6 +470,9 @@ export default function RoomTimeline() {
   };
 
   const handleDayMouseUp = (e: React.MouseEvent) => {
+    // Detener el auto-scroll
+    stopAutoScroll();
+
     // No finalizar la selección si NO se presiona Shift
     if (!dragState || !e.shiftKey) return;
 
@@ -459,7 +500,7 @@ export default function RoomTimeline() {
         roomSlug: dragState.roomSlug,
         startDate,
         endDate,
-        description: "",
+        notes: "",
       };
       setEditingBooking(newBooking);
       setIsModalOpen(true);
@@ -494,11 +535,32 @@ export default function RoomTimeline() {
     return isInRange ? "bg-blue-100 border-blue-200" : "";
   };
 
+  // Función para contar habitaciones ocupadas por día
+  const getOccupiedRoomsCount = (date: Date) => {
+    return ROOMS.reduce((count, room) => {
+      const isOccupied = filteredBookings.some(
+        (booking) =>
+          booking.roomSlug === room.slug &&
+          isWithinInterval(date, {
+            start: booking.adjustedStartDate,
+            end: booking.adjustedEndDate,
+          })
+      );
+      return isOccupied ? count + 1 : count;
+    }, 0);
+  };
+
   // Modificar el renderizado de los días en el header
-  const renderMonthHeader = (date: Date, days: typeof firstMonthDays) => (
-    <div className="flex flex-col">
-      <div className="h-8 border-b bg-slate-100 px-3 flex items-center justify-center">
-        <span className="text-sm font-medium text-slate-600">
+  const renderMonthHeader = (date: Date, days: typeof firstMonthDays, isSecondMonth: boolean) => (
+    <div className={cn(
+      "flex flex-col relative",
+      isSecondMonth ? [
+        "bg-[hsl(284,37%,95%)]",
+        "before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[1px] before:bg-[hsl(284,40%,85%)]"
+      ] : "bg-[hsl(284,57%,98%)]"
+    )}>
+      <div className="h-8 border-b bg-[hsl(284,40%,88%)] px-3 flex items-center justify-center">
+        <span className="text-sm font-medium text-[hsl(317.8,52.9%,10%)]">
           {format(date, "MMMM yyyy", { locale: es })}
         </span>
       </div>
@@ -507,18 +569,53 @@ export default function RoomTimeline() {
           const dayOfWeek = format(date, "EEE", { locale: es });
           const weekend = [0, 6].includes(date.getDay());
           const isCurrentDay = isToday(date);
+          const occupiedRooms = getOccupiedRoomsCount(date);
+          const totalRooms = ROOMS.length;
+          const occupancyText = `${occupiedRooms}/${totalRooms}`;
+          const occupancyColor = occupiedRooms === totalRooms 
+            ? "text-red-500"
+            : occupiedRooms > totalRooms / 2 
+              ? "text-orange-500"
+              : occupiedRooms > 0
+                ? "text-green-500"
+                : "text-[hsl(317.8,52.9%,10%,0.6)]";
 
           return (
             <div
               key={date.toISOString()}
               className={cn(
-                "flex h-10 w-10 flex-col items-center justify-center border-r border-slate-200 text-xs font-medium",
-                weekend ? "bg-slate-200 text-slate-700" : "text-slate-600",
-                isCurrentDay && "border-blue-300 bg-blue-100 font-bold text-blue-800"
+                "flex h-10 w-10 flex-col items-center justify-center border-r border-[hsl(0,0%,82%)] text-xs font-medium relative group",
+                weekend ? "bg-[hsl(284,40%,92%)]" : "",
+                isCurrentDay && [
+                  "border-[hsl(314,80%,71%)]",
+                  "bg-[hsl(314,80%,71%,0.15)]",
+                  "font-bold",
+                  "ring-2",
+                  "ring-[hsl(314,80%,71%)]",
+                  "ring-offset-2",
+                  "ring-offset-[hsl(284,57%,98%)]",
+                  "z-10"
+                ]
               )}
             >
-              <span className="text-[10px] text-slate-500">{dayOfWeek}</span>
-              <span>{dayNumber}</span>
+              <div className={cn(
+                "absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-[hsl(284,57%,98%)] border border-[hsl(284,40%,85%)] rounded-md text-[10px] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity z-20",
+                "before:content-[''] before:absolute before:bottom-0 before:left-1/2 before:-translate-x-1/2 before:translate-y-1/2 before:rotate-45 before:w-2 before:h-2 before:bg-[hsl(284,57%,98%)] before:border-r before:border-b before:border-[hsl(284,40%,85%)]",
+                occupancyColor
+              )}>
+                {occupancyText}
+              </div>
+              <span className={cn(
+                "text-[10px]",
+                isCurrentDay ? "text-[hsl(314,80%,71%)]" : "text-[hsl(317.8,52.9%,10%,0.6)]"
+              )}>
+                {dayOfWeek}
+              </span>
+              <span className={cn(
+                isCurrentDay ? "text-[hsl(314,80%,71%)]" : "text-[hsl(317.8,52.9%,10%)]"
+              )}>
+                {dayNumber}
+              </span>
             </div>
           );
         })}
@@ -527,11 +624,11 @@ export default function RoomTimeline() {
   );
 
   return (
-    <div className="mx-auto w-full max-w-6xl overflow-hidden rounded-xl bg-white shadow-lg">
+    <div className="mx-auto w-full overflow-hidden bg-transparent">
       {/* Header */}
-      <div className="flex items-center justify-between border-b bg-gradient-to-r from-slate-50 to-slate-100 p-6">
+      <div className="flex items-center justify-between border-b bg-gradient-to-r from-[hsl(284,57%,98%)] to-[hsl(284,37%,95%)] p-6">
         <div className="flex items-center gap-4">
-          <h2 className="text-xl font-semibold text-slate-800">
+          <h2 className="text-xl font-semibold text-[hsl(317.8,52.9%,10%)]">
             Cronograma de Habitaciones
           </h2>
           <div className="flex items-center gap-2">
@@ -557,7 +654,7 @@ export default function RoomTimeline() {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <span className="text-sm text-slate-500">
+          <span className="text-sm text-[hsl(317.8,52.9%,10%,0.6)]">
             Mantén presionado Shift + arrastrar para crear una reserva
           </span>
           <Button
@@ -565,7 +662,7 @@ export default function RoomTimeline() {
               setEditingBooking(undefined);
               setIsModalOpen(true);
             }}
-            className="bg-blue-600 text-white shadow-sm hover:bg-blue-700"
+            className="bg-[hsl(314,80%,71%)] text-white shadow-sm hover:bg-[hsl(314,80%,61%)]"
           >
             <div className="flex items-center gap-2">
               Agregar Reserva
@@ -577,24 +674,22 @@ export default function RoomTimeline() {
 
       <div className="flex">
         {/* Rooms Column */}
-        <div className="w-48 border-r bg-slate-50">
-          <div className="flex h-[4.5rem] items-center justify-center border-b bg-slate-100 px-3">
-            <span className="text-sm font-medium text-slate-600">
+        <div className="w-48 border-r bg-[hsl(284,57%,98%)]">
+          <div className="flex h-[4.5rem] items-center justify-center border-b bg-[hsl(284,40%,88%)] px-3">
+            <span className="text-sm font-medium text-[hsl(317.8,52.9%,10%)]">
               Habitaciones
             </span>
           </div>
           {ROOMS.map((room) => (
             <div
               key={room.slug}
-              className="flex h-10 items-center border-b border-slate-200 bg-white px-3 transition-colors hover:bg-slate-50"
+              className="flex h-10 items-center border-b border-[hsl(0,0%,82%)] bg-[hsl(284,57%,98%)] px-3 transition-colors hover:bg-[hsl(284,37%,95%)]"
             >
               <div>
-                <span className="text-sm font-medium text-slate-700">
+                <span className="text-sm font-medium text-[hsl(317.8,52.9%,10%)]">
                   {room.name}
                 </span>
-                <div className="text-xs text-slate-500">
-                  {room.capacity} persona{room.capacity > 1 ? "s" : ""}
-                </div>
+                 
               </div>
             </div>
           ))}
@@ -605,6 +700,7 @@ export default function RoomTimeline() {
           ref={scrollRef}
           className="flex-1 overflow-x-auto"
           style={{ userSelect: "none" }}
+          onMouseLeave={stopAutoScroll}
         >
           <div
             className="relative"
@@ -612,29 +708,32 @@ export default function RoomTimeline() {
           >
             {/* Days Header */}
             <div className="flex">
-              {renderMonthHeader(currentDate, firstMonthDays)}
-              {renderMonthHeader(secondMonth, secondMonthDays)}
+              {renderMonthHeader(currentDate, firstMonthDays, false)}
+              {renderMonthHeader(secondMonth, secondMonthDays, true)}
             </div>
 
             {/* Room Rows */}
             {ROOMS.map((room) => (
-              <div key={room.slug} className="relative h-10 border-b border-slate-200">
+              <div key={room.slug} className="relative h-10 border-b border-[hsl(0,0%,82%)]">
                 <div className="flex h-full">
-                  {allDays.map(({ dayNumber, date }) => {
+                  {allDays.map(({ dayNumber, date }, index) => {
                     const weekend = [0, 6].includes(date.getDay());
                     const isCurrentDay = isToday(date);
                     const selectionClass = getSelectionStyle(date, room.slug);
                     const isBooked = isDateBooked(date, room.slug);
+                    const isSecondMonth = index >= firstMonthDays.length;
+                    const isFirstDayOfSecondMonth = index === firstMonthDays.length;
 
                     return (
                       <div
                         key={date.toISOString()}
                         className={cn(
-                          "h-full w-10 border-r border-slate-200 transition-colors",
-                          weekend ? "bg-slate-100" : "hover:bg-slate-50",
-                          isCurrentDay && "border-blue-200 bg-blue-50",
+                          "h-full w-10 border-r border-[hsl(0,0%,82%)] transition-colors relative",
+                          weekend ? "bg-[hsl(284,40%,92%)]" : isSecondMonth ? "bg-[hsl(284,37%,95%)]" : "bg-[hsl(284,57%,98%)] hover:bg-[hsl(284,37%,95%)]",
+                          isCurrentDay && "border-[hsl(314,80%,71%)] bg-[hsl(314,80%,71%,0.1)]",
+                          isFirstDayOfSecondMonth && "before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[1px] before:bg-[hsl(284,40%,85%)]",
                           selectionClass,
-                          isBooked && "cursor-not-allowed bg-gray-100",
+                          isBooked && "cursor-not-allowed bg-[hsl(0,0%,92%)]",
                           !isBooked && "cursor-pointer"
                         )}
                         onMouseDown={(e) =>

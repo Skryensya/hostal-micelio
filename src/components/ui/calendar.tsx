@@ -173,13 +173,13 @@ function Calendar({
         button_previous: cn(
           buttonVariants({ variant: buttonVariant }),
           "size-(--cell-size) aria-disabled:opacity-50 p-0 select-none",
-          colorClasses?.text,
+          colorClasses?.text || "text-[hsl(var(--text))]",
           defaultClassNames.button_previous,
         ),
         button_next: cn(
           buttonVariants({ variant: buttonVariant }),
           "size-(--cell-size) aria-disabled:opacity-50 p-0 select-none",
-          colorClasses?.text,
+          colorClasses?.text || "text-[hsl(var(--text))]",
           defaultClassNames.button_next,
         ),
         month_caption: cn(
@@ -191,7 +191,7 @@ function Calendar({
           defaultClassNames.dropdowns,
         ),
         dropdown_root: cn(
-          "relative has-focus:border-neutral-950 border border-neutral-200 shadow-xs has-focus:ring-neutral-950/50 has-focus:ring-[3px] rounded-md",
+          "relative has-focus:border-[hsl(var(--text))] border border-[hsl(var(--text-muted))] shadow-xs has-focus:ring-[hsl(var(--text))]/50 has-focus:ring-[3px] rounded-md",
           defaultClassNames.dropdown_root,
         ),
         dropdown: cn("absolute inset-0 opacity-0", defaultClassNames.dropdown),
@@ -199,14 +199,14 @@ function Calendar({
           "select-none font-medium",
           captionLayout === "label"
             ? "text-sm"
-            : "rounded-md pl-2 pr-1 flex items-center gap-1 text-sm h-8 [&>svg]:text-neutral-500 [&>svg]:size-3.5",
-          colorClasses?.text,
+            : "rounded-md pl-2 pr-1 flex items-center gap-1 text-sm h-8 [&>svg]:text-[hsl(var(--text-muted))] [&>svg]:size-3.5",
+          colorClasses?.text || "text-[hsl(var(--text))]",
           defaultClassNames.caption_label,
         ),
         table: "w-full border-collapse",
         weekdays: cn("flex", defaultClassNames.weekdays),
         weekday: cn(
-          "text-neutral-500 rounded-md flex-1 font-normal text-xs select-none",
+          "text-[hsl(var(--text-muted))] rounded-md flex-1 font-normal text-xs select-none",
           defaultClassNames.weekday,
         ),
         week: cn("flex w-full mt-2", defaultClassNames.week),
@@ -215,7 +215,7 @@ function Calendar({
           defaultClassNames.week_number_header,
         ),
         week_number: cn(
-          "text-xs select-none text-neutral-500",
+          "text-xs select-none text-[hsl(var(--text-muted))]",
           defaultClassNames.week_number,
         ),
         day: cn(
@@ -224,30 +224,30 @@ function Calendar({
           defaultClassNames.day,
         ),
         range_start: cn(
-          colorClasses?.rangeStart || "bg-neutral-500",
+          colorClasses?.rangeStart || "bg-[hsl(var(--primary))]",
           "rounded-full",
           defaultClassNames.range_start,
         ),
         range_middle: cn(
-          colorClasses?.rangeMiddle || "bg-neutral-100",
+          colorClasses?.rangeMiddle || "bg-[hsl(var(--primary)_/_0.1)]",
           "rounded-full",
           defaultClassNames.range_middle,
         ),
         range_end: cn(
-          colorClasses?.rangeEnd || "bg-neutral-500",
+          colorClasses?.rangeEnd || "bg-[hsl(var(--primary))]",
           "rounded-full",
           defaultClassNames.range_end,
         ),
         today: cn(
-          colorClasses?.today || "bg-neutral-500",
+          colorClasses?.today || "bg-[hsl(var(--primary)_/_0.1)]",
           "rounded-full",
           defaultClassNames.today,
         ),
         outside: cn(
-          "text-neutral-500 aria-selected:text-neutral-500",
+          "text-[hsl(var(--text-muted))] aria-selected:text-[hsl(var(--text-muted))]",
           defaultClassNames.outside,
         ),
-        disabled: cn("text-neutral-500 opacity-50", defaultClassNames.disabled),
+        disabled: cn("text-[hsl(var(--text-muted))] opacity-50", defaultClassNames.disabled),
         hidden: cn("invisible", defaultClassNames.hidden),
         ...classNames,
       }}
@@ -306,8 +306,8 @@ function Calendar({
               data-today={modifiers.today}
               className={cn(
                 "flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 leading-none font-normal",
-                "group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px]",
-                colorClasses && [
+                "group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-[hsl(var(--text-muted))]",
+                colorClasses ? [
                   colorClasses.hover,
                   colorClasses.focus,
                   colorClasses.focusBorder,
@@ -323,6 +323,23 @@ function Calendar({
                   `data-[range-middle=true]:${colorClasses.rangeMiddleText}`,
                   `data-[today=true]:${colorClasses.today}`,
                   `data-[today=true]:${colorClasses.todayText}`,
+                ] : [
+                  "hover:bg-[hsl(var(--text)_/_0.1)]",
+                  "focus:bg-[hsl(var(--text)_/_0.1)]",
+                  "focus:ring-[hsl(var(--text))]",
+                  "data-[selected-single=true]:bg-[hsl(var(--primary))]",
+                  "data-[selected-single=true]:text-[hsl(var(--text-inverted))]",
+                  "data-[range-start=true]:bg-[hsl(var(--primary))]",
+                  "data-[range-start=true]:text-[hsl(var(--text-inverted))]",
+                  "data-[range-start=true]:hover:bg-[hsl(var(--primary)_/_0.9)]",
+                  "data-[range-end=true]:bg-[hsl(var(--primary))]",
+                  "data-[range-end=true]:text-[hsl(var(--text-inverted))]",
+                  "data-[range-end=true]:hover:bg-[hsl(var(--primary)_/_0.9)]",
+                  "data-[range-middle=true]:bg-[hsl(var(--primary)_/_0.1)]",
+                  "data-[range-middle=true]:text-[hsl(var(--text))]",
+                  "data-[today=true]:bg-[hsl(var(--primary)_/_0.1)]",
+                  "data-[today=true]:text-[hsl(var(--text))]",
+                  "text-[hsl(var(--text))]"
                 ],
                 "data-[range-end=true]:rounded-full",
                 "data-[range-middle=true]:rounded-full",

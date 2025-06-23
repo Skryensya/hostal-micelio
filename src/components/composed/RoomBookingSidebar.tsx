@@ -13,6 +13,7 @@ import ROOM_FORMATS from "@/db/ROOM_FORMATS.json";
 import { differenceInDays } from "date-fns";
 import { useState } from "react";
 import { X } from "lucide-react";
+import { BookingChip } from "@/components/composed/BookingChip";
 
 // Precompute price map for faster lookups
 const PRICE_MAP: Record<string, number> = ROOM_FORMATS.reduce(
@@ -169,32 +170,37 @@ export function RoomBookingSidebar({ room, className }: RoomBookingSidebarProps)
     </div>
   );
 
-  const BookingButton = ({ className }: { className?: string }) => (
-    <Button
-      className={cn(
-        "w-full text-base py-6 rounded-full",
-        format && [
-          getRoomColorsByFormat(format.id).bgSelected,
-          getRoomColorsByFormat(format.id).textHover,
-          getRoomColorsByFormat(format.id).borderSelected,
-        ],
-        className
-      )}
-      style={{
-        backgroundColor: gradientColor
-          ? `${gradientColor}BB`
-          : undefined,
-        color: format ? "white" : undefined,
-      }}
-      onClick={() => {
-        const whatsappLink = getWhatsAppLink();
-        window.open(whatsappLink, "_blank");
-      }}
-      disabled={!dateRange?.from || !dateRange?.to || !format}
-    >
-      Reservar ahora por WhatsApp
-    </Button>
-  );
+  const BookingButton = ({ className }: { className?: string }) => {
+    const booking = {
+      id: "preview",
+      guestName: "Vista previa",
+      roomSlug: room.slug,
+      startDate: dateRange?.from || new Date(),
+      endDate: dateRange?.to || new Date(),
+      color: "",
+      notes: ""
+    };
+
+    return (
+      <Button
+        className={cn(
+          "w-full text-base py-6 rounded-full overflow-hidden",
+          className
+        )}
+        onClick={() => {
+          const whatsappLink = getWhatsAppLink();
+          window.open(whatsappLink, "_blank");
+        }}
+        disabled={!dateRange?.from || !dateRange?.to || !format}
+      >
+        <BookingChip
+          booking={booking}
+          showDates={true}
+          className="!rounded-full !shadow-none !hover:scale-100"
+        />
+      </Button>
+    );
+  };
 
   return (
     <>
