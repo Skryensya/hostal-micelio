@@ -1,5 +1,5 @@
 // Definición de colores base por tipo de habitación
-const baseColors = {
+export const baseColors = {
   HCO: "emerald", // Verde para habitaciones compartidas - económico y fresco
   HIN: "blue",    // Azul para habitaciones individuales - premium y profesional
   HDB: "purple",  // Púrpura para habitaciones dobles - elegante y versátil

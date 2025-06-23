@@ -30,7 +30,7 @@ const CalendarContent = ({
   showOutsideDays?: boolean;
 }) => {
   return (
-    <div className="w-full h-full flex justify-center items-center lg:rounded-standar lg:p-0 lg:rounded-[40px] overflow-hidden">
+    <div className="w-full h-full flex justify-center items-center lg:rounded-standard lg:p-0 lg:rounded-[40px] overflow-hidden">
       <LightEffect />
       <Calendar
         initialFocus
@@ -101,13 +101,13 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
       <div
         ref={dateButtonRef}
         className={cn(
-          "transition-all duration-300 flex flex-col lg:flex-row rounded-standar w-full",
+          "transition-all duration-300 flex flex-col lg:flex-row rounded-standard w-full",
           activeButton ? "hover:bg-neutral-100/50" : ""
         )}
       >
         <div
           className={cn(
-            "flex flex-col items-start rounded-standar px-6 py-3  min-w-[170px]",
+            "flex flex-col items-start rounded-standard px-6 py-3  min-w-[170px]",
             activeButton === "from" ? "bg-neutral-50/50" : "",
             activeButton ? "" : "hover:bg-neutral-100/10"
           )}
@@ -120,7 +120,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
         </div>
         <div
           className={cn(
-            "flex flex-col items-start rounded-standar px-6  py-3  min-w-[200px] ",
+            "flex flex-col items-start rounded-standard px-6  py-3  min-w-[200px] ",
             activeButton === "to" ? "bg-primary/10 pr-8" : "",
             activeButton ? "" : "hover:bg-primary/50"
           )}
@@ -178,7 +178,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
             <DateButton />
           </PopoverTrigger>
           <PopoverContent
-            className="w-auto p-0 rounded-standar border-none  bg-surface-2-light dark:bg-surface-2-dark"
+            className="w-auto p-0 rounded-standard border-none  bg-surface-2-light dark:bg-surface-2-dark"
             align="start"
           >
             <CalendarContent
@@ -190,7 +190,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
         </Popover>
       </div>
       <div className="block lg:hidden">
-        <div className="bg-transparent rounded-standar lg:border-none lg:rounded-none">
+        <div className="bg-transparent rounded-standard lg:border-none lg:rounded-none">
           <div className="rounded-full bg-surface-2-light dark:bg-surface-2-dark lg:hidden flex justify-center items-center px-1 z-30  m-4">
             {weekdays.map((day, index) => (
               <div

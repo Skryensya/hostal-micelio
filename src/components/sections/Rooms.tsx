@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import ROOMS from "@/db/ROOMS.json";
 import ROOM_FORMATS from "@/db/ROOM_FORMATS.json";
 import RoomCard from "../composed/RoomCard";
@@ -10,6 +10,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import { RoomOptionsSelector } from "@/components/RoomOptionsSelector";
 import { Room } from "@/lib/types";
 import { useSelectionStore } from "@/store/useSelectionStore";
+
+// Mapping for URL format parameters to format IDs
+const FORMAT_URL_MAP: Record<string, string> = {
+  'triple': 'HT',
+  'doble': 'HDB',
+  'matrimonial': 'HMA',
+  'individual': 'HIN',
+  'compartida': 'HCO'
+};
+
+// Reverse mapping for format IDs to URL parameters
+const REVERSE_FORMAT_URL_MAP: Record<string, string> = Object.entries(FORMAT_URL_MAP)
+  .reduce((acc, [key, value]) => ({ ...acc, [value]: key }), {});
 
 // Precompute price map for faster lookups
 const PRICE_MAP: Record<string, number> = ROOM_FORMATS.reduce(
@@ -22,8 +35,25 @@ const typedRooms = ROOMS as Room[];
 
 export function Rooms() {
   const router = useRouter();
-  const { selectedFormat } = useSelectionStore();
+  const searchParams = useSearchParams();
+  const { selectedFormat, setSelectedFormat } = useSelectionStore();
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
+
+  // Set initial format from URL parameter only on first load
+  useEffect(() => {
+    if (!initialLoad) return;
+    
+    const formatParam = searchParams.get('formato');
+    if (formatParam && FORMAT_URL_MAP[formatParam]) {
+      const formatId = FORMAT_URL_MAP[formatParam];
+      const format = ROOM_FORMATS.find(f => f.id === formatId);
+      if (format && (!selectedFormat || selectedFormat.id !== formatId)) {
+        setSelectedFormat(format);
+      }
+    }
+    setInitialLoad(false);
+  }, [searchParams, setSelectedFormat, selectedFormat, initialLoad]);
 
   const handleViewRoom = (roomSlug: string) => {
     router.push(`/habitaciones/${roomSlug}`);

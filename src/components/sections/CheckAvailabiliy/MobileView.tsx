@@ -121,7 +121,7 @@ const ButtonWrapper: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
   return (
-    <div className="rounded-standar border border-border-light dark:border-border-dark transition-all duration-300 bg-surface-light dark:bg-surface-2-dark">
+    <div className="rounded-standard border border-border-light dark:border-border-dark transition-all duration-300 bg-surface-light dark:bg-surface-2-dark">
       {children}
     </div>
   );

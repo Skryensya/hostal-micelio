@@ -19,7 +19,7 @@ const getRoomTypeColor = (roomId: string | undefined) => {
     HIN: "#3b82f6", // blue-500
     HDB: "#8b5cf6", // purple-500
     HMA: "#f43f5e", // rose-500
-    HT: "#f59e0b",  // amber-500
+    HT: "#f59e0b", // amber-500
   };
   return roomColorMap[roomId] || "#6b7280"; // gray-500 as fallback
 };
@@ -196,7 +196,11 @@ export default function RoomCard({
         {images.length > 0 && (
           <div className="w-full flex-shrink-0 md:w-80">
             <div className="h-48 w-full overflow-hidden rounded-2xl md:h-64">
-              <ImageCarousel imgs={images} className="h-full overflow-hidden" />
+              <ImageCarousel
+                imgs={images}
+                className="h-full overflow-hidden"
+                color={getRoomTypeColor(roomFormat?.id)}
+              />
             </div>
           </div>
         )}
@@ -226,7 +230,8 @@ export default function RoomCard({
                     );
                   })()}
 
-                  {gender &&
+                  {/* Tag de género - solo para habitaciones compartidas */}
+                  {gender && roomFormat?.id === "HCO" &&
                     (() => {
                       const genderVariant =
                         gender === "male"
@@ -295,7 +300,7 @@ export default function RoomCard({
                 >
                   ${roomPrice?.toLocaleString("es-CL")}
                 </div>
-                <div className="text-text-muted text-xs">por noche</div>
+                <div className="text-text-muted text-xs">Por noche</div>
               </div>
             </div>
 
@@ -313,15 +318,15 @@ export default function RoomCard({
               <RoomAmenities amenities={amenities} />
             </div>
             <div className="items col-span-3 flex justify-end">
-                              <button
-                  onClick={onViewDetails}
-                  className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold shadow-sm transition-all duration-200 hover:scale-[1.02] hover:shadow-md"
-                  style={{
-                    backgroundColor: `${getRoomTypeColor(roomFormat?.id)}15`, // 15% opacity for subtle background
-                    color: getRoomTypeColor(roomFormat?.id),
-                    border: `1px solid ${getRoomTypeColor(roomFormat?.id)}30`, // 30% opacity border
-                  }}
-                >
+              <button
+                onClick={onViewDetails}
+                className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold shadow-sm transition-all duration-200 hover:scale-[1.02] hover:shadow-md"
+                style={{
+                  backgroundColor: `${getRoomTypeColor(roomFormat?.id)}15`, // 15% opacity for subtle background
+                  color: getRoomTypeColor(roomFormat?.id),
+                  border: `1px solid ${getRoomTypeColor(roomFormat?.id)}30`, // 30% opacity border
+                }}
+              >
                 Ver más detalles
                 <svg
                   className="h-4 w-4"

@@ -58,7 +58,7 @@ function Calendar({
           showOutsideDays={showOutsideDays}
           disabled={{ before: today }}
           className={cn(
-            "p-0 md:p-5 bg-transparent lg:rounded-standar lg:border lg:border-primary-light-30 overflow-x-hidden",
+            "p-0 md:p-5 bg-transparent lg:rounded-standard lg:border lg:border-primary-light-30 overflow-x-hidden",
             className
           )}
           classNames={{

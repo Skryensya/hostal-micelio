@@ -10,12 +10,12 @@ export function RoomSelector() {
     <a
       href="#habitaciones"
       className={cn(
-        "relative transition-all duration-300 flex rounded-standar hover:bg-primary-light-20"
+        "relative transition-all duration-300 flex rounded-standard hover:bg-primary-light-20"
       )}
     >
       <div
         className={cn(
-          "flex  items-center justify-between rounded-standar pl-6 pr-4 py-3  min-w-[300px]"
+          "flex  items-center justify-between rounded-standard pl-6 pr-4 py-3  min-w-[300px]"
         )}
         onClick={() => {}}
       >

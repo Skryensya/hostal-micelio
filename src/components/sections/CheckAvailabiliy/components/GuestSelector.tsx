@@ -57,12 +57,12 @@ export function GuestSelector() {
     return (
       <div
         className={cn(
-          "transition-all duration-300 flex rounded-standar hover:bg-primary-light-20 w-full"
+          "transition-all duration-300 flex rounded-standard hover:bg-primary-light-20 w-full"
         )}
       >
         <div
           className={cn(
-            "flex flex-col items-start rounded-standar px-6 py-3  min-w-[200px] w-full"
+            "flex flex-col items-start rounded-standard px-6 py-3  min-w-[200px] w-full"
           )}
           onClick={() => {}}
         >
@@ -177,8 +177,8 @@ export function GuestSelector() {
           <PopoverTrigger className="w-full" onClick={() => setOpen(!open)}>
             <PeopleButton />
           </PopoverTrigger>
-          <PopoverContent className="p-0 rounded-standar border-none bg-surface-2-light dark:bg-surface-2-dark w-[300px]">
-            <div className="p-6 bg-primary-light-10 rounded-standar border border-primary-light-30 ">
+          <PopoverContent className="p-0 rounded-standard border-none bg-surface-2-light dark:bg-surface-2-dark w-[300px]">
+            <div className="p-6 bg-primary-light-10 rounded-standard border border-primary-light-30 ">
               <GuestSelectorContent />
             </div>
           </PopoverContent>

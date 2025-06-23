@@ -44,7 +44,7 @@
     "capacity": 6,
     "hasPrivateToilet": false,
     "defaultFormat": "HCO",
-    "alternativeFormats": ["HDB", "HT"],
+    "alternativeFormats": [ "HT"],
     "gender": "male"
   },
   {

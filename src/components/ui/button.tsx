@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { LightEffect } from "@/components/ui/LightEffect";
 
 const buttonVariants = cva(
-  "relative inline-flex items-center justify-center whitespace-nowrap rounded-standar font-medium outline-offset-2 disabled:pointer-events-none disabled:opacity-50 transition-all duration-300 overflow-hidden",
+  "relative inline-flex items-center justify-center whitespace-nowrap rounded-standard font-medium outline-offset-2 disabled:pointer-events-none disabled:opacity-50 transition-all duration-300 overflow-hidden",
   {
     variants: {
       variant: {
@@ -18,8 +18,8 @@ const buttonVariants = cva(
         ghost: "bg-white/20 text-text",
       },
       size: {
-        default: "h-12 rounded-standar px-6 py-4 text-base",
-        small: "h-8 rounded-standar px-4 py-2 text-sm",
+        default: "h-12 rounded-standard px-6 py-4 text-base",
+        small: "h-8 rounded-standard px-4 py-2 text-sm",
         icon: "h-10 w-10",
       },
     },

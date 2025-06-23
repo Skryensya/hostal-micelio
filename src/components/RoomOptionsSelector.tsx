@@ -137,7 +137,7 @@ export const RoomOptionsSelector = ({
     dragFree: false,
     containScroll: "trimSnaps",
     align: "center",
-    skipSnaps: false,
+    skipSnaps: false
   });
 
   // Set first option as default on mobile
@@ -147,20 +147,12 @@ export const RoomOptionsSelector = ({
     }
   }, [selectedFormat, setSelectedFormat]);
 
-  // Sync Embla with selected format
-  useEffect(() => {
-    if (!emblaApi || !selectedFormat) return;
-    const index = roomOptions.findIndex((option) => option === selectedFormat);
-    if (index !== -1) {
-      emblaApi.scrollTo(index);
-    }
-  }, [selectedFormat, emblaApi]);
-
-  // Update selected format when Embla scrolls
+  // Sync Embla with selected format ONLY on manual scroll
   useEffect(() => {
     if (!emblaApi) return;
 
     const onSelect = () => {
+      // Only update if the change was from user interaction
       const selectedIndex = emblaApi.selectedScrollSnap();
       const option = roomOptions[selectedIndex];
       if (option !== selectedFormat) {

@@ -62,19 +62,27 @@ function NavigationButton({
   onClick,
   direction,
   label,
+  color,
 }: {
   onClick: () => void;
   direction: "prev" | "next";
   label: string;
+  color?: string;
 }) {
   const Icon = direction === "prev" ? ChevronLeft : ChevronRight;
   const position = direction === "prev" ? "left-3" : "right-3";
+
+  const baseOpacity = color ? `${color}cc` : "rgba(0, 0, 0, 0.5)"; // cc = 80% opacity
+
   return (
     <button
       onClick={onClick}
       aria-label={label}
       tabIndex={-1} // Evitamos que el botón reciba focus
-      className={`absolute ${position} top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 hover:bg-black/70`}
+      className={`absolute ${position} hover:bg-opacity-90 top-1/2 -translate-y-1/2 rounded-full p-2 text-white opacity-100 transition-all duration-300 sm:opacity-0 sm:group-hover:opacity-100`}
+      style={{
+        backgroundColor: baseOpacity,
+      }}
     >
       <Icon className="h-5 w-5" />
     </button>
@@ -89,6 +97,7 @@ function NavigationDots({
   total: number;
   current: number;
   onDotClick: (index: number) => void;
+  color?: string;
 }) {
   return (
     <div
@@ -97,6 +106,7 @@ function NavigationDots({
     >
       {Array.from({ length: total }).map((_, index) => {
         const isActive = current === index;
+        
         return (
           <button
             key={index}
@@ -105,10 +115,12 @@ function NavigationDots({
             aria-label={`Ir a la imagen ${index + 1}`}
             aria-selected={isActive}
             role="tab"
+            style={{
+              backgroundColor: "white",
+              opacity: isActive ? 1 : 0.5,
+            }}
             className={`cursor-pointer rounded-full transition-all duration-300 ${
-              isActive
-                ? "h-3 w-3 bg-white"
-                : "h-2 w-2 bg-white/70 hover:bg-white/90"
+              isActive ? "h-3 w-3" : "h-2 w-2 hover:opacity-0.8"
             }`}
           />
         );
@@ -123,16 +135,20 @@ export function ImageCarousel({
   ctaRef,
   className,
   onClick,
+  color,
 }: {
   imgs?: ImageType[];
   aspectRatio?: keyof typeof ASPECT_RATIOS;
   ctaRef?: React.RefObject<HTMLElement>;
   className?: string;
   onClick?: () => void;
+  color?: string;
 }) {
   const countdownControls = useAnimation();
   const isHoveredRef = useRef(false);
   const isMountedRef = useRef(false);
+  const isThrottledRef = useRef(false);
+  const THROTTLE_DELAY = 400; // 400ms de throttle
   const [current, setCurrent] = useState(0);
   const [transition, setTransition] = useState<Transition | null>(null);
   const total = imgs?.length || 0;
@@ -157,11 +173,31 @@ export function ImageCarousel({
   // Función para navegar evitando múltiples transiciones
   const navigateTo = useCallback(
     (target: number, direction: "next" | "prev") => {
-      if (transitionRef.current) return;
+      if (transitionRef.current || isThrottledRef.current) return;
+      
+      // Activar el throttle
+      isThrottledRef.current = true;
+      setTimeout(() => {
+        isThrottledRef.current = false;
+      }, THROTTLE_DELAY);
+
       setTransition({ target, direction });
       transitionRef.current = { target, direction };
+
+      // Reset countdown animation when navigating manually
+      if (window.innerWidth >= 640 && isMountedRef.current) {
+        countdownControls.stop();
+        countdownControls.set({ width: "0%" });
+        // Reiniciar la animación si el mouse sigue sobre el carrusel
+        if (isHoveredRef.current) {
+          countdownControls.start({
+            width: "100%",
+            transition: { duration: 3, ease: "linear" },
+          });
+        }
+      }
     },
-    [],
+    [countdownControls],
   );
 
   const goNext = useCallback(() => {
@@ -170,21 +206,18 @@ export function ImageCarousel({
     navigateTo(nextIndex, "next");
   }, [current, total, navigateTo]);
 
-  const goPrev = useCallback(() => {
-    if (total <= 0) return;
-    const prevIndex = (current - 1 + total) % total;
-    navigateTo(prevIndex, "prev");
-  }, [current, total, navigateTo]);
-
   // Lógica robusta de la barra de cuenta atrás (desktop)
   const handleMouseEnter = useCallback(async () => {
     if (window.innerWidth >= 640 && isMountedRef.current) {
       isHoveredRef.current = true;
+
       try {
         await countdownControls.start({
           width: "100%",
-          transition: { duration: 3, ease: "easeIn" },
+          transition: { duration: 3, ease: "linear" },
         });
+
+        // Solo avanzamos si seguimos con hover y el componente está montado
         if (isHoveredRef.current && isMountedRef.current) {
           goNext();
           countdownControls.set({ width: "0%" });
@@ -206,21 +239,19 @@ export function ImageCarousel({
     }
   }, [countdownControls]);
 
+  const goPrev = useCallback(() => {
+    if (total <= 0) return;
+    const prevIndex = (current - 1 + total) % total;
+    navigateTo(prevIndex, "prev");
+  }, [current, total, navigateTo]);
+
   const goToIndex = useCallback(
     (index: number) => {
       if (transitionRef.current || index === current || total <= 0) return;
       const direction = index > current ? "next" : "prev";
       navigateTo(index, direction);
-
-      // Reset countdown animation when navigation dot is clicked
-      if (window.innerWidth >= 640 && isMountedRef.current) {
-        countdownControls.set({ width: "0%" });
-        if (isHoveredRef.current) {
-          handleMouseEnter();
-        }
-      }
     },
-    [current, navigateTo, total, countdownControls, handleMouseEnter],
+    [current, navigateTo, total],
   );
 
   // Al terminar la animación, actualizamos el estado y liberamos el ref.
@@ -366,7 +397,8 @@ export function ImageCarousel({
 
         {/* Barra de cuenta atrás (sólo en desktop) */}
         <motion.div
-          className="bg-primary absolute bottom-0 left-0 hidden h-1 sm:block"
+          className="absolute bottom-0 left-0 hidden h-1 sm:block"
+          style={{ backgroundColor: color || "hsl(var(--primary))" }}
           initial={{ width: "0%" }}
           animate={countdownControls}
         />
@@ -379,14 +411,20 @@ export function ImageCarousel({
         onClick={goPrev}
         direction="prev"
         label="Imagen anterior"
+        color={color}
       />
       <NavigationButton
         onClick={goNext}
         direction="next"
         label="Siguiente imagen"
+        color={color}
       />
 
-      <NavigationDots total={total} current={current} onDotClick={goToIndex} />
+      <NavigationDots
+        total={total}
+        current={current}
+        onDotClick={goToIndex}
+      />
     </div>
   );
 }

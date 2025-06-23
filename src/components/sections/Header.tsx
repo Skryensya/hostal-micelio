@@ -53,7 +53,7 @@ export function Header() {
           !hideOnScroll || showHeader ? "translate-y-0" : "-translate-y-[150%]",
         )}
       >
-        <div className="pt-2">
+        <div className="pt-3 pb-1">
           <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-0">
             <Link href="/" className="flex items-center">
               <div className="h1 flex leading-6 tracking-tight opacity-100 transition-opacity">
