@@ -63,3 +63,21 @@ const roomGradientColors: Record<string, string> = {
 export const getRoomGradientColor = (roomId: string) => {
   return roomGradientColors[roomId] || "#a3a3a3"; // gray-400 fallback
 };
+
+export const BOOKING_COLORS = [
+  // Pastel colors
+  "hsl(350, 95%, 70%)", // Soft Pink
+  "hsl(27, 95%, 70%)",  // Peach
+  "hsl(54, 95%, 70%)",  // Soft Yellow
+  "hsl(80, 95%, 70%)",  // Sage Green
+  "hsl(150, 95%, 70%)", // Mint
+  "hsl(187, 95%, 70%)", // Sky Blue
+  "hsl(230, 95%, 70%)", // Periwinkle
+  "hsl(270, 95%, 70%)", // Lavender
+  "hsl(300, 95%, 70%)", // Light Mauve
+  "hsl(330, 95%, 70%)", // Rose
+  "hsl(15, 95%, 70%)",  // Coral
+  "hsl(200, 95%, 70%)", // Baby Blue
+] as const;
+
+export type BookingColor = typeof BOOKING_COLORS[number];

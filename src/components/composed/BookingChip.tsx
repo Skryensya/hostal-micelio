@@ -1,67 +1,82 @@
-import { format as dateFormat } from "date-fns";
+import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { cn } from "@/lib/utils";
 import { Booking } from "@/lib/types";
-import ROOMS from "../../../db/ROOMS.json";
-import ROOM_FORMATS from "../../../db/ROOM_FORMATS.json";
-import { getRoomColorsByFormat } from "@/lib/roomColors";
+import { cn } from "@/lib/utils";
 
 interface BookingChipProps {
-  booking: Booking;
-  className?: string;
+  booking: Booking & { adjustedStartDate?: Date; adjustedEndDate?: Date };
   showDates?: boolean;
+  isGhost?: boolean;
   continuesFromPreviousMonth?: boolean;
   continuesIntoNextMonth?: boolean;
+  hasCheckoutSameDay?: boolean;
+  hasCheckinSameDay?: boolean;
 }
 
 export function BookingChip({
   booking,
-  className,
-  showDates = true,
-  continuesFromPreviousMonth,
-  continuesIntoNextMonth
+  showDates = false,
+  isGhost = false,
+  continuesFromPreviousMonth = false,
+  continuesIntoNextMonth = false,
+  hasCheckoutSameDay = false,
+  hasCheckinSameDay = false,
 }: BookingChipProps) {
-  const room = ROOMS.find((r) => r.slug === booking.roomSlug);
-  const format = ROOM_FORMATS.find((f) => f.id === room?.defaultFormat);
-  const colors = format ? getRoomColorsByFormat(format.id) : undefined;
-
   return (
     <div
       className={cn(
-        "flex items-center justify-center rounded-md text-xs font-medium text-white shadow-sm transition-all hover:scale-[1.02] hover:shadow-md",
-        colors?.bgSelected,
-        {
-          "rounded-l-none": continuesFromPreviousMonth,
-          "rounded-r-none": continuesIntoNextMonth,
-        },
-        className
+        "relative h-full w-full overflow-hidden",
+        isGhost ? "opacity-50" : "",
+        continuesFromPreviousMonth ? "rounded-l-none" : "rounded-l-[4px]",
+        continuesIntoNextMonth ? "rounded-r-none" : "rounded-r-[4px]",
       )}
-      title={`${booking.guestName} (${dateFormat(booking.startDate, "d MMM", { locale: es })} - ${dateFormat(booking.endDate, "d MMM", { locale: es })})`}
+      style={{
+        backgroundColor: `color-mix(in srgb, ${booking.color} 15%, white)`,
+        borderLeft: continuesFromPreviousMonth ? "none" : `2px solid color-mix(in srgb, ${booking.color} 70%, black)`,
+        borderRight: continuesIntoNextMonth ? "none" : `2px solid color-mix(in srgb, ${booking.color} 70%, black)`,
+      }}
     >
-      <div className="relative w-full px-2 py-1">
-        <div className="flex items-center gap-1.5">
-          <span className="truncate">{booking.guestName}</span>
+      <div
+        className={cn(
+          "absolute inset-[1px] rounded-[3px] px-2 py-1",
+          hasCheckinSameDay && "rounded-l-none border-l border-dashed",
+          hasCheckoutSameDay && "rounded-r-none border-r border-dashed",
+        )}
+        style={{
+          borderColor: `color-mix(in srgb, ${booking.color} 70%, black)`,
+        }}
+      >
+        <div 
+          className="truncate font-medium"
+          style={{ color: `color-mix(in srgb, ${booking.color} 70%, black)` }}
+        >
+          {booking.guestName}
           {showDates && (
-            <span className="whitespace-nowrap text-white/80 text-[10px]">
-              {dateFormat(booking.startDate, "d MMM", { locale: es })} - {dateFormat(booking.endDate, "d MMM", { locale: es })}
-            </span>
+            <>
+              <br />
+              <span 
+                className="text-[10px] opacity-75"
+                style={{ color: `color-mix(in srgb, ${booking.color} 70%, black)` }}
+              >
+                {format(booking.startDate, "d MMM", { locale: es })} -{" "}
+                {format(booking.endDate, "d MMM yyyy", { locale: es })}
+              </span>
+            </>
           )}
         </div>
-        {(continuesFromPreviousMonth || continuesIntoNextMonth) && (
-          <div className="absolute inset-y-0 flex items-center">
-            {continuesFromPreviousMonth && (
-              <div className="absolute -left-2 flex h-full items-center">
-                <div className="h-2 w-2 rounded-full bg-white/50" />
-              </div>
-            )}
-            {continuesIntoNextMonth && (
-              <div className="absolute -right-2 flex h-full items-center">
-                <div className="h-2 w-2 rounded-full bg-white/50" />
-              </div>
-            )}
-          </div>
-        )}
       </div>
+      {continuesFromPreviousMonth && (
+        <div
+          className="absolute -left-2 top-0 h-full w-2 opacity-25"
+          style={{ backgroundColor: `color-mix(in srgb, ${booking.color} 70%, black)` }}
+        />
+      )}
+      {continuesIntoNextMonth && (
+        <div
+          className="absolute -right-2 top-0 h-full w-2 opacity-25"
+          style={{ backgroundColor: `color-mix(in srgb, ${booking.color} 70%, black)` }}
+        />
+      )}
     </div>
   );
 } 

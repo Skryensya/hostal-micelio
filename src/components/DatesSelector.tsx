@@ -55,12 +55,14 @@ export function DatesSelector({
       className={cn(
         "flex w-full overflow-hidden rounded-xl shadow-sm transition-all duration-200",
         selectedFormat
-          ? "border-2 hover:border-opacity-100"
-          : "border border-border",
+          ? "hover:border-opacity-100 border-2"
+          : "border-border border",
       )}
       style={{
-        borderColor: selectedFormat ? `${getRoomGradientColor(selectedFormat.id)}90` : undefined,
-        background: selectedFormat 
+        borderColor: selectedFormat
+          ? `${getRoomGradientColor(selectedFormat.id)}90`
+          : undefined,
+        background: selectedFormat
           ? `linear-gradient(135deg, ${getRoomGradientColor(selectedFormat.id)}08 0%, ${getRoomGradientColor(selectedFormat.id)}03 100%)`
           : undefined,
       }}
@@ -68,7 +70,7 @@ export function DatesSelector({
       <Button
         variant="ghost"
         className={cn(
-          "flex-1 justify-start px-4 py-3 text-left font-normal transition-all duration-200 hover:shadow-sm rounded-none rounded-l-xl",
+          "flex-1 justify-start !rounded-none rounded-none px-4 py-3 text-left font-normal transition-all duration-200 hover:shadow-sm",
           selectedFormat && [
             `hover:bg-${baseColors[selectedFormat.id]}-100/60`,
             `active:bg-${baseColors[selectedFormat.id]}-200/40`,
@@ -77,11 +79,20 @@ export function DatesSelector({
           dateRange?.from && [colors?.text, "font-medium"],
         )}
         style={{
-          color: selectedFormat ? getRoomGradientColor(selectedFormat.id) : undefined,
+          color: selectedFormat
+            ? getRoomGradientColor(selectedFormat.id)
+            : undefined,
         }}
       >
         <div className="flex items-center gap-3">
-          <CalendarIcon className={cn("h-4 w-4")} style={{ color: selectedFormat ? getRoomGradientColor(selectedFormat.id) : undefined }} />
+          <CalendarIcon
+            className={cn("h-4 w-4")}
+            style={{
+              color: selectedFormat
+                ? getRoomGradientColor(selectedFormat.id)
+                : undefined,
+            }}
+          />
           <div className="flex flex-col items-start">
             <span className="text-muted-foreground text-xs">Check in</span>
             <span className="text-sm">
@@ -98,13 +109,15 @@ export function DatesSelector({
           selectedFormat && `bg-${baseColors[selectedFormat.id]}-300`,
         )}
         style={{
-          backgroundColor: selectedFormat ? `${getRoomGradientColor(selectedFormat.id)}50` : undefined,
+          backgroundColor: selectedFormat
+            ? `${getRoomGradientColor(selectedFormat.id)}50`
+            : undefined,
         }}
       />
       <Button
         variant="ghost"
         className={cn(
-          "flex-1 justify-start px-4 py-3 text-left font-normal transition-all duration-200 hover:shadow-sm rounded-none rounded-r-xl",
+          "!rounded-none flex-1 justify-start rounded-none rounded-r-xl px-4 py-3 text-left font-normal transition-all duration-200 hover:shadow-sm",
           selectedFormat && [
             `hover:bg-${baseColors[selectedFormat.id]}-100/60`,
             `active:bg-${baseColors[selectedFormat.id]}-200/40`,
@@ -113,11 +126,20 @@ export function DatesSelector({
           dateRange?.to && [colors?.text, "font-medium"],
         )}
         style={{
-          color: selectedFormat ? getRoomGradientColor(selectedFormat.id) : undefined,
+          color: selectedFormat
+            ? getRoomGradientColor(selectedFormat.id)
+            : undefined,
         }}
       >
         <div className="flex items-center gap-3">
-          <CalendarIcon className={cn("h-4 w-4")} style={{ color: selectedFormat ? getRoomGradientColor(selectedFormat.id) : undefined }} />
+          <CalendarIcon
+            className={cn("h-4 w-4")}
+            style={{
+              color: selectedFormat
+                ? getRoomGradientColor(selectedFormat.id)
+                : undefined,
+            }}
+          />
           <div className="flex flex-col items-start">
             <span className="text-muted-foreground text-xs">Check out</span>
             <span className="text-sm">
@@ -167,12 +189,14 @@ export function DatesSelector({
               <CalendarTrigger />
             </div>
           </DrawerTrigger>
-          <DrawerContent className="p-0 rounded-t-xl">
+          <DrawerContent className="rounded-t-xl p-0">
             <DrawerHeader className="px-4 pb-2 text-left">
-              <DrawerTitle 
+              <DrawerTitle
                 className={colors?.text}
                 style={{
-                  color: selectedFormat ? getRoomGradientColor(selectedFormat.id) : undefined,
+                  color: selectedFormat
+                    ? getRoomGradientColor(selectedFormat.id)
+                    : undefined,
                 }}
               >
                 Selecciona las fechas
@@ -197,11 +221,13 @@ export function DatesSelector({
         </PopoverTrigger>
         <PopoverContent
           className={cn(
-            "w-auto rounded-xl p-0 border-2 overflow-hidden",
-            selectedFormat && "border-opacity-90"
+            "w-auto overflow-hidden rounded-xl border-2 p-0",
+            selectedFormat && "border-opacity-90",
           )}
           style={{
-            borderColor: selectedFormat ? getRoomGradientColor(selectedFormat.id) : undefined,
+            borderColor: selectedFormat
+              ? getRoomGradientColor(selectedFormat.id)
+              : undefined,
           }}
           align="start"
         >
