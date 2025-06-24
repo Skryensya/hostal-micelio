@@ -5,14 +5,14 @@ import { ButtonShowcase } from "@/components/sections/ButtonShowcase";
 // Add metadata to disable layout
 
 const ColorCard = ({ color, name, value }) => (
-  <div className="flex grow items-center rounded-lg border border-border bg-white/50 dark:bg-black/50 overflow-hidden">
+  <div className="border-border flex grow items-center overflow-hidden rounded-lg border bg-white/50">
     <div
-      className="w-20 h-20  mr-4  border-r border-border"
+      className="border-border mr-4 h-20 w-20 border-r"
       style={{ backgroundColor: removeAlpha(color) }}
     ></div>
     <div className="p-2">
-      <div className="text-sm text-text capitalize">{name}</div>
-      <div className="text-xs text-text-muted">{removeAlpha(value)}</div>
+      <div className="text-text text-sm capitalize">{name}</div>
+      <div className="text-text-muted text-xs">{removeAlpha(value)}</div>
     </div>
   </div>
 );
@@ -25,12 +25,12 @@ const ColorsPage = () => {
     typeof item === "object" && !Array.isArray(item) && item !== null;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="mx-auto max-w-6xl px-4 py-8">
       {/* <div className="flex justify-end fixed top-4 right-4 ">
         <ModeToggle />
       </div> */}
       <ButtonShowcase />
-      <h1 className="text-2xl font-bold mb-4">Color Palette</h1>
+      <h1 className="mb-4 text-2xl font-bold">Color Palette</h1>
       <div className="flex flex-col gap-4">
         {/* Combined Grid for Objects and Single Colors */}
         {Object.entries(colors).map(([colorName, colorValue]) => {
@@ -40,10 +40,10 @@ const ColorsPage = () => {
             return (
               <div
                 key={colorName}
-                className="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 mb-4"
+                className="col-span-1 mb-4 sm:col-span-2 md:col-span-3 lg:col-span-4"
               >
                 {/* Takes full width for title and nested colors */}
-                <h2 className="text-lg font-semibold capitalize mb-2">
+                <h2 className="mb-2 text-lg font-semibold capitalize">
                   {colorName}
                 </h2>
                 <div className="flex flex-wrap gap-2">

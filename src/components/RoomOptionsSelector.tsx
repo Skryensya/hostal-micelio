@@ -137,7 +137,7 @@ export const RoomOptionsSelector = ({
     dragFree: false,
     containScroll: "trimSnaps",
     align: "center",
-    skipSnaps: false
+    skipSnaps: false,
   });
 
   // Set first option as default on mobile
@@ -238,7 +238,7 @@ export const RoomOptionsSelector = ({
                 <div
                   key={index}
                   className={cn(
-                    "group bg-surface-1 dark:bg-surface-2 relative mx-3 flex flex-[0_0_80%] flex-col overflow-hidden rounded-xl border-2",
+                    "group bg-surface-1 relative mx-3 flex flex-[0_0_80%] flex-col overflow-hidden rounded-xl border-2",
                     isSelected && "shadow-lg",
                   )}
                   style={{
@@ -327,7 +327,7 @@ export const RoomOptionsSelector = ({
             <div
               key={index}
               className={cn(
-                "group bg-surface-1 dark:bg-surface-2 relative flex flex-col overflow-hidden rounded-xl border-2 p-4 transition-all duration-300",
+                "group bg-surface-1 relative flex flex-col overflow-hidden rounded-xl border-2 p-4 transition-all duration-300",
                 isSelected ? "scale-105 shadow-lg" : "hover:scale-[1.02]",
               )}
               style={{
@@ -398,7 +398,7 @@ export const RoomOptionsSelector = ({
                 </div>
                 <div
                   className={cn(
-                    "text-lg font-bold inline-flex items-center gap-1 transition-colors duration-200",
+                    "inline-flex items-center gap-1 text-lg font-bold transition-colors duration-200",
                     isSelected ? colors.textHover : "text-text",
                   )}
                 >

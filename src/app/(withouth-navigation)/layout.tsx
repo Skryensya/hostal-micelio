@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "@/styles/main.scss"; 
+import "@/styles/main.scss";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { PostHogProvider } from "@/components/PostHogProvider";
 
@@ -23,14 +23,18 @@ export default function RootLayout({
       style={{ filter: isGrayscale ? "grayscale(100%)" : "none" }}
     >
       <body
-        className={`${croissantOne.variable} ${balooBhaijaan2.variable} ${nunito.variable} font-sans antialiased min-h-screen bg-surface-1 dark:text-text overflow-x-hidden scroll-smooth`}
+        className={`${croissantOne.variable} ${balooBhaijaan2.variable} ${nunito.variable} bg-surface-1 min-h-screen overflow-x-hidden scroll-smooth font-sans antialiased`}
       >
         {/* <ReactLenis root> */}
-          <PostHogProvider>
-            <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-              {children}
-            </ThemeProvider>
-          </PostHogProvider>
+        <PostHogProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem={false}
+          >
+            {children}
+          </ThemeProvider>
+        </PostHogProvider>
         {/* </ReactLenis> */}
       </body>
     </html>
