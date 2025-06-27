@@ -244,11 +244,11 @@ export default function RoomCard({
       </div>
 
       {/* Content container */}
-      <div className="relative flex flex-col gap-4 pb-4 md:flex-row md:gap-6">
+      <div className="relative flex flex-col gap-2 pb-4 md:flex-row md:gap-4">
         {/* Image Section */}
         {images.length > 0 && (
           <div className="w-full flex-shrink-0 md:w-80">
-            <div className="h-48 w-full overflow-hidden rounded-2xl md:h-64">
+            <div className="h-56 w-full overflow-hidden rounded-2xl md:h-72">
               <ImageCarousel
                 imgs={images}
                 className="h-full overflow-hidden"
@@ -258,8 +258,29 @@ export default function RoomCard({
           </div>
         )}
 
-        {/* Content Section - Unstyled div */}
-        <div className="flex flex-1 flex-col justify-between">
+        {/* Content Section - With animated circular gradient from price */}
+        <div className="group relative flex flex-1 flex-col justify-between overflow-hidden rounded-[28px] p-4">
+          {/* Multiple circular gradients - responsive */}
+          <div
+            className="absolute inset-0 opacity-70 transition-all duration-700 group-hover:opacity-85"
+            style={{
+              background: `
+                radial-gradient(circle at 85% 15%, ${getRoomTypeColor(roomFormat?.id)}30 0%, ${getRoomTypeColor(roomFormat?.id)}18 35%, ${getRoomTypeColor(roomFormat?.id)}10 55%, transparent 70%),
+                radial-gradient(circle at 5% 85%, ${getRoomTypeColor(roomFormat?.id)}12 0%, ${getRoomTypeColor(roomFormat?.id)}06 45%, transparent 65%),
+                radial-gradient(circle at 95% 85%, ${getRoomTypeColor(roomFormat?.id)}10 0%, ${getRoomTypeColor(roomFormat?.id)}05 40%, transparent 60%)
+              `,
+            }}
+          />
+          {/* Mobile-only bottom gradients */}
+          <div
+            className="absolute inset-0 opacity-50 transition-all duration-700 group-hover:opacity-65 md:hidden"
+            style={{
+              background: `
+                radial-gradient(circle at 15% 85%, ${getRoomTypeColor(roomFormat?.id)}10 0%, ${getRoomTypeColor(roomFormat?.id)}05 35%, transparent 55%),
+                radial-gradient(circle at 85% 85%, ${getRoomTypeColor(roomFormat?.id)}08 0%, ${getRoomTypeColor(roomFormat?.id)}04 30%, transparent 50%)
+              `,
+            }}
+          />
           {/* Header */}
           <div className="mb-3">
             <div className="mb-2 flex items-start justify-between">
@@ -267,14 +288,15 @@ export default function RoomCard({
                 {/* Tags container */}
                 <div className="mb-2 -ml-2 flex flex-wrap gap-2">
                   {(() => {
-                    const primaryBadge = getBadgeStyles(
-                      "primary",
-                      getRoomTypeColor(roomFormat?.id),
-                    );
+                    const primaryBadge = getBadgeStyles("primary");
                     return (
                       <span
                         className={primaryBadge.className}
-                        style={primaryBadge.style}
+                        style={{
+                          backgroundColor: `${getRoomTypeColor(roomFormat?.id)}15`,
+                          color: `${getRoomTypeColor(roomFormat?.id)}dd`,
+                          border: `1px solid ${getRoomTypeColor(roomFormat?.id)}30`,
+                        }}
                       >
                         Habitación {roomFormat?.label}
                       </span>
@@ -350,19 +372,15 @@ export default function RoomCard({
                 )}
               </div>
               {/* Price - More subtle on desktop */}
-              <div className="mt-1 text-right md:mt-4">
+              <div className="mt-1 text-right md:mt-0">
                 <div className="md:text-text text-xl font-bold md:text-2xl">
                   <span
-                    className="md:hidden"
                     style={{ color: getRoomTypeColor(roomFormat?.id) + "bb" }}
                   >
                     ${roomPrice?.toLocaleString("es-CL")}
                   </span>
-                  <span className="hidden md:inline">
-                    ${roomPrice?.toLocaleString("es-CL")}
-                  </span>
                 </div>
-                <div className="text-text-muted text-xs">Por noche</div>
+                <div className="text-text-muted text-xs -mt-1">Por Noche</div>
               </div>
             </div>
 
@@ -372,7 +390,7 @@ export default function RoomCard({
           </div>
 
           {/* Amenities & Beds & CTA - Same line */}
-          <div className="grid items-end gap-4 pb-2 md:grid-cols-9">
+          <div className="grid items-end gap-4 md:grid-cols-9">
             <div className="col-span-2 space-y-1">
               <RoomBeds beds={beds} />
             </div>
