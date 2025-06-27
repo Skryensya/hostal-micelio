@@ -100,7 +100,7 @@ export function Rooms() {
           onSelect={() => {}}
           filteredRoomsCount={filteredRooms.length}
         />
-        <div className="flex flex-col gap-8" aria-labelledby="habitaciones">
+        <div className="flex flex-col gap-4" aria-labelledby="habitaciones">
           {filteredRooms.length === 0 ? (
             // Show skeletons only when no data
             <>
@@ -125,7 +125,7 @@ export function Rooms() {
                       ease: "easeOut",
                       layout: { duration: 0.3, ease: "easeInOut" },
                     }}
-                    className="mb-8 last:mb-0"
+                    className="mb-4 last:mb-0"
                   >
                     <RoomCard
                       {...room}

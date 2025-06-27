@@ -1,6 +1,31 @@
 "use client";
 
 import type { Room as RoomType, RoomOption } from "@/lib/types";
+
+// Add CSS animations for circular gradients
+if (typeof document !== "undefined") {
+  const style = document.createElement("style");
+  style.textContent = `
+    @keyframes floatCircle1 {
+      0% { transform: translate(0px, 0px) scale(1); }
+      33% { transform: translate(30px, -30px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+      100% { transform: translate(0px, 0px) scale(1); }
+    }
+    @keyframes floatCircle2 {
+      0% { transform: translate(0px, 0px) scale(0.8); }
+      50% { transform: translate(-40px, 30px) scale(1.2); }
+      100% { transform: translate(0px, 0px) scale(0.8); }
+    }
+    @keyframes floatCircle3 {
+      0% { transform: translate(0px, 0px) scale(1.1); }
+      40% { transform: translate(25px, 35px) scale(0.7); }
+      80% { transform: translate(-30px, -25px) scale(1.3); }
+      100% { transform: translate(0px, 0px) scale(1.1); }
+    }
+  `;
+  document.head.appendChild(style);
+}
 import ROOM_IMAGES from "@/db/ROOM_IMAGES.json";
 import { ImageCarousel } from "../ImageCarousel";
 import { RoomCardSkeleton } from "@/components/composed/RoomCardSkeleton";
@@ -42,9 +67,9 @@ const getBadgeStyles = (
   const variants = {
     primary: customColor
       ? {
-          backgroundColor: `${customColor}15`, // Light opacity for subtle look
-          color: customColor,
-          border: `1px solid ${customColor}30`,
+          backgroundColor: `${customColor}08`, // Much more subtle opacity
+          color: `${customColor}dd`, // Slightly muted color
+          border: `1px solid ${customColor}20`,
         }
       : {},
     "gender-male": {
@@ -177,21 +202,49 @@ export default function RoomCard({
 
   return (
     <div
-      className="relative overflow-hidden rounded-3xl border-2 shadow"
+      className="relative overflow-hidden rounded-3xl bg-white transition-all duration-500"
       style={{
-        borderColor: `${getRoomTypeColor(roomFormat?.id)}30`,
+        transition: "all 0.5s ease",
       }}
     >
-      {/* Gradient background container */}
+      {/* Floating circular gradients - only visible on hover */}
       <div
-        className="absolute inset-0 rounded-2xl"
+        className="absolute inset-0 opacity-0 transition-opacity duration-500 hover:opacity-100"
         style={{
-          background: `linear-gradient(135deg, ${getRoomTypeColor(roomFormat?.id)}35 0%, ${getRoomTypeColor(roomFormat?.id)}15 40%, hsl(var(--surface-1)) 80%, hsl(var(--surface-1)) 100%)`,
+          background: "transparent",
         }}
-      />
+      >
+        <div
+          className="absolute h-32 w-32 rounded-full opacity-30 blur-xl"
+          style={{
+            background: `radial-gradient(circle, ${getRoomTypeColor(roomFormat?.id)}40 0%, transparent 70%)`,
+            top: "10%",
+            left: "15%",
+            animation: "floatCircle1 4s ease-in-out infinite",
+          }}
+        />
+        <div
+          className="absolute h-24 w-24 rounded-full opacity-25 blur-lg"
+          style={{
+            background: `radial-gradient(circle, ${getRoomTypeColor(roomFormat?.id)}30 0%, transparent 70%)`,
+            top: "60%",
+            right: "20%",
+            animation: "floatCircle2 5s ease-in-out infinite 1s",
+          }}
+        />
+        <div
+          className="absolute h-20 w-20 rounded-full opacity-20 blur-md"
+          style={{
+            background: `radial-gradient(circle, ${getRoomTypeColor(roomFormat?.id)}25 0%, transparent 70%)`,
+            bottom: "20%",
+            left: "25%",
+            animation: "floatCircle3 3.5s ease-in-out infinite 0.5s",
+          }}
+        />
+      </div>
 
       {/* Content container */}
-      <div className="relative flex flex-col gap-4 p-3 md:flex-row md:gap-6">
+      <div className="relative flex flex-col gap-4 pb-4 md:flex-row md:gap-6">
         {/* Image Section */}
         {images.length > 0 && (
           <div className="w-full flex-shrink-0 md:w-80">
@@ -211,11 +264,8 @@ export default function RoomCard({
           <div className="mb-3">
             <div className="mb-2 flex items-start justify-between">
               <div>
-                <div className="hidden md:block text-text-subtle text-xs"> Parque Nacional </div>
-                <h3 className="mb-2 text-xl font-bold ">{name}</h3>
-
                 {/* Tags container */}
-                <div className="mb-2 flex flex-wrap gap-2">
+                <div className="mb-2 -ml-2 flex flex-wrap gap-2">
                   {(() => {
                     const primaryBadge = getBadgeStyles(
                       "primary",
@@ -284,6 +334,11 @@ export default function RoomCard({
                       );
                     })()}
                 </div>
+                <div className="text-text-subtle hidden text-xs md:block">
+                  {" "}
+                  Parque Nacional{" "}
+                </div>
+                <h3 className="mb-2 text-xl font-bold">{name}</h3>
 
                 {capacity && (
                   <div className="text-text-muted flex items-center gap-1 text-sm">
@@ -294,25 +349,30 @@ export default function RoomCard({
                   </div>
                 )}
               </div>
-              {/* Price - Prominente */}
-              <div className="mt-1 text-right md:mt-0">
-                <div
-                  className="text-xl font-bold md:text-2xl"
-                  style={{ color: getRoomTypeColor(roomFormat?.id) }}
-                >
-                  ${roomPrice?.toLocaleString("es-CL")}
+              {/* Price - More subtle on desktop */}
+              <div className="mt-1 text-right md:mt-4">
+                <div className="md:text-text text-xl font-bold md:text-2xl">
+                  <span
+                    className="md:hidden"
+                    style={{ color: getRoomTypeColor(roomFormat?.id) + "bb" }}
+                  >
+                    ${roomPrice?.toLocaleString("es-CL")}
+                  </span>
+                  <span className="hidden md:inline">
+                    ${roomPrice?.toLocaleString("es-CL")}
+                  </span>
                 </div>
                 <div className="text-text-muted text-xs">Por noche</div>
               </div>
             </div>
 
-            <p className="text-text line-clamp-2 text-sm leading-relaxed">
+            <p className="text-text line-clamp-3 text-sm leading-relaxed text-pretty md:max-w-[450px]">
               {description}
             </p>
           </div>
 
           {/* Amenities & Beds & CTA - Same line */}
-          <div className="grid items-end gap-4 md:grid-cols-9">
+          <div className="grid items-end gap-4 pb-2 md:grid-cols-9">
             <div className="col-span-2 space-y-1">
               <RoomBeds beds={beds} />
             </div>
@@ -322,27 +382,52 @@ export default function RoomCard({
             <div className="items col-span-3 flex justify-end">
               <button
                 onClick={onViewDetails}
-                className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold shadow-sm transition-all duration-200 hover:scale-[1.02] hover:shadow-md"
+                className="md:bg-surface-2 md:text-text md:border-border inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold shadow-sm transition-all duration-200 hover:scale-[1.02] hover:shadow-md md:border"
                 style={{
-                  backgroundColor: `${getRoomTypeColor(roomFormat?.id)}15`, // 15% opacity for subtle background
-                  color: getRoomTypeColor(roomFormat?.id),
-                  border: `1px solid ${getRoomTypeColor(roomFormat?.id)}30`, // 30% opacity border
+                  backgroundColor: `${getRoomTypeColor(roomFormat?.id)}15`,
+                  border: `1px solid ${getRoomTypeColor(roomFormat?.id)}30`,
                 }}
               >
-                Ver más detalles
-                <svg
-                  className="h-4 w-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+                {/* Mobile button with color */}
+                <span
+                  className="inline-flex items-center gap-2 md:hidden"
+                  style={{
+                    color: getRoomTypeColor(roomFormat?.id),
+                  }}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
+                  Ver más detalles
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </span>
+
+                {/* Desktop button neutral */}
+                <span className="hidden md:inline-flex md:items-center md:gap-2">
+                  Ver más detalles
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </span>
               </button>
             </div>
           </div>
