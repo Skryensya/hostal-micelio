@@ -211,7 +211,8 @@ export default function RoomCard({
           <div className="mb-3">
             <div className="mb-2 flex items-start justify-between">
               <div>
-                <h3 className="mb-2 text-xl font-bold">{name}</h3>
+                <div className="hidden md:block text-text-subtle text-xs"> Parque Nacional </div>
+                <h3 className="mb-2 text-xl font-bold ">{name}</h3>
 
                 {/* Tags container */}
                 <div className="mb-2 flex flex-wrap gap-2">
@@ -231,7 +232,8 @@ export default function RoomCard({
                   })()}
 
                   {/* Tag de género - solo para habitaciones compartidas */}
-                  {gender && roomFormat?.id === "HCO" &&
+                  {gender &&
+                    roomFormat?.id === "HCO" &&
                     (() => {
                       const genderVariant =
                         gender === "male"

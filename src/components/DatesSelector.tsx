@@ -174,7 +174,7 @@ export function DatesSelector({
         "[&_.rdp-button:hover]:bg-transparent",
         "[&_.rdp-day_button:hover]:border-0",
         isMobileView
-          ? "[&_.rdp-day]:p-0 [&_.rdp-day_span]:h-[34px] [&_.rdp-day_span]:w-[38px]"
+          ? "[&_.rdp-day]:p-0 [&_.rdp-day_span]:h-[42px] [&_.rdp-day_span]:w-[42px]"
           : "[&_.rdp-day]:p-0 [&_.rdp-day_span]:h-[32px] [&_.rdp-day_span]:w-[32px]",
       )}
     />
@@ -189,10 +189,11 @@ export function DatesSelector({
               <CalendarTrigger />
             </div>
           </DrawerTrigger>
-          <DrawerContent className="rounded-t-xl p-0">
-            <DrawerHeader className="px-4 pb-2 text-left">
+          <DrawerContent className="rounded-t-[1.25rem] px-4 pb-8">
+            <div className="mx-auto mt-2 h-1.5 w-12 rounded-full bg-neutral-200" />
+            <DrawerHeader className="px-0 pb-2 pt-6 text-left">
               <DrawerTitle
-                className={colors?.text}
+                className={cn("text-lg font-medium", colors?.text)}
                 style={{
                   color: selectedFormat
                     ? getRoomGradientColor(selectedFormat.id)
@@ -202,7 +203,7 @@ export function DatesSelector({
                 Selecciona las fechas
               </DrawerTitle>
             </DrawerHeader>
-            <div className="pb-4">
+            <div className="px-0">
               <CalendarComponent isMobileView />
             </div>
           </DrawerContent>

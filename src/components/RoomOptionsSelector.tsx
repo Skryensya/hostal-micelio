@@ -216,9 +216,9 @@ export const RoomOptionsSelector = ({
 
   return (
     <div className="pt-6 pb-2">
-      <div className="h2 mb-4 text-lg font-bold sm:font-mono md:mb-10">
-        Tipos de habitación
-      </div>
+      <h2 className="h2 mb-4 text-lg font-bold sm:font-mono md:mb-10">
+        Conoce nuestras habitaciones
+      </h2>
 
       {/* Mobile Carousel */}
       <div className="-mx-4 md:hidden">

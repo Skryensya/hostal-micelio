@@ -96,33 +96,6 @@ export function Rooms() {
   return (
     <section className="mx-auto max-w-6xl px-4 py-10">
       <div>
-        <h2 className="mb-8 text-2xl font-bold" id="habitaciones">
-          Conoce nuestras habitaciones
-        </h2>
-        <div className="max-w-[80ch] space-y-4 text-pretty">
-          <p>
-            En Hostal Micelio contamos con 9 habitaciones listas para recibirte,
-            en distintos formatos pensados para que encuentres el ideal según
-            cómo viajes: solo, en pareja o en grupo.
-          </p>
-          <p>
-            El precio se basa en la cantidad de personas, y a partir de eso
-            buscamos el formato de habitación, o múltiples habitaciones, que
-            mejor se adapte a tus necesidades. Esto nos permite ofrecer una
-            experiencia más justa y personalizada. Siempre que haya
-            disponibilidad, estaremos encantados de encontrar la mejor opción
-            para ti.
-          </p>
-          <p>
-            Por ejemplo, si viajas solo y ya no quedan habitaciones simples,
-            haremos lo posible por ofrecerte una más amplia al precio de una
-            simple. Queremos que disfrutes de una estadía cómoda, flexible y
-            hecha a tu medida en Hostal Micelio.
-          </p>
-        </div>
-      </div>
-
-      <div>
         <RoomOptionsSelector
           onSelect={() => {}}
           filteredRoomsCount={filteredRooms.length}
