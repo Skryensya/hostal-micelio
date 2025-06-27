@@ -29,10 +29,10 @@ const BED_LABELS: Record<string, string> = {
 };
 
 const BED_COLORS: Record<string, string> = {
-  B01: "bg-gradient-to-br from-rose-400 to-rose-500 text-white shadow-lg", // Matrimonial
-  B02: "bg-gradient-to-br from-blue-400 to-blue-500 text-white shadow-lg", // Individual
-  B03: "bg-gradient-to-br from-emerald-400 to-emerald-500 text-white shadow-lg", // Camarote
-  B04: "bg-gradient-to-br from-emerald-400 to-emerald-500 text-white shadow-lg", // Camarote
+  B01: "bg-rose-50 border-rose-200 text-rose-600 shadow-sm", // Matrimonial
+  B02: "bg-blue-50 border-blue-200 text-blue-600 shadow-sm", // Individual
+  B03: "bg-emerald-50 border-emerald-200 text-emerald-600 shadow-sm", // Camarote
+  B04: "bg-emerald-50 border-emerald-200 text-emerald-600 shadow-sm", // Camarote
 };
 
 export function RoomBeds({ beds }: RoomBedsProps) {
@@ -110,9 +110,9 @@ export function RoomBeds({ beds }: RoomBedsProps) {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div
-                    className={`relative flex h-8 w-8 items-center justify-center rounded ${BED_COLORS[bedId]}`}
+                    className={`relative flex h-8 w-8 items-center justify-center rounded-lg ${BED_COLORS[bedId]}`}
                   >
-                    {Icon && <Icon className="h-5 w-5" />}
+                    {Icon && <Icon className="h-5 w-5" strokeWidth={1.5} />}
                   </div>
                 </TooltipTrigger>
                 <TooltipContent side="top">
@@ -135,9 +135,9 @@ export function RoomBeds({ beds }: RoomBedsProps) {
             return (
               <div
                 key={`${bedId}-${index}`}
-                className={`flex h-8 w-8 items-center justify-center rounded ${BED_COLORS[bedId]}`}
+                className={`flex h-8 w-8 items-center justify-center rounded-lg ${BED_COLORS[bedId]}`}
               >
-                {Icon && <Icon className="h-5 w-5" />}
+                {Icon && <Icon className="h-5 w-5" strokeWidth={1.5} />}
               </div>
             );
           })}

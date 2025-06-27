@@ -41,6 +41,17 @@ const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   "female-only-room": Venus,
 };
 
+const AMENITY_COLORS: Record<string, string> = {
+  breakfast: "bg-orange-50 border-orange-200 text-orange-600 shadow-sm",
+  "shared-bathroom": "bg-cyan-50 border-cyan-200 text-cyan-600 shadow-sm",
+  "shared-spaces": "bg-indigo-50 border-indigo-200 text-indigo-600 shadow-sm",
+  "private-bathroom": "bg-blue-50 border-blue-200 text-blue-600 shadow-sm",
+  "shared-kitchen": "bg-amber-50 border-amber-200 text-amber-600 shadow-sm",
+  wifi: "bg-purple-50 border-purple-200 text-purple-600 shadow-sm",
+  "male-only-room": "bg-sky-50 border-sky-200 text-sky-600 shadow-sm",
+  "female-only-room": "bg-pink-50 border-pink-200 text-pink-600 shadow-sm",
+};
+
 export function RoomAmenities({ amenities }: RoomAmenitiesProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -60,12 +71,12 @@ export function RoomAmenities({ amenities }: RoomAmenitiesProps) {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div
-                    className={`relative flex h-8 w-8 items-center justify-center rounded ${a.color}`}
+                    className={`relative flex h-8 w-8 items-center justify-center rounded-lg ${AMENITY_COLORS[a.id] || a.color}`}
                   >
-                    {Icon && <Icon className={`h-5 w-5`} />}
+                    {Icon && <Icon className={`h-5 w-5`} strokeWidth={1.5} />}
                     {a.id === "private-bathroom" && (
                       <div className="absolute -right-1.5 -bottom-1.5 flex items-center justify-center">
-                        <KeyRound className="h-6 w-6 fill-yellow-400 stroke-white stroke-2 drop-shadow-md" />
+                        <KeyRound className="h-5 w-5 fill-yellow-400 stroke-white stroke-2 drop-shadow-md" />
                       </div>
                     )}
                   </div>
@@ -90,12 +101,12 @@ export function RoomAmenities({ amenities }: RoomAmenitiesProps) {
             return (
               <div
                 key={a.id}
-                className={`border-border relative flex h-8 w-8 items-center justify-center rounded border ${a.color}`}
+                className={`relative flex h-8 w-8 items-center justify-center rounded-lg ${AMENITY_COLORS[a.id] || a.color}`}
               >
-                {Icon && <Icon className={`h-5 w-5`} />}
+                {Icon && <Icon className={`h-5 w-5`} strokeWidth={1.5} />}
                 {a.id === "private-bathroom" && (
                   <div className="absolute -right-1.5 -bottom-1.5 flex items-center justify-center">
-                    <KeyRound className="h-6 w-6 fill-yellow-400 stroke-white stroke-2 drop-shadow-md" />
+                    <KeyRound className="h-5 w-5 fill-yellow-400 stroke-white stroke-2 drop-shadow-md" />
                   </div>
                 )}
               </div>

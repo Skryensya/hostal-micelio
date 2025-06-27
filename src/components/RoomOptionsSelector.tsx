@@ -184,7 +184,7 @@ export const RoomOptionsSelector = ({
 
   const AvailableRoomsSpan = () => {
     return (
-      <div className="mt-4 flex w-full items-center justify-between gap-4">
+      <div className="mt-2 pb-2 flex w-full items-center justify-between gap-4 px-2">
         <div className="text-text-muted text-sm">
           <AnimatePresence mode="wait">
             <motion.span
