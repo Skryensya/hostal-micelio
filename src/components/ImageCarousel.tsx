@@ -1,22 +1,16 @@
 "use client";
 
-import { useState, useCallback, useRef, useMemo, useEffect } from "react";
-import { motion, useAnimation } from "framer-motion";
+import { useState, useCallback, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Componente de imagen simple
 type ImageType = {
   src: string;
   alt: string;
   aspectRatio: "square" | "video" | "vertical";
   className?: string;
-};
-
-type Transition = {
-  target: number;
-  direction: "next" | "prev";
 };
 
 const ASPECT_RATIOS = {
@@ -57,34 +51,32 @@ function SingleImageView({
   );
 }
 
-// Botón de navegación – se muestran siempre en móvil y en hover en desktop
 function NavigationButton({
   onClick,
   direction,
   label,
-  color,
+  accentColor,
 }: {
   onClick: () => void;
   direction: "prev" | "next";
   label: string;
-  color?: string;
+  accentColor?: string;
 }) {
   const Icon = direction === "prev" ? ChevronLeft : ChevronRight;
-  const position = direction === "prev" ? "left-3" : "right-3";
-
-  const baseOpacity = color ? `${color}cc` : "rgba(0, 0, 0, 0.5)"; // cc = 80% opacity
+  const position = direction === "prev" ? "left-2" : "right-2";
 
   return (
     <button
       onClick={onClick}
       aria-label={label}
-      tabIndex={-1} // Evitamos que el botón reciba focus
-      className={`absolute ${position} hover:bg-opacity-90 top-1/2 -translate-y-1/2 rounded-full p-2 text-white opacity-100 transition-all duration-300 sm:opacity-0 sm:group-hover:opacity-100`}
-      style={{
-        backgroundColor: baseOpacity,
-      }}
+      tabIndex={-1}
+      className={`absolute ${position} top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-sm border border-white/20 rounded-full p-2 shadow-lg opacity-100 transition-all duration-200 hover:bg-white hover:scale-105 sm:opacity-0 sm:group-hover:opacity-100`}
     >
-      <Icon className="h-5 w-5" />
+      <Icon 
+        className="h-4 w-4" 
+        style={{ color: accentColor || '#6b7280' }}
+        strokeWidth={2}
+      />
     </button>
   );
 }
@@ -93,15 +85,16 @@ function NavigationDots({
   total,
   current,
   onDotClick,
+  accentColor,
 }: {
   total: number;
   current: number;
   onDotClick: (index: number) => void;
-  color?: string;
+  accentColor?: string;
 }) {
   return (
     <div
-      className="absolute right-0 bottom-4 left-0 flex items-center justify-center gap-2"
+      className="absolute bottom-3 left-0 right-0 flex items-center justify-center gap-1.5"
       role="tablist"
     >
       {Array.from({ length: total }).map((_, index) => {
@@ -115,13 +108,12 @@ function NavigationDots({
             aria-label={`Ir a la imagen ${index + 1}`}
             aria-selected={isActive}
             role="tab"
-            style={{
-              backgroundColor: "white",
-              opacity: isActive ? 1 : 0.5,
-            }}
-            className={`cursor-pointer rounded-full transition-all duration-300 ${
-              isActive ? "h-3 w-3" : "h-2 w-2 hover:opacity-0.8"
+            className={`rounded-full transition-all duration-200 ${
+              isActive ? "h-2 w-6" : "h-2 w-2 hover:opacity-80"
             }`}
+            style={{
+              backgroundColor: isActive ? (accentColor || 'white') : 'rgba(255, 255, 255, 0.6)',
+            }}
           />
         );
       })}
@@ -135,160 +127,128 @@ export function ImageCarousel({
   ctaRef,
   className,
   onClick,
-  color,
+  accentColor,
 }: {
   imgs?: ImageType[];
   aspectRatio?: keyof typeof ASPECT_RATIOS;
   ctaRef?: React.RefObject<HTMLElement>;
   className?: string;
   onClick?: () => void;
-  color?: string;
+  accentColor?: string;
 }) {
-  const countdownControls = useAnimation();
-  const isHoveredRef = useRef(false);
-  const isMountedRef = useRef(false);
-  const isThrottledRef = useRef(false);
-  const THROTTLE_DELAY = 400; // 400ms de throttle
   const [current, setCurrent] = useState(0);
-  const [transition, setTransition] = useState<Transition | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const total = imgs?.length || 0;
-  const transitionRef = useRef<Transition | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  // Marcar el componente como montado
-  useEffect(() => {
-    isMountedRef.current = true;
-    // Inicializar el estado de los controles después del montaje
-    countdownControls.set({ width: "0%" });
-
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, [countdownControls]);
-
-  // Refs para eventos táctiles
   const touchStartX = useRef<number | null>(null);
-  const touchEndX = useRef<number | null>(null);
+  const autoPlayTimer = useRef<NodeJS.Timeout | null>(null);
+  const isHovered = useRef(false);
+  const [timerProgress, setTimerProgress] = useState(0);
+  const timerInterval = useRef<NodeJS.Timeout | null>(null);
 
-  // Función para navegar evitando múltiples transiciones
-  const navigateTo = useCallback(
-    (target: number, direction: "next" | "prev") => {
-      if (transitionRef.current || isThrottledRef.current) return;
-      
-      // Activar el throttle
-      isThrottledRef.current = true;
-      setTimeout(() => {
-        isThrottledRef.current = false;
-      }, THROTTLE_DELAY);
-
-      setTransition({ target, direction });
-      transitionRef.current = { target, direction };
-
-      // Reset countdown animation when navigating manually
-      if (window.innerWidth >= 640 && isMountedRef.current) {
-        countdownControls.stop();
-        countdownControls.set({ width: "0%" });
-        // Reiniciar la animación si el mouse sigue sobre el carrusel
-        if (isHoveredRef.current) {
-          countdownControls.start({
-            width: "100%",
-            transition: { duration: 3, ease: "linear" },
-          });
+  // Timer functionality
+  const startTimer = useCallback(() => {
+    if (timerInterval.current) clearInterval(timerInterval.current);
+    setTimerProgress(0);
+    
+    timerInterval.current = setInterval(() => {
+      setTimerProgress(prev => {
+        const newProgress = prev + (100 / 40); // 4 seconds = 4000ms, update every 100ms
+        if (newProgress >= 100) {
+          setCurrent(current => (current + 1) % total);
+          return 0;
         }
-      }
-    },
-    [countdownControls],
-  );
+        return newProgress;
+      });
+    }, 100);
+  }, [total]);
+
+  const stopTimer = useCallback(() => {
+    if (timerInterval.current) {
+      clearInterval(timerInterval.current);
+      timerInterval.current = null;
+    }
+    setTimerProgress(0);
+  }, []);
+
 
   const goNext = useCallback(() => {
-    if (total <= 0) return;
-    const nextIndex = (current + 1) % total;
-    navigateTo(nextIndex, "next");
-  }, [current, total, navigateTo]);
-
-  // Lógica robusta de la barra de cuenta atrás (desktop)
-  const handleMouseEnter = useCallback(async () => {
-    if (window.innerWidth >= 640 && isMountedRef.current) {
-      isHoveredRef.current = true;
-
-      try {
-        await countdownControls.start({
-          width: "100%",
-          transition: { duration: 3, ease: "linear" },
-        });
-
-        // Solo avanzamos si seguimos con hover y el componente está montado
-        if (isHoveredRef.current && isMountedRef.current) {
-          goNext();
-          countdownControls.set({ width: "0%" });
-        }
-      } catch (error) {
-        if (isMountedRef.current) {
-          countdownControls.set({ width: "0%" });
-        }
-        console.error(error);
-      }
-    }
-  }, [countdownControls, goNext]);
-
-  const handleMouseLeave = useCallback(() => {
-    if (window.innerWidth >= 640 && isMountedRef.current) {
-      isHoveredRef.current = false;
-      countdownControls.stop();
-      countdownControls.set({ width: "0%" });
-    }
-  }, [countdownControls]);
+    if (isTransitioning || total <= 1) return;
+    setIsTransitioning(true);
+    setCurrent(prev => (prev + 1) % total);
+    stopTimer();
+    setTimeout(() => setIsTransitioning(false), 300);
+  }, [isTransitioning, total, stopTimer]);
 
   const goPrev = useCallback(() => {
-    if (total <= 0) return;
-    const prevIndex = (current - 1 + total) % total;
-    navigateTo(prevIndex, "prev");
-  }, [current, total, navigateTo]);
+    if (isTransitioning || total <= 1) return;
+    setIsTransitioning(true);
+    setCurrent(prev => (prev - 1 + total) % total);
+    stopTimer();
+    setTimeout(() => setIsTransitioning(false), 300);
+  }, [isTransitioning, total, stopTimer]);
 
-  const goToIndex = useCallback(
-    (index: number) => {
-      if (transitionRef.current || index === current || total <= 0) return;
-      const direction = index > current ? "next" : "prev";
-      navigateTo(index, direction);
-    },
-    [current, navigateTo, total],
-  );
+  const goToIndex = useCallback((index: number) => {
+    if (isTransitioning || index === current || total <= 1) return;
+    setIsTransitioning(true);
+    setCurrent(index);
+    stopTimer();
+    setTimeout(() => setIsTransitioning(false), 300);
+  }, [isTransitioning, current, total, stopTimer]);
 
-  // Al terminar la animación, actualizamos el estado y liberamos el ref.
-  const handleAnimationComplete = useCallback(() => {
-    if (transition) {
-      setCurrent(transition.target);
-      setTransition(null);
-      transitionRef.current = null;
+  const handleMouseEnter = useCallback(() => {
+    if (window.innerWidth >= 640 && total > 1) {
+      isHovered.current = true;
+      startTimer();
     }
-  }, [transition]);
+  }, [startTimer, total]);
 
-  // Calculamos imágenes y animación según la transición.
-  const { topImage, bottomImage, topInitial, topAnimate } = useMemo(() => {
-    if (!transition || !imgs?.length) {
-      return {
-        topImage: null,
-        bottomImage: imgs?.[current] || { src: "/placeholder.svg", alt: "" },
-        topInitial: {},
-        topAnimate: {},
-      };
+  const handleMouseLeave = useCallback(() => {
+    isHovered.current = false;
+    stopTimer();
+  }, [stopTimer]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      stopTimer();
+    };
+  }, [stopTimer]);
+
+  // Touch handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX;
+    
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        goNext();
+      } else {
+        goPrev();
+      }
     }
-    if (transition.direction === "next") {
-      return {
-        topImage: imgs[current],
-        bottomImage: imgs[transition.target],
-        topInitial: { opacity: 1 },
-        topAnimate: { opacity: 0 },
-      };
-    } else {
-      return {
-        topImage: imgs[transition.target],
-        bottomImage: imgs[current],
-        topInitial: { opacity: 0 },
-        topAnimate: { opacity: 1 },
-      };
+    
+    touchStartX.current = null;
+  };
+
+  // Keyboard navigation
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      goNext();
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      goPrev();
+    } else if (e.key === "Tab" && ctaRef?.current) {
+      e.preventDefault();
+      ctaRef.current.focus();
     }
-  }, [transition, imgs, current]);
+  };
 
   if (total <= 0) return null;
 
@@ -302,128 +262,86 @@ export function ImageCarousel({
     );
   }
 
-  // Manejo de eventos de teclado.
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "ArrowRight") {
-      e.preventDefault();
-      goNext();
-    } else if (e.key === "ArrowLeft") {
-      e.preventDefault();
-      goPrev();
-    } else if (e.key === "Tab") {
-      if (ctaRef && ctaRef.current) {
-        e.preventDefault();
-        ctaRef.current.focus();
-      }
-    }
-  };
-
-  // Swipe en mobile.
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    touchStartX.current = e.changedTouches[0].clientX;
-  };
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    touchEndX.current = e.changedTouches[0].clientX;
-  };
-  const handleTouchEnd = () => {
-    if (touchStartX.current !== null && touchEndX.current !== null) {
-      const diff = touchStartX.current - touchEndX.current;
-      if (Math.abs(diff) > 50) {
-        if (diff > 0) {
-          goNext();
-        } else {
-          goPrev();
-        }
-      }
-    }
-    touchStartX.current = null;
-    touchEndX.current = null;
-  };
-
   return (
     <div
-      ref={containerRef}
       tabIndex={-1}
       onKeyDown={handleKeyDown}
       onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "group relative h-full w-full outline-none",
+        "group relative h-full w-full outline-none overflow-hidden rounded-lg",
         ASPECT_RATIOS[aspectRatio],
         className,
       )}
     >
       <button
         onClick={onClick}
-        className={`relative h-full w-full ${ASPECT_RATIOS[aspectRatio]}`}
+        className="relative h-full w-full"
+        tabIndex={-1}
       >
-        {/* Imagen base */}
-        <div className="absolute inset-0">
-          <Image
-            src={bottomImage.src || "/placeholder.svg"}
-            alt={bottomImage.alt}
-            fill
-            className="bg-gray-200 object-cover"
-            priority={current === 0}
-            loading={current === 0 ? "eager" : "lazy"}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            draggable={false}
-          />
+        {/* Image container with smooth transitions */}
+        <div className="relative h-full w-full bg-gray-200">
+          {imgs.map((img, index) => (
+            <motion.div
+              key={index}
+              className="absolute inset-0"
+              initial={false}
+              animate={{
+                opacity: index === current ? 1 : 0,
+              }}
+              transition={{
+                duration: 0.4,
+                ease: "easeInOut",
+              }}
+            >
+              <Image
+                src={img.src || "/placeholder.svg"}
+                alt={img.alt}
+                fill
+                className="object-cover bg-gray-200"
+                priority={index === 0}
+                loading={index === 0 ? "eager" : "lazy"}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                draggable={false}
+              />
+            </motion.div>
+          ))}
         </div>
 
-        {/* Imagen en transición */}
-        {topImage && (
+        {/* Timer progress bar */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/10 hidden sm:block">
           <motion.div
-            className="absolute inset-0"
-            initial={topInitial}
-            animate={topAnimate}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            onAnimationComplete={handleAnimationComplete}
-          >
-            <Image
-              src={topImage.src || "/placeholder.svg"}
-              alt={topImage.alt}
-              fill
-              className="bg-gray-200 object-cover"
-              loading="eager"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              draggable={false}
-            />
-          </motion.div>
-        )}
-
-        {/* Barra de cuenta atrás (sólo en desktop) */}
-        <motion.div
-          className="absolute bottom-0 left-0 hidden h-1 sm:block"
-          style={{ backgroundColor: color || "hsl(var(--primary))" }}
-          initial={{ width: "0%" }}
-          animate={countdownControls}
-        />
+            className="h-full transition-all duration-75 ease-linear"
+            style={{ 
+              backgroundColor: accentColor || '#6b7280',
+              width: `${timerProgress}%`
+            }}
+          />
+        </div>
       </button>
 
-      {/* Se eliminó el botón de expandir (Gallery Opener) */}
-
-      {/* Botones de navegación: se muestran en móvil */}
+      {/* Navigation buttons */}
       <NavigationButton
         onClick={goPrev}
         direction="prev"
         label="Imagen anterior"
-        color={color}
+        accentColor={accentColor}
       />
       <NavigationButton
         onClick={goNext}
         direction="next"
         label="Siguiente imagen"
-        color={color}
+        accentColor={accentColor}
       />
 
+      {/* Navigation dots */}
       <NavigationDots
         total={total}
         current={current}
         onDotClick={goToIndex}
+        accentColor={accentColor}
       />
     </div>
   );

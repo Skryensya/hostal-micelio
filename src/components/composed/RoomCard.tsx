@@ -202,7 +202,7 @@ export default function RoomCard({
 
   return (
     <div
-      className="relative overflow-hidden rounded-3xl bg-white transition-all duration-500"
+      className="relative overflow-hidden rounded-3xl transition-all duration-500"
       style={{
         transition: "all 0.5s ease",
       }}
@@ -252,7 +252,7 @@ export default function RoomCard({
               <ImageCarousel
                 imgs={images}
                 className="h-full overflow-hidden"
-                color={getRoomTypeColor(roomFormat?.id)}
+                accentColor={getRoomTypeColor(roomFormat?.id)}
               />
             </div>
           </div>
@@ -380,7 +380,7 @@ export default function RoomCard({
                     ${roomPrice?.toLocaleString("es-CL")}
                   </span>
                 </div>
-                <div className="text-text-muted text-xs -mt-1">Por Noche</div>
+                <div className="text-text-muted -mt-1 text-xs">Por Noche</div>
               </div>
             </div>
 
