@@ -16,8 +16,8 @@ import {
 import { useSelectionStore } from "@/store/useSelectionStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { getRoomColors } from "@/lib/roomColors";
-import { LightEffect } from "@/components/ui/LightEffect";
-import { getRoomGradientColor } from "@/lib/roomColors";
+import { Button } from "@/components/ui/button";
+import { getRoomGradientColor, getRoomGradientColorRgb } from "@/lib/roomColors";
 import useEmblaCarousel from "embla-carousel-react";
 import TiltContainer from "@/components/ui/TiltContainer";
 
@@ -94,7 +94,7 @@ const getRoomIcon = (id: string, isSelected: boolean = false) => {
 
 const SwipeIndicator = () => {
   return (
-    <div className="-mt-2 flex flex-col items-center gap-1 py-1 md:hidden">
+    <div className="-mt-2 flex flex-col items-center gap-1 py-1 xl:hidden">
       <span className="text-text-muted/70 text-center text-xs">
         Desliza para seleccionar
       </span>
@@ -136,14 +136,14 @@ export const RoomOptionsSelector = ({
   // Embla carousel setup for mobile
   const [emblaRef, emblaApi] = useEmblaCarousel({
     dragFree: false,
-    containScroll: "trimSnaps",
+    containScroll: false,
     align: "center",
     skipSnaps: false,
   });
 
   // Set first option as default on mobile
   useEffect(() => {
-    if (!selectedFormat && window.innerWidth < 768) {
+    if (!selectedFormat && window.innerWidth < 1280) {
       setSelectedFormat(roomOptions[0]);
     }
   }, [selectedFormat, setSelectedFormat]);
@@ -227,7 +227,7 @@ export const RoomOptionsSelector = ({
         {selectedFormat && (
           <button
             onClick={handleReset}
-            className="text-text hover:text-text hidden items-center gap-1 text-sm transition-colors duration-200 md:flex"
+            className="text-text hover:text-text hidden items-center gap-1 text-sm transition-colors duration-200 xl:flex"
           >
             <Undo className="h-4 w-4" />
             <span>Ver todas</span>
@@ -244,9 +244,9 @@ export const RoomOptionsSelector = ({
       </h2>
 
       {/* Mobile Carousel */}
-      <div className="-mx-4 md:hidden">
+      <div className="-mx-4 xl:hidden">
         <div
-          className="overflow-x-hidden overflow-y-visible pb-4"
+          className="overflow-x-hidden md:overflow-x-visible overflow-y-visible pb-6"
           ref={emblaRef}
         >
           <div className="flex">
@@ -261,62 +261,60 @@ export const RoomOptionsSelector = ({
                 <div
                   key={index}
                   className={cn(
-                    "group bg-surface-1 relative mx-3 flex flex-[0_0_80%] flex-col overflow-hidden rounded-xl border-2",
-                    isSelected && "shadow-lg",
+                    "group bg-surface-1 relative mx-2 flex flex-[0_0_80%] max-w-[400px] flex-col overflow-hidden rounded-2xl border transition-all duration-300",
+                    isSelected ? "border-2 shadow-xl" : "border shadow-md",
                   )}
                   style={{
-                    borderColor: `${gradientColor}70`,
+                    borderColor: isSelected ? `${gradientColor}90` : `${gradientColor}40`,
                   }}
                 >
-                  {/* Gradient corner detail */}
+                  {/* Gradient top to bottom */}
                   <div
                     className={cn(
-                      "pointer-events-none absolute top-0 left-0 h-72 w-72 transition-opacity duration-200",
-                      isSelected ? "opacity-35" : "opacity-20",
+                      "pointer-events-none absolute top-0 left-0 right-0 h-32 transition-all duration-300",
+                      isSelected ? "opacity-40" : "opacity-25",
                     )}
                     style={{
-                      background: `radial-gradient(circle at top left, ${gradientColor} 0%, transparent 70%)`,
+                      background: `linear-gradient(to bottom, ${gradientColor}, transparent)`,
                     }}
                   />
 
-                  {/* Color accent bar - minimal */}
-                  <div
-                    className={cn(
-                      "absolute top-0 right-0 left-0 h-1 rounded-t-xl transition-all duration-200",
-                      colors.bg,
-                    )}
-                  />
 
-                  {/* Mobile Layout - Reorganized */}
-                  <div className="relative z-10 flex h-full flex-col p-4">
+                  {/* Mobile Layout - Enhanced */}
+                  <div className="relative z-10 flex h-full flex-col p-5">
                     {/* Header Section */}
-                    <div className="mb-4">
-                      <h3
-                        className={cn(
-                          "mb-1",
-                          isSelected ? colors.textHover : "text-text",
-                        )}
-                      >
-                        Habitación {option.label}
-                      </h3>
-                      <p className="text-text-muted line-clamp-2 text-sm">
+                    <div className="mb-5">
+                      <div className="mb-2">
+                        <div className="text-text-muted mb-1 text-xs font-medium uppercase tracking-wide">
+                          Habitación
+                        </div>
+                        <h3
+                          className={cn(
+                            "text-lg font-semibold transition-colors duration-300",
+                            isSelected ? colors.textHover : "text-text",
+                          )}
+                        >
+                          {option.label}
+                        </h3>
+                      </div>
+                      <p className="text-text-muted line-clamp-2 text-sm leading-relaxed">
                         {description}
                       </p>
                     </div>
 
                     {/* Capacity Section */}
-                    <div className="mb-4">
+                    <div className="mb-5">
                       {getRoomIcon(option.id, isSelected)}
                     </div>
 
                     {/* Price Section */}
-                    <div className="mt-0">
-                      <div className="text-text-muted text-xs capitalize">
+                    <div className="mt-auto">
+                      <div className="text-text-muted mb-1 text-xs font-medium uppercase tracking-wide">
                         Desde
                       </div>
                       <div
                         className={cn(
-                          "flex items-baseline gap-1 text-xl font-bold",
+                          "flex items-baseline gap-1 text-xl font-bold transition-colors duration-300",
                           isSelected ? colors.textHover : "text-text",
                         )}
                       >
@@ -337,8 +335,8 @@ export const RoomOptionsSelector = ({
       {/* Swipe Indicator - Below Carousel */}
       <SwipeIndicator />
 
-      {/* Desktop Flex */}
-      <div className="mb-8 hidden justify-between gap-4 md:flex">
+      {/* Desktop Grid */}
+      <div className="mb-8 hidden justify-between gap-4 xl:flex">
         {roomOptions.map((option, index) => {
           const colors = getRoomColors(option.id);
           const isSelected = selectedFormat === option;
@@ -347,21 +345,22 @@ export const RoomOptionsSelector = ({
           const gradientColor = getRoomGradientColor(option.id);
 
           return (
-            <div className="w-full bg-red-500" key={index}>
+            <div className="w-full" key={index}>
               <TiltContainer
                 tiltIntensity={20}
                 inverted={false}
                 transitionSpeed={0.15}
-                resetSpeed={0.5}
+                resetSpeed={0.8}
                 disableShadow={false}
                 shineEffect={true}
+                shadowColor={getRoomGradientColorRgb(option.id)}
               >
                 <div
                   className={cn(
-                    "group bg-surface-1 flex h-full w-full flex-col overflow-hidden rounded-xl border-2 p-4 transition-all duration-500",
+                    "group bg-surface-1 flex h-full w-full flex-col overflow-hidden rounded-xl border-2 p-4 transition-all duration-700 ease-out",
                     isSelected
-                      ? "border-opacity-90 scale-105 shadow-2xl"
-                      : "hover:scale-[1.02] hover:shadow-lg",
+                      ? "border-opacity-90 shadow-2xl"
+                      : "hover:shadow-lg",
                   )}
                   style={{
                     borderColor: `${gradientColor}70`,
@@ -456,33 +455,16 @@ export const RoomOptionsSelector = ({
                   </div>
 
                   {/* Button */}
-                  <button
+                  <Button
                     onClick={() => handleOptionClick(option)}
-                    className={cn(
-                      "relative z-10 w-full rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-500 hover:scale-[1.03] hover:shadow-md",
-                      isSelected
-                        ? "text-white shadow-lg"
-                        : "text-text hover:text-white",
-                    )}
-                    style={{
-                      backgroundColor: isSelected
-                        ? `${gradientColor}CC` // 80% opacity for moderate intensity when selected
-                        : `${gradientColor}30`, // 20% opacity for lighter color when not selected
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.backgroundColor = `${gradientColor}60`;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.backgroundColor = `${gradientColor}30`;
-                      }
-                    }}
+                    variant="room-option"
+                    size="room-option"
+                    accentColor={gradientColor}
+                    isSelected={isSelected}
+                    className="relative z-10 transition-all duration-500"
                   >
                     {isSelected ? "Seleccionado" : "Ver habitaciones"}
-                    <LightEffect />
-                  </button>
+                  </Button>
                 </div>
               </TiltContainer>
             </div>

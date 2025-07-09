@@ -8,6 +8,7 @@ interface TiltContainerProps {
   resetSpeed?: number;
   disableShadow?: boolean;
   shineEffect?: boolean;
+  shadowColor?: string;
 }
 
 export default function TiltContainer({
@@ -18,6 +19,7 @@ export default function TiltContainer({
   resetSpeed = 0.3,
   disableShadow = false,
   shineEffect = true,
+  shadowColor = '0, 0, 0',
 }: TiltContainerProps) {
   const [tiltStyle, setTiltStyle] = useState({ container: {}, shine: {} });
 
@@ -74,7 +76,7 @@ export default function TiltContainer({
     };
     
     if (!disableShadow) {
-      containerStyle.boxShadow = `${shadowX}px ${shadowY + 10}px ${shadowBlur}px rgba(0, 0, 0, ${shadowOpacity})`;
+      containerStyle.boxShadow = `${shadowX}px ${shadowY + 10}px ${shadowBlur}px rgba(${shadowColor}, ${shadowOpacity})`;
     }
 
     const shineStyle = shineEffect ? {
@@ -97,7 +99,7 @@ export default function TiltContainer({
     };
     
     if (!disableShadow) {
-      containerStyle.boxShadow = '0px 5px 10px rgba(0, 0, 0, 0.05)';
+      containerStyle.boxShadow = `0px 5px 10px rgba(${shadowColor}, 0.05)`;
     }
 
     const shineStyle = shineEffect ? {

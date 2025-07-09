@@ -6,13 +6,15 @@ import Link from "next/link";
 
 const GOOGLE_MAPS_LINK = "https://maps.app.goo.gl/XpovqzcoqBebn7839";
 const GOOGLE_MAPS_EMBED_LINK =
-  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7279.0746688457175!2d-72.23123636024849!3d-39.28514831555788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x96146225645498eb%3A0x4f5d838949e2c739!2sHostal%20Torre%20Suiza!5e0!3m2!1sen!2scl!4v1727501711581!5m2!1sen!2sc";
+  "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6176.327261335987!2d-72.227248!3d-39.2845395!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9614622563b69b91%3A0xc42345cc7173de40!2sHostal%20Micelio!5e0!3m2!1sen!2scl!4v1752044191073!5m2!1sen!2scl";
 
+
+  
 export function GettingHere() {
   return (
     <div className="mx-auto min-h-96 max-w-6xl px-4 py-10">
       <h2 className="flex items-center gap-2 pb-6 text-2xl">
-        <Milestone /> Como llegar
+        <Milestone /> Como llegar al Hostal
       </h2>
       <div className="grid grid-cols-12 gap-4 md:gap-12">
         <div className="col-span-12 text-lg lg:col-span-5">
@@ -42,7 +44,7 @@ export function GettingHere() {
               target="_blank"
               rel="noreferrer"
             >
-              <Button variant="outline">Preguntanos</Button>
+              <Button variant="outline">Pregúntanos</Button>
             </Link>
           </div>
         </div>

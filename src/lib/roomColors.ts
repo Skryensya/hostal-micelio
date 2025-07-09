@@ -81,3 +81,35 @@ export const BOOKING_COLORS = [
 ] as const;
 
 export type BookingColor = typeof BOOKING_COLORS[number];
+
+/**
+ * Converts a hex color to RGB format (comma-separated values)
+ * @param hex - Hex color string (e.g., "#10b981" or "#rgb")
+ * @returns RGB string in format "r, g, b" (e.g., "16, 185, 129")
+ */
+export const hexToRgb = (hex: string): string => {
+  // Remove the hash if present
+  const cleanHex = hex.replace('#', '');
+  
+  // Handle 3-digit hex codes
+  const expandedHex = cleanHex.length === 3 
+    ? cleanHex.split('').map(char => char + char).join('')
+    : cleanHex;
+  
+  // Parse the hex values
+  const r = parseInt(expandedHex.substring(0, 2), 16);
+  const g = parseInt(expandedHex.substring(2, 4), 16);
+  const b = parseInt(expandedHex.substring(4, 6), 16);
+  
+  return `${r}, ${g}, ${b}`;
+};
+
+/**
+ * Converts a room gradient color to RGB format for use with shadowColor prop
+ * @param roomId - Room type identifier (e.g., "HCO", "HIN", etc.)
+ * @returns RGB string in format "r, g, b" ready for shadowColor prop
+ */
+export const getRoomGradientColorRgb = (roomId: string): string => {
+  const hexColor = getRoomGradientColor(roomId);
+  return hexToRgb(hexColor);
+};

@@ -37,6 +37,7 @@ import { User } from "lucide-react";
 import ROOM_AMENITIES from "@/db/ROOM_AMENITIES.json";
 import { RoomFeatures } from "./RoomFeatures";
 import { getRoomGradientColor } from "@/lib/roomColors";
+import { Button } from "@/components/ui/button";
 
 // Function to get consistent badge styles - ALL badges will have the same structure
 const getBadgeStyles = (
@@ -390,25 +391,12 @@ export default function RoomCard({
               <RoomFeatures beds={beds} amenities={amenities} />
             </div>
             <div className="md:col-span-1 md:flex md:justify-end">
-              <button
+              <Button
                 onClick={onViewDetails}
-                className="group relative flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold shadow-sm transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-md md:w-auto md:rounded-full md:px-4 md:py-2 md:text-sm md:shadow-sm md:hover:scale-[1.03] md:hover:shadow-lg md:hover:shadow-black/5"
-                style={
-                  {
-                    // Mobile: lighter colors, Desktop: light tint
-                    backgroundColor: `color-mix(in srgb, ${getRoomGradientColor(roomFormat?.id)} var(--bg-strength, 8%), white var(--bg-white, 92%))`,
-                    border: `1px solid color-mix(in srgb, ${getRoomGradientColor(roomFormat?.id)} var(--border-strength, 18%), white var(--border-white, 82%))`,
-                    "--bg-strength": "8%",
-                    "--bg-white": "92%",
-                    "--border-strength": "18%",
-                    "--border-white": "82%",
-                  } as React.CSSProperties & {
-                    "--bg-strength": string;
-                    "--bg-white": string;
-                    "--border-strength": string;
-                    "--border-white": string;
-                  }
-                }
+                variant="room-card"
+                size="room-card"
+                accentColor={getRoomGradientColor(roomFormat?.id)}
+                className="group"
               >
                 {/* Mobile button - full width with stronger colors */}
                 <span
@@ -417,9 +405,9 @@ export default function RoomCard({
                     color: getRoomGradientColor(roomFormat?.id),
                   }}
                 >
-                  Ver más detalles
+                  Ver habitación
                   <svg
-                    className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5"
+                    className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -471,7 +459,7 @@ export default function RoomCard({
                     background: `radial-gradient(circle at center, ${getRoomGradientColor(roomFormat?.id)}40 0%, transparent 70%)`,
                   }}
                 />
-              </button>
+              </Button>
             </div>
           </div>
         </div>

@@ -11,7 +11,7 @@ const Reviews = () => {
     <div className="max-w-6xl mx-auto px-4 py-8 ">
       <h2 className="mb-6 text-2xl flex items-center gap-2">
         <MessageCircle className="w-8 h-8" />
-        Lo que dicen nuestros Huespedes
+        Lo que opinan nuestros huéspedes
       </h2>
       <div className=" h-fit max-h-[600px] overflow-hidden gradient-surface mb-6 ">
         <div className="masonry-container">
