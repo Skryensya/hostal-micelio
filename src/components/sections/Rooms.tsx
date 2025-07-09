@@ -29,12 +29,96 @@ const PRICE_MAP: Record<string, number> = ROOM_FORMATS.reduce(
 // Type assertion for ROOMS data
 const typedRooms = ROOMS as Room[];
 
+// Fixed height container to prevent CLS
+const RoomSlotContainer = ({
+  children,
+  isEmpty,
+}: {
+  children: React.ReactNode;
+  isEmpty: boolean;
+}) => (
+  <div
+    className="transition-all duration-300 ease-out"
+    style={{
+      minHeight: isEmpty ? "0px" : "fit-content",
+      opacity: isEmpty ? 0 : 1,
+      transform: isEmpty ? "scale(0.98)" : "scale(1)",
+    }}
+  >
+    {children}
+  </div>
+);
+
+// Optimized room slot component with cross-fade animation
+const RoomSlot = ({
+  currentRoom,
+  nextRoom,
+  index,
+  onViewDetails,
+  selectedFormat,
+  showCurrent,
+  previousSelectedFormat,
+}: {
+  currentRoom: Room | null;
+  nextRoom: Room | null;
+  index: number;
+  onViewDetails: (slug: string) => void;
+  selectedFormat: string | null;
+  isTransitioning: boolean;
+  showCurrent: boolean;
+  previousSelectedFormat: string | null;
+}) => {
+  const room = showCurrent ? currentRoom : nextRoom;
+  const isEmpty = !room;
+
+  return (
+    <RoomSlotContainer isEmpty={isEmpty}>
+      <AnimatePresence mode="wait">
+        {room && (
+          <motion.div
+            key={`${room.slug}-${showCurrent ? "current" : "next"}-${showCurrent ? previousSelectedFormat : selectedFormat}`}
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+            }}
+            exit={{
+              opacity: 0,
+              scale: 0.98,
+            }}
+            transition={{
+              duration: 0.4,
+              ease: [0.25, 0.1, 0.25, 1],
+              delay: index * 0.1,
+            }}
+          >
+            <RoomCard
+              {...room}
+              onViewDetails={() => onViewDetails(room.slug)}
+              selectedFormat={showCurrent ? previousSelectedFormat : selectedFormat}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </RoomSlotContainer>
+  );
+};
+
 export function Rooms() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { selectedFormat, setSelectedFormat } = useSelectionStore();
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
+  const [maxSlots, setMaxSlots] = useState(0);
+  const [currentRooms, setCurrentRooms] = useState<Room[]>([]);
+  const [nextRooms, setNextRooms] = useState<Room[]>([]);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [showCurrent, setShowCurrent] = useState(true);
+  const [allRoomsCache, setAllRoomsCache] = useState<Record<string, Room[]>>(
+    {},
+  );
+  const [previousSelectedFormat, setPreviousSelectedFormat] = useState<string | null>(null);
+  const [displayedCount, setDisplayedCount] = useState(0);
 
   // Set initial format from URL parameter only on first load
   useEffect(() => {
@@ -55,86 +139,138 @@ export function Rooms() {
     router.push(`/habitaciones/${roomSlug}`);
   };
 
-  // Handle smooth transition when filter changes
+  // Pre-calculate all room lists on mount for optimal performance
   useEffect(() => {
-    if (selectedFormat !== undefined) {
-      setIsTransitioning(true);
-      const timer = setTimeout(() => {
-        setIsTransitioning(false);
-      }, 150);
+    const calculateAllRoomLists = () => {
+      const cache: Record<string, Room[]> = {};
 
-      return () => clearTimeout(timer);
-    }
-  }, [selectedFormat]);
+      // Cache for "all rooms" (no filter)
+      cache["all"] = [...typedRooms].sort((a, b) => {
+        const priceA = PRICE_MAP[a.defaultFormat] || 0;
+        const totalA = priceA + (a.hasPrivateToilet ? 10000 : 0);
+        const priceB = PRICE_MAP[b.defaultFormat] || 0;
+        const totalB = priceB + (b.hasPrivateToilet ? 10000 : 0);
+        return totalA - totalB;
+      });
 
-  const filteredRooms = useMemo(() => {
-    const roomsToSort = selectedFormat
-      ? typedRooms.filter(
+      // Cache for each room format
+      ROOM_FORMATS.forEach((format) => {
+        const roomsToSort = typedRooms.filter(
           (r) =>
-            r.defaultFormat === selectedFormat.id ||
-            r.alternativeFormats.includes(selectedFormat.id),
-        )
-      : [...typedRooms];
+            r.defaultFormat === format.id ||
+            r.alternativeFormats.includes(format.id),
+        );
 
-    // Siempre ordenar por precio de menor a mayor
-    return roomsToSort.sort((a, b) => {
-      // Calcular precio para habitación A
-      const formatA = selectedFormat?.id || a.defaultFormat;
-      const priceA = PRICE_MAP[formatA] || 0;
-      const totalA = priceA + (a.hasPrivateToilet ? 10000 : 0);
+        cache[format.id] = roomsToSort.sort((a, b) => {
+          const priceA = PRICE_MAP[format.id] || 0;
+          const totalA = priceA + (a.hasPrivateToilet ? 10000 : 0);
+          const priceB = PRICE_MAP[format.id] || 0;
+          const totalB = priceB + (b.hasPrivateToilet ? 10000 : 0);
+          return totalA - totalB;
+        });
+      });
 
-      // Calcular precio para habitación B
-      const formatB = selectedFormat?.id || b.defaultFormat;
-      const priceB = PRICE_MAP[formatB] || 0;
-      const totalB = priceB + (b.hasPrivateToilet ? 10000 : 0);
+      setAllRoomsCache(cache);
+    };
 
-      // Ordenar de menor a mayor precio
-      return totalA - totalB;
-    });
-  }, [selectedFormat]);
+    calculateAllRoomLists();
+  }, []);
+
+  // Get filtered rooms from cache
+  const filteredRooms = useMemo(() => {
+    const formatKey = selectedFormat?.id || "all";
+    return allRoomsCache[formatKey] || [];
+  }, [selectedFormat, allRoomsCache]);
+
+  // Update displayed count only when transition completes
+  useEffect(() => {
+    if (!isTransitioning && displayedCount !== filteredRooms.length) {
+      setDisplayedCount(filteredRooms.length);
+    }
+  }, [isTransitioning, filteredRooms.length, displayedCount]);
+
+  // Track maximum number of slots needed
+  useEffect(() => {
+    if (displayedCount > maxSlots) {
+      setMaxSlots(displayedCount);
+    }
+  }, [displayedCount, maxSlots]);
+
+  // Set initial rooms from cache
+  useEffect(() => {
+    if (initialLoad && filteredRooms.length > 0) {
+      setCurrentRooms(filteredRooms);
+      setDisplayedCount(filteredRooms.length);
+    }
+  }, [initialLoad, filteredRooms]);
+
+  // Handle smooth cross-fade transition between room lists
+  useEffect(() => {
+    if (
+      !initialLoad &&
+      JSON.stringify(currentRooms) !== JSON.stringify(filteredRooms)
+    ) {
+      // Store previous format before transition
+      setPreviousSelectedFormat(selectedFormat?.id || null);
+      
+      setIsTransitioning(true);
+      setNextRooms(filteredRooms);
+
+      // Start fade out of current list
+      setShowCurrent(false);
+
+      // After fade out completes, switch to next list and fade in
+      setTimeout(() => {
+        setCurrentRooms(filteredRooms);
+        setShowCurrent(true);
+
+        // Complete transition after fade in
+        setTimeout(() => {
+          setIsTransitioning(false);
+          setNextRooms([]);
+        }, 400);
+      }, 300);
+    }
+  }, [filteredRooms, currentRooms, initialLoad, selectedFormat?.id]);
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-10">
       <div>
         <RoomOptionsSelector
           onSelect={() => {}}
-          filteredRoomsCount={filteredRooms.length}
+          filteredRoomsCount={displayedCount}
         />
-        <div className="flex flex-col gap-4" aria-labelledby="habitaciones">
-          {filteredRooms.length === 0 ? (
-            // Show skeletons only when no data
+        <div className="flex flex-col gap-2" aria-labelledby="habitaciones">
+          {initialLoad && Object.keys(allRoomsCache).length === 0 ? (
+            // Show skeletons only on first load
             <>
               {[...Array(3)].map((_, i) => (
                 <RoomCardSkeleton key={i} />
               ))}
             </>
           ) : (
-            <div
-              className={`transition-opacity duration-200 ${isTransitioning ? "opacity-60" : "opacity-100"}`}
-            >
-              <AnimatePresence mode="wait">
-                {filteredRooms.map((room) => (
-                  <motion.div
-                    key={room.slug}
-                    layout
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{
-                      duration: 0.25,
-                      ease: "easeOut",
-                      layout: { duration: 0.3, ease: "easeInOut" },
-                    }}
-                    className="mb-4 last:mb-0"
-                  >
-                    <RoomCard
-                      {...room}
-                      onViewDetails={() => handleViewRoom(room.slug)}
-                      selectedFormat={selectedFormat?.id || null}
-                    />
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+            <div className="flex flex-col gap-2">
+              {Array.from(
+                {
+                  length: Math.max(
+                    maxSlots,
+                    Math.max(currentRooms.length, nextRooms.length),
+                  ),
+                },
+                (_, index) => (
+                  <RoomSlot
+                    key={index}
+                    currentRoom={currentRooms[index] || null}
+                    nextRoom={nextRooms[index] || null}
+                    index={index}
+                    onViewDetails={handleViewRoom}
+                    selectedFormat={selectedFormat?.id || null}
+                    isTransitioning={isTransitioning}
+                    showCurrent={showCurrent}
+                    previousSelectedFormat={previousSelectedFormat}
+                  />
+                ),
+              )}
             </div>
           )}
         </div>

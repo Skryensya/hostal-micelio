@@ -70,13 +70,16 @@ function NavigationButton({
       onClick={onClick}
       aria-label={label}
       tabIndex={-1}
-      className={`absolute ${position} top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-sm border border-white/20 rounded-full p-2 shadow-lg opacity-100 transition-all duration-200 hover:bg-white hover:scale-105 sm:opacity-0 sm:group-hover:opacity-100`}
+      className={`absolute ${position} top-1/2 -translate-y-1/2 p-2 transition-all duration-200 sm:opacity-0 sm:group-hover:opacity-100`}
     >
-      <Icon 
-        className="h-4 w-4" 
-        style={{ color: accentColor || '#6b7280' }}
-        strokeWidth={2}
-      />
+      {/* Visual button - smaller on mobile */}
+      <div className="bg-white/90 backdrop-blur-sm border border-white/20 rounded-full p-1.5 shadow-lg transition-all duration-200 hover:bg-white hover:scale-105 sm:p-2">
+        <Icon 
+          className="h-3 w-3 sm:h-4 sm:w-4" 
+          style={{ color: accentColor || '#6b7280' }}
+          strokeWidth={2}
+        />
+      </div>
     </button>
   );
 }
@@ -140,7 +143,7 @@ export function ImageCarousel({
   const [isTransitioning, setIsTransitioning] = useState(false);
   const total = imgs?.length || 0;
   const touchStartX = useRef<number | null>(null);
-  const autoPlayTimer = useRef<NodeJS.Timeout | null>(null);
+  // const autoPlayTimer = useRef<NodeJS.Timeout | null>(null);
   const isHovered = useRef(false);
   const [timerProgress, setTimerProgress] = useState(0);
   const timerInterval = useRef<NodeJS.Timeout | null>(null);

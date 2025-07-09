@@ -34,20 +34,9 @@ import ROOM_FORMATS from "@/db/ROOM_FORMATS.json";
 
 import { User } from "lucide-react";
 import ROOM_AMENITIES from "@/db/ROOM_AMENITIES.json";
-import { RoomAmenities } from "./RoomAmenities";
-import { RoomBeds } from "./RoomBeds";
+import { RoomFeatures } from "./RoomFeatures";
+import { getRoomGradientColor } from "@/lib/roomColors";
 
-// Function to get room type color with improved contrast
-const getRoomTypeColor = (roomId: string | undefined) => {
-  const roomColorMap = {
-    HCO: "#10b981", // emerald-500
-    HIN: "#3b82f6", // blue-500
-    HDB: "#8b5cf6", // purple-500
-    HMA: "#f43f5e", // rose-500
-    HT: "#f59e0b", // amber-500
-  };
-  return roomColorMap[roomId] || "#6b7280"; // gray-500 as fallback
-};
 
 // Function to get consistent badge styles - ALL badges will have the same structure
 const getBadgeStyles = (
@@ -142,6 +131,7 @@ export default function RoomCard({
     return roomOption ? roomOption : null;
   }, [selectedFormat, defaultFormat]);
 
+
   const amenities = useMemo(() => {
     const searchBy = roomFormat?.amenities;
     if (!searchBy) return null;
@@ -217,7 +207,7 @@ export default function RoomCard({
         <div
           className="absolute h-32 w-32 rounded-full opacity-30 blur-xl"
           style={{
-            background: `radial-gradient(circle, ${getRoomTypeColor(roomFormat?.id)}40 0%, transparent 70%)`,
+            background: `radial-gradient(circle, ${getRoomGradientColor(roomFormat?.id)}40 0%, transparent 70%)`,
             top: "10%",
             left: "15%",
             animation: "floatCircle1 4s ease-in-out infinite",
@@ -226,7 +216,7 @@ export default function RoomCard({
         <div
           className="absolute h-24 w-24 rounded-full opacity-25 blur-lg"
           style={{
-            background: `radial-gradient(circle, ${getRoomTypeColor(roomFormat?.id)}30 0%, transparent 70%)`,
+            background: `radial-gradient(circle, ${getRoomGradientColor(roomFormat?.id)}30 0%, transparent 70%)`,
             top: "60%",
             right: "20%",
             animation: "floatCircle2 5s ease-in-out infinite 1s",
@@ -235,7 +225,7 @@ export default function RoomCard({
         <div
           className="absolute h-20 w-20 rounded-full opacity-20 blur-md"
           style={{
-            background: `radial-gradient(circle, ${getRoomTypeColor(roomFormat?.id)}25 0%, transparent 70%)`,
+            background: `radial-gradient(circle, ${getRoomGradientColor(roomFormat?.id)}25 0%, transparent 70%)`,
             bottom: "20%",
             left: "25%",
             animation: "floatCircle3 3.5s ease-in-out infinite 0.5s",
@@ -252,7 +242,7 @@ export default function RoomCard({
               <ImageCarousel
                 imgs={images}
                 className="h-full overflow-hidden"
-                accentColor={getRoomTypeColor(roomFormat?.id)}
+                accentColor={getRoomGradientColor(roomFormat?.id)}
               />
             </div>
           </div>
@@ -265,9 +255,9 @@ export default function RoomCard({
             className="absolute inset-0 opacity-70 transition-all duration-700 group-hover:opacity-85"
             style={{
               background: `
-                radial-gradient(circle at 85% 15%, ${getRoomTypeColor(roomFormat?.id)}30 0%, ${getRoomTypeColor(roomFormat?.id)}18 35%, ${getRoomTypeColor(roomFormat?.id)}10 55%, transparent 70%),
-                radial-gradient(circle at 5% 85%, ${getRoomTypeColor(roomFormat?.id)}12 0%, ${getRoomTypeColor(roomFormat?.id)}06 45%, transparent 65%),
-                radial-gradient(circle at 95% 85%, ${getRoomTypeColor(roomFormat?.id)}10 0%, ${getRoomTypeColor(roomFormat?.id)}05 40%, transparent 60%)
+                radial-gradient(circle at 85% 15%, ${getRoomGradientColor(roomFormat?.id)}30 0%, ${getRoomGradientColor(roomFormat?.id)}18 35%, ${getRoomGradientColor(roomFormat?.id)}10 55%, transparent 70%),
+                radial-gradient(circle at 5% 85%, ${getRoomGradientColor(roomFormat?.id)}12 0%, ${getRoomGradientColor(roomFormat?.id)}06 45%, transparent 65%),
+                radial-gradient(circle at 95% 85%, ${getRoomGradientColor(roomFormat?.id)}10 0%, ${getRoomGradientColor(roomFormat?.id)}05 40%, transparent 60%)
               `,
             }}
           />
@@ -276,8 +266,8 @@ export default function RoomCard({
             className="absolute inset-0 opacity-50 transition-all duration-700 group-hover:opacity-65 md:hidden"
             style={{
               background: `
-                radial-gradient(circle at 15% 85%, ${getRoomTypeColor(roomFormat?.id)}10 0%, ${getRoomTypeColor(roomFormat?.id)}05 35%, transparent 55%),
-                radial-gradient(circle at 85% 85%, ${getRoomTypeColor(roomFormat?.id)}08 0%, ${getRoomTypeColor(roomFormat?.id)}04 30%, transparent 50%)
+                radial-gradient(circle at 15% 85%, ${getRoomGradientColor(roomFormat?.id)}10 0%, ${getRoomGradientColor(roomFormat?.id)}05 35%, transparent 55%),
+                radial-gradient(circle at 85% 85%, ${getRoomGradientColor(roomFormat?.id)}08 0%, ${getRoomGradientColor(roomFormat?.id)}04 30%, transparent 50%)
               `,
             }}
           />
@@ -293,9 +283,9 @@ export default function RoomCard({
                       <span
                         className={primaryBadge.className}
                         style={{
-                          backgroundColor: `${getRoomTypeColor(roomFormat?.id)}15`,
-                          color: `${getRoomTypeColor(roomFormat?.id)}dd`,
-                          border: `1px solid ${getRoomTypeColor(roomFormat?.id)}30`,
+                          backgroundColor: `${getRoomGradientColor(roomFormat?.id)}15`,
+                          color: `${getRoomGradientColor(roomFormat?.id)}dd`,
+                          border: `1px solid ${getRoomGradientColor(roomFormat?.id)}30`,
                         }}
                       >
                         Habitación {roomFormat?.label}
@@ -375,7 +365,9 @@ export default function RoomCard({
               <div className="mt-1 text-right md:mt-0">
                 <div className="md:text-text text-xl font-bold md:text-2xl">
                   <span
-                    style={{ color: getRoomTypeColor(roomFormat?.id) + "bb" }}
+                    style={{ 
+                      color: `color-mix(in srgb, ${getRoomGradientColor(roomFormat?.id)} 80%, black 20%)`
+                    }}
                   >
                     ${roomPrice?.toLocaleString("es-CL")}
                   </span>
@@ -389,33 +381,63 @@ export default function RoomCard({
             </p>
           </div>
 
-          {/* Amenities & Beds & CTA - Same line */}
-          <div className="grid items-end gap-4 md:grid-cols-9">
-            <div className="col-span-2 space-y-1">
-              <RoomBeds beds={beds} />
+          {/* Features & CTA */}
+          <div className="space-y-6 md:grid md:grid-cols-3 md:items-end md:gap-4 md:space-y-0">
+            <div className="md:col-span-2">
+              <RoomFeatures beds={beds} amenities={amenities} />
             </div>
-            <div className="col-span-4 space-y-1">
-              <RoomAmenities amenities={amenities} />
-            </div>
-            <div className="items col-span-3 flex justify-end">
+            <div className="md:col-span-1 md:flex md:justify-end">
               <button
                 onClick={onViewDetails}
-                className="md:bg-surface-2 md:text-text md:border-border inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold shadow-sm transition-all duration-200 hover:scale-[1.02] hover:shadow-md md:border"
+                className="group relative flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold shadow-sm transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-md md:w-auto md:rounded-full md:px-4 md:py-2 md:text-sm md:shadow-sm md:hover:scale-[1.03] md:hover:shadow-lg md:hover:shadow-black/5"
                 style={{
-                  backgroundColor: `${getRoomTypeColor(roomFormat?.id)}15`,
-                  border: `1px solid ${getRoomTypeColor(roomFormat?.id)}30`,
+                  // Mobile: lighter colors, Desktop: light tint
+                  backgroundColor: `color-mix(in srgb, ${getRoomGradientColor(roomFormat?.id)} var(--bg-strength, 8%), white var(--bg-white, 92%))`,
+                  border: `1px solid color-mix(in srgb, ${getRoomGradientColor(roomFormat?.id)} var(--border-strength, 18%), white var(--border-white, 82%))`,
+                  '--bg-strength': '8%',
+                  '--bg-white': '92%',
+                  '--border-strength': '18%',
+                  '--border-white': '82%',
+                } as React.CSSProperties & {
+                  '--bg-strength': string;
+                  '--bg-white': string;
+                  '--border-strength': string;
+                  '--border-white': string;
                 }}
               >
-                {/* Mobile button with color */}
+                {/* Mobile button - full width with stronger colors */}
                 <span
-                  className="inline-flex items-center gap-2 md:hidden"
+                  className="flex items-center justify-center gap-2 md:hidden"
                   style={{
-                    color: getRoomTypeColor(roomFormat?.id),
+                    color: getRoomGradientColor(roomFormat?.id),
                   }}
                 >
                   Ver más detalles
                   <svg
-                    className="h-4 w-4"
+                    className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2.5}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </span>
+
+                {/* Desktop button with accent color */}
+                <span
+                  className="hidden transition-colors duration-300 md:inline-flex md:items-center md:gap-2"
+                  style={{
+                    color: getRoomGradientColor(roomFormat?.id),
+                  }}
+                >
+                  Ver más detalles
+                  <svg
+                    className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -429,23 +451,21 @@ export default function RoomCard({
                   </svg>
                 </span>
 
-                {/* Desktop button neutral */}
-                <span className="hidden md:inline-flex md:items-center md:gap-2">
-                  Ver más detalles
-                  <svg
-                    className="h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </span>
+                {/* Desktop subtle accent border on hover */}
+                <div
+                  className="absolute inset-0 hidden rounded-full border opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:block"
+                  style={{
+                    borderColor: `color-mix(in srgb, ${getRoomGradientColor(roomFormat?.id)} 20%, white 80%)`,
+                  }}
+                />
+
+                {/* Mobile subtle glow effect */}
+                <div
+                  className="absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-20 md:hidden"
+                  style={{
+                    background: `radial-gradient(circle at center, ${getRoomGradientColor(roomFormat?.id)}40 0%, transparent 70%)`,
+                  }}
+                />
               </button>
             </div>
           </div>

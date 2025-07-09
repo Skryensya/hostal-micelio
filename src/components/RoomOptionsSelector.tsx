@@ -2,7 +2,7 @@
 
 // Removed Card imports - now using simple divs
 import ROOM_FORMATS from "@/db/ROOM_FORMATS.json";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { RoomOption } from "@/lib/types";
 import {
@@ -182,23 +182,45 @@ export const RoomOptionsSelector = ({
     clearSelectedFormat();
   };
 
+  // Track previous count to only animate when it actually changes
+  const prevCountRef = useRef(filteredRoomsCount);
+  const [displayCount, setDisplayCount] = useState(filteredRoomsCount);
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+  
+  useEffect(() => {
+    if (prevCountRef.current !== filteredRoomsCount) {
+      setShouldAnimate(true);
+      setDisplayCount(filteredRoomsCount);
+      prevCountRef.current = filteredRoomsCount;
+      
+      // Reset animation flag after animation completes
+      setTimeout(() => setShouldAnimate(false), 300);
+    }
+  }, [filteredRoomsCount]);
+
   const AvailableRoomsSpan = () => {
     return (
-      <div className="mt-2 pb-2 flex w-full items-center justify-between gap-4 px-2">
+      <div className="mt-2 flex w-full items-center justify-between gap-4 px-2 pb-2">
         <div className="text-text-muted text-sm">
           <AnimatePresence mode="wait">
-            <motion.span
-              key={filteredRoomsCount}
-              initial={{ y: 10, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -10, opacity: 0 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="inline-block"
-            >
-              {filteredRoomsCount}
-            </motion.span>
+            {shouldAnimate ? (
+              <motion.span
+                key={`count-${displayCount}`}
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -20, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="inline-block font-medium"
+              >
+                {displayCount || 0}
+              </motion.span>
+            ) : (
+              <span className="inline-block font-medium">
+                {displayCount || 0}
+              </span>
+            )}
           </AnimatePresence>{" "}
-          {filteredRoomsCount === 1 ? "habitación" : "habitaciones"} disponibles
+          {displayCount === 1 ? "habitación" : "habitaciones"} disponibles
         </div>
 
         {selectedFormat && (
@@ -411,7 +433,7 @@ export const RoomOptionsSelector = ({
 
               {/* Button */}
               <button
-                onClick={() => handleOptionClick(option)}
+                onClick={() => handleOptionClick(option)} 
                 className={cn(
                   "relative z-10 w-full rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:scale-[1.02]",
                   isSelected ? "text-white shadow-sm" : "text-text",

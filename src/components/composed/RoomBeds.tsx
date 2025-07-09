@@ -35,6 +35,13 @@ const BED_COLORS: Record<string, string> = {
   B04: "bg-emerald-50 border-emerald-200 text-emerald-600 shadow-sm", // Camarote
 };
 
+const BED_TOOLTIP_COLORS: Record<string, { bg: string; text: string }> = {
+  B01: { bg: "#fef2f2", text: "#991b1b" }, // rose-50 bg, rose-800 text
+  B02: { bg: "#eff6ff", text: "#1e40af" }, // blue-50 bg, blue-800 text
+  B03: { bg: "#ecfdf5", text: "#065f46" }, // emerald-50 bg, emerald-800 text
+  B04: { bg: "#ecfdf5", text: "#065f46" }, // emerald-50 bg, emerald-800 text
+};
+
 export function RoomBeds({ beds }: RoomBedsProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -115,7 +122,14 @@ export function RoomBeds({ beds }: RoomBedsProps) {
                     {Icon && <Icon className="h-5 w-5" strokeWidth={1.5} />}
                   </div>
                 </TooltipTrigger>
-                <TooltipContent side="top">
+                <TooltipContent 
+                  side="top"
+                  className="border-0 shadow-lg"
+                  style={{
+                    backgroundColor: BED_TOOLTIP_COLORS[bedId]?.bg,
+                    color: BED_TOOLTIP_COLORS[bedId]?.text,
+                  }}
+                >
                   <p>{BED_LABELS[bedId]}</p>
                 </TooltipContent>
               </Tooltip>

@@ -52,6 +52,17 @@ const AMENITY_COLORS: Record<string, string> = {
   "female-only-room": "bg-pink-50 border-pink-200 text-pink-600 shadow-sm",
 };
 
+const AMENITY_TOOLTIP_COLORS: Record<string, { bg: string; text: string }> = {
+  breakfast: { bg: "#fff7ed", text: "#9a3412" }, // orange-50 bg, orange-800 text
+  "shared-bathroom": { bg: "#ecfeff", text: "#155e75" }, // cyan-50 bg, cyan-800 text
+  "shared-spaces": { bg: "#eef2ff", text: "#3730a3" }, // indigo-50 bg, indigo-800 text
+  "private-bathroom": { bg: "#eff6ff", text: "#1e40af" }, // blue-50 bg, blue-800 text
+  "shared-kitchen": { bg: "#fffbeb", text: "#92400e" }, // amber-50 bg, amber-800 text
+  wifi: { bg: "#faf5ff", text: "#6b21a8" }, // purple-50 bg, purple-800 text
+  "male-only-room": { bg: "#f0f9ff", text: "#075985" }, // sky-50 bg, sky-800 text
+  "female-only-room": { bg: "#fdf2f8", text: "#9d174d" }, // pink-50 bg, pink-800 text
+};
+
 export function RoomAmenities({ amenities }: RoomAmenitiesProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -81,7 +92,14 @@ export function RoomAmenities({ amenities }: RoomAmenitiesProps) {
                     )}
                   </div>
                 </TooltipTrigger>
-                <TooltipContent side="top">
+                <TooltipContent 
+                  side="top"
+                  className="border-0 shadow-lg"
+                  style={{
+                    backgroundColor: AMENITY_TOOLTIP_COLORS[a.id]?.bg,
+                    color: AMENITY_TOOLTIP_COLORS[a.id]?.text,
+                  }}
+                >
                   <p>{a.label}</p>
                 </TooltipContent>
               </Tooltip>
