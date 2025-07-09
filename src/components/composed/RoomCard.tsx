@@ -1,6 +1,7 @@
 "use client";
 
 import type { Room as RoomType, RoomOption } from "@/lib/types";
+import Link from "next/link";
 
 // Add CSS animations for circular gradients
 if (typeof document !== "undefined") {
@@ -36,7 +37,6 @@ import { User } from "lucide-react";
 import ROOM_AMENITIES from "@/db/ROOM_AMENITIES.json";
 import { RoomFeatures } from "./RoomFeatures";
 import { getRoomGradientColor } from "@/lib/roomColors";
-
 
 // Function to get consistent badge styles - ALL badges will have the same structure
 const getBadgeStyles = (
@@ -130,7 +130,6 @@ export default function RoomCard({
     );
     return roomOption ? roomOption : null;
   }, [selectedFormat, defaultFormat]);
-
 
   const amenities = useMemo(() => {
     const searchBy = roomFormat?.amenities;
@@ -238,7 +237,7 @@ export default function RoomCard({
         {/* Image Section */}
         {images.length > 0 && (
           <div className="w-full flex-shrink-0 md:w-80">
-            <div className="h-56 w-full overflow-hidden rounded-2xl md:h-72">
+            <div className="h-56 w-full overflow-hidden rounded-4xl md:h-72">
               <ImageCarousel
                 imgs={images}
                 className="h-full overflow-hidden"
@@ -350,7 +349,11 @@ export default function RoomCard({
                   {" "}
                   Parque Nacional{" "}
                 </div>
-                <h3 className="mb-2 text-xl font-bold">{name}</h3>
+                <Link href={`/habitaciones/${slug}`}>
+                  <h3 className="mb-2 cursor-pointer text-xl font-bold transition-all duration-200 hover:underline hover:decoration-wavy hover:decoration-2 hover:underline-offset-4">
+                    {name}
+                  </h3>
+                </Link>
 
                 {capacity && (
                   <div className="text-text-muted flex items-center gap-1 text-sm">
@@ -365,8 +368,8 @@ export default function RoomCard({
               <div className="mt-1 text-right md:mt-0">
                 <div className="md:text-text text-xl font-bold md:text-2xl">
                   <span
-                    style={{ 
-                      color: `color-mix(in srgb, ${getRoomGradientColor(roomFormat?.id)} 80%, black 20%)`
+                    style={{
+                      color: `color-mix(in srgb, ${getRoomGradientColor(roomFormat?.id)} 80%, black 20%)`,
                     }}
                   >
                     ${roomPrice?.toLocaleString("es-CL")}
@@ -390,20 +393,22 @@ export default function RoomCard({
               <button
                 onClick={onViewDetails}
                 className="group relative flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 text-base font-semibold shadow-sm transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-md md:w-auto md:rounded-full md:px-4 md:py-2 md:text-sm md:shadow-sm md:hover:scale-[1.03] md:hover:shadow-lg md:hover:shadow-black/5"
-                style={{
-                  // Mobile: lighter colors, Desktop: light tint
-                  backgroundColor: `color-mix(in srgb, ${getRoomGradientColor(roomFormat?.id)} var(--bg-strength, 8%), white var(--bg-white, 92%))`,
-                  border: `1px solid color-mix(in srgb, ${getRoomGradientColor(roomFormat?.id)} var(--border-strength, 18%), white var(--border-white, 82%))`,
-                  '--bg-strength': '8%',
-                  '--bg-white': '92%',
-                  '--border-strength': '18%',
-                  '--border-white': '82%',
-                } as React.CSSProperties & {
-                  '--bg-strength': string;
-                  '--bg-white': string;
-                  '--border-strength': string;
-                  '--border-white': string;
-                }}
+                style={
+                  {
+                    // Mobile: lighter colors, Desktop: light tint
+                    backgroundColor: `color-mix(in srgb, ${getRoomGradientColor(roomFormat?.id)} var(--bg-strength, 8%), white var(--bg-white, 92%))`,
+                    border: `1px solid color-mix(in srgb, ${getRoomGradientColor(roomFormat?.id)} var(--border-strength, 18%), white var(--border-white, 82%))`,
+                    "--bg-strength": "8%",
+                    "--bg-white": "92%",
+                    "--border-strength": "18%",
+                    "--border-white": "82%",
+                  } as React.CSSProperties & {
+                    "--bg-strength": string;
+                    "--bg-white": string;
+                    "--border-strength": string;
+                    "--border-white": string;
+                  }
+                }
               >
                 {/* Mobile button - full width with stronger colors */}
                 <span

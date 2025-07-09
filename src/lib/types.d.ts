@@ -11,6 +11,12 @@ export interface Room {
   gender: string;
 }
 
+export interface RoomImage {
+  src: string;
+  thumbnail: string;
+  alt: string;
+}
+
 export interface RoomFormat {
   id: string;
   name: string;
@@ -27,12 +33,10 @@ export interface RoomAmenity {
 }
 
 export interface Review {
-  id: string;
-  author: string;
-  rating: number;
+  name: string;
   comment: string;
-  date: string;
-  platform: string;
+  url: string;
+  hue: number;
 }
 
 export interface TeamMember {
@@ -66,6 +70,7 @@ export interface RoomOption {
   id: string;
   label: string;
   price: number;
+  amenities: string[];
 }
 
 export type Booking = {
@@ -74,6 +79,9 @@ export type Booking = {
   roomSlug: string;
   startDate: Date;
   endDate: Date;
+  startDay: number;
+  endDay: number;
   color: string;
   notes?: string;
+  description?: string;
 };

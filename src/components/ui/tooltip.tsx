@@ -37,7 +37,7 @@ function TooltipContent({
   style,
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Content>) {
-  const arrowBg = (style as any)?.backgroundColor || "white";
+  const arrowBg = (style as React.CSSProperties)?.backgroundColor || "white";
   
   return (
     <TooltipPrimitive.Portal>

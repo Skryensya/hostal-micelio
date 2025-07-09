@@ -65,6 +65,20 @@ const AMENITY_TOOLTIP_COLORS: Record<string, { bg: string; text: string }> = {
 
 export function RoomAmenities({ amenities }: RoomAmenitiesProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [openTooltips, setOpenTooltips] = useState<Set<string>>(new Set());
+
+  const toggleTooltip = (id: string) => {
+    setOpenTooltips((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.clear(); // Close other tooltips
+        newSet.add(id);
+      }
+      return newSet;
+    });
+  };
 
   if (!amenities?.length) return null;
 
@@ -75,16 +89,18 @@ export function RoomAmenities({ amenities }: RoomAmenitiesProps) {
       </span>
       {/* ─── Lista de íconos con tooltip (desktop / tablet) ─── */}
       <div className="hidden flex-wrap gap-1 sm:flex">
-        {amenities.map((a) => {
-          const Icon = ICONS[a.id];
-          return (
-            <TooltipProvider key={a.id}>
-              <Tooltip>
+        <TooltipProvider>
+          {amenities.map((a) => {
+            const Icon = ICONS[a.id];
+            const tooltipId = `amenity-${a.id}`;
+            return (
+              <Tooltip key={a.id} open={openTooltips.has(tooltipId)}>
                 <TooltipTrigger asChild>
                   <div
-                    className={`relative flex h-8 w-8 items-center justify-center rounded-lg ${AMENITY_COLORS[a.id] || a.color}`}
+                    className={`relative flex h-8 w-8 items-center justify-center rounded-lg cursor-pointer ${AMENITY_COLORS[a.id] || a.color}`}
+                    onClick={() => toggleTooltip(tooltipId)}
                   >
-                    {Icon && <Icon className={`h-5 w-5`} strokeWidth={1.5} />}
+                    {Icon && <Icon className={`h-5 w-5`} />}
                     {a.id === "private-bathroom" && (
                       <div className="absolute -right-1.5 -bottom-1.5 flex items-center justify-center">
                         <KeyRound className="h-5 w-5 fill-yellow-400 stroke-white stroke-2 drop-shadow-md" />
@@ -99,13 +115,14 @@ export function RoomAmenities({ amenities }: RoomAmenitiesProps) {
                     backgroundColor: AMENITY_TOOLTIP_COLORS[a.id]?.bg,
                     color: AMENITY_TOOLTIP_COLORS[a.id]?.text,
                   }}
+                  onPointerDownOutside={() => setOpenTooltips(new Set())}
                 >
                   <p>{a.label}</p>
                 </TooltipContent>
               </Tooltip>
-            </TooltipProvider>
-          );
-        })}
+            );
+          })}
+        </TooltipProvider>
       </div>
 
       {/* ─── Iconos horizontales (solo móvil) ─── */}
@@ -121,7 +138,7 @@ export function RoomAmenities({ amenities }: RoomAmenitiesProps) {
                 key={a.id}
                 className={`relative flex h-8 w-8 items-center justify-center rounded-lg ${AMENITY_COLORS[a.id] || a.color}`}
               >
-                {Icon && <Icon className={`h-5 w-5`} strokeWidth={1.5} />}
+                {Icon && <Icon className={`h-5 w-5`} />}
                 {a.id === "private-bathroom" && (
                   <div className="absolute -right-1.5 -bottom-1.5 flex items-center justify-center">
                     <KeyRound className="h-5 w-5 fill-yellow-400 stroke-white stroke-2 drop-shadow-md" />

@@ -950,6 +950,8 @@ export default function RoomTimeline() {
                                 dragState.endDay.getTime(),
                               ),
                             ),
+                            startDay: 1,
+                            endDay: 1,
                             color: dragState.color,
                             notes: "",
                           }}

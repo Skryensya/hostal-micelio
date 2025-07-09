@@ -28,6 +28,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { differenceInDays, startOfMonth } from "date-fns";
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -121,11 +122,17 @@ export function BookingModal({
     }
 
     // Intentar guardar
+    const monthStart = startOfMonth(dateRange.from);
+    const startDay = differenceInDays(dateRange.from, monthStart) + 1;
+    const endDay = differenceInDays(dateRange.to, monthStart) + 1;
+    
     const success = onSave({
       guestName: guestName.trim() || "Reservado",
       roomSlug,
       startDate: dateRange.from,
       endDate: dateRange.to,
+      startDay,
+      endDay,
       notes: "",
       color: selectedColor,
     });

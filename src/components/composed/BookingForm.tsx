@@ -70,6 +70,8 @@ export const BookingForm: React.FC<BookingFormProps> = ({
       roomSlug: formData.roomSlug,
       startDay,
       endDay,
+      startDate: dateRange.from,
+      endDate: dateRange.to,
       guestName: formData.guestName,
       description: formData.description,
     });

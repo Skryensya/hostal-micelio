@@ -177,6 +177,8 @@ export function RoomBookingSidebar({ room, className }: RoomBookingSidebarProps)
       roomSlug: room.slug,
       startDate: dateRange?.from || new Date(),
       endDate: dateRange?.to || new Date(),
+      startDay: 1,
+      endDay: 1,
       color: "",
       notes: ""
     };
@@ -196,7 +198,6 @@ export function RoomBookingSidebar({ room, className }: RoomBookingSidebarProps)
         <BookingChip
           booking={booking}
           showDates={true}
-          className="!rounded-full !shadow-none !hover:scale-100"
         />
       </Button>
     );

@@ -2,7 +2,7 @@
   {
     "name": "Rapa Nui",
     "slug": "rapa-nui",
-    "description": "Cama matrimonial en primer piso con baño privado y vista parcial al lago Villarrica. Ambiente luminoso, ropa de cama cómoda y acceso a desayuno, cocina y zonas comunes.",
+    "description": "Escápate en esta elegante habitación matrimonial con baño privado y vistas parciales al majestuoso lago Villarrica. Ubicada en el primer piso, ofrece un ambiente luminoso y tranquilo, perfecto para parejas que buscan intimidad sin renunciar a la comodidad. Despierta con las primeras luces del día reflejándose en el lago y disfruta de un desayuno incluido antes de explorar el parque.",
     "floor": 1,
     "beds": ["B01"],
     "capacity": 2,
@@ -14,7 +14,7 @@
   {
     "name": "Conguillío",
     "slug": "conguillio",
-    "description": "Habitación en primer piso con tres camas individuales de 1,5 plazas, luz natural y calefacción regulable. Baños, cocina y áreas comunes compartidas: opción práctica para grupos pequeños.",
+    "description": "Perfecta para grupos de amigos o familias, esta espaciosa habitación cuenta con tres cómodas camas individuales de 1,5 plazas en el primer piso. Disfruta de abundante luz natural y calefacción regulable para tu máximo confort. Con acceso a cocina compartida totalmente equipada y amplias zonas comunes, es el lugar ideal para socializar y planificar tus aventuras en la naturaleza.",
     "floor": 1,
     "beds": ["B02", "B02", "B02"],
     "capacity": 3,
@@ -26,7 +26,7 @@
   {
     "name": "Villarrica",
     "slug": "villarrica",
-    "description": "Cama matrimonial orientada al volcán Villarrica; luz de amanecer y atardecer entra por la ventana. Incluye desayuno y acceso a cocina y baños compartidos.",
+    "description": "Despierta con una vista espectacular al imponente volcán Villarrica desde esta romántica habitación matrimonial. Ubicada estratégicamente para capturar tanto la luz dorada del amanecer como los atardeceres más memorables, es perfecta para parejas que buscan una experiencia única. Incluye desayuno artesanal y acceso completo a nuestra cocina equipada y espacios comunes acogedores.",
     "floor": 1,
     "beds": ["B01"],
     "capacity": 2,
@@ -38,7 +38,7 @@
   {
     "name": "Laguna San Rafael",
     "slug": "laguna-san-rafael",
-    "description": "Dormitorio masculino con seis camas individuales (dos en litera). Espacio ventilado, taquillas básicas y acceso a cocina, baños y zonas comunes compartidos.",
+    "description": "Dormitorio masculino espacioso y bien ventilado con seis camas individuales cómodas, incluyendo dos prácticas literas. Diseñado para viajeros que buscan una experiencia auténtica de hostal, cuenta con taquillas para tus pertenencias y acceso completo a nuestra cocina comunitaria y zonas de descanso. Perfecto para conocer otros aventureros y compartir historias de viaje.",
     "floor": 0,
     "beds": ["B02", "B02", "B03", "B03", "B04", "B04"],
     "capacity": 6,
@@ -50,7 +50,7 @@
   {
     "name": "Torres del Paine",
     "slug": "torres-del-paine",
-    "description": "Dormitorio femenino con cuatro camas individuales de 1,5 plazas y buena luz natural. Cocina, baños y espacios comunes compartidos para un descanso cómodo y ordenado.",
+    "description": "Dormitorio femenino acogedor y luminoso con cuatro camas individuales extra cómodas de 1,5 plazas, bañado por abundante luz natural. Creado especialmente para mujeres viajeras que valoran la comodidad y el orden, ofrece un ambiente seguro y relajante. Disfruta de nuestra cocina completamente equipada y espacios comunes diseñados para el descanso y la socialización.",
     "floor": 1,
     "beds": ["B03", "B04", "B03", "B04"],
     "capacity": 4,
@@ -62,7 +62,7 @@
   {
     "name": "Huerquehue",
     "slug": "huerquehue",
-    "description": "Segundo piso, dos camas de 1,5 plazas y vista parcial al volcán. Ambiente silencioso, desayuno incluido y acceso a cocina y baños compartidos.",
+    "description": "Refugio perfecto para viajeros individuales o parejas, ubicado en el segundo piso con vistas parciales al majestuoso volcán. Esta habitación tranquila cuenta con dos cómodas camas de 1,5 plazas en un ambiente silencioso, ideal para descansar después de un día de aventuras. Incluye desayuno artesanal y acceso completo a nuestra cocina y espacios comunes.",
     "floor": 2,
     "beds": ["B02", "B02"],
     "capacity": 2,
@@ -74,7 +74,7 @@
   {
     "name": "Pumalin",
     "slug": "pumalin",
-    "description": "Habitación doble en segundo piso con dos camas de 1,5 plazas y ventanas amplias hacia el volcán. Desayuno, cocina y baños compartidos incluidos.",
+    "description": "Habitación doble espectacular en el segundo piso con amplias ventanas que enmarcan vistas impresionantes del volcán. Las dos cómodas camas de 1,5 plazas te garantizan un descanso reparador mientras contemplas el paisaje andino. Perfecta para amigos o familiares que buscan compartir una experiencia única, con desayuno incluido y acceso completo a todas nuestras instalaciones.",
     "floor": 2,
     "beds": ["B02", "B02"],
     "capacity": 2,
@@ -86,7 +86,7 @@
   {
     "name": "Nahuelbuta",
     "slug": "nahuelbuta",
-    "description": "Espacio sencillo con dos camas de 1,5 plazas para descansar sin distracciones. Desayuno y acceso a cocina y baños compartidos incluidos.",
+    "description": "Santuario de tranquilidad con dos cómodas camas de 1,5 plazas, diseñado para quienes buscan un descanso sin distracciones en medio de la naturaleza. Esta habitación minimalista pero acogedora es perfecta para desconectar y recargar energías. Incluye desayuno casero y acceso completo a nuestra cocina equipada y espacios comunes para cuando quieras socializar.",
     "floor": 2,
     "beds": ["B02", "B02"],
     "capacity": 2,
@@ -98,7 +98,7 @@
   {
     "name": "Queulat",
     "slug": "queulat",
-    "description": "Habitación amplia con cama matrimonial y una individual. Vistas mixtas a la ciudad, lago y volcán Llaima. Desayuno, cocina y baños compartidos incluidos.",
+    "description": "Habitación amplia y versátil con una cama matrimonial y una individual, perfecta para familias pequeñas o grupos de amigos. Disfruta de vistas panorámicas únicas que abarcan la ciudad, el sereno lago y el majestuoso volcán Llaima. Esta habitación te ofrece lo mejor de todos los mundos: comodidad, espacio y las vistas más espectaculares del hostal, con desayuno incluido y acceso completo a todas las instalaciones.",
     "floor": 2,
     "beds": ["B01", "B02"],
     "capacity": 3,

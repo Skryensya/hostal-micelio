@@ -119,7 +119,7 @@ export function RoomBeds({ beds }: RoomBedsProps) {
                   <div
                     className={`relative flex h-8 w-8 items-center justify-center rounded-lg ${BED_COLORS[bedId]}`}
                   >
-                    {Icon && <Icon className="h-5 w-5" strokeWidth={1.5} />}
+                    {Icon && <Icon className="h-5 w-5" />}
                   </div>
                 </TooltipTrigger>
                 <TooltipContent 
@@ -151,7 +151,7 @@ export function RoomBeds({ beds }: RoomBedsProps) {
                 key={`${bedId}-${index}`}
                 className={`flex h-8 w-8 items-center justify-center rounded-lg ${BED_COLORS[bedId]}`}
               >
-                {Icon && <Icon className="h-5 w-5" strokeWidth={1.5} />}
+                {Icon && <Icon className="h-5 w-5" />}
               </div>
             );
           })}

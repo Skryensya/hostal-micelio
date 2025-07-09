@@ -4,10 +4,7 @@ import { Room } from '@/lib/types';
 // Simulate async data loading (in real app, this would be an API call)
 const fetchRooms = async (): Promise<Room[]> => {
   // Import data asynchronously
-  const [roomsData, roomFormats] = await Promise.all([
-    import('@/db/ROOMS.json'),
-    import('@/db/ROOM_FORMATS.json')
-  ]);
+  const roomsData = await import('@/db/ROOMS.json');
   
   return roomsData.default as Room[];
 };
