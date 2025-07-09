@@ -19,6 +19,7 @@ import { getRoomColors } from "@/lib/roomColors";
 import { LightEffect } from "@/components/ui/LightEffect";
 import { getRoomGradientColor } from "@/lib/roomColors";
 import useEmblaCarousel from "embla-carousel-react";
+import TiltContainer from "@/components/ui/TiltContainer";
 
 // Ordena las opciones por precio
 const roomOptions = ROOM_FORMATS.sort((a, b) => a.price - b.price);
@@ -186,13 +187,13 @@ export const RoomOptionsSelector = ({
   const prevCountRef = useRef(filteredRoomsCount);
   const [displayCount, setDisplayCount] = useState(filteredRoomsCount);
   const [shouldAnimate, setShouldAnimate] = useState(false);
-  
+
   useEffect(() => {
     if (prevCountRef.current !== filteredRoomsCount) {
       setShouldAnimate(true);
       setDisplayCount(filteredRoomsCount);
       prevCountRef.current = filteredRoomsCount;
-      
+
       // Reset animation flag after animation completes
       setTimeout(() => setShouldAnimate(false), 300);
     }
@@ -336,8 +337,8 @@ export const RoomOptionsSelector = ({
       {/* Swipe Indicator - Below Carousel */}
       <SwipeIndicator />
 
-      {/* Desktop Grid */}
-      <div className="mb-8 hidden grid-cols-2 gap-4 sm:grid-cols-3 md:grid md:grid-cols-5 lg:grid-cols-5">
+      {/* Desktop Flex */}
+      <div className="mb-8 hidden justify-between gap-4 md:flex">
         {roomOptions.map((option, index) => {
           const colors = getRoomColors(option.id);
           const isSelected = selectedFormat === option;
@@ -346,107 +347,144 @@ export const RoomOptionsSelector = ({
           const gradientColor = getRoomGradientColor(option.id);
 
           return (
-            <div
-              key={index}
-              className={cn(
-                "group bg-surface-1 relative flex flex-col overflow-hidden rounded-xl border-2 p-4 transition-all duration-300",
-                isSelected ? "scale-105 shadow-lg" : "hover:scale-[1.02]",
-              )}
-              style={{
-                borderColor: `${gradientColor}70`,
-              }}
-            >
-              {/* Gradient corner detail */}
-              <div
-                className={cn(
-                  "pointer-events-none absolute top-0 left-0 h-52 w-52 transition-opacity duration-200",
-                  isSelected ? "opacity-35" : "opacity-20",
-                )}
-                style={{
-                  background: `radial-gradient(circle at top left, ${gradientColor} 0%, transparent 70%)`,
-                }}
-              />
-
-              {/* Color accent bar - minimal */}
-              <div
-                className={cn(
-                  "absolute top-0 right-0 left-0 h-1 rounded-t-xl transition-all duration-200",
-                  colors.bg,
-                )}
-              />
-
-              {/* Room Type */}
-              <div className="relative z-10 mt-1 mb-3 text-center">
-                <div
-                  className={cn(
-                    "mb-1 text-xs font-medium transition-colors duration-200",
-                    isSelected ? "text-text" : "text-text-muted",
-                  )}
-                >
-                  Habitación
-                </div>
-                <h3
-                  className={cn(
-                    "mb-1 text-sm font-semibold transition-colors duration-200",
-                    isSelected ? colors.textHover : "text-text",
-                  )}
-                >
-                  {option.label}
-                </h3>
-                <p
-                  className={cn(
-                    "text-xs leading-tight transition-colors duration-200",
-                    isSelected ? "text-text" : "text-text-muted",
-                  )}
-                >
-                  {description}
-                </p>
-              </div>
-
-              {/* Icon and Capacity */}
-              <div className="relative z-10 mb-4 flex justify-center">
-                {getRoomIcon(option.id, isSelected)}
-              </div>
-
-              {/* Price */}
-              <div className="relative z-10 mb-4 text-center">
-                <div
-                  className={cn(
-                    "mb-1 text-xs font-medium transition-colors duration-200",
-                    isSelected ? "text-text" : "text-text-muted",
-                  )}
-                >
-                  Desde
-                </div>
-                <div
-                  className={cn(
-                    "inline-flex items-center gap-1 text-lg font-bold transition-colors duration-200",
-                    isSelected ? colors.textHover : "text-text",
-                  )}
-                >
-                  ${option.price.toLocaleString("es-CL")}
-                  <span className="text-text-muted text-xs font-normal">
-                    / Noche
-                  </span>
-                </div>
-              </div>
-
-              {/* Button */}
-              <button
-                onClick={() => handleOptionClick(option)} 
-                className={cn(
-                  "relative z-10 w-full rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:scale-[1.02]",
-                  isSelected ? "text-white shadow-sm" : "text-text",
-                )}
-                style={{
-                  backgroundColor: isSelected
-                    ? `${gradientColor}BB` // 80% opacity for moderate intensity when selected
-                    : `${gradientColor}30`, // 20% opacity for lighter color when not selected
-                }}
+            <div className="w-full bg-red-500" key={index}>
+              <TiltContainer
+                tiltIntensity={20}
+                inverted={false}
+                transitionSpeed={0.15}
+                resetSpeed={0.5}
+                disableShadow={false}
+                shineEffect={true}
               >
-                {isSelected ? "Seleccionado" : "Ver habitaciones"}
-                <LightEffect />
-              </button>
+                <div
+                  className={cn(
+                    "group bg-surface-1 flex h-full w-full flex-col overflow-hidden rounded-xl border-2 p-4 transition-all duration-500",
+                    isSelected
+                      ? "border-opacity-90 scale-105 shadow-2xl"
+                      : "hover:scale-[1.02] hover:shadow-lg",
+                  )}
+                  style={{
+                    borderColor: `${gradientColor}70`,
+                  }}
+                >
+                  {/* Gradient corner detail */}
+                  <div
+                    className={cn(
+                      "pointer-events-none absolute top-0 left-0 h-52 w-52 transition-all duration-500",
+                      isSelected
+                        ? "scale-110 opacity-45"
+                        : "opacity-20 group-hover:opacity-30",
+                    )}
+                    style={{
+                      background: `radial-gradient(circle at top left, ${gradientColor} 0%, transparent 70%)`,
+                    }}
+                  />
+
+                  {/* Color accent bar - minimal */}
+                  <div
+                    className={cn(
+                      "absolute top-0 right-0 left-0 rounded-t-xl transition-all duration-500",
+                      colors.bg,
+                      isSelected ? "h-2" : "h-1 group-hover:h-1.5",
+                    )}
+                  />
+
+                  {/* Room Type */}
+                  <div className="relative z-10 mt-1 mb-3 text-center">
+                    <div
+                      className={cn(
+                        "mb-1 text-xs font-medium transition-colors duration-500",
+                        isSelected
+                          ? "text-text"
+                          : "text-text-muted group-hover:text-text",
+                      )}
+                    >
+                      Habitación
+                    </div>
+                    <h3
+                      className={cn(
+                        "mb-1 text-sm font-semibold transition-colors duration-500",
+                        isSelected
+                          ? colors.textHover
+                          : "text-text group-hover:" + colors.textHover,
+                      )}
+                    >
+                      {option.label}
+                    </h3>
+                    <p
+                      className={cn(
+                        "text-xs leading-tight transition-colors duration-500",
+                        isSelected
+                          ? "text-text"
+                          : "text-text-muted group-hover:text-text",
+                      )}
+                    >
+                      {description}
+                    </p>
+                  </div>
+
+                  {/* Icon and Capacity */}
+                  <div className="relative z-10 mb-4 flex justify-center">
+                    {getRoomIcon(option.id, isSelected)}
+                  </div>
+
+                  {/* Price */}
+                  <div className="relative z-10 mb-4 text-center">
+                    <div
+                      className={cn(
+                        "mb-1 text-xs font-medium transition-colors duration-500",
+                        isSelected
+                          ? "text-text"
+                          : "text-text-muted group-hover:text-text",
+                      )}
+                    >
+                      Desde
+                    </div>
+                    <div
+                      className={cn(
+                        "inline-flex items-center gap-1 text-lg font-bold transition-colors duration-500",
+                        isSelected
+                          ? colors.textHover
+                          : "text-text group-hover:" + colors.textHover,
+                      )}
+                    >
+                      ${option.price.toLocaleString("es-CL")}
+                      <span className="text-text-muted text-xs font-normal">
+                        / Noche
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Button */}
+                  <button
+                    onClick={() => handleOptionClick(option)}
+                    className={cn(
+                      "relative z-10 w-full rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-500 hover:scale-[1.03] hover:shadow-md",
+                      isSelected
+                        ? "text-white shadow-lg"
+                        : "text-text hover:text-white",
+                    )}
+                    style={{
+                      backgroundColor: isSelected
+                        ? `${gradientColor}CC` // 80% opacity for moderate intensity when selected
+                        : `${gradientColor}30`, // 20% opacity for lighter color when not selected
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.backgroundColor = `${gradientColor}60`;
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.backgroundColor = `${gradientColor}30`;
+                      }
+                    }}
+                  >
+                    {isSelected ? "Seleccionado" : "Ver habitaciones"}
+                    <LightEffect />
+                  </button>
+                </div>
+              </TiltContainer>
             </div>
           );
         })}
