@@ -17,7 +17,10 @@ import { useSelectionStore } from "@/store/useSelectionStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { getRoomColors } from "@/lib/roomColors";
 import { Button } from "@/components/ui/button";
-import { getRoomGradientColor, getRoomGradientColorRgb } from "@/lib/roomColors";
+import {
+  getRoomGradientColor,
+  getRoomGradientColorRgb,
+} from "@/lib/roomColors";
 import useEmblaCarousel from "embla-carousel-react";
 import TiltContainer from "@/components/ui/TiltContainer";
 
@@ -238,7 +241,7 @@ export const RoomOptionsSelector = ({
   };
 
   return (
-    <div className="pt-6 pb-2">
+    <div className="pt-6 pb-2" id="habitaciones">
       <h2 className="h2 mb-4 text-lg font-bold sm:font-mono md:mb-10">
         Conoce nuestras habitaciones
       </h2>
@@ -246,7 +249,7 @@ export const RoomOptionsSelector = ({
       {/* Mobile Carousel */}
       <div className="-mx-4 xl:hidden">
         <div
-          className="overflow-x-hidden md:overflow-x-visible overflow-y-visible pb-6"
+          className="overflow-x-hidden overflow-y-visible pb-6 md:overflow-x-visible"
           ref={emblaRef}
         >
           <div className="flex">
@@ -261,17 +264,19 @@ export const RoomOptionsSelector = ({
                 <div
                   key={index}
                   className={cn(
-                    "group bg-surface-1 relative mx-2 flex flex-[0_0_80%] max-w-[400px] flex-col overflow-hidden rounded-2xl border transition-all duration-300",
+                    "group bg-surface-1 relative mx-2 flex max-w-[400px] flex-[0_0_80%] flex-col overflow-hidden rounded-2xl border transition-all duration-300",
                     isSelected ? "border-2 shadow-xl" : "border shadow-md",
                   )}
                   style={{
-                    borderColor: isSelected ? `${gradientColor}90` : `${gradientColor}40`,
+                    borderColor: isSelected
+                      ? `${gradientColor}90`
+                      : `${gradientColor}40`,
                   }}
                 >
                   {/* Gradient top to bottom */}
                   <div
                     className={cn(
-                      "pointer-events-none absolute top-0 left-0 right-0 h-32 transition-all duration-300",
+                      "pointer-events-none absolute top-0 right-0 left-0 h-32 transition-all duration-300",
                       isSelected ? "opacity-40" : "opacity-25",
                     )}
                     style={{
@@ -279,13 +284,12 @@ export const RoomOptionsSelector = ({
                     }}
                   />
 
-
                   {/* Mobile Layout - Enhanced */}
                   <div className="relative z-10 flex h-full flex-col p-5">
                     {/* Header Section */}
                     <div className="mb-5">
                       <div className="mb-2">
-                        <div className="text-text-muted mb-1 text-xs font-medium uppercase tracking-wide">
+                        <div className="text-text-muted mb-1 text-xs font-medium tracking-wide uppercase">
                           Habitación
                         </div>
                         <h3
@@ -309,7 +313,7 @@ export const RoomOptionsSelector = ({
 
                     {/* Price Section */}
                     <div className="mt-auto">
-                      <div className="text-text-muted mb-1 text-xs font-medium uppercase tracking-wide">
+                      <div className="text-text-muted mb-1 text-xs font-medium tracking-wide uppercase">
                         Desde
                       </div>
                       <div

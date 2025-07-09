@@ -5,6 +5,7 @@ import ROOMS from "@/db/ROOMS.json";
 import ROOM_FORMATS from "@/db/ROOM_FORMATS.json";
 import { RoomAmenities } from "@/components/composed/RoomAmenities";
 import { RoomBeds } from "@/components/composed/RoomBeds";
+import { RoomBentoGrid } from "@/components/composed/RoomBentoGrid";
 import ROOM_AMENITIES from "@/db/ROOM_AMENITIES.json";
 import { useSelectionStore } from "@/store/useSelectionStore";
 import { ImagesShowcaseGrid } from "@/components/ImagesShowcaseGrid";
@@ -82,12 +83,21 @@ export default function RoomPage({ params }: { params: { slug: string } }) {
               </ul>
             </div>
 
-            <div>
+            <RoomBentoGrid 
+              amenities={amenities}
+              beds={room.beds}
+              capacity={room.capacity}
+              hasPrivateToilet={room.hasPrivateToilet}
+              formatLabel={format?.label}
+              price={totalPrice}
+            />
+
+            <div className="hidden">
               <h2 className="mb-2 text-xl font-semibold">Camas</h2>
               <RoomBeds beds={room.beds} />
             </div>
 
-            <div>
+            <div className="hidden">
               <h2 className="mb-2 text-xl font-semibold">Amenidades</h2>
               <RoomAmenities amenities={amenities} />
             </div>

@@ -95,10 +95,10 @@ export function DatesSelector({
           />
           <div className="flex flex-col items-start">
             <span className="text-muted-foreground text-xs">Check in</span>
-            <span className="text-sm">
+            <span className="text-sm -mt-1">
               {dateRange?.from
                 ? format(dateRange.from, "EEE, d MMM", { locale: es })
-                : "Seleccionar fecha"}
+                : "-"}
             </span>
           </div>
         </div>
@@ -142,10 +142,10 @@ export function DatesSelector({
           />
           <div className="flex flex-col items-start">
             <span className="text-muted-foreground text-xs">Check out</span>
-            <span className="text-sm">
+            <span className="text-sm -mt-1">
               {dateRange?.to
                 ? format(dateRange.to, "EEE, d MMM", { locale: es })
-                : "Seleccionar fecha"}
+                : "-"}
             </span>
           </div>
         </div>

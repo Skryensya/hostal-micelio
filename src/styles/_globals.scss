@@ -2,12 +2,13 @@
   border-radius: 40px;
 }
 
-html {
+* {
   scroll-behavior: smooth;
   font-size: 16px;
   font-family: var(--font-baloo-bhaijaan-2);
   font-weight: 400;
   color: var(--text);
+  scroll-margin-top: 50px;
 }
 
 @layer base {

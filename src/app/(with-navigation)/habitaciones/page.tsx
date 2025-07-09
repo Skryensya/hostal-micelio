@@ -1,12 +1,5 @@
-import { Suspense } from 'react';
-import { Rooms } from "@/components/sections/Rooms";
+import { redirect } from "next/navigation";
 
 export default function Habitaciones() {
-  return (
-    <main className="pt-32">
-      <Suspense fallback={<div>Loading...</div>}>
-        <Rooms />
-      </Suspense>
-    </main>
-  );
+  redirect("/#habitaciones");
 }
