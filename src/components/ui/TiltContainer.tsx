@@ -111,18 +111,21 @@ export default function TiltContainer({
     setTiltStyle({ container: containerStyle, shine: shineStyle });
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const childProps = children.props as any;
+  
   return cloneElement(children, {
-    ...(children.props || {}),
-    className: `${children.props?.className || ''} relative`.trim(),
+    ...childProps,
+    className: `${childProps?.className || ''} relative`.trim(),
     style: {
-      ...(children.props?.style || {}),
+      ...(childProps?.style || {}),
       ...tiltStyle.container,
     },
     onMouseMove: handleMouseMove,
     onMouseLeave: handleMouseLeave,
     children: (
       <>
-        {children.props?.children}
+        {childProps?.children}
         {shineEffect && (
           <div 
             className="absolute inset-0 pointer-events-none"
