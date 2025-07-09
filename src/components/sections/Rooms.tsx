@@ -65,7 +65,6 @@ const RoomSlot = ({
   index: number;
   onViewDetails: (slug: string) => void;
   selectedFormat: string | null;
-  isTransitioning: boolean;
   showCurrent: boolean;
   previousSelectedFormat: string | null;
   isFirstLoad: boolean;
@@ -273,7 +272,6 @@ export function Rooms() {
                     index={index}
                     onViewDetails={handleViewRoom}
                     selectedFormat={selectedFormat?.id || null}
-                    isTransitioning={isTransitioning}
                     showCurrent={showCurrent}
                     previousSelectedFormat={previousSelectedFormat}
                     isFirstLoad={isFirstLoad}
