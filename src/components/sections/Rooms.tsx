@@ -58,6 +58,7 @@ const RoomSlot = ({
   selectedFormat,
   showCurrent,
   previousSelectedFormat,
+  isFirstLoad,
 }: {
   currentRoom: Room | null;
   nextRoom: Room | null;
@@ -67,6 +68,7 @@ const RoomSlot = ({
   isTransitioning: boolean;
   showCurrent: boolean;
   previousSelectedFormat: string | null;
+  isFirstLoad: boolean;
 }) => {
   const room = showCurrent ? currentRoom : nextRoom;
   const isEmpty = !room;
@@ -87,9 +89,9 @@ const RoomSlot = ({
               scale: 0.98,
             }}
             transition={{
-              duration: 0.4,
+              duration: isFirstLoad ? 0.4 : 0.2, // Faster for subsequent loads
               ease: [0.25, 0.1, 0.25, 1],
-              delay: index * 0.1,
+              delay: isFirstLoad ? index * 0.1 : index * 0.03, // Shorter delay for subsequent loads
             }}
           >
             <RoomCard
@@ -109,6 +111,7 @@ export function Rooms() {
   const searchParams = useSearchParams();
   const { selectedFormat, setSelectedFormat } = useSelectionStore();
   const [initialLoad, setInitialLoad] = useState(true);
+  const [isFirstLoad, setIsFirstLoad] = useState(true); // Track very first load
   const [maxSlots, setMaxSlots] = useState(0);
   const [currentRooms, setCurrentRooms] = useState<Room[]>([]);
   const [nextRooms, setNextRooms] = useState<Room[]>([]);
@@ -201,6 +204,8 @@ export function Rooms() {
     if (initialLoad && filteredRooms.length > 0) {
       setCurrentRooms(filteredRooms);
       setDisplayedCount(filteredRooms.length);
+      // Mark first load as complete once rooms are loaded
+      setIsFirstLoad(false);
     }
   }, [initialLoad, filteredRooms]);
 
@@ -220,6 +225,9 @@ export function Rooms() {
       setShowCurrent(false);
 
       // After fade out completes, switch to next list and fade in
+      const fadeOutDuration = isFirstLoad ? 300 : 150; // Faster for subsequent loads
+      const fadeInDuration = isFirstLoad ? 400 : 200; // Faster for subsequent loads
+      
       setTimeout(() => {
         setCurrentRooms(filteredRooms);
         setShowCurrent(true);
@@ -228,10 +236,10 @@ export function Rooms() {
         setTimeout(() => {
           setIsTransitioning(false);
           setNextRooms([]);
-        }, 400);
-      }, 300);
+        }, fadeInDuration);
+      }, fadeOutDuration);
     }
-  }, [filteredRooms, currentRooms, initialLoad, selectedFormat?.id]);
+  }, [filteredRooms, currentRooms, initialLoad, selectedFormat?.id, isFirstLoad]);
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-10">
@@ -241,8 +249,8 @@ export function Rooms() {
           filteredRoomsCount={displayedCount}
         />
         <div className="flex flex-col gap-2" aria-labelledby="habitaciones">
-          {initialLoad && Object.keys(allRoomsCache).length === 0 ? (
-            // Show skeletons only on first load
+          {isFirstLoad && Object.keys(allRoomsCache).length === 0 ? (
+            // Show skeletons only on very first load
             <>
               {[...Array(3)].map((_, i) => (
                 <RoomCardSkeleton key={i} />
@@ -268,6 +276,7 @@ export function Rooms() {
                     isTransitioning={isTransitioning}
                     showCurrent={showCurrent}
                     previousSelectedFormat={previousSelectedFormat}
+                    isFirstLoad={isFirstLoad}
                   />
                 ),
               )}
