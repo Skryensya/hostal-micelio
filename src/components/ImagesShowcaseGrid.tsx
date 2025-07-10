@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image"; 
+import Image from "next/image";
 import { useGallery } from "./GalleryProvider";
 
 export type ImageType = {
@@ -13,188 +13,96 @@ export function ImagesShowcaseGrid({ imgs }: { imgs: ImageType[] }) {
 
   if (!imgs || imgs.length === 0) return null;
 
-  // Case 1: Una imagen → Banner a ancho completo con altura fija.
+  // Caso único: banner full-width
   if (imgs.length === 1) {
     return (
       <button
         onClick={() => openGallery(imgs, 0)}
-        className="relative w-full h-[250px] md:h-[300px] rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="relative h-[250px] w-full overflow-hidden rounded-2xl focus:ring-2 focus:ring-blue-500 focus:outline-none md:h-[400px] select-none"
       >
         <Image
           src={imgs[0].src}
           alt={imgs[0].alt}
           fill
-          className="object-cover"
+          className="cursor-pointer object-cover"
           sizes="100vw"
+          draggable={false}
+          onDragStart={(e) => e.preventDefault()}
         />
       </button>
     );
   }
 
-  // Case 2: Dos imágenes → Split view: imagen principal a la izquierda (2/3) y segunda imagen a la derecha (1/3).
-  if (imgs.length === 2) {
-    return (
-      <div className="flex gap-1">
-        <button
-          onClick={() => openGallery(imgs, 0)}
-          className="relative w-2/3 h-[250px] md:h-[300px] rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <Image
-            src={imgs[0].src}
-            alt={imgs[0].alt}
-            fill
-            className="object-cover"
-            sizes="66vw"
-          />
-        </button>
-        <button
-          onClick={() => openGallery(imgs, 1)}
-          className="relative w-1/3 h-[250px] md:h-[300px] rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <Image
-            src={imgs[1].src}
-            alt={imgs[1].alt}
-            fill
-            className="object-cover"
-            sizes="33vw"
-          />
-        </button>
-      </div>
-    );
-  }
-
-  // Case 3: Tres imágenes → Grid de dos columnas: imagen principal a la izquierda y dos imágenes apiladas a la derecha.
-  if (imgs.length === 3) {
-    return (
-      <div className="grid grid-cols-2 gap-1 h-[250px] md:h-[300px]">
-        <button
-          onClick={() => openGallery(imgs, 0)}
-          className="relative w-full h-full rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <Image
-            src={imgs[0].src}
-            alt={imgs[0].alt}
-            fill
-            className="object-cover"
-            sizes="66vw"
-          />
-        </button>
-        <div className="flex flex-col gap-1 h-full">
-          <button
-            onClick={() => openGallery(imgs, 1)}
-            className="relative w-full flex-1 rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <Image
-              src={imgs[1].src}
-              alt={imgs[1].alt}
-              fill
-              className="object-cover"
-              sizes="33vw"
-            />
-          </button>
-          <button
-            onClick={() => openGallery(imgs, 2)}
-            className="relative w-full flex-1 rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <Image
-              src={imgs[2].src}
-              alt={imgs[2].alt}
-              fill
-              className="object-cover"
-              sizes="33vw"
-            />
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // Case 4: Exactamente cuatro imágenes →
-  // Layout: columna principal (75% ancho) y columna de miniaturas apiladas verticalmente (25% ancho).
-  if (imgs.length === 4) {
-    return (
-      <div className="grid grid-cols-[3fr_1fr] gap-1 h-[250px] md:h-[300px]">
-        {/* Imagen principal */}
-        <button
-          onClick={() => openGallery(imgs, 0)}
-          className="relative w-full h-full rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <Image
-            src={imgs[0].src}
-            alt={imgs[0].alt}
-            fill
-            className="object-cover"
-            sizes="75vw"
-          />
-        </button>
-        {/* Columna de 3 miniaturas */}
-        <div className="grid grid-rows-3 gap-1 h-full">
-          {imgs.slice(1, 4).map((img, index) => (
-            <button
-              key={index}
-              onClick={() => openGallery(imgs, index + 1)}
-              className="relative w-full h-full rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <Image
-                src={img.src}
-                alt={img.alt}
-                fill
-                className="object-cover"
-                sizes="25vw"
-              />
-            </button>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  // Case 5: Más de cuatro imágenes →
-  // Usa el mismo layout que para 4 imágenes, pero la última miniatura muestra un overlay con el contador de imágenes restantes.
+  // Para 2 o más imágenes, usamos siempre grid:
   const mainImage = imgs[0];
-  const thumbnails = imgs.slice(1, 4);
-  const remainingCount = imgs.length - 4;
+  const thumbnails = imgs.slice(1, 4); // hasta 3 miniaturas
+  const thumbsCount = thumbnails.length;
+  const remainingCount = imgs.length - 1 - thumbsCount;
+
+  // Definimos dinámicamente columnas y filas:
+  const gridCols = thumbsCount === 1 ? "2fr 1fr" : "3fr 1fr";
+  const gridRows = thumbsCount === 1 ? "1fr" : `repeat(${thumbsCount}, 1fr)`;
+
+  // Ajustamos el atributo sizes para cada caso
+  const mainSizes = thumbsCount === 1 ? "66vw" : "75vw";
+  const thumbSizes = thumbsCount === 1 ? "33vw" : "25vw";
 
   return (
-    <div className="grid grid-cols-[3fr_1fr] gap-1 h-[250px] md:h-[300px]">
+    <div
+      className="grid h-[250px] gap-2 select-none md:h-[400px]"
+      style={{ gridTemplateColumns: gridCols, gridTemplateRows: gridRows }}
+    >
       {/* Imagen principal */}
       <button
         onClick={() => openGallery(imgs, 0)}
-        className="relative w-full h-[250px] md:h-[300px] rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="relative h-full w-full overflow-hidden rounded-2xl select-none focus:ring-2 focus:ring-blue-500 focus:outline-none select-none"
+        style={{
+          gridColumn: "1",
+          gridRow: thumbsCount > 1 ? `span ${thumbsCount}` : "1",
+        }}
       >
         <Image
           src={mainImage.src}
           alt={mainImage.alt}
           fill
-          className="object-cover"
-          sizes="75vw"
+          className="cursor-pointer object-cover"
+          sizes={mainSizes}
+          draggable={false}
+          onDragStart={(e) => e.preventDefault()}
         />
       </button>
+
       {/* Miniaturas */}
-      <div className="grid grid-rows-3 gap-1 h-full">
-        {thumbnails.map((img, i) => (
-          <button
-            key={i}
-            onClick={() => openGallery(imgs, i + 1)}
-            className="relative w-full h-full rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <Image
-              src={img.src}
-              alt={img.alt}
-              fill
-              className="object-cover"
-              sizes="25vw"
-            />
-            {i === thumbnails.length - 1 && remainingCount > 0 && (
-              <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                <span className="text-white text-xl font-semibold">
-                  +{remainingCount}
-                </span>
-              </div>
-            )}
-          </button>
-        ))}
-      </div>
+      {thumbnails.map((img, i) => (
+        <button
+          key={i}
+          onClick={() => openGallery(imgs, i + 1)}
+          className="relative h-full w-full overflow-hidden rounded-2xl select-none focus:ring-2 focus:ring-blue-500 focus:outline-none select-none"
+          style={{
+            gridColumn: "2",
+            gridRow: String(i + 1),
+          }}
+        >
+          <Image
+            src={img.src}
+            alt={img.alt}
+            fill
+            className="cursor-pointer object-cover"
+            sizes={thumbSizes}
+            draggable={false}
+            onDragStart={(e) => e.preventDefault()}
+          />
+
+          {/* Overlay de “+N” en la última miniatura si hay más */}
+          {i === thumbsCount - 1 && remainingCount > 0 && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+              <span className="text-xl font-semibold text-white">
+                +{remainingCount}
+              </span>
+            </div>
+          )}
+        </button>
+      ))}
     </div>
   );
 }

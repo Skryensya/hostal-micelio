@@ -16,6 +16,10 @@ const buttonVariants = cva(
         link: "text-text font-medium border-none hover:underline !shadow-none visited:text-text/70 hover:text-inverted",
         outline: "border border-border text-text bg-transparent",
         ghost: "bg-white/20 text-text",
+        // Gallery button variant
+        "gallery-nav": "bg-white/10 text-white border-2 border-white/60 backdrop-blur-md shadow-lg hover:bg-white hover:text-black hover:border-white hover:shadow-xl hover:scale-105 transition-all duration-300 ease-out",
+        // Gallery white button variant
+        "gallery-white": "bg-white text-black border-0 shadow-lg hover:bg-gray-100 hover:shadow-xl hover:scale-105 transition-all duration-200 ease-out",
         // Room button variants
         "room-card": "rounded-4xl px-6 py-3 text-base font-semibold shadow-sm hover:scale-[1.02] hover:shadow-md md:w-auto md:rounded-full md:px-4 md:py-2 md:text-sm md:shadow-sm md:hover:scale-[1.03] md:hover:shadow-lg md:hover:shadow-black/5",
         "room-option": "rounded-lg px-3 py-2.5 text-sm font-medium shadow-md hover:shadow-lg",

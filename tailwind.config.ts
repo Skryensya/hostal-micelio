@@ -125,7 +125,20 @@ const config: Config = {
       },
     },
   },
-  plugins: [animate], // Add plugins
+  plugins: [
+    animate,
+    function({ addUtilities }) {
+      addUtilities({
+        '.scrollbar-hide': {
+          '-ms-overflow-style': 'none',
+          'scrollbar-width': 'none',
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        },
+      });
+    },
+  ], // Add plugins
 };
 
 export default config;

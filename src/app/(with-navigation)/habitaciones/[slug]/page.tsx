@@ -50,11 +50,11 @@ export default function RoomPage({ params }: { params: { slug: string } }) {
     <main className="relative pt-32 pb-10">
       <div className="mx-auto max-w-6xl px-4">
         <h1 className="mb-6 text-3xl font-bold">{room.name}</h1>
-        <div className="flex flex-col justify-between gap-8 md:flex-row">
+        <div className="flex flex-col justify-between gap-8 md:gap-20 md:flex-row">
           <div className="order-2 w-full md:order-1 md:w-4/12">
             <RoomBookingSidebar room={room} />
           </div>
-          <div className="w-full space-y-4 md:w-6/12">
+          <div className="w-full space-y-4 md:w-8/12">
             <ImagesShowcaseGrid imgs={roomImages} />
             <div>
               <p>{room.description}</p>

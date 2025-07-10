@@ -21,8 +21,8 @@ const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      "fixed inset-0 z-50 bg-black/80 backdrop-blur-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-      className
+      "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/80 backdrop-blur-lg",
+      className,
     )}
     {...props}
   />
@@ -38,8 +38,8 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "p-4 fixed left-1/2 top-1/2 rounded-[2rem] -translate-x-1/2 -translate-y-1/2 z-50 flex flex-col w-full gap-2 border bg-white border-neutral-200 shadow-lg duration-200 data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]",
-        className
+        "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed top-1/2 left-1/2 z-50 flex w-full flex-col gap-2 rounded-[2rem] border border-neutral-200 bg-white p-4 shadow-lg duration-200",
+        className,
       )}
       {...props}
     >
@@ -47,7 +47,7 @@ const DialogContent = React.forwardRef<
       <DialogPrimitive.Close
         className={cn(
           buttonVariants({ variant: "outline", size: "icon" }),
-          "absolute right-5 top-5 aspect-square p-0 h-[40px] w-[40px]"
+          "absolute top-5 right-5 aspect-square h-[40px] w-[40px] p-0",
         )}
       >
         <Cross2Icon className="h-6 w-6" />
@@ -65,7 +65,7 @@ const DialogHeader = ({
   <div
     className={cn(
       "flex flex-col space-y-1.5 text-center sm:text-left",
-      className
+      className,
     )}
     {...props}
   />
@@ -79,7 +79,7 @@ const DialogFooter = ({
   <div
     className={cn(
       "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
-      className
+      className,
     )}
     {...props}
   />
@@ -93,8 +93,8 @@ const DialogTitle = React.forwardRef<
   <DialogPrimitive.Title
     ref={ref}
     className={cn(
-      "text-lg font-semibold leading-none tracking-tight",
-      className
+      "text-lg leading-none font-semibold tracking-tight",
+      className,
     )}
     {...props}
   />
@@ -107,7 +107,7 @@ const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn("text-sm text-text", className)}
+    className={cn("text-text text-sm", className)}
     {...props}
   />
 ));
