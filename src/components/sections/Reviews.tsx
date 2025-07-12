@@ -11,20 +11,31 @@ import { useRef, useEffect, useState, useMemo } from "react";
 import { motion, useInView } from "framer-motion";
 import { Review } from "@/lib/types";
 
-// Fisher-Yates shuffle algorithm
-function shuffleArray<T>(array: T[]): T[] {
+// Seeded random number generator for consistent results across server and client
+function seededRandom(seed: number) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+// Fisher-Yates shuffle algorithm with seeded random
+function shuffleArraySeeded<T>(array: T[], seed: number): T[] {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const randomValue = seededRandom(seed + i);
+    const j = Math.floor(randomValue * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
   return shuffled;
 }
 
 const Reviews = () => {
-  // Randomize reviews order on each component mount
+  // Randomize reviews order with consistent seed for server/client hydration
   const REVIEWS = useMemo(() => {
-    return shuffleArray(SCRAPED_REVIEWS.reviews);
+    // Use a fixed seed based on the current date to get different order each day
+    // but consistent between server and client on the same day
+    const today = new Date().toDateString();
+    const seed = today.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    return shuffleArraySeeded(SCRAPED_REVIEWS.reviews, seed);
   }, []);
   
   // Divide reviews into 2 rows

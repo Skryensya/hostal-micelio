@@ -81,8 +81,8 @@ const fontSize = {
 };
 
 const fontFamily = {
-  heading: "Poppins",
-  body: "Baloo Bhaijaan 2",
+  heading: "var(--font-croissant-one)",
+  body: "var(--font-k2d)",
 };
 
 const container = {

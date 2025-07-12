@@ -3,94 +3,16 @@
 import type { Room as RoomType, RoomOption } from "@/lib/types";
 import Link from "next/link";
 
-// Add CSS animations for circular gradients
-if (typeof document !== "undefined") {
-  const style = document.createElement("style");
-  style.textContent = `
-    @keyframes floatCircle1 {
-      0% { transform: translate(0px, 0px) scale(1); }
-      33% { transform: translate(30px, -30px) scale(1.1); }
-      66% { transform: translate(-20px, 20px) scale(0.9); }
-      100% { transform: translate(0px, 0px) scale(1); }
-    }
-    @keyframes floatCircle2 {
-      0% { transform: translate(0px, 0px) scale(0.8); }
-      50% { transform: translate(-40px, 30px) scale(1.2); }
-      100% { transform: translate(0px, 0px) scale(0.8); }
-    }
-    @keyframes floatCircle3 {
-      0% { transform: translate(0px, 0px) scale(1.1); }
-      40% { transform: translate(25px, 35px) scale(0.7); }
-      80% { transform: translate(-30px, -25px) scale(1.3); }
-      100% { transform: translate(0px, 0px) scale(1.1); }
-    }
-  `;
-  document.head.appendChild(style);
-}
-import ROOM_IMAGES from "@/db/ROOM_IMAGES.json";
 import { ImageCarousel } from "../ImageCarousel";
-import { RoomCardSkeleton } from "@/components/composed/RoomCardSkeleton";
-import { useEffect, useState, useMemo } from "react";
-import ROOM_FORMATS from "@/db/ROOM_FORMATS.json";
-
+// import { RoomCardSkeleton } from "@/components/composed/RoomCardSkeleton";
+import { useEffect,  useMemo } from "react";
 import { User } from "lucide-react";
-import ROOM_AMENITIES from "@/db/ROOM_AMENITIES.json";
+import { useRoomImages, useRoomFormats, useRoomAmenities } from "@/hooks/useData";
 import { RoomFeatures } from "./RoomFeatures";
 import { getRoomGradientColor } from "@/lib/roomColors";
 import { Button } from "@/components/ui/button";
+import { Badge, getGenderColor, getAmenityColor } from "@/components/ui/badge";
 
-// Function to get consistent badge styles - ALL badges will have the same structure
-const getBadgeStyles = (
-  variant:
-    | "primary"
-    | "gender-male"
-    | "gender-female"
-    | "breakfast"
-    | "private-bathroom"
-    | "mixed",
-  customColor?: string,
-) => {
-  // Base classes identical for ALL badges - SMALLER SIZE
-  const baseClasses =
-    "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold shadow-sm";
-
-  const variants = {
-    primary: customColor
-      ? {
-          backgroundColor: `${customColor}08`, // Much more subtle opacity
-          color: `${customColor}dd`, // Slightly muted color
-          border: `1px solid ${customColor}20`,
-        }
-      : {},
-    "gender-male": {
-      backgroundColor: "#dbeafe", // blue-100
-      color: "#3b82f6", // blue-500
-      border: "1px solid #93c5fd", // blue-300
-    },
-    "gender-female": {
-      backgroundColor: "#fce7f3", // pink-100
-      color: "#f43f5e", // rose-500
-      border: "1px solid #f9a8d4", // pink-300
-    },
-    mixed: {
-      backgroundColor: "#f3f4f6", // gray-100
-      color: "#6b7280", // gray-500
-      border: "1px solid #d1d5db", // gray-300
-    },
-    breakfast: {
-      backgroundColor: "#fef3c7", // amber-100
-      color: "#f59e0b", // amber-500
-      border: "1px solid #fcd34d", // amber-300
-    },
-    "private-bathroom": {
-      backgroundColor: "#d1fae5", // emerald-100
-      color: "#10b981", // emerald-500
-      border: "1px solid #86efac", // emerald-300
-    },
-  };
-
-  return { className: baseClasses, style: variants[variant] };
-};
 
 type RoomCardProps = Partial<RoomType> & {
   onViewDetails?: () => void;
@@ -109,86 +31,131 @@ export default function RoomCard({
   gender,
   beds,
 }: RoomCardProps) {
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
+  
+  // Fetch data using React Query
+  const { data: roomFormats = [] } = useRoomFormats();
+  const { data: roomAmenities = [] } = useRoomAmenities();
+  const { data: roomImages = {} } = useRoomImages();
 
   // Cálculo del precio de la habitación
   const roomPrice = useMemo(() => {
     const searchBy = selectedFormat || defaultFormat;
-    if (!searchBy) return null;
-    const roomOption = ROOM_FORMATS.find(
+    if (!searchBy || !roomFormats.length) return null;
+    const roomOption = roomFormats.find(
       (option: RoomOption) => option.id === searchBy,
     );
     const basePrice = roomOption ? roomOption.price : 0;
     const privateToiletPrice = hasPrivateToilet ? 10000 : 0;
     return basePrice + privateToiletPrice;
-  }, [selectedFormat, defaultFormat, hasPrivateToilet]);
+  }, [selectedFormat, defaultFormat, hasPrivateToilet, roomFormats]);
 
   const roomFormat = useMemo(() => {
     const searchBy = selectedFormat || defaultFormat;
-    if (!searchBy) return null;
-    const roomOption = ROOM_FORMATS.find(
+    if (!searchBy || !roomFormats.length) return null;
+    const roomOption = roomFormats.find(
       (option: RoomOption) => option.id === searchBy,
     );
     return roomOption ? roomOption : null;
-  }, [selectedFormat, defaultFormat]);
+  }, [selectedFormat, defaultFormat, roomFormats]);
 
   const amenities = useMemo(() => {
     const searchBy = roomFormat?.amenities;
-    if (!searchBy) return null;
-    let roomAmenities = ROOM_AMENITIES.filter(
+    if (!searchBy || !roomAmenities.length) return null;
+
+    let filteredRoomAmenities = roomAmenities.filter(
       (amenity) => searchBy.includes(amenity.id) && amenity.featured,
     );
 
-    const PrivateBathroomAmenity = ROOM_AMENITIES.find(
+    const PrivateBathroomAmenity = roomAmenities.find(
       (amenity) => amenity.id === "private-bathroom",
     );
-    const FemaleOnlyRoomAmenity = ROOM_AMENITIES.find(
+    const FemaleOnlyRoomAmenity = roomAmenities.find(
       (amenity) => amenity.id === "female-only-room",
     );
-    const MaleOnlyRoomAmenity = ROOM_AMENITIES.find(
+    const MaleOnlyRoomAmenity = roomAmenities.find(
       (amenity) => amenity.id === "male-only-room",
     );
 
-    if (hasPrivateToilet) {
-      roomAmenities.push(PrivateBathroomAmenity);
-      // remote the shared bathroom
-      roomAmenities = roomAmenities.filter(
+    // Create new arrays instead of mutating
+    const additionalAmenities = [];
+
+    if (hasPrivateToilet && PrivateBathroomAmenity) {
+      additionalAmenities.push(PrivateBathroomAmenity);
+      // Filter out shared bathroom
+      filteredRoomAmenities = filteredRoomAmenities.filter(
         (amenity) => amenity.id !== "shared-bathroom",
       );
     }
-    if (gender === "male") roomAmenities.push(MaleOnlyRoomAmenity);
-    if (gender === "female") roomAmenities.push(FemaleOnlyRoomAmenity);
+
+    if (gender === "male" && MaleOnlyRoomAmenity) {
+      additionalAmenities.push(MaleOnlyRoomAmenity);
+    }
+
+    if (gender === "female" && FemaleOnlyRoomAmenity) {
+      additionalAmenities.push(FemaleOnlyRoomAmenity);
+    }
+
+    // Combine arrays without mutation
+    let finalAmenities = [...filteredRoomAmenities, ...additionalAmenities];
 
     if (selectedFormat && selectedFormat !== "HCO") {
-      roomAmenities = roomAmenities.filter(
-        (amenity) => amenity.id !== "female-only-room",
-      );
-      roomAmenities = roomAmenities.filter(
-        (amenity) => amenity.id !== "male-only-room",
+      finalAmenities = finalAmenities.filter(
+        (amenity) =>
+          amenity.id !== "female-only-room" && amenity.id !== "male-only-room",
       );
     }
 
-    return roomAmenities.sort((a, b) => a.order - b.order);
-  }, [roomFormat, hasPrivateToilet, gender, selectedFormat]);
+    return finalAmenities.sort((a, b) => a.order - b.order);
+  }, [roomFormat?.amenities, hasPrivateToilet, gender, selectedFormat, roomAmenities]);
 
-  const images = useMemo(() => ROOM_IMAGES[slug] || [], [slug]);
+  const images = useMemo(() => roomImages[slug] || [], [slug, roomImages]);
 
+  // Add CSS animations after component mounts to avoid hydration issues
   useEffect(() => {
-    const imgPromises = images.map(
-      (src) =>
-        new Promise((resolve) => {
-          const img = new Image();
-          img.src = src;
-          img.onload = () => resolve(true);
-          img.onerror = () => resolve(true);
-        }),
-    );
-    Promise.all(imgPromises).then(() => setIsLoading(false));
-  }, [images]);
+    const existingStyle = document.querySelector("#room-card-animations");
+    if (!existingStyle) {
+      const style = document.createElement("style");
+      style.id = "room-card-animations";
+      style.textContent = `
+        @keyframes floatCircle1 {
+          0% { transform: translate(0px, 0px) scale(1); }
+          33% { transform: translate(30px, -30px) scale(1.1); }
+          66% { transform: translate(-20px, 20px) scale(0.9); }
+          100% { transform: translate(0px, 0px) scale(1); }
+        }
+        @keyframes floatCircle2 {
+          0% { transform: translate(0px, 0px) scale(0.8); }
+          50% { transform: translate(-40px, 30px) scale(1.2); }
+          100% { transform: translate(0px, 0px) scale(0.8); }
+        }
+        @keyframes floatCircle3 {
+          0% { transform: translate(0px, 0px) scale(1.1); }
+          40% { transform: translate(25px, 35px) scale(0.7); }
+          80% { transform: translate(-30px, -25px) scale(1.3); }
+          100% { transform: translate(0px, 0px) scale(1.1); }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }, []);
 
-  if (isLoading) {
-    return <RoomCardSkeleton />;
-  }
+  // useEffect(() => {
+  //   const imgPromises = images.map(
+  //     (image: any) =>
+  //       new Promise((resolve) => {
+  //         const img = new Image();
+  //         img.src = image.src; // Access the src property from the image object
+  //         img.onload = () => resolve(true);
+  //         img.onerror = () => resolve(true);
+  //       }),
+  //   );
+  //   Promise.all(imgPromises).then(() => setIsLoading(false));
+  // }, [images]);
+
+  // if (isLoading) {
+  //   return <RoomCardSkeleton />;
+  // }
 
   return (
     <div
@@ -277,76 +244,36 @@ export default function RoomCard({
               <div>
                 {/* Tags container */}
                 <div className="mb-2 -ml-2 flex flex-wrap gap-2">
-                  {(() => {
-                    const primaryBadge = getBadgeStyles("primary");
-                    return (
-                      <span
-                        className={primaryBadge.className}
-                        style={{
-                          backgroundColor: `${getRoomGradientColor(roomFormat?.id)}15`,
-                          color: `${getRoomGradientColor(roomFormat?.id)}dd`,
-                          border: `1px solid ${getRoomGradientColor(roomFormat?.id)}30`,
-                        }}
-                      >
-                        Habitación {roomFormat?.label}
-                      </span>
-                    );
-                  })()}
+                  <Badge color={getRoomGradientColor(roomFormat?.id)}>
+                    Habitación {roomFormat?.label}
+                  </Badge>
 
                   {/* Tag de género - solo para habitaciones compartidas */}
-                  {gender &&
-                    roomFormat?.id === "HCO" &&
-                    (() => {
-                      const genderVariant =
-                        gender === "male"
-                          ? "gender-male"
-                          : gender === "female"
-                            ? "gender-female"
-                            : "mixed";
-                      const genderBadge = getBadgeStyles(genderVariant);
-                      return (
-                        <span
-                          className={genderBadge.className}
-                          style={genderBadge.style}
-                        >
-                          {gender === "male"
-                            ? "Solo hombres"
-                            : gender === "female"
-                              ? "Solo mujeres"
-                              : "Mixta"}
-                        </span>
-                      );
-                    })()}
+                  {gender && roomFormat?.id === "HCO" && (
+                    <Badge color={getGenderColor(gender as "male" | "female" | "mixed")}>
+                      {gender === "male"
+                        ? "Solo hombres"
+                        : gender === "female"
+                          ? "Solo mujeres"
+                          : "Mixta"}
+                    </Badge>
+                  )}
 
                   {/* Desayuno incluido tag - solo para habitaciones no compartidas */}
-                  {roomFormat?.id !== "HCO" &&
-                    (() => {
-                      const breakfastBadge = getBadgeStyles("breakfast");
-                      return (
-                        <span
-                          className={breakfastBadge.className}
-                          style={breakfastBadge.style}
-                        >
-                          Desayuno incluido
-                        </span>
-                      );
-                    })()}
+                  {roomFormat?.id !== "HCO" && (
+                    <Badge color={getAmenityColor("breakfast")}>
+                      Desayuno incluido
+                    </Badge>
+                  )}
 
                   {/* Baño privado tag */}
-                  {hasPrivateToilet &&
-                    (() => {
-                      const bathroomBadge = getBadgeStyles("private-bathroom");
-                      return (
-                        <span
-                          className={bathroomBadge.className}
-                          style={bathroomBadge.style}
-                        >
-                          Baño privado
-                        </span>
-                      );
-                    })()}
+                  {hasPrivateToilet && (
+                    <Badge color={getAmenityColor("private-bathroom")}>
+                      Baño privado
+                    </Badge>
+                  )}
                 </div>
-                <div className="text-text-subtle hidden text-xs md:block">
+                <div className="text-text-subtle hidden text-sm md:block">
                   {" "}
                   Parque Nacional{" "}
                 </div>
@@ -367,16 +294,15 @@ export default function RoomCard({
               </div>
               {/* Price - More subtle on desktop */}
               <div className="mt-1 text-right md:mt-0">
-                <div className="md:text-text text-xl font-bold md:text-2xl">
-                  <span
-                    style={{
-                      color: `color-mix(in srgb, ${getRoomGradientColor(roomFormat?.id)} 80%, black 20%)`,
-                    }}
-                  >
-                    ${roomPrice?.toLocaleString("es-CL")}
-                  </span>
+                <div
+                  className="text-xl !font-semibold md:!text-2xl"
+                  style={{
+                    color: `color-mix(in srgb, ${getRoomGradientColor(roomFormat?.id)} 80%, black 20%)`,
+                  }}
+                >
+                  ${roomPrice?.toLocaleString("es-CL")}
                 </div>
-                <div className="text-text-muted -mt-1 text-xs">Por Noche</div>
+                <div className="text-text-muted -mt-1 text-xs">Por noche</div>
               </div>
             </div>
 

@@ -19,6 +19,7 @@ interface ReviewsData {
     source: string;
     pages: number;
     sortType: string;
+    filteredAt?: string;
   };
   reviews: Review[];
 }
@@ -123,7 +124,7 @@ function filterReviews() {
         ...data.metadata,
         totalReviews: filteredReviews.length,
         filteredAt: new Date().toISOString(),
-      } as any,
+      },
       reviews: filteredReviews
     };
     

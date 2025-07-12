@@ -3,7 +3,7 @@ import "@/styles/main.scss";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { PostHogProvider } from "@/components/PostHogProvider";
 
-import { balooBhaijaan2, nunito, croissantOne } from "@/app/fonts";
+import { k2d, nunito, croissantOne } from "@/app/fonts";
 // import { ReactLenis } from "lenis/react";
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ export default function RootLayout({
       style={{ filter: isGrayscale ? "grayscale(100%)" : "none" }}
     >
       <body
-        className={`${croissantOne.variable} ${balooBhaijaan2.variable} ${nunito.variable} bg-surface-1 min-h-screen overflow-x-hidden scroll-smooth font-sans antialiased`}
+        className={`${croissantOne.variable} ${k2d.variable} ${nunito.variable} bg-surface-1 min-h-screen overflow-x-hidden scroll-smooth font-sans antialiased`}
       >
         {/* <ReactLenis root> */}
         <PostHogProvider>

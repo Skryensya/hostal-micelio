@@ -25,7 +25,7 @@ export function ImagesShowcaseGrid({ imgs }: { imgs: ImageType[] }) {
           alt={imgs[0].alt}
           fill
           className="cursor-pointer object-cover"
-          sizes="100vw"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 66vw"
           draggable={false}
           onDragStart={(e) => e.preventDefault()}
         />
@@ -43,9 +43,13 @@ export function ImagesShowcaseGrid({ imgs }: { imgs: ImageType[] }) {
   const gridCols = thumbsCount === 1 ? "2fr 1fr" : "3fr 1fr";
   const gridRows = thumbsCount === 1 ? "1fr" : `repeat(${thumbsCount}, 1fr)`;
 
-  // Ajustamos el atributo sizes para cada caso
-  const mainSizes = thumbsCount === 1 ? "66vw" : "75vw";
-  const thumbSizes = thumbsCount === 1 ? "33vw" : "25vw";
+  // Ajustamos el atributo sizes para cada caso (responsive based on container width)
+  const mainSizes = thumbsCount === 1 
+    ? "(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 50vw" 
+    : "(max-width: 768px) 100vw, (max-width: 1200px) 65vw, 55vw";
+  const thumbSizes = thumbsCount === 1 
+    ? "(max-width: 768px) 50vw, (max-width: 1200px) 30vw, 25vw" 
+    : "(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw";
 
   return (
     <div

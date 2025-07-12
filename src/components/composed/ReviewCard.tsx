@@ -3,7 +3,7 @@ import { Review } from "@/lib/types";
 import { StarIcon, ExternalLink, Quote } from "lucide-react";
 import { cn } from "@/lib/utils";
 import TiltContainer from "@/components/ui/TiltContainer";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 
 const getColorFromString = (str: string) => {
   let hash = 0;
@@ -41,7 +41,12 @@ const getRelativeTime = (dateString: string) => {
 const ReviewCard = ({ review }: { review: Review }) => {
   const [isTruncated, setIsTruncated] = useState(false);
   const textRef = useRef<HTMLQuoteElement>(null);
-  const hue = getColorFromString(review.author);
+  
+  // Memoize hue calculation to ensure consistency between server and client
+  const hue = useMemo(() => {
+    if (!review?.author) return 200; // fallback hue
+    return getColorFromString(review.author);
+  }, [review?.author]);
   
   useEffect(() => {
     const element = textRef.current;
@@ -66,7 +71,7 @@ const ReviewCard = ({ review }: { review: Review }) => {
       transitionSpeed={0.15}
       resetSpeed={0.6}
       shineEffect={true}
-      shadowColor={`${Math.round((review.hue * 360) / 100)}, 50%, 50%`}
+      shadowColor={`${hue}, 50%, 50%`}
     >
       <Card
         style={

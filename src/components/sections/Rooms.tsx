@@ -2,8 +2,7 @@
 
 import { useMemo, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import ROOMS from "@/db/ROOMS.json";
-import ROOM_FORMATS from "@/db/ROOM_FORMATS.json";
+import { useRooms, useRoomFormats } from "@/hooks/useData";
 import RoomCard from "../composed/RoomCard";
 import { RoomCardSkeleton } from "../composed/RoomCardSkeleton";
 import { motion, AnimatePresence } from "framer-motion";
@@ -20,14 +19,7 @@ const FORMAT_URL_MAP: Record<string, string> = {
   compartida: "HCO",
 };
 
-// Precompute price map for faster lookups
-const PRICE_MAP: Record<string, number> = ROOM_FORMATS.reduce(
-  (map, opt) => ({ ...map, [opt.id]: opt.price }),
-  {},
-);
-
-// Type assertion for ROOMS data
-const typedRooms = ROOMS as Room[];
+// Will be computed dynamically from API data
 
 // Fixed height container to prevent CLS
 const RoomSlotContainer = ({
@@ -109,6 +101,19 @@ export function Rooms() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { selectedFormat, setSelectedFormat } = useSelectionStore();
+  
+  // Fetch data using React Query
+  const { data: rooms = [], isLoading: roomsLoading } = useRooms();
+  const { data: roomFormats = [], isLoading: formatsLoading } = useRoomFormats();
+  
+  // Type assertion for rooms data
+  const typedRooms = rooms as Room[];
+  
+  // Compute price map dynamically
+  const PRICE_MAP: Record<string, number> = useMemo(() => {
+    return roomFormats.reduce((map, opt) => ({ ...map, [opt.id]: opt.price }), {});
+  }, [roomFormats]);
+  
   const [initialLoad, setInitialLoad] = useState(true);
   const [isFirstLoad, setIsFirstLoad] = useState(true); // Track very first load
   const [maxSlots, setMaxSlots] = useState(0);
@@ -121,21 +126,24 @@ export function Rooms() {
   );
   const [previousSelectedFormat, setPreviousSelectedFormat] = useState<string | null>(null);
   const [displayedCount, setDisplayedCount] = useState(0);
+  
+  // Show loading state while data is being fetched
+  const isLoading = roomsLoading || formatsLoading;
 
   // Set initial format from URL parameter only on first load
   useEffect(() => {
-    if (!initialLoad) return;
+    if (!initialLoad || !roomFormats.length) return;
 
     const formatParam = searchParams.get("formato");
     if (formatParam && FORMAT_URL_MAP[formatParam]) {
       const formatId = FORMAT_URL_MAP[formatParam];
-      const format = ROOM_FORMATS.find((f) => f.id === formatId);
+      const format = roomFormats.find((f) => f.id === formatId);
       if (format && (!selectedFormat || selectedFormat.id !== formatId)) {
         setSelectedFormat(format);
       }
     }
     setInitialLoad(false);
-  }, [searchParams, setSelectedFormat, selectedFormat, initialLoad]);
+  }, [searchParams, setSelectedFormat, selectedFormat, initialLoad, roomFormats]);
 
   const handleViewRoom = (roomSlug: string) => {
     router.push(`/habitaciones/${roomSlug}`);
@@ -156,7 +164,7 @@ export function Rooms() {
       });
 
       // Cache for each room format
-      ROOM_FORMATS.forEach((format) => {
+      roomFormats.forEach((format) => {
         const roomsToSort = typedRooms.filter(
           (r) =>
             r.defaultFormat === format.id ||
@@ -175,8 +183,10 @@ export function Rooms() {
       setAllRoomsCache(cache);
     };
 
-    calculateAllRoomLists();
-  }, []);
+    if (typedRooms.length && roomFormats.length) {
+      calculateAllRoomLists();
+    }
+  }, [typedRooms, roomFormats, PRICE_MAP]);
 
   // Get filtered rooms from cache
   const filteredRooms = useMemo(() => {
@@ -248,8 +258,8 @@ export function Rooms() {
           filteredRoomsCount={displayedCount}
         />
         <div className="flex flex-col gap-2" aria-labelledby="habitaciones">
-          {isFirstLoad && Object.keys(allRoomsCache).length === 0 ? (
-            // Show skeletons only on very first load
+          {(isFirstLoad && Object.keys(allRoomsCache).length === 0) || isLoading ? (
+            // Show skeletons on first load or while fetching data
             <>
               {[...Array(3)].map((_, i) => (
                 <RoomCardSkeleton key={i} />

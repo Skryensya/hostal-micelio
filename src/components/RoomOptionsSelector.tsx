@@ -361,7 +361,7 @@ export const RoomOptionsSelector = ({
               >
                 <div
                   className={cn(
-                    "group bg-surface-1 flex h-full w-full flex-col overflow-hidden rounded-xl border-2 p-4 transition-all duration-700 ease-out",
+                    "group bg-surface-1 flex h-full w-full flex-col justify-between overflow-hidden rounded-xl border-2 p-4 transition-all duration-700 ease-out",
                     isSelected
                       ? "border-opacity-90 shadow-2xl"
                       : "hover:shadow-lg",

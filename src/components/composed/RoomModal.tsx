@@ -4,7 +4,7 @@ import { useMemo } from "react";
 // import { cn } from "@/lib/utils";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { Button } from "@/components/ui/button";
-import ROOM_AMENITIES from "@/db/ROOM_AMENITIES.json";
+import { useRoomAmenities } from "@/hooks/useData";
 import {
   Dialog,
   DialogContent,
@@ -104,20 +104,22 @@ const RoomDashboard = ({
   room: Room | undefined;
   roomImages: RoomImage[] | undefined;
 }) => {
+  const { data: roomAmenitiesData = [] } = useRoomAmenities();
+  
   const amenities = useMemo(() => {
     const searchBy = room?.defaultFormat;
-    if (!searchBy) return null;
-    let roomAmenities = ROOM_AMENITIES.filter(
+    if (!searchBy || !roomAmenitiesData.length) return null;
+    let roomAmenities = roomAmenitiesData.filter(
       (amenity) => searchBy.includes(amenity.id) && amenity.featured
     );
 
-    const PrivateBathroomAmenity = ROOM_AMENITIES.find(
+    const PrivateBathroomAmenity = roomAmenitiesData.find(
       (amenity) => amenity.id === "private-bathroom"
     );
-    const FemaleOnlyRoomAmenity = ROOM_AMENITIES.find(
+    const FemaleOnlyRoomAmenity = roomAmenitiesData.find(
       (amenity) => amenity.id === "female-only-room"
     );
-    const MaleOnlyRoomAmenity = ROOM_AMENITIES.find(
+    const MaleOnlyRoomAmenity = roomAmenitiesData.find(
       (amenity) => amenity.id === "male-only-room"
     );
 
@@ -141,7 +143,7 @@ const RoomDashboard = ({
     }
 
     return roomAmenities.sort((a, b) => a.order - b.order);
-  }, [room?.defaultFormat, room?.hasPrivateToilet, room?.gender]);
+  }, [room?.defaultFormat, room?.hasPrivateToilet, room?.gender, roomAmenitiesData]);
 
   return (
     <div>

@@ -35,12 +35,14 @@ export const HoverCard: React.FC<HoverCardProps> = ({
           src={blurUrl}
           alt={alt || title} // Use alt if provided, otherwise use title
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover blur-sm"
         />
         <Image
           src={imgUrl}
           alt={alt || title} // Use alt if provided, otherwise use title
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="transition-transform duration-500 delay-100 ease-out group-hover:scale-105 object-cover"
         />
         <div className="px-6 md:px-8 absolute inset-0 z-10 pb-8 text-text-dark flex flex-col justify-end bottom-gradient--soft">

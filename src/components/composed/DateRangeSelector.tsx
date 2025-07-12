@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
@@ -37,16 +37,16 @@ export function DateRangeSelector({
     if (startDate !== date?.from || endDate !== date?.to) {
       setDate({ from: startDate, to: endDate });
     }
-  }, [startDate, endDate]);
+  }, [startDate, endDate, date?.from, date?.to]);
 
-  const handleSelect = (selectedDate: DateRange | undefined) => {
+  const handleSelect = useCallback((selectedDate: DateRange | undefined) => {
     setDate(selectedDate);
     if (selectedDate) {
       onDateChange(selectedDate.from, selectedDate.to);
     } else {
       onDateChange(undefined, undefined);
     }
-  };
+  }, [onDateChange]);
 
   return (
     <div className={cn("grid gap-2", className)}>

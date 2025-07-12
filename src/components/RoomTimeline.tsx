@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Plus, Edit, Trash2, Calendar, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -251,7 +251,7 @@ export default function RoomTimeline() {
   };
 
   // Verificar si hay conflicto de fechas para una habitación
-  const checkBookingConflict = (
+  const checkBookingConflict = useCallback((
     roomSlug: string,
     startDate: Date,
     endDate: Date,
@@ -291,7 +291,7 @@ export default function RoomTimeline() {
         isWithinInterval(booking.startDate, { start: startDate, end: endDate })
       );
     });
-  };
+  }, [bookings]);
 
   const handleSaveBooking = (bookingData: Omit<Booking, "id">) => {
     const hasConflict = checkBookingConflict(
@@ -744,7 +744,7 @@ export default function RoomTimeline() {
 
     window.addEventListener("keyup", handleKeyUp);
     return () => window.removeEventListener("keyup", handleKeyUp);
-  }, [dragState]);
+  }, [dragState, checkBookingConflict]);
 
   return (
     <div>

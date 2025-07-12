@@ -1,33 +1,42 @@
 "use client";
 
 import { notFound } from "next/navigation";
-import ROOMS from "@/db/ROOMS.json";
-import ROOM_FORMATS from "@/db/ROOM_FORMATS.json";
+import { useRooms, useRoomFormats, useRoomAmenities, useRoomImages } from "@/hooks/useData";
 import { RoomAmenities } from "@/components/composed/RoomAmenities";
 import { RoomBeds } from "@/components/composed/RoomBeds";
 import { RoomBentoGrid } from "@/components/composed/RoomBentoGrid";
-import ROOM_AMENITIES from "@/db/ROOM_AMENITIES.json";
 import { useSelectionStore } from "@/store/useSelectionStore";
 import { ImagesShowcaseGrid } from "@/components/ImagesShowcaseGrid";
 import { Room, RoomImage } from "@/lib/types";
-import ROOM_IMAGES from "@/db/ROOM_IMAGES.json";
 import { RoomBookingSidebar } from "@/components/composed/RoomBookingSidebar";
 import { getRoomColorsByFormat } from "@/lib/roomColors";
 import { cn } from "@/lib/utils";
 
-// Type assertion for ROOMS data
-const typedRooms = ROOMS as Room[];
-
 export default function RoomPage({ params }: { params: { slug: string } }) {
   const { selectedFormat } = useSelectionStore();
+  
+  // Fetch data using React Query
+  const { data: rooms = [], isLoading: roomsLoading } = useRooms();
+  const { data: roomFormats = [], isLoading: formatsLoading } = useRoomFormats();
+  const { data: roomAmenities = [], isLoading: amenitiesLoading } = useRoomAmenities();
+  const { data: roomImages = {}, isLoading: imagesLoading } = useRoomImages();
+  
+  // Type assertion for rooms data
+  const typedRooms = rooms as Room[];
   const room = typedRooms.find((r) => r.slug === params.slug);
+
+  // Show loading state
+  const isLoading = roomsLoading || formatsLoading || amenitiesLoading || imagesLoading;
+  
+  if (isLoading) {
+    return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+  }
 
   if (!room) {
     notFound();
   }
 
-  const roomImages: RoomImage[] | undefined =
-    ROOM_IMAGES[room.slug as keyof typeof ROOM_IMAGES];
+  const roomImagesForRoom: RoomImage[] | undefined = roomImages[room.slug as keyof typeof roomImages];
 
   // Use selected format if available and valid for this room, otherwise use default format
   const format =
@@ -35,13 +44,13 @@ export default function RoomPage({ params }: { params: { slug: string } }) {
     (selectedFormat.id === room.defaultFormat ||
       room.alternativeFormats.includes(selectedFormat.id))
       ? selectedFormat
-      : ROOM_FORMATS.find((f) => f.id === room.defaultFormat);
+      : roomFormats.find((f) => f.id === room.defaultFormat);
 
-  const price = format ? ROOM_FORMATS.find((f) => f.id === format.id)?.price || 0 : 0;
+  const price = format ? roomFormats.find((f) => f.id === format.id)?.price || 0 : 0;
   const totalPrice = price + (room.hasPrivateToilet ? 10000 : 0);
 
   const amenities = format
-    ? ROOM_AMENITIES.filter(
+    ? roomAmenities.filter(
         (amenity) => format.amenities.includes(amenity.id) && amenity.featured,
       )
     : [];
@@ -55,7 +64,7 @@ export default function RoomPage({ params }: { params: { slug: string } }) {
             <RoomBookingSidebar room={room} />
           </div>
           <div className="w-full space-y-4 md:w-8/12">
-            <ImagesShowcaseGrid imgs={roomImages} />
+            <ImagesShowcaseGrid imgs={roomImagesForRoom} />
             <div>
               <p>{room.description}</p>
             </div>

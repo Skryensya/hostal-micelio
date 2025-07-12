@@ -80,7 +80,6 @@ export function Gallery() {
                   className="h-10 w-10"
                   onClick={closeGallery}
                   aria-label="Cerrar galería"
-                  noLight
                 >
                   <X className="h-5 w-5" />
                 </Button>
@@ -131,7 +130,6 @@ export function Gallery() {
                 prevImage();
               }}
               aria-label="Imagen anterior"
-              noLight
             >
               <ChevronLeft className="h-7 w-7" />
             </Button>
@@ -147,7 +145,6 @@ export function Gallery() {
                 nextImage();
               }}
               aria-label="Siguiente imagen"
-              noLight
             >
               <ChevronRight className="h-7 w-7" />
             </Button>
@@ -167,7 +164,6 @@ export function Gallery() {
                     prevImage();
                   }}
                   aria-label="Imagen anterior"
-                  noLight
                 >
                   <ArrowLeft className="h-5 w-5" />
                 </Button>
@@ -180,7 +176,6 @@ export function Gallery() {
                     nextImage();
                   }}
                   aria-label="Siguiente imagen"
-                  noLight
                 >
                   <ArrowRight className="h-5 w-5" />
                 </Button>

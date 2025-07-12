@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Flower2 } from "lucide-react";
-import TEAM from "@/db/TEAM.json";
+import { useTeam } from "@/hooks/useData";
 import Image from "next/image";
 
 const TeamHoverImage = ({ picture1, picture2, alt }) => {
@@ -19,6 +19,7 @@ const TeamHoverImage = ({ picture1, picture2, alt }) => {
         src={picture1}
         alt={alt}
         fill
+        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
         className={`absolute object-cover transition-opacity duration-300 ${
           isHovered ? "opacity-0" : "opacity-100"
         }`}
@@ -28,6 +29,7 @@ const TeamHoverImage = ({ picture1, picture2, alt }) => {
         src={picture2}
         alt={alt}
         fill
+        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
         className={`absolute object-cover transition-opacity duration-300 ${
           isHovered ? "opacity-100" : "opacity-0"
         }`}
@@ -76,7 +78,8 @@ const SingleContributionMember = ({ person }) => (
 );
 
 const Team = () => {
-  const { owner, permanent, temporary } = TEAM;
+  const { data: teamData } = useTeam();
+  const { owner, permanent, temporary } = teamData || { owner: [], permanent: [], temporary: [] };
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6  ">

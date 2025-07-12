@@ -11,7 +11,6 @@ import Image from "next/image";
 import { ChevronRight, ChevronLeft, Play, Pause } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { LightEffect } from "@/components/ui/LightEffect";
 import { WavyDivider } from "@/components/composed/WavyDivider";
 // Types
 type SlideType = {
@@ -101,7 +100,9 @@ const SlideImage = React.memo(
             src={thumbnail}
             alt=""
             className="absolute inset-0 h-full w-full object-cover object-bottom"
-            fill
+            width={320}
+            height={288}
+            sizes="320px"
             priority
             loading="eager"
           />
@@ -110,7 +111,9 @@ const SlideImage = React.memo(
             src={image}
             alt=""
             className="absolute inset-0 h-full w-full object-cover object-bottom"
-            fill
+            width={320}
+            height={288}
+            sizes="320px"
             loading="lazy"
             fetchPriority="low"
             onLoad={onLoad}
@@ -170,7 +173,6 @@ const PlayPauseButton = ({
             "z-10 h-10 rounded-full",
           )}
         >
-          <LightEffect />
           {isPlaying ? <Pause size={16} /> : <Play size={16} />}
         </div>
       </button>
@@ -210,7 +212,6 @@ const NavigationButton = ({
             buttonVariants({ variant: "ghost", size: "icon" }),
           )}
         >
-          <LightEffect />
           {direction === "prev" ? (
             <ChevronLeft className="transition-all duration-300" />
           ) : (
@@ -393,7 +394,6 @@ export function Hero() {
                     disabled={!isLoaded}
                     tabIndex={-1}
                   >
-                    <LightEffect />
                   </button>
                 ))}
               </div> */}
