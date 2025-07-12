@@ -5,9 +5,43 @@ import { cn } from "@/lib/utils";
 import TiltContainer from "@/components/ui/TiltContainer";
 import { useRef, useEffect, useState } from "react";
 
+const getColorFromString = (str: string) => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return Math.abs(hash) % 360;
+};
+
+const getRelativeTime = (dateString: string) => {
+  // Parse date from dd/mm/yyyy format
+  const [day, month, year] = dateString.split('/').map(Number);
+  const reviewDate = new Date(year, month - 1, day);
+  const now = new Date();
+  
+  const diffTime = Math.abs(now.getTime() - reviewDate.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const diffMonths = Math.floor(diffDays / 30);
+  const diffYears = Math.floor(diffDays / 365);
+  
+  if (diffYears > 0) {
+    return diffYears === 1 ? 'hace 1 año' : `hace ${diffYears} años`;
+  } else if (diffMonths > 0) {
+    return diffMonths === 1 ? 'hace 1 mes' : `hace ${diffMonths} meses`;
+  } else if (diffDays > 7) {
+    const weeks = Math.floor(diffDays / 7);
+    return weeks === 1 ? 'hace 1 semana' : `hace ${weeks} semanas`;
+  } else if (diffDays > 0) {
+    return diffDays === 1 ? 'hace 1 día' : `hace ${diffDays} días`;
+  } else {
+    return 'hoy';
+  }
+};
+
 const ReviewCard = ({ review }: { review: Review }) => {
   const [isTruncated, setIsTruncated] = useState(false);
   const textRef = useRef<HTMLQuoteElement>(null);
+  const hue = getColorFromString(review.author);
   
   useEffect(() => {
     const element = textRef.current;
@@ -15,7 +49,7 @@ const ReviewCard = ({ review }: { review: Review }) => {
       // Check if text is truncated by comparing scrollHeight to clientHeight
       setIsTruncated(element.scrollHeight > element.clientHeight);
     }
-  }, [review.comment]);
+  }, [review.text]);
   
   const getInitials = (name: string) => {
     return name
@@ -37,8 +71,8 @@ const ReviewCard = ({ review }: { review: Review }) => {
       <Card
         style={
           {
-            "--hue": review.hue,
-            background: `linear-gradient(135deg, hsl(${review.hue} 60% 88%) 0%, hsl(${review.hue} 70% 95%) 30%, white 60%)`,
+            "--hue": hue,
+            background: `linear-gradient(135deg, hsl(${hue} 60% 88%) 0%, hsl(${hue} 70% 95%) 30%, white 60%)`,
           } as React.CSSProperties
         }
         className={cn(
@@ -53,7 +87,7 @@ const ReviewCard = ({ review }: { review: Review }) => {
           <Quote
             className="h-8 w-8 drop-shadow-sm"
             style={{
-              color: `hsl(${review.hue} 60% 45%)`,
+              color: `hsl(${hue} 60% 45%)`,
             }}
           />
         </div>
@@ -65,24 +99,36 @@ const ReviewCard = ({ review }: { review: Review }) => {
           <div className="flex flex-1 flex-col p-5">
             {/* Header with name and rating */}
             <div className="mb-3 flex items-center gap-3">
-              <div
-                className="h-12 w-12 -rotate-4 transform rounded-2xl text-sm font-bold text-white shadow-lg"
-                style={{
-                  background: `linear-gradient(135deg, hsl(${review.hue} 65% 45%), hsl(${review.hue} 70% 75%))`,
-                }}
+              <a
+                href={review.reviewerUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-transform hover:scale-105"
               >
-                <div className="flex h-full w-full items-center justify-center">
-                  {getInitials(review.name)}
+                <div
+                  className="h-12 w-12 -rotate-4 transform rounded-2xl text-sm font-bold text-white shadow-lg cursor-pointer"
+                  style={{
+                    background: `linear-gradient(135deg, hsl(${hue} 65% 45%), hsl(${hue} 70% 75%))`,
+                  }}
+                >
+                  <div className="flex h-full w-full items-center justify-center">
+                    {getInitials(review.author)}
+                  </div>
                 </div>
-              </div>
-              <div>
+              </a>
+              <div className="flex-1">
                 <p className="font-heading text-sm font-bold text-gray-900">
-                  {review.name}
+                  {review.author}
+                </p>
+                
+                {/* Date */}
+                <p className="text-xs text-gray-500 mb-1">
+                  {getRelativeTime(review.date)}
                 </p>
 
                 {/* Rating */}
-                <div className="mt-1 flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
+                <div className="flex items-center gap-1">
+                  {[...Array(review.rating)].map((_, i) => (
                     <StarIcon
                       key={i}
                       className="h-2.5 w-2.5"
@@ -103,13 +149,13 @@ const ReviewCard = ({ review }: { review: Review }) => {
                 isTruncated && "md:[&:after]:ml-1 md:[&:after]:content-['...']"
               )}
             >
-              &ldquo;{review.comment}&rdquo;
+              &ldquo;{review.text}&rdquo;
             </blockquote>
 
             {/* Button at the end - centered */}
             <div className="flex justify-end mt-auto">
               <a
-                href={review.url}
+                href={review.reviewUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
@@ -117,8 +163,8 @@ const ReviewCard = ({ review }: { review: Review }) => {
                   "rounded-full px-3 py-1.5 shadow-sm",
                 )}
                 style={{
-                  backgroundColor: `hsl(${review.hue} 60% 80%)`,
-                  color: `hsl(${review.hue} 60% 30%)`,
+                  backgroundColor: `hsl(${hue} 60% 80%)`,
+                  color: `hsl(${hue} 60% 30%)`,
                 }}
               >
                 <span className="font-bold">Ver más</span>

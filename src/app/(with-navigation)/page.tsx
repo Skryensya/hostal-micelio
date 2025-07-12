@@ -33,8 +33,8 @@ export default function Home() {
       {/* <Events /> */}
       {/* <Team /> */}
       {/* <Menu /> */}
-      <GettingHere />
       <Reviews />
+      <GettingHere />
     </main>
   );
 }

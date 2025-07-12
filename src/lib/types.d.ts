@@ -33,10 +33,14 @@ export interface RoomAmenity {
 }
 
 export interface Review {
-  name: string;
-  comment: string;
-  url: string;
-  hue: number;
+  review_id: string;
+  author: string;
+  rating: number;
+  text: string;
+  date: string;
+  reviewerUrl: string;
+  reviewUrl: string;
+  scrapedAt: string;
 }
 
 export interface TeamMember {

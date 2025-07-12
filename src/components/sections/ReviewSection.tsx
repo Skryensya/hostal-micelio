@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import { ReviewCard } from "@/components/composed/ReviewCard";
-import REVIEWS from "@/db/REVIEWS.json";
+import SCRAPED_REVIEWS from "@/db/SCRAPED_REVIEWS.json";
 
 export function ReviewSection() {
   const controls = useAnimation();
@@ -21,7 +21,7 @@ export function ReviewSection() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="masonry-container" ref={ref}>
-        {REVIEWS.sort((a, b) => a.comment.length - b.comment.length).map(
+        {SCRAPED_REVIEWS.reviews.sort((a, b) => a.text.length - b.text.length).map(
           (review, index) => (
             <motion.div
               key={`${index}`}

@@ -416,7 +416,7 @@ export const RoomOptionsSelector = ({
                     </h3>
                     <p
                       className={cn(
-                        "text-xs leading-tight transition-colors duration-500",
+                        "leading-tight transition-colors duration-500",
                         isSelected
                           ? "text-text"
                           : "text-text-muted group-hover:text-text",

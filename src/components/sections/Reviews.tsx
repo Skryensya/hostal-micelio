@@ -1,6 +1,6 @@
 "use client";
 
-import REVIEWS from "@/db/REVIEWS.json";
+import SCRAPED_REVIEWS from "@/db/SCRAPED_REVIEWS.json";
 import { ReviewCard } from "@/components/composed/ReviewCard";
 // import { Button } from "@/components/ui/button";
 import { ScrollMarquee } from "@/components/ui/scroll-marquee";
@@ -12,6 +12,9 @@ import { motion, useInView } from "framer-motion";
 import { Review } from "@/lib/types";
 
 const Reviews = () => {
+  // Use the reviews from scraped data
+  const REVIEWS = SCRAPED_REVIEWS.reviews;
+  
   // Divide reviews into 2 rows
   const reviewsPerRow = Math.ceil(REVIEWS.length / 2);
   const row1 = REVIEWS.slice(0, reviewsPerRow);

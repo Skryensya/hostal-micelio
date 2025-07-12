@@ -4,6 +4,16 @@
       "src": "/assets/images/_webp/rooms/conguillio/00.webp",
       "thumbnail": "/assets/images/_thumbnails/rooms/conguillio/00.webp",
       "alt": "View of conguillio Room"
+    },
+    {
+      "src": "/assets/images/_webp/rooms/conguillio/01.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/conguillio/01.webp",
+      "alt": "View of conguillio Room"
+    },
+    {
+      "src": "/assets/images/_webp/rooms/conguillio/02.webp",
+      "thumbnail": "/assets/images/_thumbnails/rooms/conguillio/02.webp",
+      "alt": "View of conguillio Room"
     }
   ],
   "huerquehue": [
@@ -20,17 +30,6 @@
     {
       "src": "/assets/images/_webp/rooms/huerquehue/02.webp",
       "thumbnail": "/assets/images/_thumbnails/rooms/huerquehue/02.webp",
-      "alt": "View of huerquehue Room"
-    },
-
-    {
-      "src": "/assets/images/_webp/rooms/huerquehue/02.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/huerquehue/02.webp",
-      "alt": "View of huerquehue Room"
-    },
-    {
-      "src": "/assets/images/_webp/rooms/huerquehue/00.webp",
-      "thumbnail": "/assets/images/_thumbnails/rooms/huerquehue/00.webp",
       "alt": "View of huerquehue Room"
     }
   ],
