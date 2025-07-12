@@ -7,13 +7,25 @@ import { ScrollMarquee } from "@/components/ui/scroll-marquee";
 import { AutoMarquee } from "@/components/ui/auto-marquee";
 import { MessageCircle } from "lucide-react";
 // import Link from "next/link";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import { motion, useInView } from "framer-motion";
 import { Review } from "@/lib/types";
 
+// Fisher-Yates shuffle algorithm
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 const Reviews = () => {
-  // Use the reviews from scraped data
-  const REVIEWS = SCRAPED_REVIEWS.reviews;
+  // Randomize reviews order on each component mount
+  const REVIEWS = useMemo(() => {
+    return shuffleArray(SCRAPED_REVIEWS.reviews);
+  }, []);
   
   // Divide reviews into 2 rows
   const reviewsPerRow = Math.ceil(REVIEWS.length / 2);

@@ -21,6 +21,7 @@ interface ScrapedReview {
   text: string;
   reviewerUrl: string;
   reviewUrl: string;
+  photoCount: number;
   scrapedAt: string;
 }
 
@@ -158,24 +159,29 @@ export async function scrapeGoogleReviews(
           // Get reviewer URL
           const reviewerUrl = review[1]?.[4]?.[5]?.[2]?.[0] || '';
           
+          // Count photos in the review
+          const photos = review[2]?.[2] || [];
+          const photoCount = Array.isArray(photos) ? photos.length : 0;
+          
           // Generate review URL using Google Maps review data format
-          const reviewId = review[0] || '';
+          const reviewId = String(review[0] || '');
           const placeIdMatch = spanishUrl.match(/!1s([^!]+)/);
           const placeId = placeIdMatch ? placeIdMatch[1] : '';
           
-          // Use the Google Maps reviews data URL format that works reliably
+          // Use the Google Maps reviews data URL format with coordinates
           const reviewUrl = reviewId && placeId 
-            ? `https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1s${reviewId}!2m1!1s0x0:${placeId}!3m1!1s2@1:${reviewId.replace('==', '%3D%3D')}?hl=es`
+            ? `https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1s${reviewId}!2m1!1s0x0:${placeId}!3m1!1s2@1:${reviewId.replace('==', '%3D%3D')}/@-39.2856781,-72.2264821,216m?hl=es`
             : '';
           
           return {
-            review_id: reviewId,
-            author: review[1]?.[4]?.[5]?.[0] || 'Anónimo',
-            rating: review[2]?.[0]?.[0] || 0,
-            text: fullText,
+            review_id: String(reviewId),
+            author: String(review[1]?.[4]?.[5]?.[0] || 'Anónimo'),
+            rating: Number(review[2]?.[0]?.[0] || 0),
+            text: String(fullText),
             date: formattedDate,
-            reviewerUrl: reviewerUrl,
+            reviewerUrl: String(reviewerUrl),
             reviewUrl: reviewUrl,
+            photoCount: photoCount,
             scrapedAt: new Date().toISOString()
           };
         } catch (error) {
@@ -188,6 +194,7 @@ export async function scrapeGoogleReviews(
             date: '',
             reviewerUrl: '',
             reviewUrl: '',
+            photoCount: 0,
             scrapedAt: new Date().toISOString()
           };
         }
@@ -209,7 +216,7 @@ export async function scrapeGoogleReviews(
           
           return isFiveStars && isSpanish;
         })
-        .slice(0, 20); // Limit to 20 reviews
+        .slice(0, 30); // Limit to 30 reviews
       
       console.log(`🌟 Filtered to ${filteredReviews.length} Spanish 5-star reviews`);
       

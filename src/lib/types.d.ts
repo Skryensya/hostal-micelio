@@ -40,6 +40,7 @@ export interface Review {
   date: string;
   reviewerUrl: string;
   reviewUrl: string;
+  photoCount: number;
   scrapedAt: string;
 }
 
